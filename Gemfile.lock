@@ -250,6 +250,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-fedora (= 2.3.3)
   bcrypt-ruby
   blacklight (~> 3.0.0)
   capybara

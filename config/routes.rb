@@ -1,7 +1,11 @@
 TdlHydraHead::Application.routes.draw do
+#  Blacklight.add_routes(self,
+#  map.connect '/catalog/', :controller => 'catalog', :action => 'index'
+#    map.connect '/catalog/:id', :controller => 'catalog', :action => 'show', :requirements => { :id => /.*/ }
+  #Our pids don't work with the stock blacklight routes, so I added this route
+  match '/catalog/:id', :to => 'catalog#show', :constraints => {:id => /.*/}, :as =>'catalog'
   Blacklight.add_routes(self)
   HydraHead.add_routes(self)
-
   root :to => "catalog#index"
 
   devise_for :users
