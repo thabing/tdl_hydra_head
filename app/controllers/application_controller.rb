@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
   # Please be sure to impelement current_user and user_session. Blacklight depends on 
   # these methods in order to perform user specific actions. 
   before_filter :add_my_own_assets
-
+ 
+  # look for layout file in /app/views/layouts/tdl.html.erb
   def layout_name
 	"tdl"
   end
