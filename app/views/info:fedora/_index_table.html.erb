@@ -1,0 +1,8 @@
+<tr class="document <%= cycle("even","odd") %>">
+  <td class="document_title"><%= link_to document.get(:id), "/catalog/" + document.get(:id)  %></td>
+  <td class="document_author"><%= document.get(:creator_t) %></td>
+  <td class="document_work"><%= document.get(:title_t) %></td>
+  <td class="document_date"><%= format_date(DateTime.parse(document.get(:system_create_dt)).to_time) %></td>
+  <td class="document_files"> 1</td>
+</tr>
+

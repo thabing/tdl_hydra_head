@@ -1,0 +1,54 @@
+<% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
+<% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
+<%= javascript_include_tag "flexpaper_flash" %>
+
+<div class="document_viewer" id="cover_container">
+
+  <h1>
+    <% unless get_values_from_datastream(@document_fedora, "DCA-META", [:title]).first.empty? %>
+        <%= get_values_from_datastream(@document_fedora, "DCA-META", [:title]).first %>
+    <% else %>
+        <%= params[:id] %>
+    <% end %>
+  </h1>
+
+  <% unless get_values_from_datastream(@document_fedora, "DCA-META", [:description]).first.empty? %>
+      <fieldset>
+        <legend>Abstract</legend>
+        <div id="abstract" class="browse_value">
+          <%= Sanitize.clean(RedCloth.new(get_values_from_datastream(@document_fedora, "DCA-META", [:description]).first, [:sanitize_html]).to_html) %>
+        </div>
+      </fieldset>
+  <% end %>
+
+  <fieldset><legend>Files</legend>
+	    <div id="uploads" data-pid=<%= params[:id] %>>
+		  <table id="file_assets" class="multipleEdit">
+		    <tr>
+		      <th>File</th>
+		      <th>Size</th>
+		      <th>Uploaded</th>
+		    </tr>
+
+			<tr class="file_asset" id="result1">
+			  <td>
+                <% title = get_values_from_datastream(@document_fedora, "DCA-META", [:title])%>
+			    <%=disseminator_link params[:id], "Archival.pdf" %>
+
+			  </td>
+			  <td>
+                <% fs = get_values_from_datastream(@document_fedora, "DCA-META", [:filesize])%>
+			    <%=fs %>
+			  </td>
+			  <td>
+			    <% dt = get_values_from_datastream(@document_fedora, "DCA-META", [:dateIssued])%>
+			    <%=dt %>
+			  </td>
+			</tr>
+		  </table>
+			</div>
+		</fieldset>
+        <div>
+          <%= get_google_docs_iframe params[:id], "Archival.pdf" %>
+        </div>
+</div>
