@@ -79,7 +79,7 @@ GEM
     curb (0.7.15)
     daemons (1.1.4)
     database_cleaner (0.6.7)
-    devise (1.4.6)
+    devise (1.4.7)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
@@ -259,6 +259,7 @@ DEPENDENCIES
   devise
   hydra-head (= 3.0.0pre3)
   mocha
+  om (= 1.4.0)
   rails (= 3.0.4)
   rspec
   rspec-rails (>= 2.5.0)
