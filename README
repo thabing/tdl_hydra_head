@@ -15,6 +15,17 @@ $ rails server
 
 Working with TDL Objects in the Console
 
+load "tufts_facpub.rb"
+p= TuftsFacultyPublication.load_instance('tufts:UA005.036.001.00001')
+p.datastreams_in_memory["DCA-META"].get_values :filesize
+p.datastreams_in_memory["DCA-META"].get_values :title
+
+solrizer = Solrizer::Fedora::Solrizer.new
+solrizer.solrize "tufts:PB.002.001.00001"
+
+rights_ds2 = TuftsRightsMetadata.new
+rights_ds2.to_solr
+
 Where are the TDL views?
 
 Where are the TDL models?
