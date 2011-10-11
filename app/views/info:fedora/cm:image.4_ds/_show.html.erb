@@ -2,25 +2,49 @@
 <% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
 <%= javascript_include_tag "flexpaper_flash" %>
 
-<div class="document_viewer" id="cover_container">
+<%
+  def showMetadataItem(label, tagID, metadataKey)
+    unless get_values_from_datastream(@document_fedora, "DCA-META", [metadataKey]).first.empty?
+%>
+          <fieldset>
+            <legend><%= label %></legend>
+            <div id="<%= tagID %>" class="browse_value">
+<%
+      get_values_from_datastream(@document_fedora, "DCA-META", [metadataKey]).each do |metadataItem|
+%>
+              <%= Sanitize.clean(RedCloth.new(metadataItem, [:sanitize_html]).to_html) %><br>
+<%
+      end
+%>
+            </div>
+          </fieldset>
+<%
+    end
+  end
+%>
 
-
-  <% unless get_values_from_datastream(@document_fedora, "DCA-META", [:bibliographicCitation]).first.empty? %>
-      <fieldset>
-        <legend>Citation</legend>
-        <div id="abstract" class="browse_value">
-          <%= Sanitize.clean(RedCloth.new(get_values_from_datastream(@document_fedora, "DCA-META", [:bibliographicCitation]).first, [:sanitize_html]).to_html) %>
+        <div class="document_viewer" id="cover_container">
+          <% showMetadataItem("Title", "title", :title) %>
+          <% showMetadataItem("Creator", "creator", :creator) %>
+          <% showMetadataItem("Source", "source2", :source2) %>
+          <% showMetadataItem("Description", "description", :description) %>
+          <% showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
+          <% showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
+          <% showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
+          <% showMetadataItem("Identifier", "identifier", :identifier) %>
+          <% showMetadataItem("Rights", "rights", :rights) %>
+          <% showMetadataItem("Bibliographic Citation", "bibliographicCitation", :bibliographicCitation) %>
+          <% showMetadataItem("Publisher", "publisher", :publisher) %>
+          <% showMetadataItem("Type", "type2", :type2) %>
+          <% showMetadataItem("Format", "format2", :format2) %>
+          <% showMetadataItem("Person Name", "persname", :persname) %>
+          <% showMetadataItem("Corp Name", "corpname", :corpname) %>
+          <% showMetadataItem("Place Name", "geogname", :geogname) %>
+          <% showMetadataItem("Subject", "subject", :subject) %>
+          <% showMetadataItem("Funder", "funder", :funder) %>
+          <% showMetadataItem("Temporal", "temporal", :temporal) %>
+          <% showMetadataItem("Resolution", "resolution", :resolution) %>
+          <% showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
+          <% showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
+          <% showMetadataItem("File Size", "filesize", :filesize) %>
         </div>
-      </fieldset>
-  <% end %>
-
-  <% unless get_values_from_datastream(@document_fedora, "DCA-META", [:description]).first.empty? %>
-      <fieldset>
-        <legend>Abstract</legend>
-        <div id="abstract" class="browse_value">
-          <%= Sanitize.clean(RedCloth.new(get_values_from_datastream(@document_fedora, "DCA-META", [:description]).first, [:sanitize_html]).to_html) %>
-        </div>
-      </fieldset>
-  <% end %>
-
-</div>
