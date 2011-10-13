@@ -46,9 +46,8 @@ class TuftsImage < ActiveFedora::Base
 
   def to_solr(solr_doc=Hash.new,opts={})
     super
-    #logger.info("Error encountered trying to output solr_doc details for pid: #{pid}")
+
     ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "object_type_facet", "Image")
-   # ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "clean_id_t", "tufts:UA005_036_001_00001")
 
     return solr_doc
   end
