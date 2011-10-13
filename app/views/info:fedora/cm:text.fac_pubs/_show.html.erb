@@ -33,7 +33,7 @@
 			<tr class="file_asset" id="result1">
 			  <td>
                 <% title = get_values_from_datastream(@document_fedora, "DCA-META", [:title])%>
-			    <%=disseminator_link params[:id], "Archival.pdf" %>
+			    <%=raw disseminator_link params[:id], "Archival.pdf" %>
 
 			  </td>
 			  <td>

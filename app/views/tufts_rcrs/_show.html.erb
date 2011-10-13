@@ -1,0 +1,28 @@
+<% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
+<% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
+<%= javascript_include_tag "flexpaper_flash" %>
+
+        <div class="document_viewer" id="cover_container">
+          <%= showMetadataItem("Creator", "creator", :creator) %>
+          <%= showMetadataItem("Source", "source2", :source2) %>
+          <%= showMetadataItem("Description", "description", :description) %>
+          <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
+          <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
+          <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
+          <%= showMetadataItem("Identifier", "identifier", :identifier) %>
+          <%= showMetadataItem("Rights", "rights", :rights) %>
+          <%= showMetadataItem("Bibliographic Citation", "bibliographicCitation", :bibliographicCitation) %>
+          <%= showMetadataItem("Publisher", "publisher", :publisher) %>
+          <%= showMetadataItem("Type", "type2", :type2) %>
+          <%= showMetadataItem("Format", "format2", :format2) %>
+          <%= showMetadataItem("Person Name", "persname", :persname) %>
+          <%= showMetadataItem("Corp Name", "corpname", :corpname) %>
+          <%= showMetadataItem("Place Name", "geogname", :geogname) %>
+          <%= showMetadataItem("Subject", "subject", :subject) %>
+          <%= showMetadataItem("Funder", "funder", :funder) %>
+          <%= showMetadataItem("Temporal", "temporal", :temporal) %>
+          <%= showMetadataItem("Resolution", "resolution", :resolution) %>
+          <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
+          <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
+          <%= showMetadataItem("File Size", "filesize", :filesize) %>
+        </div>
