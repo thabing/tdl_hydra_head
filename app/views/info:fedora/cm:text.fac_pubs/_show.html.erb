@@ -51,4 +51,8 @@
         <div>
           <%= get_google_docs_iframe params[:id], "Archival.pdf" %>
         </div>
+        <% source_url = datastream_disseminator_url(params[:id], "Archival.pdf") %>
+        <a class="fbImage" id="single_image" href="<%= source_url %>">PDF</a>
+        <a class="fbImage" id="single_image" href="<%= file_asset_path(params[:id]) %>">PDF</a>
+
 </div>
