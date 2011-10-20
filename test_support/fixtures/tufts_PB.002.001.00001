@@ -144,8 +144,8 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:xlink="http://www.w3.org/TR/xlink">
   <rdf:Description rdf:about="info:fedora/tufts:PB.002.001.00001">
-    <fedora-model:hasModel rdf:resource="info:fedora/cm:Text.FacPub" xmlns:fedora-model="info:fedora/fedora-system:def/model#"/>
     <fedora-model:hasModel rdf:resource="info:fedora/afmodel:TuftsFacultyPublication" xmlns:fedora-model="info:fedora/fedora-system:def/model#"/>
+    <fedora-model:hasModel rdf:resource="info:fedora/cm:Text.FacPub" xmlns:fedora-model="info:fedora/fedora-system:def/model#"/>
     <rel:isMemberOfCollection rdf:resource="info:fedora/tufts:UA069.006.DO.PB001.00005"/>
     <rel:isMemberOfCollection rdf:resource="info:fedora/tufts:UA069.006.DO.PB002.00004"/>
     <itemID xmlns="http://www.openarchives.org/OAI/2.0/">oai:tufts:PB.002.001.00001</itemID>
