@@ -43,7 +43,13 @@ module ApplicationHelper
 
 
   def showImage(pid)
-    result = "<img src=""" + datastream_disseminator_url(params[:id], "Basic.jpg") + """/>"
+    result = "<img src=""" + datastream_disseminator_url(pid, "Basic.jpg") + """/>"
+
+    return raw(result)
+  end
+
+    def showPDFLink(pid)
+    result = "<a href=""" + file_asset_path(pid) + """>Get PDF</a>"
 
     return raw(result)
   end

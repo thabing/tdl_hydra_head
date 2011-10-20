@@ -138,12 +138,12 @@ From file_assets/_new.html.haml
         end
       end
 
-      if (@file_asset.class.to_s == "TuftsFacultyPublication")
+      if (@file_asset.relationships[:self][:has_model].include?("info:fedora/afmodel:TuftsFacultyPublication"))
         if @file_asset.datastreams_in_memory.include?("Archival.pdf")
           send_datastream @file_asset.datastreams_in_memory["Archival.pdf"]
         end
       end
-       if (@file_asset.class.to_s == "TuftsPdf")
+       if (@file_asset.relationships[:self][:has_model].include?("info:fedora/afmodel:TuftsPdf"))
         if @file_asset.datastreams_in_memory.include?("Archival.pdf")
           send_datastream @file_asset.datastreams_in_memory["Archival.pdf"]
         end
