@@ -2,9 +2,7 @@
 <% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
 <%= javascript_include_tag "flexpaper_flash" %>
 
-<div class="document_viewer" id="cover_container">
-
-    <div class="document_viewer" id="cover_container">
+        <div class="document_viewer" id="cover_container">
           <%= showMetadataItem("Creator", "creator", :creator) %>
           <%= showMetadataItem("Source", "source2", :source2) %>
           <%= showMetadataItem("Description", "description", :description) %>
@@ -28,7 +26,3 @@
           <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
           <%= showMetadataItem("File Size", "filesize", :filesize) %>
         </div>
-        <div>
-          <%= showPDFLink(params[:id]) %>
-        </div>
-</div>

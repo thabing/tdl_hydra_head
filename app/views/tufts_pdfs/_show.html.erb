@@ -4,55 +4,31 @@
 
 <div class="document_viewer" id="cover_container">
 
-  <h1>
-    <% unless get_values_from_datastream(@document_fedora, "DCA-META", [:title]).first.empty? %>
-        <%= get_values_from_datastream(@document_fedora, "DCA-META", [:title]).first %>
-    <% else %>
-        <%= params[:id] %>
-    <% end %>
-  </h1>
-
-  <% unless get_values_from_datastream(@document_fedora, "DCA-META", [:description]).first.empty? %>
-      <fieldset>
-        <legend>Abstract</legend>
-        <div id="abstract" class="browse_value">
-          <%= Sanitize.clean(RedCloth.new(get_values_from_datastream(@document_fedora, "DCA-META", [:description]).first, [:sanitize_html]).to_html) %>
+    <div class="document_viewer" id="cover_container">
+          <%= showMetadataItem("Creator", "creator", :creator) %>
+          <%= showMetadataItem("Source", "source2", :source2) %>
+          <%= showMetadataItem("Description", "description", :description) %>
+          <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
+          <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
+          <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
+          <%= showMetadataItem("Citable URL", "identifier", :identifier) %>
+          <%= showMetadataItem("Rights", "rights", :rights) %>
+          <%= showMetadataItem("Citation", "bibliographicCitation", :bibliographicCitation) %>
+          <%= showMetadataItem("Publisher", "publisher", :publisher) %>
+          <%= showMetadataItem("Type", "type2", :type2) %>
+          <%= showMetadataItem("Format", "format2", :format2) %>
+          <%= showMetadataItem("Person Name", "persname", :persname) %>
+          <%= showMetadataItem("Organizations", "corpname", :corpname) %>
+          <%= showMetadataItem("Places", "geogname", :geogname) %>
+          <%= showMetadataItem("Topics", "subject", :subject) %>
+          <%= showMetadataItem("Funder", "funder", :funder) %>
+          <%= showMetadataItem("Temporal", "temporal", :temporal) %>
+          <%= showMetadataItem("Resolution", "resolution", :resolution) %>
+          <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
+          <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
+          <%= showMetadataItem("File Size", "filesize", :filesize) %>
         </div>
-      </fieldset>
-  <% end %>
-
-  <fieldset><legend>Files</legend>
-	    <div id="uploads" data-pid=<%= params[:id] %>>
-		  <table id="file_assets" class="multipleEdit">
-		    <tr>
-		      <th>File</th>
-		      <th>Size</th>
-		      <th>Uploaded</th>
-		    </tr>
-
-			<tr class="file_asset" id="result1">
-			  <td>
-                <% title = get_values_from_datastream(@document_fedora, "DCA-META", [:title])%>
-			    <%=raw disseminator_link params[:id], "Archival.pdf" %>
-
-			  </td>
-			  <td>
-                <% fs = get_values_from_datastream(@document_fedora, "DCA-META", [:filesize])%>
-			    <%=fs %>
-			  </td>
-			  <td>
-			    <% dt = get_values_from_datastream(@document_fedora, "DCA-META", [:dateIssued])%>
-			    <%=dt %>
-			  </td>
-			</tr>
-		  </table>
-			</div>
-		</fieldset>
         <div>
-          <%= get_google_docs_iframe params[:id], "Archival.pdf" %>
+          <%= showPDFLink(params[:id]) %>
         </div>
-        <% source_url = datastream_disseminator_url(params[:id], "Archival.pdf") %>
-        <a class="fbImage" id="single_image" href="<%= source_url %>">PDF</a>
-        <a class="fbImage" id="single_image" href="<%= file_asset2_path(params[:id]) %>">PDF</a>
-
 </div>
