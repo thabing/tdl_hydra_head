@@ -43,7 +43,7 @@ module ApplicationHelper
 
 
   def showImage(pid)
-    result = "<img src=""" + datastream_disseminator_url(pid, "Basic.jpg") + """/>"
+    result = "<img src=""" + file_asset_path(pid) + """/>"
 
     return raw(result)
   end

@@ -143,7 +143,14 @@ From file_assets/_new.html.haml
           send_datastream @file_asset.datastreams_in_memory["Archival.pdf"]
         end
       end
-       if (@file_asset.relationships[:self][:has_model].include?("info:fedora/afmodel:TuftsPdf"))
+
+      if (@file_asset.relationships[:self][:has_model].include?("info:fedora/afmodel:TuftsImage"))
+        if @file_asset.datastreams_in_memory.include?("Basic.jpg")
+          send_datastream @file_asset.datastreams_in_memory["Basic.jpg"]
+        end
+      end
+
+      if (@file_asset.relationships[:self][:has_model].include?("info:fedora/afmodel:TuftsPdf"))
         if @file_asset.datastreams_in_memory.include?("Archival.pdf")
           send_datastream @file_asset.datastreams_in_memory["Archival.pdf"]
         end
