@@ -69,4 +69,24 @@ module ApplicationHelper
     return raw(result)
   end
 
+
+  def showWPMetadataItem(label, tagID, metadataKey)
+#   result = "<iframe src=""" + datastream_disseminator_url(params[:id], "Metadata.xml") + """  width=""600"" height=""480"" style=""border: none;""></iframe>"
+
+    result = "Metadata should follow:"
+
+    unless get_values_from_datastream(@document_fedora, "Metadata.xml", [metadataKey]).first.empty?
+
+      result += "<fieldset><legend>" + label + "</legend><div id=""" + tagID + """ class=""browse_value"">"
+
+      get_values_from_datastream(@document_fedora, "Metadata.xml", [metadataKey]).each do |metadataItem|
+        result += Sanitize.clean(RedCloth.new(metadataItem, [:sanitize_html]).to_html) + "<br>"
+      end
+
+      result += "</div></fieldset>"
+    end
+
+    return raw(result)
+  end
+
 end
