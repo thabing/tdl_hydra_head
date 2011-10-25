@@ -150,6 +150,18 @@ From file_assets/_new.html.haml
         end
       end
 
+      if (@file_asset.relationships[:self][:has_model].include?("info:fedora/afmodel:TuftsImageText"))
+        if @file_asset.datastreams_in_memory.include?("Basic.jpg")
+          send_datastream @file_asset.datastreams_in_memory["Basic.jpg"]
+        end
+      end
+
+      if (@file_asset.relationships[:self][:has_model].include?("info:fedora/afmodel:TuftsWP"))
+        if @file_asset.datastreams_in_memory.include?("Basic.jpg")
+          send_datastream @file_asset.datastreams_in_memory["Basic.jpg"]
+        end
+      end
+
       if (@file_asset.relationships[:self][:has_model].include?("info:fedora/afmodel:TuftsPdf"))
         if @file_asset.datastreams_in_memory.include?("Archival.pdf")
           send_datastream @file_asset.datastreams_in_memory["Archival.pdf"]
