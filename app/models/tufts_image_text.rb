@@ -36,7 +36,7 @@ class TuftsImageText < ActiveFedora::Base
   #has_datastream :name=>"Access.xml", :type=>ActiveFedora::Datastream, :controlGroup=>'E'
   #has_datastream :name=>"Archival.pdf", :type=>ActiveFedora::Datastream, :controlGroup=>'E'
 
-  #def initialize()
+ #def initialize()
   ##    super()
   #    ds = ActiveFedora::Datastream.new(:dsid=> "Access.xml", :label => "Access.xml", :controlGroup => "M", :dsLocation => "", :mimeType=> "text/xml")
   ##    add_datastream(ds)

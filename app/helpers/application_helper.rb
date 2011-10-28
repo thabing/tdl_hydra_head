@@ -25,13 +25,19 @@ module ApplicationHelper
 
 
   def showMetadataItem(label, tagID, metadataKey)
+    return showMetadataItemForDatastream("DCA-META", label, tagID, metadataKey)
+  end
+
+
+  def showMetadataItemForDatastream(datastream, label, tagID, metadataKey)
+#   result = "<iframe src=""" + datastream_disseminator_url(params[:id], datastream) + """  width=""600"" height=""480"" style=""border: none;""></iframe>"
     result = ""
 
-    unless get_values_from_datastream(@document_fedora, "DCA-META", [metadataKey]).first.empty?
+    unless get_values_from_datastream(@document_fedora, datastream, [metadataKey]).first.empty?
 
       result += "<fieldset><legend>" + label + "</legend><div id=""" + tagID + """ class=""browse_value"">"
 
-      get_values_from_datastream(@document_fedora, "DCA-META", [metadataKey]).each do |metadataItem|
+      get_values_from_datastream(@document_fedora, datastream, [metadataKey]).each do |metadataItem|
         result += Sanitize.clean(RedCloth.new(metadataItem, [:sanitize_html]).to_html) + "<br>"
       end
 
@@ -48,30 +54,19 @@ module ApplicationHelper
     return raw(result)
   end
 
-    def showPDFLink(pid)
+
+  def showPDFLink(pid)
     result = "<a href=""" + file_asset_path(pid) + """>Get PDF</a>"
 
     return raw(result)
   end
 
 
-  def showWPMetadataItem(label, tagID, metadataKey)
-#   result = "<iframe src=""" + datastream_disseminator_url(params[:id], "Metadata.xml") + """  width=""600"" height=""480"" style=""border: none;""></iframe>"
-
-    result = "Metadata should follow:"
-
-    unless get_values_from_datastream(@document_fedora, "Metadata.xml", [metadataKey]).first.empty?
-
-      result += "<fieldset><legend>" + label + "</legend><div id=""" + tagID + """ class=""browse_value"">"
-
-      get_values_from_datastream(@document_fedora, "Metadata.xml", [metadataKey]).each do |metadataItem|
-        result += Sanitize.clean(RedCloth.new(metadataItem, [:sanitize_html]).to_html) + "<br>"
-      end
-
-      result += "</div></fieldset>"
-    end
+  def showHTML(pid)
+    result = ActiveFedora::Base.load_instance(pid).datastreams_in_memory["Content.html"].content
 
     return raw(result)
   end
+
 
 end
