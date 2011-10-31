@@ -8,8 +8,10 @@
   class TuftsWpMeta < ActiveFedora::NokogiriDatastream
 
     set_terminology do |t|
-      t.root(:path => "tuftsWildlifePathologyRecord", :xmlns => "http://dca.lib.tufts.edu/schema/twp/twp.xsd/")
+      t.root(:path => "tuftsWildlifePathologyRecord",  :xmlns=>"http://demo.lib.tufts.edu/dca_file/", :schema=>"")
+      t.originalFilename(:path=>"originalFilename")
       t.title(:path => "title")
+      t.pictureFormat
     end
 
     # I thought my confusion here was in what OM was doing but its actually a lack of knowledge
