@@ -35,33 +35,18 @@ module ApplicationHelper
 
     unless get_values_from_datastream(@document_fedora, datastream, [metadataKey]).first.empty?
 
-      result += "<fieldset><legend>" + label + "</legend><div id=""" + tagID + """ class=""browse_value"">"
+      result += "<div class=""metadata_row"" id=""" + tagID + """><div class=""metadata_label"">" + label + "</div><div class=""metadata_values"">"
 
       get_values_from_datastream(@document_fedora, datastream, [metadataKey]).each do |metadataItem|
-        result += Sanitize.clean(RedCloth.new(metadataItem, [:sanitize_html]).to_html) + "<br>"
+        result += "<div  class=""metadata_value"">" + Sanitize.clean(RedCloth.new(metadataItem, [:sanitize_html]).to_html) + "</div>"
       end
 
-      result += "</div></fieldset>"
+      result += "</div></div>"
     end
 
     return raw(result)
   end
 
-  #http://ap.rubyonrails.org/classes/ActionController/Streaming.html#M000045
-  def showGenericObjects(obj)
-    blah = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item])
-    result = ""
-    blah.each_with_index do |page, index|
-      result+="<tr class=\"manifestRow\">"
-      fileName = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item,:fileName])[index];
-      link = bucketproxy_path(URI.escape(get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item,:link])[index]));
-      mimeType = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item,:mimeType])[index];
-      result+="<td class=\"nameCol\"><a class=\"manifestLink\" href=\"#{link}\">#{fileName}</a></td>"
-      result+="<td class=\"mimeCol\">#{mimeType}</td>"
-      result+="</tr>"
-    end
-    return raw(result)
-  end
 
   def showImage(pid)
     result = "<img src=""" + file_asset_path(pid) + """/>"

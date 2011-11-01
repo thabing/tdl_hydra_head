@@ -7,3 +7,25 @@ input#submit {
 
 }
 
+.metadata_row {
+  display: table-row;
+}
+
+.metadata_label {
+  display: table-cell;
+  width: 100px;
+  color: darkgray;
+  padding-right: 2em;
+  padding-top: .25em;
+  padding-bottom: .25em;
+}
+
+.metadata_values {
+  display: table;
+  padding-top: .25em;
+  padding-bottom: .25em;
+}
+
+.metadata_value {
+  display: table-row;
+}
