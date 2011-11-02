@@ -54,6 +54,21 @@ module ApplicationHelper
     return raw(result)
   end
 
+ #http://ap.rubyonrails.org/classes/ActionController/Streaming.html#M000045
+  def showGenericObjects(obj)
+    blah = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item])
+    result = ""
+    blah.each_with_index do |page, index|
+      result+="<tr class=\"manifestRow\">"
+      fileName = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item,:fileName])[index];
+      link = bucketproxy_path(URI.escape(get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item,:link])[index]));
+      mimeType = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item,:mimeType])[index];
+      result+="<td class=\"nameCol\"><a class=\"manifestLink\" href=\"#{link}\">#{fileName}</a></td>"
+      result+="<td class=\"mimeCol\">#{mimeType}</td>"
+      result+="</tr>"
+    end
+    return raw(result)
+  end
 
   def showPDFLink(pid)
     result = "<a href=""" + file_asset_path(pid) + """>Get PDF</a>"
