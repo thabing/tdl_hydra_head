@@ -121,6 +121,11 @@
 		padding: 0;
 	}
 
+    /* bkg -- added this to override the style in yui.css that puts a disc bullet on the playlist list items */
+    ul li {
+        list-style: none;
+    }
+
 	#playlist li {
 		margin: 5px;
 		padding: 5px;
