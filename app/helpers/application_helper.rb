@@ -55,13 +55,13 @@ module ApplicationHelper
   end
 
  #http://ap.rubyonrails.org/classes/ActionController/Streaming.html#M000045
-  def showGenericObjects(obj)
+  def showGenericObjects(pid)
     blah = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item])
     result = ""
     blah.each_with_index do |page, index|
       result+="<tr class=\"manifestRow\">"
       fileName = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item,:fileName])[index];
-      link = bucketproxy_path(URI.escape(get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item,:link])[index]));
+      link = bucketproxy_path(pid,index);
       mimeType = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item,:mimeType])[index];
       result+="<td class=\"nameCol\"><a class=\"manifestLink\" href=\"#{link}\">#{fileName}</a></td>"
       result+="<td class=\"mimeCol\">#{mimeType}</td>"
