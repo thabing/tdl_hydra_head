@@ -1,0 +1,151 @@
+	audio {
+		display: block;
+	}
+
+	ul#playlist {
+		list-style-type: none;
+	}
+
+	ul#playlist img {
+		display: none;
+	}
+
+	#playerDiv {
+		border: 1px solid #000;
+		width: 467px; /* #controls width + border allowance */
+	}
+
+	#controls {
+		position: relative;
+		border: 2px solid #4c4c4c;
+		background-color: #666666;
+		width: 464px;
+		height: 30px;
+		line-height: 30px;
+	}
+
+	#controls input {
+		border: 2px solid #666666; /* masked against background until input has focus*/
+		position: absolute;
+		background-position: center center;
+		background-repeat: no-repeat;
+	}
+
+	#controls input:focus, #controls input:hover, #controls input:active {
+		border-color: #ffff00 !important; /* yellow */
+	}
+
+	input#playpause {
+		top: 0px;
+		left: 0px;
+		width: 34px;
+		height: 30px;
+		background-color: transparent;
+		background-image: url('../images/audio_play.gif');
+		color: transparent;
+		border-right-color: #848484;
+	}
+
+	input#stop {
+		top: 0px;
+		left: 40px;
+		width: 34px;
+		height: 30px;
+		background-color: transparent;
+		background-image: url('../images/audio_stop.gif');
+		color: transparent;
+	}
+
+	input#seekBack {
+		top: 0px;
+		left: 80px;
+		width: 34px;
+		height: 30px;
+		background-color: transparent;
+		background-image: url('../images/audio_rewind.gif');
+		color: transparent;
+	}
+
+	input#seekForward {
+		top: 0px;
+		left: 120px;
+		width: 34px;
+		height: 30px;
+		background-color: transparent;
+		background-image: url('../images/audio_forward.gif');
+		color: transparent;
+	}
+
+	span#timer { /* contains both span#currentTime and span#duration */
+		position: absolute;
+		left: 250px;
+		width: 100px;
+		color: #ffffff;
+	}
+
+	input#mute {
+		left: 360px;
+		top: 0px;
+		width: 34px;
+		height: 30px;
+		background-color: transparent;
+		background-image: url('../images/audio_volume.gif');
+		color: transparent;
+		border-left-color: #848484;
+	}
+
+	input#volumeUp {
+		top: 0px;
+		left: 395px;
+		width: 34px;
+		height: 30px;
+		background-color: transparent;
+		background-image: url('../images/audio_volumeUp.gif');
+		color: transparent;
+	}
+
+	input#volumeDown {
+		top: 0px;
+		left: 430px;
+		width: 34px;
+		height: 30px;
+		background-color: transparent;
+		background-image: url('../images/audio_volumeDown.gif');
+		color: transparent;
+	}
+
+	#playlist {
+		font-size: 0.9em;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+    /* bkg -- added this to override the style in yui.css that puts a disc bullet on the playlist list items */
+    ul li {
+        list-style: none;
+    }
+
+	#playlist li {
+		margin: 5px;
+		padding: 5px;
+		background-color: #eee;
+	}
+
+	#playlist li.focus {
+		background-color: #cfc;
+		font-weight: bold;
+	}
+
+	#playlist a {
+		margin: 0;
+		padding: 5px;
+		width: 100%;
+		color: #333;
+		text-decoration: none;
+	}
+
+	input.disabled {
+		opacity: 0.4;
+		filter:alpha(opacity=40);
+	}

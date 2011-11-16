@@ -30,15 +30,15 @@ module ApplicationHelper
 
 
   def showMetadataItemForDatastream(datastream, label, tagID, metadataKey)
-#   result = "<iframe src=""" + datastream_disseminator_url(params[:id], datastream) + """  width=""600"" height=""480"" style=""border: none;""></iframe>"
+#   result = "<iframe src="\" + datastream_disseminator_url(params[:id], datastream) + "\" width=\"600\" height=\"480\" style=\"border: none;\"></iframe>"
     result = ""
 
     unless get_values_from_datastream(@document_fedora, datastream, [metadataKey]).first.empty?
 
-      result += "<div class=""metadata_row"" id=""" + tagID + """><div class=""metadata_label"">" + label + "</div><div class=""metadata_values"">"
+      result += "<div class=\"metadata_row\" id=\"" + tagID + "\"><div class=\"metadata_label\">" + label + "</div><div class=\"metadata_values\">"
 
       get_values_from_datastream(@document_fedora, datastream, [metadataKey]).each do |metadataItem|
-        result += "<div  class=""metadata_value"">" + Sanitize.clean(RedCloth.new(metadataItem, [:sanitize_html]).to_html) + "</div>"
+        result += "<div class=\"metadata_value\">" + Sanitize.clean(RedCloth.new(metadataItem, [:sanitize_html]).to_html) + "</div>"
       end
 
       result += "</div></div>"
@@ -49,7 +49,7 @@ module ApplicationHelper
 
 
   def showImage(pid)
-    result = "<img src=""" + file_asset_path(pid) + """/>"
+    result = "<img src=\"" + file_asset_path(pid) + "\"/>"
 
     return raw(result)
   end
@@ -71,7 +71,7 @@ module ApplicationHelper
   end
 
   def showPDFLink(pid)
-    result = "<a href=""" + file_asset_path(pid) + """>Get PDF</a>"
+    result = "<a href=\"" + file_asset_path(pid) + "\">Get PDF</a>"
 
     return raw(result)
   end
@@ -79,6 +79,17 @@ module ApplicationHelper
 
   def showHTML(pid)
     result = ActiveFedora::Base.load_instance(pid).datastreams_in_memory["Content.html"].content
+
+    return raw(result)
+  end
+
+
+  def showAudioPlayer(pid)
+
+    result = "<div id=\"playerDiv\"><div id=\"controls\"></div><ul id=\"playlist\"><li>"
+#   result += "<a href=\"" + file_asset_path(pid) + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+   result += "<a href=\"" + datastream_disseminator_url(params[:id], "ACCESS_MP3") + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+    result += "</li></ul></div>"
 
     return raw(result)
   end
