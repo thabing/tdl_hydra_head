@@ -87,8 +87,19 @@ module ApplicationHelper
   def showAudioPlayer(pid)
 
     result = "<div id=\"playerDiv\"><div id=\"controls\"></div><ul id=\"playlist\"><li>"
+
+#   the following line is what we would ultimately want but it doesn't work yet
 #   result += "<a href=\"" + file_asset_path(pid) + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-   result += "<a href=\"" + datastream_disseminator_url(params[:id], "ACCESS_MP3") + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+
+#   the following line works in Safari and Firefox but not in Chrome or Opera
+#   result += "<a href=\"" + datastream_disseminator_url(params[:id], "ACCESS_MP3") + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+
+#   the following line works in Safari, Chrome and Firefox but not in Opera
+    result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + params[:id] + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+
+#   the following test works in Safari, Chrome, Firefox and Opera, proving that Opera is capable of using the yahoo media player, as in current DL prod...
+#   result += "<a href=\"http://dl.tufts.edu/ProxyServlet/?url=http://repository01.lib.tufts.edu:8080/fedora/get/tufts:AC00001/bdef:TuftsAudio/getAudioFile&filename=tufts:AC00001.mp3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+
     result += "</li></ul></div>"
 
     return raw(result)
