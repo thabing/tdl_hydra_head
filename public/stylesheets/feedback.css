@@ -1,0 +1,34 @@
+#feedbackForm {
+  display: table;
+  width: 100%;
+}
+
+#feedbackBody {
+  margin: 0;
+  width: 100%;
+  height: 6em;
+}
+
+#feedbackEmail {
+  margin: 0;
+  width: 100%;
+  height: 1.5em;
+}
+
+#feedbackSendButton {
+  float: right;
+}
+
+.feedbackLink {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-weight: bold;
+  font-size: xx-small; 
+  color: #336699;
+  background-color: transparent;
+  text-decoration: underline;
+  border: none;
+  padding: 0px;
+  cursor: pointer;
+  float: right;
+}
+

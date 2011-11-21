@@ -4,17 +4,19 @@ input#submit {
   margin-top:5px;
   margin-bottom:-9px;
   height: 26px;
-
 }
 
 .metadata_row {
   display: table-row;
+  width: 100%;
 }
 
 .metadata_label {
   display: table-cell;
   width: 100px;
   color: darkgray;
+  font-weight: normal;
+  vertical-align: top;
   padding-right: 2em;
   padding-top: .25em;
   padding-bottom: .25em;
@@ -22,10 +24,13 @@ input#submit {
 
 .metadata_values {
   display: table;
+  width: 100%;
   padding-top: .25em;
   padding-bottom: .25em;
 }
 
 .metadata_value {
   display: table-row;
+  width: 100%;
 }
+
