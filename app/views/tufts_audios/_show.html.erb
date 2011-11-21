@@ -4,6 +4,8 @@
 <% javascript_includes << "yahooMediaPlayer.js" %>
 <% javascript_includes << "audio_player.js" %>
 <% stylesheet_links << "audio_player.css" %>
+<% javascript_includes << "feedback.js" %>
+<% stylesheet_links << "feedback.css" %>
 
         <div class="document_viewer" id="cover_container">
           <%= showMetadataItem("Creator", "creator", :creator) %>
@@ -28,6 +30,7 @@
           <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
           <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
           <%= showMetadataItem("File Size", "filesize", :filesize) %>
+          <%= showFeedbackForm(params[:id]) %>
         </div>
         <div>
           <%= showAudioPlayer(params[:id]) %>
