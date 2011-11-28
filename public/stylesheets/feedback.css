@@ -32,3 +32,22 @@
   float: right;
 }
 
+#feedbackBodyRow {
+  display: none;
+}
+
+#feedbackEmailRow {
+  display: none;
+}
+
+#feedbackSubmitRow {
+  display: none;
+}
+
+#feedbackHideRow {
+  display: none;
+}
+
+#feedbackShowRow {
+  display: none;
+}
