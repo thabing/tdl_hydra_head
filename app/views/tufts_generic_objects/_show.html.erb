@@ -26,3 +26,18 @@
           <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
           <%= showMetadataItem("File Size", "filesize", :filesize) %>
         </div>
+
+        <table  class="fileManifest">
+            <thead>
+              <tr>
+                 <td>Object Manifest for Generic Content Datastream</td>
+              </tr>
+              <tr>
+                 <th scope="col">link</th>
+                 <th scope="col">mime type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= showGenericObjects(params[:id]) %>
+            </tbody>
+        </table>
