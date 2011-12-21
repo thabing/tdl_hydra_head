@@ -14,8 +14,12 @@ TdlHydraHead::Application.configure do
   config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  # Tell me if the mailer can't send
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.tufts.edu",
+    :port => 25
+  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
