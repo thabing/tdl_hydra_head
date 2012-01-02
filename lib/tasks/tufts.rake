@@ -1,6 +1,12 @@
  #require File.expand_path(File.dirname(__FILE__) + '/hydra_jetty.rb')
 require "solrizer-fedora"
 
+#Calling ActiveFedora.init with a path as an argument has been removed.  Use ActiveFedora.init(:fedora_config_path=>/Users/mkorcy01/Desktop/tdl_hydra_head/config/fedora.yml)
+
+#ActiveFedora.init("#{Rails.root}/config/fedora.yml")
+#ActiveFedora.init(:fedora_config_path=>"/Users/mkorcy01/Desktop/tdl_hydra_head/config/fedora.yml")
+ActiveFedora.init(:fedora_config_path=>"#{Rails.root}/config/fedora.yml")
+
 namespace :tufts_dca do
     TDL_FIXTURE_FILES = [
 	"tufts_MS115.003.001.00001",
