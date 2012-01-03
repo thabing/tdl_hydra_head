@@ -44,7 +44,19 @@
   http://www.openarchives.org/OAI/2.0/: 
     :oai_item_id: itemID
   http://dca.lib.tufts.edu/ontology/rcr#:
+    :reports_to: reportsTo
+    :has_report: hasReport
+    :is_part_of: isPartOf
+    :has_part: hasPart
+    :is_member_of: isMemberOf
+    :has_member: hasMember
     :is_preceded_by: isPrecededBy
     :is_followed_by: isFollowedBy
-    :is_associated_with: isAssociatedWith 
-    :is_part_of: isPartof
+    :is_associated_with: isAssociatedWith
+    :is_child_of: isChildOf
+    :is_parent_of: isParentOf
+    :is_cousin_of: isCousinOf
+    :is_sibling_of: isSiblingOf
+    :is_spouse_of: isSpouseOf
+    :is_grandchild_of: isGrandchildOf
+    :is_grandparent_of: isGrandparentOf

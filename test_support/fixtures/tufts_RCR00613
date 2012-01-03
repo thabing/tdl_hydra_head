@@ -38,7 +38,7 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 	                 
 	      <rcr:isFollowedBy rdf:resource="info:fedora/tufts:RCR00141"></rcr:isFollowedBy>
 	                 <rcr:isAssociatedWith rdf:resource="info:fedora/tufts:RCR00148"></rcr:isAssociatedWith>
-	                 <rcr:isPartof rdf:resource="info:fedora/tufts:RCR00569"></rcr:isPartof>
+	                 <rcr:isPartOf rdf:resource="info:fedora/tufts:RCR00569"></rcr:isPartOf>
 	              </rdf:Description>
             </rdf:RDF>
 </foxml:xmlContent>

@@ -36,9 +36,9 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 	                 <fedora-model:hasModel xmlns:fedora-model="info:fedora/fedora-system:def/model#" rdf:resource="info:fedora/cm:Text.RCR"></fedora-model:hasModel>
 	                 <rel:isMemberOfCollection rdf:resource="info:fedora/tufts:UA069.006.DO.RCR"></rel:isMemberOfCollection>
 	                 
-	      <rcr:isPartof rdf:resource="info:fedora/tufts:RCR00002"></rcr:isPartof>
+	      <rcr:isPartOf rdf:resource="info:fedora/tufts:RCR00002"></rcr:isPartOf>
 	                 <rcr:isFollowedBy rdf:resource="info:fedora/tufts:RCR00141"></rcr:isFollowedBy>
-	                 <rcr:isPartof rdf:resource="info:fedora/tufts:RCR00569"></rcr:isPartof>
+	                 <rcr:isPartOf rdf:resource="info:fedora/tufts:RCR00569"></rcr:isPartOf>
 	              </rdf:Description>
             </rdf:RDF>
 </foxml:xmlContent>
