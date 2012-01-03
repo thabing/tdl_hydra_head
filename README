@@ -50,5 +50,18 @@ Fast-forward
  test_support/fixtures/tufts_PB.002.001.00001 |    2 +-
  3 files changed, 4 insertions(+), 2 deletions(-)
 
+Pushing changes back
+$ git push -u origin master
 
-
+Hydra 3.0 -> 3.1.5 Upgrade path.
+0) shutdown jetty and rails server
+1) delete existing Gemfile.lock
+2) update Gemfile with needed Gems for 3.1.5
+3) create new gemset for rails 3.0.10 ree-1.8.7-2011.03@rails3010
+4) make new gemset default, and re-source shells
+5) bundle install
+(6 - ignore this step) create new emtpy hydrahead elsewhere and copy back updated solr schema and configs into existing head
+7) rake hydra:jetty:config
+8) rake jetty:start
+9) rake tufts_dca:refresh
+10) rails server
