@@ -47,6 +47,7 @@
     :reports_to: reportsTo
     :has_report: hasReport
     :is_part_of: isPartOf
+    :is_part_of_legacy: isPartof
     :has_part: hasPart
     :is_member_of: isMemberOf
     :has_member: hasMember
