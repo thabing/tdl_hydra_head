@@ -1,0 +1,22 @@
+development:
+  fedora:
+    url: http://fedoraAdmin:fedoraAdmin@127.0.0.1:8983/fedora
+  solr:
+    url: http://localhost:8983/solr/development
+tdldev:
+  fedora:
+    url: http://dev-repository01.lib.tufts.edu/fedora
+  solr:
+    url: http://dev-search01.lib.tufts.edu/solr/development
+test: &TEST  
+  fedora:
+    url: http://fedoraAdmin:fedoraAdmin@127.0.0.1:8983/fedora
+  solr:
+    url: http://localhost:8983/solr/test
+production:
+  fedora:
+    url: http://fedoraAdmin:fedoraAdmin@your.production.server:8080/fedora
+  solr:
+    url: http://your.production.server:8080/solr 
+cucumber:
+  <<: *TEST
