@@ -58,6 +58,11 @@ GEM
       rsolr (~> 1.0)
       rsolr-ext (~> 1.0)
       unicode
+    blacklight_advanced_search (1.1.1)
+      blacklight
+      parslet
+      rails (~> 3.0)
+    blankslate (2.1.2.4)
     block_helpers (0.3.3)
       activesupport (>= 2.0)
     builder (2.1.2)
@@ -180,6 +185,8 @@ GEM
       mediashelf-loggable
       nokogiri (>= 1.4.2)
     orm_adapter (0.0.5)
+    parslet (1.2.3)
+      blankslate (~> 2.0)
     polyglot (0.3.3)
     rack (1.2.5)
     rack-mount (0.6.14)
@@ -301,8 +308,10 @@ DEPENDENCIES
   active-fedora
   bcrypt-ruby
   blacklight (~> 3.0.0)
+  blacklight_advanced_search (= 1.1.1)
   capybara
   cucumber-rails
+  daemons
   database_cleaner
   devise
   hydra-head
@@ -318,3 +327,4 @@ DEPENDENCIES
   solrizer-fedora (>= 1.0.1)
   sqlite3 (= 1.3.5)
   sqlite3-ruby
+  stomp
