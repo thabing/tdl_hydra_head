@@ -14,9 +14,11 @@ function setActiveMenu(arr, crtPage)
 			{
 				arr[i].className = "current";
 				arr[i].parentNode.className = "current";
+                return;
 			}
 		}
 	}
+    setActiveMenu(document.getElementById("navigation").getElementsByTagName("a"), "catalog");
 }
  
 function setPage()
