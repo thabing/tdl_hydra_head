@@ -3,12 +3,12 @@ source 'http://rubygems.org'
 gem 'rails', '~> 3.0.10'
 
 gem 'blacklight', '~> 3.0.0'
+gem 'active-fedora', '~> 3.1.6'
 gem 'hydra-head'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'devise'
 gem 'rsolr','=1.0.2'
 gem 'rsolr-ext','=1.0.1'
-gem 'active-fedora'
 gem 'om', '1.4.4'
 gem 'sqlite3','1.3.5'
 gem "jettywrapper"
