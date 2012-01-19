@@ -139,46 +139,46 @@ From file_assets/_new.html.haml
       end
 
       if (@file_asset.relationships(:has_model).include?("info:fedora/afmodel:TuftsFacultyPublication"))
-        if @file_asset.datastreams_in_memory.include?("Archival.pdf")
-          send_datastream @file_asset.datastreams_in_memory["Archival.pdf"]
+        if @file_asset.datastreams.include?("Archival.pdf")
+          send_datastream @file_asset.datastreams["Archival.pdf"]
         end
       end
 
       if (@file_asset.relationships(:has_model).include?("info:fedora/afmodel:TuftsImage"))
-        if @file_asset.datastreams_in_memory.include?("Basic.jpg")
-          send_datastream @file_asset.datastreams_in_memory["Basic.jpg"]
+        if @file_asset.datastreams.include?("Basic.jpg")
+          send_datastream @file_asset.datastreams["Basic.jpg"]
         end
       end
 
       if (@file_asset.relationships(:has_model).include?("info:fedora/afmodel:TuftsImageText"))
-        if @file_asset.datastreams_in_memory.include?("Basic.jpg")
-          send_datastream @file_asset.datastreams_in_memory["Basic.jpg"]
+        if @file_asset.datastreams.include?("Basic.jpg")
+          send_datastream @file_asset.datastreams["Basic.jpg"]
         end
       end
 
       if (@file_asset.relationships(:has_model).include?("info:fedora/afmodel:TuftsAudio"))
-        if @file_asset.datastreams_in_memory.include?("ACCESS_MP3")
-          datastream = @file_asset.datastreams_in_memory["ACCESS_MP3"]
+        if @file_asset.datastreams.include?("ACCESS_MP3")
+          datastream = @file_asset.datastreams["ACCESS_MP3"]
           send_data datastream.content, :filename=>params[:id], :type=>datastream.attributes["mimeType"], :disposition=>"inline"
         end
       end
 
       if (@file_asset.relationships(:has_model).include?("info:fedora/afmodel:TuftsAudioText"))
-        if @file_asset.datastreams_in_memory.include?("ACCESS_MP3")
-          datastream = @file_asset.datastreams_in_memory["ACCESS_MP3"]
+        if @file_asset.datastreams.include?("ACCESS_MP3")
+          datastream = @file_asset.datastreams["ACCESS_MP3"]
           send_data datastream.content, :filename=>params[:id], :type=>datastream.attributes["mimeType"], :disposition=>"inline"
         end
       end
 
       if (@file_asset.relationships(:has_model).include?("info:fedora/afmodel:TuftsWP"))
-        if @file_asset.datastreams_in_memory.include?("Basic.jpg")
-          send_datastream @file_asset.datastreams_in_memory["Basic.jpg"]
+        if @file_asset.datastreams.include?("Basic.jpg")
+          send_datastream @file_asset.datastreams["Basic.jpg"]
         end
       end
 
       if (@file_asset.relationships(:has_model).include?("info:fedora/afmodel:TuftsPdf"))
-        if @file_asset.datastreams_in_memory.include?("Archival.pdf")
-          send_datastream @file_asset.datastreams_in_memory["Archival.pdf"]
+        if @file_asset.datastreams.include?("Archival.pdf")
+          send_datastream @file_asset.datastreams["Archival.pdf"]
         end
       end
      # else
