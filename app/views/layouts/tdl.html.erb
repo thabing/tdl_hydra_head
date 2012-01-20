@@ -25,6 +25,17 @@
             <h1 class="site_title"><%= link_to application_name, "/" %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
           </div>
 
+          <div class="yui-u user_util_links">
+            <nav class="round">
+              <ul id="navigation">
+                <li><%= link_to "Search", '/search' %></li>
+                <!-- <li><%= link_to "Browse", '/browse' %></li>    -->
+                <li><%= link_to "About", '/about' %></li>
+                <li><%= link_to "Contact", '/contact' %></li>
+                <li><%= link_to "Home", '/catalog' %></li>
+              </ul>
+            </nav>
+          </div>
 <!--COMMENTED BY MK 2011-09-26          <div class="yui-u user_util_links">
             <%= render :partial=>'/user_util_links' %>
           </div> -->

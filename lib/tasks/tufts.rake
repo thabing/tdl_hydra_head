@@ -93,7 +93,7 @@ namespace :tufts_dca do
     task :load do
       TDL_FIXTURE_FILES.each_with_index do |fixture,index|
         ENV["pid"] = nil
-        ENV["fixture"] = "#{Rails.root}/test_support/fixtures/#{fixture}"
+        ENV["fixture"] = "#{Rails.root}/test_support/fixtures/#{Rails.env}/#{fixture}"
         # logger.debug ENV["fixture"] 
         if index == 0
           Rake::Task["hydra:import_fixture"].invoke 

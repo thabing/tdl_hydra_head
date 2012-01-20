@@ -1,4 +1,14 @@
+
 TdlHydraHead::Application.routes.draw do
+  get "search/index"
+
+  get "contact/index"
+
+  get "about/index"
+  match "/about" => "about#index"
+  match "/search" => "search#index"
+  match "/contact" => "contact#index"
+
 #  Blacklight.add_routes(self,
 #  map.connect '/catalog/', :controller => 'catalog', :action => 'index'
 #    map.connect '/catalog/:id', :controller => 'catalog', :action => 'show', :requirements => { :id => /.*/ }
@@ -7,8 +17,14 @@ TdlHydraHead::Application.routes.draw do
   # :as makes it a named route so you can use catalog_path about_url in the application
   # good info here:
   # http://asciicasts.com/episodes/203-routing-in-rails-3
+  match '/catalog/facet/:id', :to => 'catalog#facet', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/:id', :to => 'catalog#show', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/file_assets/:id', :to => 'file_assets#show', :constraints => {:id => /.*/}, :as =>'file_asset'
+  match '/proxy/:id', :to => 'proxy#show', :constraints => {:id => /.*/}, :as =>'proxy'
+  #match '/bucketproxy/:id/:index', :to => 'bucketproxy#show', :constraints => {:id => /.*/}, :as =>'bucketproxy'
+  #match "/myApi.js" => lambda { |env| [200, {}, "Hello World"] }
+  #mount FooBar, :at => '/foo'
+
   Blacklight.add_routes(self)
   HydraHead.add_routes(self)
   root :to => "catalog#index"

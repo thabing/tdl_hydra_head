@@ -110,6 +110,20 @@
           active_fedora_model_s
           object_type_facet
         </str>
+        <str name="keyword_qf">
+          id
+          title_t^25000
+          text
+          active_fedora_model_s
+          object_type_facet
+        </str>
+        <str name="keyword_pf">
+          id
+          title_t^250000
+          text^10
+          active_fedora_model_s
+          object_type_facet
+        </str>
         <str name="author_qf">
           author_unstem_search^200
           author_addl_unstem_search^50

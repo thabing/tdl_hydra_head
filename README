@@ -50,6 +50,29 @@ Fast-forward
  test_support/fixtures/tufts_PB.002.001.00001 |    2 +-
  3 files changed, 4 insertions(+), 2 deletions(-)
 
+
+How do I find modified files between local and remote?
+(see: http://stackoverflow.com/questions/231211/using-git-how-do-i-find-modified-files-between-local-and-remote)
+$ git fetch origin
+remote: Counting objects: 44, done.
+remote: Compressing objects: 100% (14/14), done.
+remote: Total 31 (delta 15), reused 31 (delta 15)
+Unpacking objects: 100% (31/31), done.
+From github.com:mkorcy/tdl_hydra_head
+   0c9be45..0c3e221  master     -> origin/master
+$ git log master..origin/master
+commit 0c3e22159e1922b239f08f05e3ec096cc8aa207c
+Author: Brian Goodmon <brian.goodmon@tufts.edu>
+Date:   Tue Nov 15 12:18:06 2011 -0500
+
+    Modified audio_player.css to override list item style conflict with yui.css.
+
+commit 4f1c8a70569b916437c50dc55c4e852ef5af2e0b
+Author: Brian Goodmon <brian.goodmon@tufts.edu>
+Date:   Tue Nov 15 12:12:14 2011 -0500
+
+    Changes and additions for audio player.
+
 Pushing changes back
 $ git push -u origin master
 
