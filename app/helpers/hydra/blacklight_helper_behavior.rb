@@ -7,7 +7,7 @@ module Hydra
     include HydraHelper
     
     def application_name
-      'A Hydra Head'
+      'Tufts Digital Library'
     end
     
     def get_data_with_linked_label(doc, label, field_string, opts={})
@@ -51,7 +51,7 @@ module Hydra
     # currently only used by the render_document_partial helper method (below)
     def document_partial_name(document)
       return if document[Blacklight.config[:show][:display_type]].nil?
-      document[Blacklight.config[:show][:display_type]].first.gsub(/^[^\/]+\/[^:]+:/,"").underscore.pluralize
+      map_model_name(document[Blacklight.config[:show][:display_type]].first).gsub(/^[^\/]+\/[^:]+:/,"").underscore.pluralize
     end
     
     # Overriding Blacklight's render_document_partial

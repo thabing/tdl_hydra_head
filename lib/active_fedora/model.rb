@@ -1,5 +1,7 @@
 require 'active_fedora/fedora_object'
 
+include ModelNameHelper
+
 SOLR_DOCUMENT_ID = "id" unless defined?(SOLR_DOCUMENT_ID)
 
 module ActiveFedora
@@ -13,9 +15,11 @@ module ActiveFedora
     def self.included(klass) # :nodoc:
       klass.extend(ClassMethods)
     end
-    
+
+
     # Takes a Fedora URI for a cModel and returns classname, namespace
     def self.classname_from_uri(uri)
+      uri = map_model_name(uri)
       local_path = uri.split('/')[1]
       parts = local_path.split(':')
       return parts[-1].gsub('_','/').classify, parts[0]
@@ -91,9 +95,9 @@ module ActiveFedora
       def to_class_uri
         ns = (self.respond_to? :pid_namespace) ? self.pid_namespace : Model::DEFAULT_NS
         pid = self.name.gsub(/::/,'_')
-        "info:fedora/#{ns}:#{pid}"
+        map_model_name("info:fedora/#{ns}:#{pid}")
       end
-      
+
       # Takes :all or a pid as arguments
       # Returns an Array of objects of the Class that +find+ is being 
       # called on
