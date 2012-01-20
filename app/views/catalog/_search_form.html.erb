@@ -10,6 +10,8 @@
 
     <%= submit_tag 'search', :class=>'submit' %>
   <% end %>
+  <%= link_to 'Advanced Search', params.merge(:controller=>"advanced", :action=>"index") , :class=>"advanced_search"%>
+
 
   <hr/>
 </div>
@@ -23,7 +25,6 @@
 
     <%= image_submit_tag('tdl/search_button.png', :plugin=>"hydra-head", :id => "submit", :alt=>"Search") %>
   <% end %>
-  <%= link_to 'Advanced Search', params.merge(:controller=>"advanced", :action=>"index") , :class=>"advanced_search"%>
 
 </div>
 
