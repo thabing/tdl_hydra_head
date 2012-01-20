@@ -82,7 +82,6 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
     <rel:isMemberOfCollection rdf:resource="info:fedora/tufts:UA069.006.DO.MS056"></rel:isMemberOfCollection>
     <rel:isMemberOfCollection rdf:resource="info:fedora/tufts:UA069.006.DO.MSCOLL"></rel:isMemberOfCollection>
     <fedora-model:hasModel xmlns:fedora-model="info:fedora/fedora-system:def/model#" rdf:resource="info:fedora/afmodel:TuftsEAD"></fedora-model:hasModel>
-    <fedora-model:hasModel xmlns:fedora-model="info:fedora/fedora-system:def/model#" rdf:resource="info:fedora/cm:Text.EAD"></fedora-model:hasModel>
     <itemID xmlns="http://www.openarchives.org/OAI/2.0/">oai:tufts:UA069.001.DO.MS056</itemID>
   </rdf:Description>
 </rdf:RDF>
