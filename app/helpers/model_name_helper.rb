@@ -10,7 +10,7 @@ module ModelNameHelper
   def map_model_name(model_name)
     result = model_name
 
-    if model_name.starts_with?("info:fedora/cm:")
+    if model_name[0, 15] == "info:fedora/cm:"
       mapped_model_name = ""
 
       if model_name == "info:fedora/cm:Audio"
@@ -49,5 +49,18 @@ module ModelNameHelper
 
     return result
   end
+
+
+  # iterate through an array of model names and call map_model_name() for each element
+  def map_model_names(model_names)
+    mapped_model_names = []
+
+    model_names.each { |model_name|
+      mapped_model_names << map_model_name(model_name)
+    }
+
+    return mapped_model_names
+  end
+
 
 end
