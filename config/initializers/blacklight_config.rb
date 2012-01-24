@@ -44,24 +44,18 @@ Blacklight.configure(:shared) do |config|
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
     :field_names => (facet_fields = [
-      "format",
-      "pub_date",
-      "subject_topic_facet",
-      "language_facet",
-      "lc_1letter_facet",
-      "subject_geo_facet",
-      "subject_era_facet",
-      "object_type_facet",
+      "names_facet",
+      "year_facet",
+      "subject_facet",
+      "collection_facet",
+      "object_type_facet"
     ]),
     :labels => {
-      "format"              => "Format",
-      "pub_date"            => "Publication Year",
-      "subject_topic_facet" => "Topic",
-      "language_facet"      => "Language",
-      "lc_1letter_facet"    => "Call Number",
-      "subject_era_facet"   => "Era",
-      "subject_geo_facet"   => "Region",
-      "object_type_facet"   => "Type"
+        "names_facet" => "Names",
+        "year_facet"=>"Year",
+        "subject_facet"=>"Subject",
+        "collection_facet"=>"Collection",
+        "object_type_facet"   => "Format"
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
     # * If left unset, then all facet values returned by solr will be displayed.
@@ -77,9 +71,13 @@ Blacklight.configure(:shared) do |config|
     # sniffing requires solr requests to be made with "echoParams=all", for
     # app code to actually have it echo'd back to see it.     
     :limits => {
-      "object_type_facet" => 6,
-      "subject_topic_facet" => 20,
-      "language_facet" => true
+        "names_facet" => 7,
+        "year_facet" => 7,
+        "subject_facet" =>7,
+        "collection_facet" =>7,
+        "object_type_facet" => 7
+      #"subject_topic_facet" => 20,
+      #"language_facet" => true
     }
   }
 
