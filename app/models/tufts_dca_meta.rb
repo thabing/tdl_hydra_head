@@ -38,7 +38,7 @@
       t.geogname(:namespace_prefix=>"dcadesc",:path => "geogname",:index_as=>[:facetable],:label=>"geographic name")
       t.subject(:namespace_prefix=>"dcadesc",:path => "subject",:index_as=>[:facetable],:label=>"subject")
       t.funder(:namespace_prefix=>"dcadesc",:path => "funder",:index_as=>[:facetable],:label=>"funder")
-      t.temporal(:namespace_prefix=>"dcadesc",:path => "temporal",:index_as=>[:facetable],:label=>"temporal")
+      t.temporal(:namespace_prefix=>"dc",:path => "temporal",:index_as=>[:facetable],:label=>"temporal")
       t.resolution(:namespace_prefix=>"dcatech",:path => "resolution",:index_as=>[:facetable],:label=>"resolution")
       t.bitDepth(:namespace_prefix=>"dcatech",:path => "bitdepth",:index_as=>[:facetable],:label=>"bit depth")
       t.colorSpace(:namespace_prefix=>"dcatech",:path => "colorspace",:index_as=>[:facetable],:label=>"color space")
