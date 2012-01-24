@@ -20,6 +20,7 @@ module Tufts
     end
 
     def create_facets(fedora_object, solr_doc)
+
       index_names_info(fedora_object,solr_doc)
       index_subject_info(fedora_object,solr_doc)
       index_collection_info(solr_doc)
@@ -148,17 +149,36 @@ module Tufts
         unless models.nil?
           models.each { |model|
             case model
-              when "info:fedora/cm:WP"
+              when "info:fedora/cm:WP","info:fedora/afmodel:TuftsWP","info:fedora/afmodel:TuftsTeiFragmented","info:fedora/cm:Text.TEI-Fragmented"
                 model_s="Datasets"
-              when "info:fedora/cm:Text.EAD"
+              when "info:fedora/cm:Text.EAD", "info:fedora/afmodel:TuftsEAD"
                 model_s = "Collection Guides"
-              when "info:fedora/afmodel:TuftsEAD"
-                model_s = "Collection Guides"
-              when "info:fedora/cm:Audio"
+              when "info:fedora/cm:Audio", "info:fedora/afmodel:TuftsAudio","info:fedora/cm:Audio.OralHistory","info:fedora/afmodel:TuftsAudioText"
                 model_s="Audio"
+              when "info:fedora/cm:Image.4DS","info:fedora/cm:Image.3DS	","info:fedora/afmodel:TuftsImage"
+                model_s="Image"
+              when "info:fedora/afmodel:TuftsPdf","info:fedora/afmodel:TuftsTEI","info:fedora/cm:Text.TEI"
+                model_s="Text"
               else
                 model_s="Unclassified"
             end
+
+            #First pass of model assignment done.
+
+            #Newspaper assignment by title
+            titles = fedora_object.datastreams["DCA-META"].get_values(:title)
+
+            if titles.first.start_with?("Tufts Daily")
+              model_s="Newspaper"
+            end
+
+            #Musical score assignment by subject
+            subjects = fedora_object.datastreams["DCA-META"].get_values(:subject)
+
+            if subjects.include?("Dagomba drumming")
+              model_s="Musical score"
+            end
+
             ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "object_type_facet", model_s)
           }
         end
