@@ -95,6 +95,8 @@ namespace :tufts_dca do
         ENV["pid"] = nil
         ENV["fixture"] = "#{Rails.root}/test_support/fixtures/#{Rails.env}/#{fixture}"
         # logger.debug ENV["fixture"] 
+        #Rails.logger = Logger.new(STDOUT)
+        #logger.level = 0
         if index == 0
           Rake::Task["hydra:import_fixture"].invoke 
         elsif index > 0
@@ -115,10 +117,15 @@ namespace :tufts_dca do
     task:solarize do
       TDL_FIXTURES.each_with_index do |fixture,index|
         ENV["PID"] = fixture
-        if index == 0
-          Rake::Task["solrizer:fedora:solrize"].invoke
-        elsif index > 0
-          Rake::Task["solrizer:fedora:solrize"].execute
+
+        #don't index perseus and art history objects
+
+        unless fixture.start_with?("tufts:aah") || fixture.start_with?("tufts:perseus")
+          if index == 0
+           Rake::Task["solrizer:fedora:solrize"].invoke
+          elsif index > 0
+            Rake::Task["solrizer:fedora:solrize"].execute
+          end
         end
       end
     end
