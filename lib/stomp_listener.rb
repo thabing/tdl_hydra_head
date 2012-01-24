@@ -2,6 +2,7 @@ require 'rubygems'
 require 'stomp'
 
 
+
 class StompListener
   require 'singleton'
   include Singleton
@@ -34,7 +35,13 @@ class StompListener
             index_log.info "\nPID: #{@msg.headers["pid"]}\n"
             unless method == "purgeObject"
               solrizer = Solrizer::Fedora::Solrizer.new
-              solrizer.solrize @msg.headers["pid"]
+
+              #we don't want to solrize aah and perseus objects
+              #so check the pid pattern for those two.
+              #test="not(starts-with($PID,'tufts:aah')) and not(starts-with($PID,'tufts:perseus'))">
+              unless pid.start_with?("tufts:aah") || pid.start_with?("tufts:perseus")
+                solrizer.solrize @msg.headers["pid"]
+              end
             else
               ActiveFedora::SolrService.instance.conn.delete(pid)
             end
