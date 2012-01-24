@@ -13,9 +13,10 @@ require "hydra"
 class TuftsWP < ActiveFedora::Base
   
   include Hydra::ModelMethods
+  include Tufts::ModelMethods
 
   # I haven't quite worked out how this works or if its relevant for us.
-  has_relationship "parts", :is_part_of, :inbound => true
+  #has_relationship "parts", :is_part_of, :inbound => true
   
   # Uses the Hydra Rights Metadata Schema for tracking access permissions & copyright
   has_metadata :name => "rightsMetadata", :type => TuftsRightsMetadata
@@ -49,8 +50,9 @@ class TuftsWP < ActiveFedora::Base
 
   def to_solr(solr_doc=Hash.new,opts={})
     super
-
-    ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "object_type_facet", "Image")
+    index_collection_info(solr_doc)
+    index_format_info(self, solr_doc)
+    index_date_info(self,solr_doc)
 
     return solr_doc
   end
