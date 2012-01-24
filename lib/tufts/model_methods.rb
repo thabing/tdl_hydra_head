@@ -11,8 +11,10 @@ module Tufts
 
     def to_solr(solr_doc=Hash.new,opts={})
         super
-
-        create_facets(self,solr_doc)
+        models = self.relationships(:has_model)
+        unless models.include?("info:fedora/cm:Text.RCR") || models.include?("info:fedora/afmodel:TuftsRCR")
+          create_facets(self,solr_doc)
+        end
 
         return solr_doc
     end
@@ -148,6 +150,10 @@ module Tufts
             case model
               when "info:fedora/cm:WP"
                 model_s="Datasets"
+              when "info:fedora/cm:Text.EAD"
+                model_s = "Collection Guides"
+              when "info:fedora/afmodel:TuftsEAD"
+                model_s = "Collection Guides"
               when "info:fedora/cm:Audio"
                 model_s="Audio"
               else
