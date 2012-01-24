@@ -45,16 +45,4 @@ class TuftsAudioText < ActiveFedora::Base
    #   add_datastream(ds)
   #end
 
-  def to_solr(solr_doc=Hash.new,opts={})
-    super
-
-    index_collection_info(solr_doc)
-    index_format_info(self,solr_doc)
-    index_date_info(self,solr_doc)
-
-
-
-    return solr_doc
-  end
-
 end

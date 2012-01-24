@@ -46,16 +46,5 @@ class TuftsFacultyPublication < ActiveFedora::Base
    #   add_datastream(ds)
   #end
 
-  def to_solr(solr_doc=Hash.new,opts={})
-    super
-
-    index_collection_info(solr_doc)
-    index_date_info(self,solr_doc)
-    #logger.info("Error encountered trying to output solr_doc details for pid: #{pid}")
-    ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "object_type_facet", "Faculty Publication")
-   # ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "clean_id_t", "tufts:UA005_036_001_00001")
-
-    return solr_doc
-  end
 
 end
