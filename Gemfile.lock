@@ -75,6 +75,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.3.0)
       ffi (~> 1.0.6)
+    chronic (0.6.6)
     columnize (0.3.6)
     crack (0.3.1)
     cucumber (1.1.4)
@@ -311,6 +312,7 @@ DEPENDENCIES
   blacklight (~> 3.0.0)
   blacklight_advanced_search (= 1.1.1)
   capybara
+  chronic
   cucumber-rails
   daemons
   database_cleaner

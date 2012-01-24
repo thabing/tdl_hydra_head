@@ -15,6 +15,7 @@ gem "jettywrapper"
 gem "blacklight_advanced_search", '1.1.1'
 gem 'stomp'
 gem 'daemons'
+gem 'chronic'
 
  # For testing.  You will probably want to use all of these to run the tests you write for your hydra head
 group :development, :test do 
