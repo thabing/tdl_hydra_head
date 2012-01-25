@@ -54,6 +54,12 @@ module ApplicationHelper
     return raw(result)
   end
 
+  def render_image_viewer_link(pid)
+      result = "<a href=\"" + imageviewer_path(pid) + "\">full view</a>"
+
+      return raw(result)
+    end
+
  #http://ap.rubyonrails.org/classes/ActionController/Streaming.html#M000045
   def showGenericObjects(pid)
     blah = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item])
