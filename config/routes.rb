@@ -5,6 +5,8 @@ TdlHydraHead::Application.routes.draw do
   get "contact/index"
 
   get "about/index"
+
+  match '/imageviewer/:id', :to => 'imageviewer#show', :constraints => {:id => /.*/}, :as =>'imageviewer'
   match "/about" => "about#index"
   match "/search" => "search#index"
   match "/contact" => "contact#index"
