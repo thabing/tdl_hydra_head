@@ -19,6 +19,7 @@
 
 Blacklight.configure(:shared) do |config|
 
+
   config[:default_solr_params] = {
     :qt => "search",
     :per_page => 10 
@@ -79,7 +80,12 @@ Blacklight.configure(:shared) do |config|
       #"subject_topic_facet" => 20,
       #"language_facet" => true
     }
+    #,
+    #:range => {
+    #    "year_facet"=>true
+    #}
   }
+
 
   # Have BL send all facet field names to Solr, which has been the default
   # previously. Simply remove these lines if you'd rather use Solr request
@@ -243,5 +249,17 @@ Blacklight.configure(:shared) do |config|
   config[:unapi] = {
     'oai_dc_xml' => { :content_type => 'text/xml' } 
   }
+  #config[:facet][:field_names] << "year_facet_tint"
+
+ # puts config[:facet][:field_names]
+ # puts "BLAH"
+ # config[:facet][:range]["year_facet"] = {
+ #     :num_segments => 6,
+ #     :assumed_boundaries => [1100, Time.now.year + 2],
+ #     :slider_js => true,
+ #     :chart_js => true,
+ #     :segments => true
+ #   }
+
 end
 
