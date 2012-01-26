@@ -99,7 +99,14 @@ module Tufts
         dates.each {|date|
           valid_date = Chronic.parse(date)
           unless valid_date.nil?
-            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "year_facet", "#{valid_date.year}")
+            last_digit= valid_date.year.to_s[3,1]
+            decade_lower = valid_date.year.to_i - last_digit.to_i
+            decade_upper = valid_date.year.to_i + (10-last_digit.to_i)
+            if (decade_upper >= 2020)
+              decade_upper ="Present"
+            end
+            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "year_facet", "#{decade_lower} to #{decade_upper}")
+            #::Solrizer::Extractor.insert_solr_field_value(solr_doc, "year_facet", "#{valid_date.year}f")
           end}
       end
 

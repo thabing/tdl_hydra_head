@@ -1,3 +1,10 @@
+<% content_for(:head) do %>
+<%= javascript_include_tag 'Bookreader.js' %>
+<%= stylesheet_link_tag 'Bookreader.css' %>
+<%= stylesheet_link_tag 'BookreaderDemo.css' %>
+
+<% end %>
+
 <%= link_to("back",:back) %>
 <div id="BookReader" style="left:10px; right:10px; top:10px; bottom:2em;">
 
@@ -7,5 +14,4 @@
     </p>
     </noscript>
 </div>
-
-<script type="text/javascript" src="BookReaderJSSimple.js"></script>
+<%= javascript_include_tag 'BookreaderJSSimple.js' %>

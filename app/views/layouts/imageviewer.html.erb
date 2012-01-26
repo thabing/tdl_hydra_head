@@ -6,6 +6,15 @@
     <title><%= h(@page_title || application_name) %></title>
     <link href="<%= opensearch_catalog_path %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
     <%= raw(render_head_content) %>
+    <%= yield(:head) %>
+    <script type="text/javascript" src="http://www.archive.org/includes/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="http://www.archive.org/bookreader/jquery-ui-1.8.5.custom.min.js"></script>
+
+        <script type="text/javascript" src="http://www.archive.org/bookreader/dragscrollable.js"></script>
+        <script type="text/javascript" src="http://www.archive.org/bookreader/jquery.colorbox-min.js"></script>
+        <script type="text/javascript" src="http://www.archive.org/bookreader/jquery.ui.ipad.js"></script>
+        <script type="text/javascript" src="http://www.archive.org/bookreader/jquery.bt.min.js"></script>
+
   </head>
 
   <% if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
