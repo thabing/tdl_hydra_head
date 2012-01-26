@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 require 'blacklight/catalog'
-require 'blacklight_range_limit/segment_calculation'
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
