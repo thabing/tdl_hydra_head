@@ -138,7 +138,7 @@ From file_assets/_new.html.haml
         end
       end
 
-      mapped_model_names = map_model_names(@file_asset.relationships(:has_model))
+      mapped_model_names = ModelNameHelper.map_model_names(@file_asset.relationships(:has_model))
 
       if (mapped_model_names.include?("info:fedora/afmodel:TuftsFacultyPublication"))
         if @file_asset.datastreams.include?("Archival.pdf")
