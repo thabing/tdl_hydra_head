@@ -126,16 +126,13 @@ From file_assets/_new.html.haml
       flash[:notice]= "No such file asset."
       redirect_to(:action => 'index', :q => nil , :f => nil)
     else
-      # get array of parent (container) objects for this FileAsset
-      @id_array = @file_asset.containers(:response_format => :id_array)
+       # get containing object for this FileAsset
+      pid = @file_asset.container_id
       @downloadable = false
       # A FileAsset is downloadable iff the user has read or higher access to a parent
-      @id_array.each do |pid|
-        @response, @document = get_solr_response_for_doc_id(pid)
-        if reader?
-          @downloadable = true
-          break
-        end
+      @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
+      if reader?
+        @downloadable = true
       end
 
       mapped_model_names = ModelNameHelper.map_model_names(@file_asset.relationships(:has_model))
