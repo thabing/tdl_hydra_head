@@ -144,31 +144,6 @@ module ApplicationHelper
     return raw(result)
   end
 
-  Hydra::BlacklightHelperBehavior.module_eval do
-        # currently only used by the render_document_partial helper method (below)
-            def document_partial_name(document)
-              return if document[Blacklight.config[:show][:display_type]].nil?
-              ModelNameHelper.map_model_name(document[Blacklight.config[:show][:display_type]].first).gsub(/^[^\/]+\/[^:]+:/,"").underscore.pluralize
-            end
-  end
-
-  ActiveFedora::Model.module_eval do
-      # Takes a Fedora URI for a cModel and returns classname, namespace
-          def self.classname_from_uri(uri)
-            uri = ModelNameHelper.map_model_name(uri)
-            local_path = uri.split('/')[1]
-            parts = local_path.split(':')
-            return parts[-1].gsub('_','/').classify, parts[0]
-          end
-  end
-
-  ActiveFedora::ClassMethods.module_eval do
-    def to_class_uri
-            ns = (self.respond_to? :pid_namespace) ? self.pid_namespace : Model::DEFAULT_NS
-            pid = self.name.gsub(/::/,'_')
-            ModelNameHelper.map_model_name("info:fedora/#{ns}:#{pid}")
-    end
-  end
 
 
 end
