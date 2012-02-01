@@ -7,6 +7,30 @@ require "solrizer-fedora"
 #ActiveFedora.init(:fedora_config_path=>"/Users/mkorcy01/Desktop/tdl_hydra_head/config/fedora.yml")
 ActiveFedora.init(:fedora_config_path=>"#{Rails.root}/config/fedora.yml")
 
+ namespace :repo do
+   desc "Load the object located at the provided path or identified by pid."
+   override_task :load => :environment do
+     ### override the AF provided task to use the correct fixture directory
+     if ENV["pid"].nil?
+       raise "You must specify a valid pid.  Example: rake repo:load pid=demo:12"
+     end
+ puts "loading #{ENV['pid']}"
+     if ENV["path"].nil?
+         path = 'test_support/fixtures'
+     else
+         path = ENV["path"]
+     end
+
+     begin
+       ActiveFedora::FixtureLoader.new(path).reload(ENV["pid"])
+     rescue Errno::ECONNREFUSED => e
+       puts "Can't connect to Fedora! Are you sure jetty is running?"
+     rescue Exception => e
+       logger.error("Received a Fedora error while loading #{ENV["pid"]}\n#{e}")
+     end
+   end
+ end
+
 namespace :tufts_dca do
     TDL_FIXTURE_FILES = [
 	"tufts_MS115.003.001.00001",
