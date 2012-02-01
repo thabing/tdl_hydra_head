@@ -16,7 +16,7 @@ class TuftsAudioText < ActiveFedora::Base
 
   # I haven't quite worked out how this works or if its relevant for us.
   has_relationship "parts", :is_part_of, :inbound => true
-  
+
   # Uses the Hydra Rights Metadata Schema for tracking access permissions & copyright
   has_metadata :name => "rightsMetadata", :type => TuftsRightsMetadata
 
@@ -31,6 +31,9 @@ class TuftsAudioText < ActiveFedora::Base
   #MK 2011-04-13 - Are we really going to need to access FILE-META from FILE-META.  I'm guessing
   # not.
   has_metadata :name => "FILE-META", :type => TuftsFileMeta
+  
+  # Tufts specific needed metadata streams
+  has_metadata :name => "ARCHIVAL_XML", :type => TuftsAudioTextMeta
 
   #Our Binary streams
   #has_datastream :name=>"Access.xml", :type=>ActiveFedora::Datastream, :controlGroup=>'E'

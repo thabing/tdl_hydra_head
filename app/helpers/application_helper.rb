@@ -32,6 +32,14 @@ module ApplicationHelper
   def showMetadataItemForDatastream(datastream, label, tagID, metadataKey)
 #   result = "<iframe src="\" + datastream_disseminator_url(params[:id], datastream) + "\" width=\"600\" height=\"480\" style=\"border: none;\"></iframe>"
     result = ""
+Rails.logger.debug("!!!!!!!!!!!!!!!!!!!! in showMetadataItemForDatastream(#{datastream}, #{label}, #{tagID}, #{metadataKey})")        
+if datastream == "ARCHIVAL_XML"
+  if get_values_from_datastream(@document_fedora, datastream, [metadataKey]).first.empty?
+    Rails.logger.debug("!!!!!!!!!!!!!!!!!!!! in showMetadataItemForDatastream get_values_from_datastream .first.empty? is true")        
+  else
+    Rails.logger.debug("!!!!!!!!!!!!!!!!!!!! in showMetadataItemForDatastream get_values_from_datastream .first.empty? is false")        
+  end
+end
 
     unless get_values_from_datastream(@document_fedora, datastream, [metadataKey]).first.empty?
 
@@ -54,6 +62,7 @@ module ApplicationHelper
     return raw(result)
   end
 
+
  #http://ap.rubyonrails.org/classes/ActionController/Streaming.html#M000045
   def showGenericObjects(pid)
     blah = get_values_from_datastream(@document_fedora,"GENERIC-CONTENT",[:item])
@@ -69,6 +78,7 @@ module ApplicationHelper
     end
     return raw(result)
   end
+
 
   def showPDFLink(pid)
     result = "<a href=\"" + file_asset_path(pid) + "\">Get PDF</a>"
@@ -107,7 +117,7 @@ module ApplicationHelper
 
 
   def showFeedbackForm(pid)
-    result =  "<form id=\"feedbackForm\" action=\"/feedback\" method=\"get\">\n"
+    result =  "<form id=\"feedbackForm\" action=\"/feedback\" method=\"post\">\n"
 
     result += "<div class=\"metadata_row\" id=\"feedbackBodyRow\"><label for=\"feedbackBody\" class=\"metadata_label\">Feedback</label><div class=\"metadata_values\">\n"
     result += "<div class=\"metadata_value\"><textarea id=\"feedbackBody\" name=\"feedbackBody\" rows=\"5\" tabindex=\"1\" aria-required=\"true\"></textarea></div>\n"
@@ -137,5 +147,13 @@ module ApplicationHelper
 
     return raw(result)
   end
+
+
+  def showTranscript(pid)
+    result = ActiveFedora::Base.load_instance(pid).datastreams_in_memory["ARCHIVAL_XML"].content
+
+    return raw(result)
+  end
+
 
 end
