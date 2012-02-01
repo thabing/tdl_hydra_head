@@ -10,6 +10,8 @@
 #
   class TuftsDcaMeta  < ActiveFedora::NokogiriDatastream
 
+    # 2012-01-23 decided to make everything searchable here and handle facetable in the to_solr methods of the
+    # models
 
     set_terminology do |t|
       t.root("path"=>"dc", "xmlns"=>"http://www.fedora.info/definitions/",
@@ -19,30 +21,30 @@
              "xmlns:dcatech"=>"http://nils.lib.tufts.edu/dcatech/",
              "xmlns:dcterms"=>"http://purl.org/d/terms/",
              "xmlns:xlink"=>"http://www.w3.org/1999/xlink")
-      t.title(:namespace_prefix=>"dc",:path => "title",:index_as=>[:facetable],:label=>"title")
-      t.creator(:namespace_prefix=>"dc",:path => "creator",:index_as=>[:facetable],:label=>"creator")
-      t.source2(:namespace_prefix=>"dc",:path => "source",:index_as=>[:facetable],:label=>"source")
+      t.title(:namespace_prefix=>"dc",:path => "title",:index_as=>[:searchable],:label=>"title")
+      t.creator(:namespace_prefix=>"dc",:path => "creator",:index_as=>[:searchable],:label=>"creator")
+      t.source2(:namespace_prefix=>"dc",:path => "source",:index_as=>[:searchable],:label=>"source")
       t.description(:namespace_prefix=>"dc",:path => "description",:index_as=>[:searchable],:label=>"description")
       t.dateCreated(:namespace_prefix=>"dc",:path => "date.created",:index_as=>[:searchable],:label=>"date created")
       t.dateAvailable(:namespace_prefix=>"dc",:path => "date.available",:index_as=>[:searchable],:label=>"date available")
       t.dateIssued(:namespace_prefix=>"dc",:path => "date.issued",:index_as=>[:searchable],:label=>"date issued")
-      t.identifier(:namespace_prefix=>"dc",:path => "identifier",:label=>"identifier")
-      t.rights(:namespace_prefix=>"dc",:path => "rights",:label=>"rights")
-      t.bibliographicCitation(:namespace_prefix=>"dc",:path => "bibliographicCitation",:label=>"bibliographic citation")
-      t.publisher(:namespace_prefix=>"dc",:path => "publisher",:index_as=>[:facetable],:label=>"publisher")
-      t.type2(:namespace_prefix=>"dc",:path => "type",:index_as=>[:facetable],:label=>"type")
-      t.format2(:namespace_prefix=>"dc",:path => "format",:index_as=>[:facetable],:label=>"format")
-      t.extent(:namespace_prefix=>"dc",:path => "publisher",:label=>"extent")
-      t.persname(:namespace_prefix=>"dcadesc",:path => "persname",:index_as=>[:facetable],:label=>"person")
-      t.corpname(:namespace_prefix=>"dcadesc",:path => "corpname",:index_as=>[:facetable],:label=>"corporation")
-      t.geogname(:namespace_prefix=>"dcadesc",:path => "geogname",:index_as=>[:facetable],:label=>"geographic name")
-      t.subject(:namespace_prefix=>"dcadesc",:path => "subject",:index_as=>[:facetable],:label=>"subject")
-      t.funder(:namespace_prefix=>"dcadesc",:path => "funder",:index_as=>[:facetable],:label=>"funder")
-      t.temporal(:namespace_prefix=>"dcadesc",:path => "temporal",:index_as=>[:facetable],:label=>"temporal")
-      t.resolution(:namespace_prefix=>"dcatech",:path => "resolution",:index_as=>[:facetable],:label=>"resolution")
-      t.bitDepth(:namespace_prefix=>"dcatech",:path => "bitdepth",:index_as=>[:facetable],:label=>"bit depth")
-      t.colorSpace(:namespace_prefix=>"dcatech",:path => "colorspace",:index_as=>[:facetable],:label=>"color space")
-      t.filesize(:namespace_prefix=>"dcatech",:path => "fileSize",:index_as=>[:facetable],:label=>"file size")
+      t.identifier(:namespace_prefix=>"dc",:path => "identifier",:index_as=>[:searchable],:label=>"identifier")
+      t.rights(:namespace_prefix=>"dc",:path => "rights",:index_as=>[:searchable],:label=>"rights")
+      t.bibliographicCitation(:namespace_prefix=>"dc",:path => "bibliographicCitation",:index_as=>[:searchable],:label=>"bibliographic citation")
+      t.publisher(:namespace_prefix=>"dc",:path => "publisher",:index_as=>[:searchable],:label=>"publisher")
+      t.type2(:namespace_prefix=>"dc",:path => "type",:index_as=>[:searchable],:label=>"type")
+      t.format2(:namespace_prefix=>"dc",:path => "format",:index_as=>[:searchable],:label=>"format")
+      t.extent(:namespace_prefix=>"dc",:path => "publisher",:index_as=>[:searchable],:label=>"extent")
+      t.persname(:namespace_prefix=>"dcadesc",:path => "persname",:index_as=>[:searchable],:label=>"person")
+      t.corpname(:namespace_prefix=>"dcadesc",:path => "corpname",:index_as=>[:searchable],:label=>"corporation")
+      t.geogname(:namespace_prefix=>"dcadesc",:path => "geogname",:index_as=>[:searchable],:label=>"geographic name")
+      t.subject(:namespace_prefix=>"dcadesc",:path => "subject",:index_as=>[:searchable],:label=>"subject")
+      t.funder(:namespace_prefix=>"dcadesc",:path => "funder",:index_as=>[:searchable],:label=>"funder")
+      t.temporal(:namespace_prefix=>"dc",:path => "temporal",:index_as=>[:searchable],:label=>"temporal")
+      t.resolution(:namespace_prefix=>"dcatech",:path => "resolution",:index_as=>[:searchable],:label=>"resolution")
+      t.bitDepth(:namespace_prefix=>"dcatech",:path => "bitdepth",:index_as=>[:searchable],:label=>"bit depth")
+      t.colorSpace(:namespace_prefix=>"dcatech",:path => "colorspace",:index_as=>[:searchable],:label=>"color space")
+      t.filesize(:namespace_prefix=>"dcatech",:path => "fileSize",:index_as=>[:searchable],:label=>"file size")
     end
 
     # Generates an empty Mods Article (used when you call ModsArticle.new without passing in existing xml)

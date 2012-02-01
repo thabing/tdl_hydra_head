@@ -7,7 +7,7 @@ module ModelNameHelper
   # document_partial_name() to fix the link to the object from the search results page.
   # Also called from modified copy of app/helpers/hydra/hydra_assets_helper_behavior.rb's
   # document_type() to fix the document type displayed on the search results page.
-  def map_model_name(model_name)
+  def self.map_model_name(model_name)
     result = model_name
 
     if model_name[0, 15] == "info:fedora/cm:"
@@ -52,7 +52,7 @@ module ModelNameHelper
 
 
   # iterate through an array of model names and call map_model_name() for each element
-  def map_model_names(model_names)
+  def self.map_model_names(model_names)
     mapped_model_names = []
 
     model_names.each { |model_name|

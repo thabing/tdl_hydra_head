@@ -1,0 +1,51 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= h(@page_title || application_name) %></title>
+    <link href="<%= opensearch_catalog_path %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+    <%= raw(render_head_content) %>
+    <%= yield(:head) %>
+    <script type="text/javascript" src="http://www.archive.org/includes/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="http://www.archive.org/bookreader/jquery-ui-1.8.5.custom.min.js"></script>
+
+        <script type="text/javascript" src="http://www.archive.org/bookreader/dragscrollable.js"></script>
+        <script type="text/javascript" src="http://www.archive.org/bookreader/jquery.colorbox-min.js"></script>
+        <script type="text/javascript" src="http://www.archive.org/bookreader/jquery.ui.ipad.js"></script>
+        <script type="text/javascript" src="http://www.archive.org/bookreader/jquery.bt.min.js"></script>
+
+  </head>
+
+  <% if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
+  <body onload="$('input#q').focus();" class="<%= render_body_class %>">
+    <% else %>
+  <body class="<%= render_body_class.html_safe %>">
+    <% end %>
+      <div id="doc4" class="yui-t2">
+
+	    <div id="hd">
+        <div class="yui-g">
+          <div class="yui-u first">
+            <h1 class="site_title"><%= link_to application_name, "/" %><%= (params[:controller] == "catalog" and !params[:id]) ? "<span id='results_text'>Search Results</span>".html_safe : "" %></h1>
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+      	<div id="yui-main">
+
+            <%= render :partial=>'/flash_msg' %>
+            <%= yield %>
+
+        </div>
+
+
+	    <div id="ft"><%= raw(@footer) %></div>
+	  </div>
+    </body>
+
+    </html>

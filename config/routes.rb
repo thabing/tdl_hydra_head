@@ -5,6 +5,8 @@ TdlHydraHead::Application.routes.draw do
   get "contact/index"
 
   get "about/index"
+
+  match '/imageviewer/:id', :to => 'imageviewer#show', :constraints => {:id => /.*/}, :as =>'imageviewer'
   match "/about" => "about#index"
   match "/search" => "search#index"
   match "/contact" => "contact#index"
@@ -17,6 +19,8 @@ TdlHydraHead::Application.routes.draw do
   # :as makes it a named route so you can use catalog_path about_url in the application
   # good info here:
   # http://asciicasts.com/episodes/203-routing-in-rails-3
+#  match '/catalog/range_limit', :to=> 'catalog#range_limit', :as=>'catalog'
+  match '/catalog/opensearch', :to => 'catalog#opensearch', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/facet/:id', :to => 'catalog#facet', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/:id', :to => 'catalog#show', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/file_assets/:id', :to => 'file_assets#show', :constraints => {:id => /.*/}, :as =>'file_asset'

@@ -1,0 +1,17 @@
+<% content_for(:head) do %>
+<%= javascript_include_tag 'Bookreader.js' %>
+<%= stylesheet_link_tag 'Bookreader.css' %>
+<%= stylesheet_link_tag 'BookreaderDemo.css' %>
+
+<% end %>
+
+<%= link_to("back",:back) %>
+<div id="BookReader" style="left:10px; right:10px; top:10px; bottom:2em;">
+
+    <noscript>
+    <p>
+        The BookReader requires JavaScript to be enabled. Please check that your browser supports JavaScript and that it is enabled in the browser settings.  You can also try one of the <a href="http://www.archive.org/details/goodytwoshoes00newyiala"> other formats of the book</a>.
+    </p>
+    </noscript>
+</div>
+<%= javascript_include_tag 'BookreaderJSSimple.js' %>

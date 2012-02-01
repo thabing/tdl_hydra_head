@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 require 'blacklight/catalog'
-
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
@@ -15,6 +14,16 @@ class CatalogController < ApplicationController
   # This filters out objects that you want to exclude from search results, like FileAssets
   CatalogController.solr_search_params_logic << :exclude_unwanted_models
   def enforce_facet_permissions
-    return;
+    return
   end
+
+  def enforce_opensearch_permissions
+    return
+  end
+
+  def enforce_range_limit_permissions
+
+  end
+
+
 end
