@@ -16,7 +16,41 @@ module Tufts
           create_facets(self,solr_doc)
         end
 
+        index_fulltext solr_doc
+
         return solr_doc
+    end
+
+    def index_fulltext(solr_doc)
+      full_text = ""
+
+      # p.datastreams['Archival.xml'].content
+      # doc = Nokogiri::XML(p.datastreams['Archival.xml'].content)
+      # doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
+      models = self.relationships(:has_model)
+
+      unless models.nil?
+        models.each { |model|
+          case model
+            when "info:fedora/cm:WP", "info:fedora/afmodel:TuftsWP", "info:fedora/afmodel:TuftsTeiFragmented", "info:fedora/cm:Text.TEI-Fragmented"
+              model_s="Datasets"
+            when "info:fedora/cm:Text.EAD", "info:fedora/afmodel:TuftsEAD"
+              model_s = "Collection Guides"
+            when "info:fedora/cm:Audio", "info:fedora/afmodel:TuftsAudio", "info:fedora/cm:Audio.OralHistory", "info:fedora/afmodel:TuftsAudioText"
+              model_s="Audio"
+            when "info:fedora/cm:Image.4DS", "info:fedora/cm:Image.3DS	", "info:fedora/afmodel:TuftsImage"
+              model_s="Image"
+            when "info:fedora/afmodel:TuftsPdf", "info:fedora/afmodel:TuftsTEI"
+              model_s="Text"
+            when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI"
+              nokogiri_doc = Nokogiri::XML(self.datastreams['Archival.xml'].content)
+              full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
+            else
+              model_s="Unclassified"
+          end }
+      end
+
+      ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "text", full_text)
     end
 
     def create_facets(fedora_object, solr_doc)
