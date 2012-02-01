@@ -91,16 +91,16 @@ namespace :tufts_dca do
 
     desc "Load default tufts_dca fixtures"
     task :load do
-      TDL_FIXTURE_FILES.each_with_index do |fixture,index|
-        ENV["pid"] = nil
-        ENV["fixture"] = "#{Rails.root}/test_support/fixtures/#{Rails.env}/#{fixture}"
+      TDL_FIXTURES.each_with_index do |fixture,index|
+        ENV["pid"] = fixture
+        ENV["path"] = "test_support/fixtures/#{Rails.env}"
         # logger.debug ENV["fixture"] 
         #Rails.logger = Logger.new(STDOUT)
         #logger.level = 0
         if index == 0
-          Rake::Task["hydra:import_fixture"].invoke 
+          Rake::Task["repo:load"].invoke
         elsif index > 0
-          Rake::Task["hydra:import_fixture"].execute
+          Rake::Task["repo:load"].execute
         end 
       end
       TDL_FIXTURES.each_with_index do |fixture,index|
@@ -134,8 +134,8 @@ namespace :tufts_dca do
     task :delete do
       TDL_FIXTURES.each_with_index do |fixture,index|
         ENV["pid"] = fixture
-        Rake::Task["hydra:delete"].invoke if index == 0
-        Rake::Task["hydra:delete"].execute if index > 0
+        Rake::Task["repo:delete"].invoke if index == 0
+        Rake::Task["repo:delete"].execute if index > 0
       end
     end
 

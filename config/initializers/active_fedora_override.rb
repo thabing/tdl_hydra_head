@@ -1,5 +1,3 @@
-
-
 ActiveFedora::Model.module_eval do
     # Takes a Fedora URI for a cModel and returns classname, namespace
         def self.classname_from_uri(uri)
@@ -15,5 +13,12 @@ ActiveFedora::ClassMethods.module_eval do
           ns = (self.respond_to? :pid_namespace) ? self.pid_namespace : Model::DEFAULT_NS
           pid = self.name.gsub(/::/,'_')
           ModelNameHelper.map_model_name("info:fedora/#{ns}:#{pid}")
+  end
+end
+
+# Our foxml fixtures don't have the extension and it seems unnecessary to add them at this point
+ActiveFedora::FixtureLoader.class_eval do
+  def filename_for_pid(pid)
+        File.join(path, "#{pid.gsub(":","_")}")
   end
 end
