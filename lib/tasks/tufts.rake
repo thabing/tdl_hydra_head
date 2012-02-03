@@ -1,5 +1,10 @@
- #require File.expand_path(File.dirname(__FILE__) + '/hydra_jetty.rb')
+#require File.expand_path(File.dirname(__FILE__) + '/hydra_jetty.rb')
+
 require "solrizer-fedora"
+
+if defined?(Rails) && (Rails.env == 'development')
+  Rails.logger = Logger.new(STDOUT)
+end
 
 #Calling ActiveFedora.init with a path as an argument has been removed.  Use ActiveFedora.init(:fedora_config_path=>/Users/mkorcy01/Desktop/tdl_hydra_head/config/fedora.yml)
 
@@ -70,8 +75,16 @@ namespace :tufts_dca do
 	"tufts_UP029.003.003.00014",
 	"tufts_UP029.020.031.00108",
 	"tufts_WP0001",
-	"tufts_sample001"
-    ]
+	"tufts_sample001",
+  "tufts_UA069.001.DO.MS124",
+  "tufts_UA069.001.DO.MS134",
+  "tufts_UA069.001.DO.UA015",
+  "tufts_UA069.001.DO.UP022",
+  "tufts_UA069.001.DO.UP029",
+  "tufts_la.speakerofthehouse.1820",
+  "tufts_me.uscongress3.second.1825",
+  "tufts_ky.clerkofthehouse.1813"
+  ]
     TDL_FIXTURES = [
 	"tufts:MS115.003.001.00001",
 	"tufts:MS115.003.001.00002",
@@ -110,7 +123,16 @@ namespace :tufts_dca do
 	"tufts:UP029.003.003.00014",
 	"tufts:UP029.020.031.00108",
 	"tufts:WP0001",
-	"tufts:sample001"
+	"tufts:sample001",
+  "tufts:UA069.001.DO.MS124",
+  "tufts:UA069.001.DO.MS134",
+  "tufts:UA069.001.DO.UA015",
+  "tufts:UA069.001.DO.UP022",
+  "tufts:UA069.001.DO.UP029",
+  "tufts:la.speakerofthehouse.1820",
+  "tufts:me.uscongress3.second.1825",
+  "tufts:ky.clerkofthehouse.1813"
+
     ]
 
     desc "Load default tufts_dca fixtures"
@@ -121,6 +143,9 @@ namespace :tufts_dca do
         # logger.debug ENV["fixture"] 
         #Rails.logger = Logger.new(STDOUT)
         #logger.level = 0
+        if ENV["pid"] == "tufts:UA069.001.DO.MS134"
+          puts "BLAH"
+        end
         if index == 0
           Rake::Task["repo:load"].invoke
         elsif index > 0
