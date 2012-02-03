@@ -39,6 +39,8 @@ module ModelNameHelper
         mapped_model_name = "info:fedora/afmodel:TuftsTEI"
       elsif model_name == "info:fedora/cm:Text.RCR"
         mapped_model_name = "info:fedora/afmodel:TuftsRCR"
+      elsif model_name == "info:fedora/cm:VotingRecord"
+        mapped_model_name = "info:fedora/afmodel:TuftsVotingRecord"
       end
 
       if mapped_model_name != ""
