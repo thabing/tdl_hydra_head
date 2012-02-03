@@ -106,10 +106,22 @@ module Tufts
 
     def index_collection_info(solr_doc)
       collections = self.relationships(:is_member_of_collection)
-          unless collections.nil?
-            collections.each {|collection|
-            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", "#{collection}") }
-          end
+      ead = self.relationships(:has_description)
+
+      unless ead.first.nil?
+        ead = ead.first.gsub('info:fedora/','')
+        ead_obj = TuftsEAD.load_instance(ead)
+        if ead_obj.nil?
+         Rails.logger.debug "EAD Nil " + ead
+        else
+          ead_title = ead_obj.datastreams["DCA-META"].get_values(:title).first
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", ead_title)
+        end
+      end
+         # unless collections.nil?
+         #   collections.each {|collection|
+         #   ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", "#{collection}") }
+         # end
     end
 
     #if possible, exposed as ranges, cf. the Virgo catalog facet "publication era". Under the heading
@@ -152,45 +164,28 @@ module Tufts
 
     #The labels are:
 
-    #Audio Includes audio, captioned audio, oral history.
-    #(We might eventually consider having an Oral history dedicated facet, but that should not preclude these
-    #items from being returned in audio as well)
-    #Text Includes PDF, faculty publication, TEI.
-    #(we might consider breaking this apart into Scholarly article, Newspaper, Journal, Manuscript,
-    # Thesis/Dissertation, etc...)
-    #Should it also include oral history/captioned audio, since those are heavily composed of text documents?
-    #Aaron thanks no, I think yes (I think they should be in all places that are appropriate – browse writ large, not small)
-    #Should it also include image with HTML fragment, since often the HTML is a textual representation of the text
-    #on an image? Aaron and I think yes.
-    #Eventually, when we have a good display mechanism/e-book format delivery for e-books, we should have a separate
-    #sub facet for those.
-    #Are athletic rosters texts? Do they get their own facet?
-    #Image Includes 4 DS image, 3 DS image
-    #Image with HTML fragment as well? Aaron thinks not.
-    #Should this include wildlife pathology as well? Aaron thinks not – he thinks they should only deliver through
-    # data sets.
+
+    #Text Includes PDF, faculty publication, TEI, captioned audio.
+
+    #Images Includes 4 DS image, 3 DS image
+    #Preferably, not PDF page images, not election record images.
     #Note that this will include the individual images used in image books and other TEI, but not the books themselves.
-    #Datasets include wildlife pathology, election records, election images (if possible).
-    #Thesis/Dissertation includes everything from the student work collections. I noticed that some other catalogs
-    # have this as a facet.
-    #Map (we have some, and I think we have metadata indicating they are maps)
-    #Faculty scholarship
-    #Newspaper
-    #Journal/Magazine/Newspaper
-    #Musical score (is this currently only Dagomba?)
-    # Note that there's a lot of logic in here that the developers might tell us is impossible. For example, we are
-    #talking about separating out oral histories from regular captioned audio, but that's not going to be determinable
-    #by content model alone (once the Walter Wriston captioned audio goes in) which means it's a combination of content
-    # model + collection. This is logic we would need to deliver to the developers, keep up to date, and they would
-    #need to maintain.
+    ##Depending on how we deal with the PDFs, this might include individual page images for PDF. Problem?
+
+    #Datasets include wildlife pathology, election records, election images (if possible), Boston streets splash pages.
+    #Periodicals any PID that begins with UP.
+    #Collection guides Text.EAD
+    #Audio Includes audio, captioned audio, oral history.
 
     def index_format_info(fedora_object,solr_doc)
       models = fedora_object.relationships(:has_model)
 
+      model_s = nil
+
         unless models.nil?
           models.each { |model|
             case model
-              when "info:fedora/cm:WP","info:fedora/afmodel:TuftsWP","info:fedora/afmodel:TuftsTeiFragmented","info:fedora/cm:Text.TEI-Fragmented"
+              when "info:fedora/cm:WP","info:fedora/afmodel:TuftsWP","info:fedora/afmodel:TuftsTeiFragmented","info:fedora/cm:Text.TEI-Fragmented","info:fedora/afmodel:TuftsVotingRecord","info:fedora/cm:VotingRecord"
                 model_s="Datasets"
               when "info:fedora/cm:Text.EAD", "info:fedora/afmodel:TuftsEAD"
                 model_s = "Collection Guides"
@@ -201,26 +196,32 @@ module Tufts
               when "info:fedora/afmodel:TuftsPdf","info:fedora/afmodel:TuftsTEI","info:fedora/cm:Text.TEI"
                 model_s="Text"
               else
-                model_s="Unclassified"
+                COLLECTION_ERROR_LOG.error "ERROR: Could not determine collection for : #{fedora_object.pid}"
+
             end
+
+         #   if fedora_object.pid.starts_with? 'tufts:UP'
+         #     model_s = "Periodicals"
+         #   end
 
             #First pass of model assignment done.
 
             #Newspaper assignment by title
-            titles = fedora_object.datastreams["DCA-META"].get_values(:title)
-
-            if titles.first.start_with?("Tufts Daily")
-              model_s="Newspaper"
-            end
+            #titles = fedora_object.datastreams["DCA-META"].get_values(:title)
+            #
+            #if titles.first.start_with?("Tufts Daily")
+            #  model_s="Newspaper"
+            #end
 
             #Musical score assignment by subject
-            subjects = fedora_object.datastreams["DCA-META"].get_values(:subject)
-
-            if subjects.include?("Dagomba drumming")
-              model_s="Musical score"
+            #subjects = fedora_object.datastreams["DCA-META"].get_values(:subject)
+            #
+            #if subjects.include?("Dagomba drumming")
+            #  model_s="Musical score"
+            #end
+            unless model_s.nil?
+              ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "object_type_facet", model_s)
             end
-
-            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "object_type_facet", model_s)
           }
         end
     end
