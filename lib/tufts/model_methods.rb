@@ -105,25 +105,62 @@ module Tufts
     # less relevant.
 
     def index_collection_info(solr_doc)
+
       collections = self.relationships(:is_member_of_collection)
       ead = self.relationships(:has_description)
+      pid = self.pid.to_s
+      ead_title = nil
 
-      unless ead.first.nil?
+      if ead.first.nil?
+        # there is no hasDescription
+        ead_title = get_collection_from_pid(ead_title)
+        if ead_title.nil?
+          COLLECTION_ERROR_LOG.error "Could not determine Collection for : #{self.pid}"
+        else
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", ead_title)
+        end
+      else
         ead = ead.first.gsub('info:fedora/','')
         ead_obj = TuftsEAD.load_instance(ead)
         if ead_obj.nil?
          Rails.logger.debug "EAD Nil " + ead
         else
           ead_title = ead_obj.datastreams["DCA-META"].get_values(:title).first
-          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", ead_title)
+          ead_title = Tufts::ModelUtilityMethods.clean_ead_title(ead_title)
+
+          #4 additional collections, unfortunately defined by regular expression parsing. If one of these has hasDescription PID takes precedence
+          #"Undergraduate scholarship": PID in tufts:UA005.*
+          #"Graduate scholarship": PID in tufts:UA015.012.*
+          #"Faculty scholarship": PID in tufts:PB.001.001* or tufts:ddennett*
+          #"Boston Streets": PID in tufts:UA069.005.DO.* should be merged with the facet hasDescription UA069.001.DO.MS102
+
+          ead_title = get_collection_from_pid(ead_title)
+
+
         end
+
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", ead_title)
       end
+
          # unless collections.nil?
          #   collections.each {|collection|
          #   ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", "#{collection}") }
          # end
     end
 
+  def get_collection_from_pid(ead_title)
+    if pid.starts_with? "tufts:UA005"
+      ead_title = "Undergraduate scholarship"
+    elsif pid.starts_with? "tufts:UA015.012"
+      ead_title = "Graduate scholarship"
+    elsif (pid.starts_with? "tufts:PB.001.001") || (pid.starts_with? "tufts:ddennett")
+      ead_title = "Faculty scholarship"
+    elseif pid.starts_with? "tufts:UA069.005.DO"
+      ead_title = "Boston Streets"
+    end
+
+    ead_title
+  end
     #if possible, exposed as ranges, cf. the Virgo catalog facet "publication era". Under the heading
     #"Date". Also, if possible, use Temporal if "Date.Created" is unavailable.)
 
@@ -191,13 +228,12 @@ module Tufts
                 model_s = "Collection Guides"
               when "info:fedora/cm:Audio", "info:fedora/afmodel:TuftsAudio","info:fedora/cm:Audio.OralHistory","info:fedora/afmodel:TuftsAudioText"
                 model_s="Audio"
-              when "info:fedora/cm:Image.4DS","info:fedora/cm:Image.3DS	","info:fedora/afmodel:TuftsImage"
-                model_s="Image"
-              when "info:fedora/afmodel:TuftsPdf","info:fedora/afmodel:TuftsTEI","info:fedora/cm:Text.TEI"
+              when "info:fedora/cm:Image.4DS","info:fedora/cm:Image.3DS","info:fedora/afmodel:TuftsImage","info:fedora/cm:Image.HTML"
+                model_s="Images"
+              when "info:fedora/cm:Text.PDF","info:fedora/afmodel:TuftsPdf","info:fedora/afmodel:TuftsTEI","info:fedora/cm:Text.TEI","info:fedora/cm:Text.FacPub","info:fedora/afmodel:TuftsFacultyPublication"
                 model_s="Text"
-              else
-                COLLECTION_ERROR_LOG.error "ERROR: Could not determine collection for : #{fedora_object.pid}"
-
+              when "info:fedora/cm:Object.Generic","info:fedora/afmodel:TuftsGenericObject"
+                model_s="Generic Objects"
             end
 
          #   if fedora_object.pid.starts_with? 'tufts:UP'
@@ -219,9 +255,30 @@ module Tufts
             #if subjects.include?("Dagomba drumming")
             #  model_s="Musical score"
             #end
-            unless model_s.nil?
+            if (model_s == "Text") && (fedora_object.pid.to_s.starts_with? "tufts:UP")
+              model_s = "Periodicals"
+            end
+
+            if (model_s == "Images") && (fedora_object.pid.to_s.starts_with? "tufts:MS115")
+              model_s="Datasets"
+            end
+
+            if model_s.nil?
+              COLLECTION_ERROR_LOG.error "Could not determine Format for : #{fedora_object.pid} with model #{models.to_s}"
+            else
               ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "object_type_facet", model_s)
             end
+
+
+            # At this point primary classification is complete but there are some outlier cases where we want to
+            # Attribute two classifications to one object, now's the time to do that
+            ##,"info:fedora/cm:Audio.OralHistory","info:fedora/afmodel:TuftsAudioText" -> needs text
+            ##,"info:fedora/cm:Image.HTML" -->needs text
+            if ["info:fedora/cm:Audio.OralHistory","info:fedora/afmodel:TuftsAudioText","info:fedora/cm:Image.HTML"].include? model
+              ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "object_type_facet", "Text")
+            end
+
+
           }
         end
     end
