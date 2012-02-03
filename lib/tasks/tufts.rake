@@ -83,7 +83,8 @@ namespace :tufts_dca do
   "tufts_UA069.001.DO.UP029",
   "tufts_la.speakerofthehouse.1820",
   "tufts_me.uscongress3.second.1825",
-  "tufts_ky.clerkofthehouse.1813"
+  "tufts_ky.clerkofthehouse.1813",
+  "tufts_MS115.001.DO.11090"
   ]
     TDL_FIXTURES = [
 	"tufts:MS115.003.001.00001",
@@ -131,7 +132,8 @@ namespace :tufts_dca do
   "tufts:UA069.001.DO.UP029",
   "tufts:la.speakerofthehouse.1820",
   "tufts:me.uscongress3.second.1825",
-  "tufts:ky.clerkofthehouse.1813"
+  "tufts:ky.clerkofthehouse.1813",
+  "tufts:MS115.001.DO.11090"
 
     ]
 
