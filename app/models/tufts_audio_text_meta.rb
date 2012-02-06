@@ -8,7 +8,7 @@
   class TuftsAudioTextMeta < ActiveFedora::NokogiriDatastream
 
     set_terminology do |t|
-      t.root(:path => "TEI.2", "xmlns" => "http://dca.lib.tufts.edu/schema/tei/tei2.dtd")
+      t.root(:path => "TEI.2", "xmlns" => "http://www.tei-c.org/ns/2.0")
       t.teiHeader(:path => "teiHeader")
       t.fileDesc(:path => "fileDesc")
       t.titleStmt(:path => "titleStmt")

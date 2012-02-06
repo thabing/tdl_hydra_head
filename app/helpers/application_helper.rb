@@ -32,14 +32,6 @@ module ApplicationHelper
   def showMetadataItemForDatastream(datastream, label, tagID, metadataKey)
 #   result = "<iframe src="\" + datastream_disseminator_url(params[:id], datastream) + "\" width=\"600\" height=\"480\" style=\"border: none;\"></iframe>"
     result = ""
-Rails.logger.debug("!!!!!!!!!!!!!!!!!!!! in showMetadataItemForDatastream(#{datastream}, #{label}, #{tagID}, #{metadataKey})")        
-if datastream == "ARCHIVAL_XML"
-  if get_values_from_datastream(@document_fedora, datastream, [metadataKey]).first.empty?
-    Rails.logger.debug("!!!!!!!!!!!!!!!!!!!! in showMetadataItemForDatastream get_values_from_datastream .first.empty? is true")        
-  else
-    Rails.logger.debug("!!!!!!!!!!!!!!!!!!!! in showMetadataItemForDatastream get_values_from_datastream .first.empty? is false")        
-  end
-end
 
     unless get_values_from_datastream(@document_fedora, datastream, [metadataKey]).first.empty?
 
@@ -151,13 +143,6 @@ end
     result += "</div></noscript>\n"
 
     result += "</form>"
-
-    return raw(result)
-  end
-
-
-  def showTranscript(pid)
-    result = ActiveFedora::Base.load_instance(pid).datastreams_in_memory["ARCHIVAL_XML"].content
 
     return raw(result)
   end
