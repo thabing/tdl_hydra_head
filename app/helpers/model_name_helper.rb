@@ -1,12 +1,15 @@
 module ModelNameHelper
 
-  # Called from modified copy of lib/active_fedora/model.rb's classname_from_uri() and to_class_uri();
+  # map_model_name() is called from modified copy of lib/active_fedora/model.rb's classname_from_uri() and to_class_uri();
   # classname_from_uri() is called when the fedora objects are being indexed.  to_class_uri() doesn't
   # actually appear to be called from anywhere.
-  # Also called from modified copy of app/helpers/hydra/blacklight_helper_behavior.rb's
+  # map_model_name() is also called from modified copy of app/helpers/hydra/blacklight_helper_behavior.rb's
   # document_partial_name() to fix the link to the object from the search results page.
-  # Also called from modified copy of app/helpers/hydra/hydra_assets_helper_behavior.rb's
+  # map_model_name() is also called from modified copy of app/helpers/hydra/hydra_assets_helper_behavior.rb's
   # document_type() to fix the document type displayed on the search results page.
+  # map_model_names() is called from app/controllers/file_assets_controller.rb.
+
+
   def self.map_model_name(model_name)
     result = model_name
 
