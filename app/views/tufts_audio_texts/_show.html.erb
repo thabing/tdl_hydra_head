@@ -35,6 +35,10 @@
         <div>
           <%= showAudioPlayer(params[:id]) %>
         </div>
-        <div id="transcript_goes_here">
-          <%= showMetadataItemForDatastream("ARCHIVAL_XML", "Author", "author", :author) %>
+        <div id="transcript">
+          <%= showMetadataItemForDatastream("ARCHIVAL_XML", "ID", "id_attr", :id_attr) %>
+          <%= showMetadataItemForDatastream("ARCHIVAL_XML", "Name", "p", :p) %>
+          <%= showMetadataItemForDatastream("ARCHIVAL_XML", "Role", "role_attr", :role_attr) %>
+          <%= showMetadataItemForDatastream("ARCHIVAL_XML", "Speaker", "who_attr", :who_attr) %>
+          <%= showMetadataItemForDatastream("ARCHIVAL_XML", "Utterance", "u_inner", :u_inner) %>
         </div>
