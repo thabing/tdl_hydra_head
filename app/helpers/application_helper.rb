@@ -148,4 +148,54 @@ module ApplicationHelper
   end
 
 
+  def showTranscriptFromDatastream(datastream)
+    result =  "<div class=\"participant_section\">\n"
+    result += "  <h1 class=\"participant_header\">Interview Participants</h1>\n"
+    result += "  <div class=\"participant_table\">\n";
+
+    id_attrs = get_values_from_datastream(@document_fedora, datastream, [:id_attr])
+    participants = get_values_from_datastream(@document_fedora, datastream, [:p])
+    role_attrs = get_values_from_datastream(@document_fedora, datastream, [:role_attr])
+
+    index = 0;
+    count = id_attrs.size
+
+    while index < count
+      result += "    <div class=\"participant_row\" id=\"participant" + (index + 1).to_s + "\">\n";
+      result += "      <div class=\"participant_id\">" + Sanitize.clean(RedCloth.new(id_attrs[index], [:sanitize_html]).to_html) + ":</div>\n"
+      result += "      <div class=\"participant_name\">" + Sanitize.clean(RedCloth.new(participants[index], [:sanitize_html]).to_html) + "</div>\n"
+      result += "      <div class=\"participant_role\">" + Sanitize.clean(RedCloth.new(role_attrs[index], [:sanitize_html]).to_html) + "</div>\n"
+      result += "    </div> <!-- participant_row -->\n"
+
+      index += 1
+    end
+
+    result += "  </div> <!-- participant_table -->\n"
+    result += "</div> <!-- participant_section -->\n"
+    result += "<div class=\"transcript_section\">\n"
+    result += "  <h1 class=\"transcript_header\">Transcript</h1>\n"
+    result += "  <div class=\"transcript_table\">\n";
+
+    speakers = get_values_from_datastream(@document_fedora, datastream, [:who_attr])
+    utterances = get_values_from_datastream(@document_fedora, datastream, [:u_inner])
+
+    index = 0;
+    count = speakers.size
+
+    while index < count
+      result += "    <div class=\"transcript_row\" id=\"utterance" + (index + 1).to_s + "\">\n"
+      result += "      <div class=\"transcript_speaker\">" + Sanitize.clean(RedCloth.new(speakers[index], [:sanitize_html]).to_html) + ":</div>\n"
+      result += "      <div class=\"transcript_utterance\">" + Sanitize.clean(RedCloth.new(utterances[index], [:sanitize_html]).to_html) + "</div>\n"
+      result += "    </div> <!-- transcript_row -->\n"
+
+      index += 1
+    end
+
+    result += "  </div> <!-- transcript_table -->\n"
+    result += "</div> <!-- transcript_section -->\n"
+
+    return raw(result)
+  end
+
+
 end
