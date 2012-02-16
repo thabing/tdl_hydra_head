@@ -23,6 +23,9 @@ TdlHydraHead::Application.routes.draw do
   match '/catalog/opensearch', :to => 'catalog#opensearch', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/facet/:id', :to => 'catalog#facet', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/:id', :to => 'catalog#show', :constraints => {:id => /.*/}, :as =>'catalog'
+  match '/file_assets/advanced/:id', :to => 'file_assets#showAdvanced', :constraints => {:id => /.*/}, :as =>'file_asset'
+  match '/file_assets/dimensions/:id', :to => 'file_assets#dimensions', :constraints => {:id => /.*/}, :as =>'file_asset'
+
   match '/file_assets/:id', :to => 'file_assets#show', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/proxy/:id', :to => 'proxy#show', :constraints => {:id => /.*/}, :as =>'proxy'
   #match '/bucketproxy/:id/:index', :to => 'bucketproxy#show', :constraints => {:id => /.*/}, :as =>'bucketproxy'

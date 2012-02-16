@@ -22,12 +22,16 @@ br.getPageURI = function(index, reduce, rotate) {
     // reduce and rotate are ignored in this simple implementation, but we
     // could e.g. look at reduce and load images from a different directory
     // or pass the information to an image server
-    var leafStr = '0';            
+    var leafStr = '0';
     var imgStr = (index+1).toString();
     var re = new RegExp("0{"+imgStr.length+"}$");
-    var url = 'http://dl.dropbox.com/u/43822/bookreader/crane-'+leafStr.replace(re, imgStr) + '.jpg';
+    var bookReaderDiv = $('#BookReader');
+    var url = '/'+ bookReaderDiv.data('pid') +leafStr.replace(re, imgStr) + '.jpg';
     return url;
 }
+
+// Total number of leafs
+br.numLeafs = 4;
 
 // Return which side, left or right, that a given page should be displayed on
 br.getPageSide = function(index) {
@@ -37,6 +41,7 @@ br.getPageSide = function(index) {
         return 'L';
     }
 }
+
 
 // This function returns the left and right indices for the user-visible
 // spread that contains the given index.  The return values may be
@@ -76,8 +81,6 @@ br.getPageNum = function(index) {
     return index+1;
 }
 
-// Total number of leafs
-br.numLeafs = 4;
 
 // Book title and the URL used for the book title link
 br.bookTitle= 'Open Library BookReader Presentation';
