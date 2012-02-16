@@ -56,7 +56,7 @@ module ApplicationHelper
 
 
   def render_image_viewer_link(pid)
-      result = "<a href=\"" + imageviewer_path(pid) + "\">full view</a>"
+      result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\">full view</a>"
 
       return raw(result)
     end
@@ -196,6 +196,8 @@ module ApplicationHelper
 
     return raw(result)
   end
+  def render_back_to_overview_link
+      link_to('Back to overview', catalog_url)
 
-
+  end
 end
