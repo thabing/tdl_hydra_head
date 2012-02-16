@@ -59,8 +59,8 @@ br.getPageURI = function(index, reduce, rotate) {
    // var imgStr = (index+1).toString();
    // var re = new RegExp("0{"+imgStr.length+"}$");
     var bookReaderDiv = $('#ImageInfo');
-    return "/file_assets/advanced/tufts:TBS.VW0001.000113";
-    //return '/file_assets/advanced/'+ bookReaderDiv.data('pid');// +leafStr.replace(re, imgStr) + '.jpg';
+    //return "/file_assets/advanced/tufts:TBS.VW0001.000113";
+    return '/file_assets/advanced/'+ bookReaderDiv.data('pid');// +leafStr.replace(re, imgStr) + '.jpg';
 
 };
 
