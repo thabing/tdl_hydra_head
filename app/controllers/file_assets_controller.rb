@@ -1,4 +1,3 @@
-
 class FileAssetsController < ApplicationController
   
   include Hydra::AccessControlsEnforcement
@@ -7,7 +6,7 @@ class FileAssetsController < ApplicationController
   include Hydra::RepositoryController  
   include MediaShelf::ActiveFedoraHelper
   include Blacklight::SolrHelper
-  
+  include TuftsFileAssetsHelper
 #  before_filter :require_fedora
   before_filter :require_solr, :only=>[:index, :create, :show, :destroy]
   prepend_before_filter :sanitize_update_params
@@ -15,22 +14,6 @@ class FileAssetsController < ApplicationController
   helper :hydra_uploader
   
   def index
-=begin
-Removed from file_assets/index.html.haml
--# javascript_includes << infusion_javascripts(:inline_edit, :extras=>[:inline_editor_integrations], :debug=>true, :render_html=>false) 
--# javascript_includes << ['../infusion/framework/core/js/ProgressiveEnhancement.js', '../infusion/InfusionAll.js', {:cache=>true, :plugin=>"fluid-infusion"}]
-
-- javascript_includes << "jquery.jeditable.mini"
-- javascript_includes << 'custom'
-- javascript_includes << "catalog/edit"
-- javascript_includes << "jquery.hydraMetadata.js"  
-- javascript_includes << "/plugin_assets/fluid-infusion/infusion/components/undo/js/Undo.js" 
-- javascript_includes << "jquery.form.js"
-
-
-
-
-=end
 
     if params[:layout] == "false"
       # action = "index_embedded"
@@ -117,16 +100,105 @@ From file_assets/_new.html.haml
     ActiveFedora::Base.load_instance(params[:id]).delete 
     render :text => "Deleted #{params[:id]} from #{params[:asset_id]}."
   end
-  
-  
+
+
+  def showAdvanced
+    @file_asset = FileAsset.find(params[:id])
+    if (@file_asset.nil?)
+      logger.warn("No such file asset: " + params[:id])
+      flash[:notice]= "No such file asset."
+      redirect_to(:action => 'index', :q => nil, :f => nil)
+    else
+      # get containing object for this FileAsset
+      pid = @file_asset.container_id
+      @downloadable = false
+      # A FileAsset is downloadable iff the user has read or higher access to a parent
+      @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
+      if reader?
+        @downloadable = true
+      end
+
+      mapped_model_names = ModelNameHelper.map_model_names(@file_asset.relationships(:has_model))
+
+
+      if (mapped_model_names.include?("info:fedora/afmodel:TuftsImage"))
+        if @file_asset.datastreams.include?("Advanced.jpg")
+          send_datastream_inline @file_asset.datastreams["Advanced.jpg"]
+
+        end
+      end
+
+      if (mapped_model_names.include?("info:fedora/afmodel:TuftsImageText"))
+        if @file_asset.datastreams.include?("Advanced.jpg")
+          send_datastream @file_asset.datastreams["Advanced.jpg"]
+        end
+      end
+
+      if (mapped_model_names.include?("info:fedora/afmodel:TuftsWP"))
+        if @file_asset.datastreams.include?("Basic.jpg")
+          send_datastream @file_asset.datastreams["Advanced.jpg"]
+        end
+      end
+    end
+  end
+
+
+  def dimensions
+    @file_asset = FileAsset.find(params[:id])
+
+
+    if (@file_asset.nil?)
+      logger.warn("No such file asset: " + params[:id])
+      flash[:notice]= "No such file asset."
+      redirect_to(:action => 'index', :q => nil, :f => nil)
+    else
+      # get containing object for this FileAsset
+      pid = @file_asset.container_id
+      @downloadable = false
+      # A FileAsset is downloadable iff the user has read or higher access to a parent
+      @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
+      if reader?
+        @downloadable = true
+      end
+
+      mapped_model_names = ModelNameHelper.map_model_names(@file_asset.relationships(:has_model))
+
+
+      if (mapped_model_names.include?("info:fedora/afmodel:TuftsImage"))
+        if @file_asset.datastreams.include?("Advanced.jpg")
+          imagesize = ImageSize.new @file_asset.datastreams["Advanced.jpg"].content
+
+          render :json => {:height=> imagesize.get_height, :width=> imagesize.get_width}
+        end
+      end
+
+      if (mapped_model_names.include?("info:fedora/afmodel:TuftsImageText"))
+        if @file_asset.datastreams.include?("Advanced.jpg")
+          imagesize = ImageSize.new @file_asset.datastreams["Advanced.jpg"].content
+          render :json => {:height=> imagesize.get_height, :width=> imagesize.get_width}
+        end
+      end
+
+      if (mapped_model_names.include?("info:fedora/afmodel:TuftsWP"))
+        if @file_asset.datastreams.include?("Basic.jpg")
+          imagesize = ImageSize.new @file_asset.datastreams["Advanced.jpg"].content
+          render :json => {:height=> imagesize.get_height, :width=> imagesize.get_width}.to_s
+        end
+      end
+    end
+
+
+
+  end
+
   def show
     @file_asset = FileAsset.find(params[:id])
     if (@file_asset.nil?)
       logger.warn("No such file asset: " + params[:id])
       flash[:notice]= "No such file asset."
-      redirect_to(:action => 'index', :q => nil , :f => nil)
+      redirect_to(:action => 'index', :q => nil, :f => nil)
     else
-       # get containing object for this FileAsset
+      # get containing object for this FileAsset
       pid = @file_asset.container_id
       @downloadable = false
       # A FileAsset is downloadable iff the user has read or higher access to a parent
