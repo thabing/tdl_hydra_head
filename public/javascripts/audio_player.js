@@ -135,7 +135,7 @@
 			stop.addEventListener('click',function() {
 				YAHOO.MediaPlayer.stop();
 				playpause.setAttribute('title','Play');
-				playpause.style.backgroundImage="url('../images/audio_play.gif')";
+				playpause.style.backgroundImage="url('../images/audio/audio_play.gif')";
 				showTime(0,currentTimeContainer);
 				resumeTrack = null;
 				resumeTime = 0;
@@ -145,7 +145,7 @@
 			stop.attachEvent('onclick',function () {
 				YAHOO.MediaPlayer.stop();
 				playpause.setAttribute('title','Play');
-				playpause.style.backgroundImage="url('../images/audio_play.gif')";
+				playpause.style.backgroundImage="url('../images/audio/audio_play.gif')";
 				showTime(0,currentTimeContainer);
 				resumeTrack = null;
 				resumeTime = 0;
@@ -232,7 +232,7 @@
 		var trackMeta = YAHOO.MediaPlayer.getMetaData();
 		songTitle = trackMeta['title'];
 		playpause.setAttribute('title','Pause');
-		playpause.style.backgroundImage="url('../images/audio_pause.gif')";
+		playpause.style.backgroundImage="url('../images/audio/audio_pause.gif')";
 		thisMediaObj = mediaObj;
 		//at this point, ok to enable seek buttons
 		seekBack.disabled=false;
@@ -254,7 +254,7 @@
 		//track has been possed, possible via a click on a pause button in the playlist
 		//be sure playpause button is in play state
 		playpause.setAttribute('title','Play');
-		playpause.style.backgroundImage="url('../images/audio_play.gif')";
+		playpause.style.backgroundImage="url('../images/audio/audio_play.gif')";
 
 		resumeTrack = YAHOO.MediaPlayer.getMetaData().id;
 		resumeTime = YAHOO.MediaPlayer.getTrackPosition();
@@ -276,12 +276,12 @@
 		if (playerState == 2) { //playing -- meaning you now want it to pause
 			YAHOO.MediaPlayer.pause();
 			playpause.setAttribute('title','Play');
-			playpause.style.backgroundImage="url('../images/audio_play.gif')";
+			playpause.style.backgroundImage="url('../images/audio/audio_play.gif')";
 		}
 		else {
 			YAHOO.MediaPlayer.play();
 			playpause.setAttribute('title','Pause');
-			playpause.style.backgroundImage="url('../images/audio_pause.gif')";
+			playpause.style.backgroundImage="url('../images/audio/audio_pause.gif')";
 		}
 	}
 
@@ -343,14 +343,14 @@
 		if (YAHOO.MediaPlayer.getVolume() == 0) { //muted, so unmute.
 			mute.setAttribute('title','Mute');
 			YAHOO.MediaPlayer.setVolume(volume); //volume should still be at pre-muted value
-			mute.style.backgroundImage="url('../images/audio_volume.gif')";
+			mute.style.backgroundImage="url('../images/audio/audio_volume.gif')";
 		}
 		else { //not muted, so mute
 			mute.setAttribute('title','UnMute');
 			//don't update var volume. Keep it at previous level
 			//so we can return to it on unmute
 			YAHOO.MediaPlayer.setVolume(0);
-			mute.style.backgroundImage="url('../images/audio_mute.gif')";
+			mute.style.backgroundImage="url('../images/audio/audio_mute.gif')";
 		}
 	}
 
