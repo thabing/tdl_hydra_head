@@ -41,7 +41,7 @@
 		width: 34px;
 		height: 30px;
 		background-color: transparent;
-		background-image: url('../images/audio/audio_play.gif');
+		background-image: url('/images/audio/audio_play.gif');
 		color: transparent;
 		border-right-color: #848484;
 	}
@@ -52,7 +52,7 @@
 		width: 34px;
 		height: 30px;
 		background-color: transparent;
-		background-image: url('../images/audio/audio_stop.gif');
+		background-image: url('/images/audio/audio_stop.gif');
 		color: transparent;
 	}
 
@@ -62,7 +62,7 @@
 		width: 34px;
 		height: 30px;
 		background-color: transparent;
-		background-image: url('../images/audio/audio_rewind.gif');
+		background-image: url('/images/audio/audio_rewind.gif');
 		color: transparent;
 	}
 
@@ -72,7 +72,7 @@
 		width: 34px;
 		height: 30px;
 		background-color: transparent;
-		background-image: url('../images/audio/audio_forward.gif');
+		background-image: url('/images/audio/audio_forward.gif');
 		color: transparent;
 	}
 
@@ -89,7 +89,7 @@
 		width: 34px;
 		height: 30px;
 		background-color: transparent;
-		background-image: url('../images/audio/audio_volume.gif');
+		background-image: url('/images/audio/audio_volume.gif');
 		color: transparent;
 		border-left-color: #848484;
 	}
@@ -100,7 +100,7 @@
 		width: 34px;
 		height: 30px;
 		background-color: transparent;
-		background-image: url('../images/audio/audio_volumeUp.gif');
+		background-image: url('/images/audio/audio_volumeUp.gif');
 		color: transparent;
 	}
 
@@ -110,7 +110,7 @@
 		width: 34px;
 		height: 30px;
 		background-color: transparent;
-		background-image: url('../images/audio/audio_volumeDown.gif');
+		background-image: url('/images/audio/audio_volumeDown.gif');
 		color: transparent;
 	}
 
