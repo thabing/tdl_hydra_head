@@ -6,15 +6,12 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/bookreader/BookReader.css"/>
     <!-- Custom CSS overrides -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/imageviewer/BookReaderImageViewer.css"/>
-
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="http://www.archive.org/bookreader/jquery-ui-1.8.5.custom.min.js"></script>
-
-    <script type="text/javascript" src="http://www.archive.org/bookreader/dragscrollable.js"></script>
-    <script type="text/javascript" src="http://www.archive.org/bookreader/jquery.colorbox-min.js"></script>
-    <script type="text/javascript" src="http://www.archive.org/bookreader/jquery.ui.ipad.js"></script>
-    <script type="text/javascript" src="http://www.archive.org/bookreader/jquery.bt.min.js"></script>
-
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <%= javascript_include_tag "bookreader/jquery-ui-1.8.5.custom.min" %>
+    <%= javascript_include_tag 'bookreader/dragscrollable' %>
+    <%= javascript_include_tag 'bookreader/jquery.colorbox-min' %>
+    <%= javascript_include_tag 'bookreader/jquery.ui.ipad' %>
+    <%= javascript_include_tag 'bookreader/jquery.bt.min' %>
     <script type="text/javascript" src="/javascripts/BookReader.js"></script>
 </head>
 <body style="background-color: #939598;">
