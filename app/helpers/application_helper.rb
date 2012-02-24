@@ -80,8 +80,8 @@ module ApplicationHelper
 #   result += "<a href=\"" + datastream_disseminator_url(params[:id], "ACCESS_MP3") + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
 
 #   the following line works in Safari, Chrome and Firefox but not in Opera
-    result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + pid + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-
+    #result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + pid + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+    result += "<a href=\"/file_assets/" + pid +"\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
 #   the following test works in Safari, Chrome, Firefox and Opera, proving that Opera is capable of using the yahoo media player, as in current DL prod...
 #   result += "<a href=\"http://dl.tufts.edu/ProxyServlet/?url=http://repository01.lib.tufts.edu:8080/fedora/get/tufts:AC00001/bdef:TuftsAudio/getAudioFile&filename=tufts:AC00001.mp3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
 
@@ -127,48 +127,67 @@ module ApplicationHelper
   def showTranscriptFromDatastream(datastream)
     result =  "<div class=\"participant_section\">\n"
     result += "  <h1 class=\"participant_header\">Interview Participants</h1>\n"
-    result += "  <div class=\"participant_table\">\n";
+    result += "  <div class=\"participant_table\">\n"
 
-    id_attrs = get_values_from_datastream(@document_fedora, datastream, [:id_attr])
-    participants = get_values_from_datastream(@document_fedora, datastream, [:p])
-    role_attrs = get_values_from_datastream(@document_fedora, datastream, [:role_attr])
-
-    index = 0;
-    count = id_attrs.size
-
-    while index < count
-      result += "    <div class=\"participant_row\" id=\"participant" + (index + 1).to_s + "\">\n";
-      result += "      <div class=\"participant_id\">" + Sanitize.clean(RedCloth.new(id_attrs[index], [:sanitize_html]).to_html) + ":</div>\n"
-      result += "      <div class=\"participant_name\">" + Sanitize.clean(RedCloth.new(participants[index], [:sanitize_html]).to_html) + "</div>\n"
-      result += "      <div class=\"participant_role\">" + Sanitize.clean(RedCloth.new(role_attrs[index], [:sanitize_html]).to_html) + "</div>\n"
-      result += "    </div> <!-- participant_row -->\n"
-
-      index += 1
+    #id_attrs = get_values_from_datastream(@document_fedora, datastream, [:id_attr])
+    #participants = get_values_from_datastream(@document_fedora, datastream, [:p])
+    #role_attrs = get_values_from_datastream(@document_fedora, datastream, [:role_attr])
+    #
+    #index = 0;
+    #count = id_attrs.size
+    node_sets = @document_fedora.datastreams[datastream].find_by_terms_and_value(:participants)
+    node_sets.each_with_index do |node,index|
+      node.children.each do |child|
+        unless child.attributes.empty?
+          id = child.attributes["id"]
+          sex = child.attributes["sex"]
+          role = child.attributes["role"]
+          result += "    <div class=\"participant_row\" id=\"participant" + (index + 1).to_s + "\">\n"
+          unless id.nil?
+            result += "      <div class=\"participant_id\">" + id + ":</div>\n"
+          end
+          result += "      <div class=\"participant_name\">" + child.text + "</div>\n"
+          result += "      <div class=\"participant_role\">" + role + "</div>\n"
+          result += "      <div class=\"participant_sex\">" + sex + "</div>\n"
+          result += "    </div> <!-- participant_row -->\n"
+        end
+      end
     end
+
+    #while index < count
+    ###  result += "    <div class=\"participant_row\" id=\"participant" + (index + 1).to_s + "\">\n"
+      #result += "      <div class=\"participant_id\">" + id_attrs[index] + ":</div>\n"
+      #result += "      <div class=\"participant_name\">" + participants[index] + "</div>\n"
+      ##result += "      <div class=\"participant_role\">" + role_attrs[index] + "</div>\n"
+      #result += "    </div> <!-- participant_row -->\n"
+
+      #index += 1
+    #end
 
     result += "  </div> <!-- participant_table -->\n"
     result += "</div> <!-- participant_section -->\n"
     result += "<div class=\"transcript_section\">\n"
     result += "  <h1 class=\"transcript_header\">Transcript</h1>\n"
-    result += "  <div class=\"transcript_table\">\n";
+    result += "  <div class=\"transcript_table\">\n"
+    node_sets = @document_fedora.datastreams[datastream].find_by_terms_and_value(:u)
 
-    speakers = get_values_from_datastream(@document_fedora, datastream, [:who_attr])
-    utterances = get_values_from_datastream(@document_fedora, datastream, [:u_inner])
-
-    index = 0;
-    count = speakers.size
-
-    while index < count
-      result += "    <div class=\"transcript_row\" id=\"utterance" + (index + 1).to_s + "\">\n"
-      result += "      <div class=\"transcript_speaker\">" + Sanitize.clean(RedCloth.new(speakers[index], [:sanitize_html]).to_html) + ":</div>\n"
-      result += "      <div class=\"transcript_utterance\">" + Sanitize.clean(RedCloth.new(utterances[index], [:sanitize_html]).to_html) + "</div>\n"
-      result += "    </div> <!-- transcript_row -->\n"
-
-      index += 1
+    # => #<Nokogiri::XML::Element:0x83736db4 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a3130c name="rend" value="transcript_chunk">, #<Nokogiri::XML::Attr:0x83a312e4 name="start" value="timepoint_1">, #<Nokogiri::XML::Attr:0x83a312d0 name="n" value="1">, #<Nokogiri::XML::Attr:0x83a312bc name="end" value="timepoint_2">] children=[#<Nokogiri::XML::Text:0x83a30768 "\n\t  ">, #<Nokogiri::XML::Element:0x83a30704 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a30574 name="who" value="AE">] children=[#<Nokogiri::XML::Text:0x83a30088 "This is a test, this is a test. I'm just going to record, this is Adrienne Effron and I'm here with Ed Ciampa, did I say that right?">]>, #<Nokogiri::XML::Text:0x83a2fee4 "\n\t  ">, #<Nokogiri::XML::Element:0x83a2fe80 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a2fcf0 name="who" value="EC">] children=[#<Nokogiri::XML::Text:0x83a2f804 "Right, Ed Chi-amp-pah. ">]>, #<Nokogiri::XML::Text:0x83a2f660 "\n\t  ">, #<Nokogiri::XML::Element:0x83a2f5e8 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a2f458 name="who" value="AE">] children=[#<Nokogiri::XML::Text:0x83a2ef6c "Chi-amp-pah, sorry I said it wrong.">]>, #<Nokogiri::XML::Text:0x83a2edc8 "\n\t  ">, #<Nokogiri::XML::Element:0x83a2ed64 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a2ebd4 name="who" value="EC">] children=[#<Nokogiri::XML::Text:0x83a2e6e8 "No.">]>, #<Nokogiri::XML::Text:0x83a2e544 "\n\t">]>
+   node_sets.each_with_index do |node,index|
+    node.children.each do |child|
+      unless child.attributes.empty?
+        who = child.attributes["who"]
+        result += "    <div class=\"transcript_row\" id=\"utterance" + (index + 1).to_s + "\">\n"
+        unless who.nil?
+          result += "<div class=\"transcript_speaker\">"+ who.value + "</div>"
+        end
+        result += "<div class=\"transcript_utterance\">"+ child.text() + "</div>"
+        result += "    </div> <!-- transcript_row -->\n"
+      end
     end
+   end
 
-    result += "  </div> <!-- transcript_table -->\n"
-    result += "</div> <!-- transcript_section -->\n"
+  result += "  </div> <!-- transcript_table -->\n"
+  result += "</div> <!-- transcript_section -->\n"
 
     return raw(result)
   end
