@@ -1,0 +1,17 @@
+# config/application.yml
+defaults: &defaults
+  pdfpages:
+    pagelocation: "#{Rails.root}/pdf_pages"
+
+development:
+  <<: *defaults
+  neat_setting: 800
+
+tdldev:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
