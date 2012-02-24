@@ -147,7 +147,9 @@ module ApplicationHelper
             result += "      <div class=\"participant_id\">" + id + ":</div>\n"
           end
           result += "      <div class=\"participant_name\">" + child.text + "</div>\n"
-          result += "      <div class=\"participant_role\">" + role + "</div>\n"
+          unless role.nil?
+            result += "      <div class=\"participant_role\">" + role + "</div>\n"
+          end
           result += "      <div class=\"participant_sex\">" + sex + "</div>\n"
           result += "    </div> <!-- participant_row -->\n"
         end
