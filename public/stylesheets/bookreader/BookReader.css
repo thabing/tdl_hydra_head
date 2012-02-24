@@ -126,6 +126,11 @@ a {
     -webkit-user-drag: none;
 }
 
+.BRnoselect2 {
+    position: absolute;
+    top:0px;
+    left:0px;
+}
 .BRleafEdgeR {
     /*
     border-style: solid solid solid none;

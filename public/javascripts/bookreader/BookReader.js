@@ -88,6 +88,8 @@ function BookReader() {
     //     path in the CSS.  Would be better to automagically find that path.
     this.imagesBaseURL = '/bookreader/images/';
 
+    // protect images
+    this.protectImages = false;
 
     // Zoom levels
     // $$$ provide finer grained zooming
@@ -412,132 +414,7 @@ BookReader.prototype.setClickHandler2UP = function( element, data, handler) {
 }
 
 // drawLeafsOnePage()
-//______________________________________________________________________________
-BookReader.prototype.drawLeafsOnePage = function() {
-    //alert('drawing leafs!');
-    this.timer = null;
-
-
-    var scrollTop = $('#BRcontainer').prop('scrollTop');
-    var scrollBottom = scrollTop + $('#BRcontainer').height();
-    //console.log('top=' + scrollTop + ' bottom='+scrollBottom);
-
-    var indicesToDisplay = [];
-
-    var i;
-    var leafTop = 0;
-    var leafBottom = 0;
-    for (i=0; i<this.numLeafs; i++) {
-        var height  = parseInt(this._getPageHeight(i)/this.reduce);
-
-        leafBottom += height;
-        //console.log('leafTop = '+leafTop+ ' pageH = ' + this.pageH[i] + 'leafTop>=scrollTop=' + (leafTop>=scrollTop));
-        var topInView    = (leafTop >= scrollTop) && (leafTop <= scrollBottom);
-        var bottomInView = (leafBottom >= scrollTop) && (leafBottom <= scrollBottom);
-        var middleInView = (leafTop <=scrollTop) && (leafBottom>=scrollBottom);
-        if (topInView | bottomInView | middleInView) {
-            //console.log('displayed: ' + this.displayedIndices);
-            //console.log('to display: ' + i);
-            indicesToDisplay.push(i);
-        }
-        leafTop += height +10;
-        leafBottom += 10;
-    }
-
-    // Based of the pages displayed in the view we set the current index
-    // $$$ we should consider the page in the center of the view to be the current one
-    var firstIndexToDraw  = indicesToDisplay[0];
-    if (firstIndexToDraw != this.firstIndex) {
-        this.willChangeToIndex(firstIndexToDraw);
-    }
-    this.firstIndex = firstIndexToDraw;
-
-    // Update hash, but only if we're currently displaying a leaf
-    // Hack that fixes #365790
-    if (this.displayedIndices.length > 0) {
-        this.updateLocationHash();
-    }
-
-    if ((0 != firstIndexToDraw) && (1 < this.reduce)) {
-        firstIndexToDraw--;
-        indicesToDisplay.unshift(firstIndexToDraw);
-    }
-
-    var lastIndexToDraw = indicesToDisplay[indicesToDisplay.length-1];
-    if ( ((this.numLeafs-1) != lastIndexToDraw) && (1 < this.reduce) ) {
-        indicesToDisplay.push(lastIndexToDraw+1);
-    }
-
-    leafTop = 0;
-    var i;
-    for (i=0; i<firstIndexToDraw; i++) {
-        leafTop += parseInt(this._getPageHeight(i)/this.reduce) +10;
-    }
-
-    //var viewWidth = $('#BRpageview').width(); //includes scroll bar width
-    var viewWidth = $('#BRcontainer').prop('scrollWidth');
-
-
-    for (i=0; i<indicesToDisplay.length; i++) {
-        var index = indicesToDisplay[i];
-        var height  = parseInt(this._getPageHeight(index)/this.reduce);
-
-        if (BookReader.util.notInArray(indicesToDisplay[i], this.displayedIndices)) {
-            var width   = parseInt(this._getPageWidth(index)/this.reduce);
-            //console.log("displaying leaf " + indicesToDisplay[i] + ' leafTop=' +leafTop);
-            var div = document.createElement("div");
-            div.className = 'BRpagediv1up';
-            div.id = 'pagediv'+index;
-            div.style.position = "absolute";
-            $(div).css('top', leafTop + 'px');
-            var left = (viewWidth-width)>>1;
-            if (left<0) left = 0;
-            $(div).css('left', left+'px');
-            $(div).css('width', width+'px');
-            $(div).css('height', height+'px');
-            //$(div).text('loading...');
-
-            $('#BRpageview').append(div);
-
-            var img = document.createElement("img");
-            img.src = this._getPageURI(index, this.reduce, 0);
-            $(img).addClass('BRnoselect');
-            $(img).css('width', width+'px');
-            $(img).css('height', height+'px');
-            $(div).append(img);
-
-        } else {
-            //console.log("not displaying " + indicesToDisplay[i] + ' score=' + jQuery.inArray(indicesToDisplay[i], this.displayedIndices));
-        }
-
-        leafTop += height +10;
-
-    }
-
-    for (i=0; i<this.displayedIndices.length; i++) {
-        if (BookReader.util.notInArray(this.displayedIndices[i], indicesToDisplay)) {
-            var index = this.displayedIndices[i];
-            //console.log('Removing leaf ' + index);
-            //console.log('id='+'#pagediv'+index+ ' top = ' +$('#pagediv'+index).css('top'));
-            $('#pagediv'+index).remove();
-        } else {
-            //console.log('NOT Removing leaf ' + this.displayedIndices[i]);
-        }
-    }
-
-    this.displayedIndices = indicesToDisplay.slice();
-    this.updateSearchHilites();
-
-    if (null != this.getPageNum(firstIndexToDraw))  {
-        $("#BRpagenum").val(this.getPageNum(this.currentIndex()));
-    } else {
-        $("#BRpagenum").val('');
-    }
-
-    this.updateToolbarZoom(this.reduce);
-
-}
-
+//___
 // drawLeafsThumbnail()
 //______________________________________________________________________________
 // If seekIndex is defined, the view will be drawn with that page visible (without any
@@ -2507,19 +2384,23 @@ BookReader.prototype.prefetchImg = function(index) {
         //console.log('prefetching ' + index);
         var img = document.createElement("img");
         $(img).addClass('BRpageimage').addClass('BRnoselect');
-        if (index < 0 || index > (this.numLeafs - 1) ) {
+        //if (index < 0 || index > (this.numLeafs - 1) ) {
             // Facing page at beginning or end, or beyond
-            $(img).css({
-                'background-color': '#efefef'
-            });
-        }
-        img.src = pageURI;
-        img.uri = pageURI; // browser may rewrite src so we stash raw URI here
+         //   $(img).css({
+         //       'background-color': '#efefef'
+          //  });
+        //}
+        $('#BRPageview').css('background-image', this._getPageURI(index, this.reduce, 0));
+        img.src = this.protectImages ? this._getTransparentPageURI() : pageURI;
+        img.uri =  this.protectImages ? this._getTransparentPageURI() : pageURI; // browser may rewrite src so we stash raw URI here
         this.prefetchedImgs[index] = img;
     }
 }
 
-
+BookReader.prototype._getTransparentPageURI= function()
+{
+    return 'transparent.gif';
+}
 // prepareFlipLeftToRight()
 //
 //______________________________________________________________________________

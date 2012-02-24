@@ -202,7 +202,10 @@ BookReader.prototype.drawLeafsOnePage = function() {
     for (i=0; i<firstIndexToDraw; i++) {
         leafTop += parseInt(this._getPageHeight(i)/this.reduce) +10;
     }
+    var cont = $('#BRContainer');
 
+    cont.css('background-image', this._getPageURI(index, this.reduce, 0));
+    cont.css('background-color', 'transparent');
 
 
     //center the page vertically
@@ -239,13 +242,21 @@ BookReader.prototype.drawLeafsOnePage = function() {
 
             $('#BRpageview').append(div);
 
+
+
             var img = document.createElement("img");
-            img.src = this._getPageURI(index, this.reduce, 0);
-            $(img).addClass('BRnoselect');
+            img.src = this.protectImages ? this._getTransparentPageURI() : this._getPageURI(index, this.reduce, 0);
+            $(img).addClass('BRnoselect2');
             $(img).css('width', width+'px');
             $(img).css('height', height+'px');
             $(div).append(img);
 
+            var img2 = document.createElement("img");
+                                                img2.src = this._getPageURI(index, this.reduce, 0);
+                                                $(img2).addClass('BRnoselect');
+                                                $(img2).css('width', width+'px');
+                                                $(img2).css('height', height+'px');
+                                                $(div).append(img2);
         } else {
             //console.log("not displaying " + indicesToDisplay[i] + ' score=' + jQuery.inArray(indicesToDisplay[i], this.displayedIndices));
         }
@@ -278,6 +289,10 @@ BookReader.prototype.drawLeafsOnePage = function() {
 
 }
 
+BookReader.prototype._getTransparentPageURI = function()
+{
+    return '/images/tdl/Transparent.gif'
+}
 // This function returns the left and right indices for the user-visible
 // spread that contains the given index.  The return values may be
 // null if there is no facing page or the index is invalid.
@@ -315,6 +330,10 @@ br.getSpreadIndices = function(pindex) {
 br.getPageNum = function(index) {
     return index+1;
 }
+
+
+// Protect images
+br.protectImages = true;
 
 // Total number of leafs
 br.numLeafs = 1;
