@@ -126,71 +126,103 @@ module ApplicationHelper
 
   def showTranscriptFromDatastream(datastream)
     result =  "<div class=\"participant_section\">\n"
-    result += "  <h1 class=\"participant_header\">Interview Participants</h1>\n"
-    result += "  <div class=\"participant_table\">\n"
+    result += "            <h1 class=\"participant_header\">Interview Participants</h1>\n"
+    result += "            <div class=\"participant_table\">\n"
 
-    #id_attrs = get_values_from_datastream(@document_fedora, datastream, [:id_attr])
-    #participants = get_values_from_datastream(@document_fedora, datastream, [:p])
-    #role_attrs = get_values_from_datastream(@document_fedora, datastream, [:role_attr])
-    #
-    #index = 0;
-    #count = id_attrs.size
+    participant_number = 0
     node_sets = @document_fedora.datastreams[datastream].find_by_terms_and_value(:participants)
-    node_sets.each_with_index do |node,index|
+
+    node_sets.each do |node|
       node.children.each do |child|
         unless child.attributes.empty?
+          participant_number += 1
           id = child.attributes["id"]
           sex = child.attributes["sex"]
           role = child.attributes["role"]
-          result += "    <div class=\"participant_row\" id=\"participant" + (index + 1).to_s + "\">\n"
+          result += "              <div class=\"participant_row\" id=\"participant" + participant_number.to_s + "\">\n"
           unless id.nil?
-            result += "      <div class=\"participant_id\">" + id + ":</div>\n"
+            result += "                <div class=\"participant_id\">" + id + ":</div>\n"
           end
-          result += "      <div class=\"participant_name\">" + child.text + "</div>\n"
-          result += "      <div class=\"participant_role\">" + role + "</div>\n"
-          result += "      <div class=\"participant_sex\">" + sex + "</div>\n"
-          result += "    </div> <!-- participant_row -->\n"
+          result += "                <div class=\"participant_name\">" + child.text + "</div>\n"
+          result += "                <div class=\"participant_role\">" + role + "</div>\n"
+          result += "                <div class=\"participant_sex\">" + sex + "</div>\n"
+          result += "              </div> <!-- participant_row -->\n"
         end
       end
     end
 
-    #while index < count
-    ###  result += "    <div class=\"participant_row\" id=\"participant" + (index + 1).to_s + "\">\n"
-      #result += "      <div class=\"participant_id\">" + id_attrs[index] + ":</div>\n"
-      #result += "      <div class=\"participant_name\">" + participants[index] + "</div>\n"
-      ##result += "      <div class=\"participant_role\">" + role_attrs[index] + "</div>\n"
-      #result += "    </div> <!-- participant_row -->\n"
+    result += "            </div> <!-- participant_table -->\n"
+    result += "          </div> <!-- participant_section -->\n"
 
-      #index += 1
-    #end
+    timepoints = Hash.new
+    node_sets = @document_fedora.datastreams[datastream].find_by_terms_and_value(:when)
 
-    result += "  </div> <!-- participant_table -->\n"
-    result += "</div> <!-- participant_section -->\n"
-    result += "<div class=\"transcript_section\">\n"
-    result += "  <h1 class=\"transcript_header\">Transcript</h1>\n"
-    result += "  <div class=\"transcript_table\">\n"
+    node_sets.each do |node|
+      timepoint_id = node.attributes["id"]
+      timepoint_interval = node.attributes["interval"]
+      unless timepoint_id.nil? | timepoint_interval.nil?
+        timepoint_id = timepoint_id.value
+        timepoint_interval = timepoint_interval.value
+        # result += "<!-- " + timepoint_id + " => " + timepoint_interval + " -->\n"
+        timepoints[timepoint_id] = timepoint_interval
+      end
+    end
+
+    result += "          <div class=\"transcript_section\">\n"
+    result += "            <h1 class=\"transcript_header\">Transcript</h1>\n"
+    result += "            <div class=\"transcript_table\">\n"
+
     node_sets = @document_fedora.datastreams[datastream].find_by_terms_and_value(:u)
 
-    # => #<Nokogiri::XML::Element:0x83736db4 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a3130c name="rend" value="transcript_chunk">, #<Nokogiri::XML::Attr:0x83a312e4 name="start" value="timepoint_1">, #<Nokogiri::XML::Attr:0x83a312d0 name="n" value="1">, #<Nokogiri::XML::Attr:0x83a312bc name="end" value="timepoint_2">] children=[#<Nokogiri::XML::Text:0x83a30768 "\n\t  ">, #<Nokogiri::XML::Element:0x83a30704 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a30574 name="who" value="AE">] children=[#<Nokogiri::XML::Text:0x83a30088 "This is a test, this is a test. I'm just going to record, this is Adrienne Effron and I'm here with Ed Ciampa, did I say that right?">]>, #<Nokogiri::XML::Text:0x83a2fee4 "\n\t  ">, #<Nokogiri::XML::Element:0x83a2fe80 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a2fcf0 name="who" value="EC">] children=[#<Nokogiri::XML::Text:0x83a2f804 "Right, Ed Chi-amp-pah. ">]>, #<Nokogiri::XML::Text:0x83a2f660 "\n\t  ">, #<Nokogiri::XML::Element:0x83a2f5e8 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a2f458 name="who" value="AE">] children=[#<Nokogiri::XML::Text:0x83a2ef6c "Chi-amp-pah, sorry I said it wrong.">]>, #<Nokogiri::XML::Text:0x83a2edc8 "\n\t  ">, #<Nokogiri::XML::Element:0x83a2ed64 name="u" attributes=[#<Nokogiri::XML::Attr:0x83a2ebd4 name="who" value="EC">] children=[#<Nokogiri::XML::Text:0x83a2e6e8 "No.">]>, #<Nokogiri::XML::Text:0x83a2e544 "\n\t">]>
-   node_sets.each_with_index do |node,index|
-    node.children.each do |child|
-      unless child.attributes.empty?
-        who = child.attributes["who"]
-        result += "    <div class=\"transcript_row\" id=\"utterance" + (index + 1).to_s + "\">\n"
-        unless who.nil?
-          result += "<div class=\"transcript_speaker\">"+ who.value + "</div>"
+    node_sets.each do |node|
+      string_total_seconds = ""
+      timepoint_id = node.attributes["start"]
+      unless timepoint_id.nil?
+        timepoint_id = timepoint_id.value
+        timepoint_interval = timepoints[timepoint_id]
+        unless timepoint_interval.nil?
+          # timepoint_interval is a String containing the timestamp in milliseconds
+          int_total_seconds = timepoint_interval.to_i / 1000 # truncated to the second
+          int_minutes = int_total_seconds / 60
+          int_just_seconds = int_total_seconds - (int_minutes * 60) # the seconds for seconds:minutes (0:00) display
+          string_total_seconds = int_total_seconds.to_s
+          string_minutes = int_minutes.to_s
+          string_just_seconds = int_just_seconds.to_s
+          if (int_just_seconds < 10)
+              string_just_seconds = "0" + string_just_seconds
+          end
         end
-        result += "<div class=\"transcript_utterance\">"+ child.text() + "</div>"
-        result += "    </div> <!-- transcript_row -->\n"
       end
+      result += "              <div class=\"transcript_chunk\" id=\"chunk" + string_total_seconds + "\">\n"
+      unless (string_total_seconds == "")
+        result += "                <div class=\"transcript_row\">\n"
+        result += "                  <div class=\"transcript_speaker\"></div>\n"
+        result += "                  <div class=\"transcript_utterance\">\n"
+        result += "                    <a class=\"transcript_chunk_link\" href=\"javascript:movePlayerTo(" + timepoint_interval + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+        result += "                  </div> <!-- transcript_utterance -->\n"
+        result += "                </div> <!-- transcript_row -->\n"
+      end
+      node.children.each do |child|
+        unless child.attributes.empty?
+          who = child.attributes["who"]
+          result += "                <div class=\"transcript_row\">\n"
+          unless who.nil?
+            result += "                  <div class=\"transcript_speaker\">"+ who.value + "</div>\n"
+          end
+          result += "                  <div class=\"transcript_utterance\">"+ child.text() + "</div>\n"
+          result += "                </div> <!-- transcript_row -->\n"
+        end
+      end
+      result += "              </div> <!-- transcript_chunk -->\n"
     end
-   end
 
-  result += "  </div> <!-- transcript_table -->\n"
-  result += "</div> <!-- transcript_section -->\n"
+    result += "            </div> <!-- transcript_table -->\n"
+    result += "          </div> <!-- transcript_section -->"
 
     return raw(result)
   end
+
+
   def render_back_to_overview_link
       link_to('Back to overview', catalog_url)
 
