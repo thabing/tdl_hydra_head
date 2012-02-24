@@ -184,6 +184,7 @@ module ApplicationHelper
         timepoint_interval = timepoints[timepoint_id]
         unless timepoint_interval.nil?
           # timepoint_interval is a String containing the timestamp in milliseconds
+          string_milliseconds = timepoint_interval
           int_total_seconds = timepoint_interval.to_i / 1000 # truncated to the second
           int_minutes = int_total_seconds / 60
           int_just_seconds = int_total_seconds - (int_minutes * 60) # the seconds for seconds:minutes (0:00) display
@@ -200,7 +201,7 @@ module ApplicationHelper
         result += "                <div class=\"transcript_row\">\n"
         result += "                  <div class=\"transcript_speaker\"></div>\n"
         result += "                  <div class=\"transcript_utterance\">\n"
-        result += "                    <a class=\"transcript_chunk_link\" href=\"javascript:movePlayerTo(" + timepoint_interval + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+        result += "                    <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
         result += "                  </div> <!-- transcript_utterance -->\n"
         result += "                </div> <!-- transcript_row -->\n"
       end
