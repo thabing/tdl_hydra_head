@@ -51,8 +51,8 @@
       t.participants(:proxy => [:teiHeader, :profileDesc, :particDesc])
       t.when(:proxy => [:text, :body, :timeline, :when])
       t.u(:proxy => [:text, :body, :div1, :u])
-      t.who_attr(:proxy => [:text, :body, :div1, :u, :u, :who_attr])
-      t.u_inner(:proxy => [:text, :body, :div1, :u, :u_inner])
+      #t.who_attr(:proxy => [:text, :body, :div1, :u, :u, :who_attr])
+      #t.u_inner(:proxy => [:text, :body, :div1, :u, :u_inner])
     end
 
 
