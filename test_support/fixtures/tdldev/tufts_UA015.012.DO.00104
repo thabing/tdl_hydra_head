@@ -297,7 +297,6 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 <foxml:xmlContent>
 <rdf:RDF xmlns="http://www.fedora.info/definitions/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:xlink="http://www.w3.org/1999/xlink">
   <rdf:Description rdf:about="info:fedora/tufts:UA015.012.DO.00104">
-    <fedora-model:hasModel xmlns:fedora-model="info:fedora/fedora-system:def/model#" rdf:resource="info:fedora/cm:FacPub"></fedora-model:hasModel>
     <fedora-model:hasModel xmlns:fedora-model="info:fedora/fedora-system:def/model#" rdf:resource="info:fedora/afmodel:TuftsFacultyPublication"></fedora-model:hasModel>
     <rel:isMemberOfCollection rdf:resource="info:fedora/tufts:UA069.006.DO.UA015"></rel:isMemberOfCollection>
     <rel:isMemberOfCollection rdf:resource="info:fedora/tufts:UA069.006.DO.UA015.012"></rel:isMemberOfCollection>
