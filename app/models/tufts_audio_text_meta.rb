@@ -42,7 +42,7 @@
         }
       }
 
-      t.title(:proxy => [:teiHeader, :fileDesc, :titleStmt, :title])
+      t.title(:proxy => [:teiHeader, :fileDesc, :titleStmt, :title],:index_as=>[nil])
       t.author(:proxy => [:teiHeader, :fileDesc, :titleStmt, :author])
 
       t.id_attr(:proxy => [:teiHeader, :profileDesc, :particDesc, :person, :id_attr])
