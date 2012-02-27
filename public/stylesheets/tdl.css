@@ -114,6 +114,10 @@ input#submit {
   padding-bottom: .25em;
 }
 
+.transcript_notation {
+  font-style: italic;
+}
+
 /* Navigation */
 
 nav {
