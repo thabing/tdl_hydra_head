@@ -229,15 +229,15 @@ From file_assets/_new.html.haml
 
       if (mapped_model_names.include?("info:fedora/afmodel:TuftsAudio"))
         if @file_asset.datastreams.include?("ACCESS_MP3")
-          datastream = @file_asset.datastreams["ACCESS_MP3"]
-          send_data datastream.content, :filename=>params[:id], :type=>datastream.attributes["mimeType"], :disposition=>"inline"
+          # datastream = @file_asset.datastreams["ACCESS_MP3"]
+          send_datastream_inline @file_asset.datastreams["ACCESS_MP3"]
         end
       end
 
       if (mapped_model_names.include?("info:fedora/afmodel:TuftsAudioText"))
         if @file_asset.datastreams.include?("ACCESS_MP3")
-          datastream = @file_asset.datastreams["ACCESS_MP3"]
-          send_data datastream.content, :filename=>params[:id], :type=>datastream.attributes["mimeType"], :disposition=>"inline"
+          # datastream = @file_asset.datastreams["ACCESS_MP3"]
+          send_datastream_inline @file_asset.datastreams["ACCESS_MP3"]
         end
       end
 
