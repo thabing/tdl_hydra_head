@@ -137,17 +137,13 @@ module ApplicationHelper
         unless child.attributes.empty?
           participant_number += 1
           id = child.attributes["id"]
-          sex = child.attributes["sex"]
           role = child.attributes["role"]
+          sex = child.attributes["sex"]
           result += "              <div class=\"participant_row\" id=\"participant" + participant_number.to_s + "\">\n"
-          unless id.nil?
-            result += "                <div class=\"participant_id\">" + id + ":</div>\n"
-          end
+          result += "                <div class=\"participant_id\">" + (id.nil? ? "" : id) + ":</div>\n"
           result += "                <div class=\"participant_name\">" + child.text + "</div>\n"
-          unless role.nil?
-            result += "                <div class=\"participant_role\">" + role + "</div>\n"
-          end
-          result += "                <div class=\"participant_sex\">" + sex + "</div>\n"
+          result += "                <div class=\"participant_role\">" + (role.nil? ? "" : role) + "</div>\n"
+          result += "                <div class=\"participant_sex\">" + (sex.nil? ? "" : sex) + "</div>\n"
           result += "              </div> <!-- participant_row -->\n"
         end
       end
@@ -211,9 +207,7 @@ module ApplicationHelper
           unless child.attributes.empty?
             who = child.attributes["who"]
             result += "                <div class=\"transcript_row\">\n"
-            unless who.nil?
-              result += "                  <div class=\"transcript_speaker\">"+ who.value + "</div>\n"
-            end
+            result += "                  <div class=\"transcript_speaker\">"+ (who.nil? ? "" : who.value) + "</div>\n"
             result += "                  <div class=\"transcript_utterance\">"+ parseNotations(child) + "</div>\n"
             result += "                </div> <!-- transcript_row -->\n"
           end
