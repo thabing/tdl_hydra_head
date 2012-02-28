@@ -162,7 +162,7 @@ module ApplicationHelper
     node_sets.each do |node|
       timepoint_id = node.attributes["id"]
       timepoint_interval = node.attributes["interval"]
-      unless timepoint_id.nil? | timepoint_interval.nil?
+      unless timepoint_id.nil? || timepoint_interval.nil?
         timepoint_id = timepoint_id.value
         timepoint_interval = timepoint_interval.value
         # result += "<!-- " + timepoint_id + " => " + timepoint_interval + " -->\n"
@@ -206,14 +206,27 @@ module ApplicationHelper
         result += "                </div> <!-- transcript_row -->\n"
       end
       node.children.each do |child|
-        unless child.attributes.empty?
-          who = child.attributes["who"]
-          result += "                <div class=\"transcript_row\">\n"
-          unless who.nil?
-            result += "                  <div class=\"transcript_speaker\">"+ who.value + "</div>\n"
+        childName = child.name
+        if (childName == "u")
+          unless child.attributes.empty?
+            who = child.attributes["who"]
+            result += "                <div class=\"transcript_row\">\n"
+            unless who.nil?
+              result += "                  <div class=\"transcript_speaker\">"+ who.value + "</div>\n"
+            end
+            result += "                  <div class=\"transcript_utterance\">"+ parseNotations(child) + "</div>\n"
+            result += "                </div> <!-- transcript_row -->\n"
           end
-          result += "                  <div class=\"transcript_utterance\">"+ child.text() + "</div>\n"
-          result += "                </div> <!-- transcript_row -->\n"
+        elsif (childName == "event" || childName == "gap" || childName == "vocal")
+          unless child.attributes.empty?
+            desc = child.attributes["desc"]
+            unless desc.nil?
+              result += "                <div class=\"transcript_row\">\n"
+              result += "                  <div class=\"transcript_speaker\">""</div>\n"
+              result += "                  <div class=\"transcript_utterance\"><span class = \"transcript_notation\">["+ desc + "]</span></div>\n"
+              result += "                </div> <!-- transcript_row -->\n"
+            end
+          end
         end
       end
       result += "              </div> <!-- transcript_chunk -->\n"
@@ -221,6 +234,30 @@ module ApplicationHelper
 
     result += "            </div> <!-- transcript_table -->\n"
     result += "          </div> <!-- transcript_section -->"
+
+    return raw(result)
+  end
+
+
+  def parseNotations(node)
+    result = ""
+
+    node.children.each do |child|
+      childName = child.name
+
+      if (childName == "text")
+        result += child.text
+      elsif (childName == "unclear")
+        result += "<span class=\"transcript_notation\">[" + child.text + "]</span>"
+      elsif (childName == "event" || childName == "gap" || childName == "vocal")
+        unless child.attributes.empty?
+          desc = child.attributes["desc"]
+          unless desc.nil?
+            result += "<span class=\"transcript_notation\">[" + desc + "]</span>"
+          end
+        end
+      end
+    end
 
     return raw(result)
   end
