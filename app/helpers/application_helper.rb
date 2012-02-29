@@ -168,6 +168,7 @@ module ApplicationHelper
 
     result += "          <div class=\"transcript_section\">\n"
     result += "            <h1 class=\"transcript_header\">Transcript</h1>\n"
+    result += "            <div class=\"transcript_scrollarea\">\n"
     result += "            <div class=\"transcript_table\">\n"
 
     node_sets = @document_fedora.datastreams[datastream].find_by_terms_and_value(:u)
@@ -197,7 +198,7 @@ module ApplicationHelper
         result += "                <div class=\"transcript_row\">\n"
         result += "                  <div class=\"transcript_speaker\"></div>\n"
         result += "                  <div class=\"transcript_utterance\">\n"
-        result += "                    <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+        result += "                    <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
         result += "                  </div> <!-- transcript_utterance -->\n"
         result += "                </div> <!-- transcript_row -->\n"
       end
@@ -227,6 +228,7 @@ module ApplicationHelper
     end
 
     result += "            </div> <!-- transcript_table -->\n"
+    result += "            </div> <!-- transcript_scrollarea -->\n"
     result += "          </div> <!-- transcript_section -->"
 
     return raw(result)
