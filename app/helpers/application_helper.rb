@@ -211,7 +211,7 @@ module ApplicationHelper
             result += "                  <div class=\"transcript_utterance\">"+ parseNotations(child) + "</div>\n"
             result += "                </div> <!-- transcript_row -->\n"
           end
-        elsif (childName == "event" || childName == "gap" || childName == "vocal")
+        elsif (childName == "event" || childName == "gap" || childName == "vocal" || childName == "kinesic")
           unless child.attributes.empty?
             desc = child.attributes["desc"]
             unless desc.nil?
@@ -243,7 +243,7 @@ module ApplicationHelper
         result += child.text
       elsif (childName == "unclear")
         result += "<span class=\"transcript_notation\">[" + child.text + "]</span>"
-      elsif (childName == "event" || childName == "gap" || childName == "vocal")
+      elsif (childName == "event" || childName == "gap" || childName == "vocal" || childName == "kinesic")
         unless child.attributes.empty?
           desc = child.attributes["desc"]
           unless desc.nil?
