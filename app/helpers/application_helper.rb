@@ -261,4 +261,20 @@ module ApplicationHelper
       link_to('Back to overview', catalog_url)
 
   end
+
+   ##
+  # Assumes controller has a #js_includes method, array with each
+  # element being a set of arguments for javsascript_include_tag.
+  # See #render_head_content for instructions on local code or plugins
+  # adding js files.
+  def render_js_includes
+    return "" unless respond_to?(:javascript_includes)
+    str = ""
+    javascript_includes.collect do |args|
+      if (args.to_a & %w(hydra/hydra-head jquery.form.js spin.min.js)).empty?
+        str +=javascript_include_tag(*args)
+      end
+    end.join("\n")
+    return raw("\n"+str)
+  end
 end
