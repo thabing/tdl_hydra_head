@@ -169,7 +169,7 @@ module ApplicationHelper
     result += "          <div class=\"transcript_section\">\n"
     result += "            <h1 class=\"transcript_header\">Transcript</h1>\n"
     result += "            <div class=\"transcript_scrollarea\">\n"
-    result += "            <div class=\"transcript_table\">\n"
+    result += "              <div class=\"transcript_table\">\n"  
 
     node_sets = @document_fedora.datastreams[datastream].find_by_terms_and_value(:u)
 
@@ -193,41 +193,41 @@ module ApplicationHelper
           end
         end
       end
-      result += "              <div class=\"transcript_chunk\" id=\"chunk" + string_total_seconds + "\">\n"
+      result += "                <div class=\"transcript_chunk\" id=\"chunk" + string_total_seconds + "\">\n"
       unless (string_total_seconds == "")
-        result += "                <div class=\"transcript_row\">\n"
-        result += "                  <div class=\"transcript_speaker\"></div>\n"
-        result += "                  <div class=\"transcript_utterance\">\n"
-        result += "                    <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
-        result += "                  </div> <!-- transcript_utterance -->\n"
-        result += "                </div> <!-- transcript_row -->\n"
+        result += "                  <div class=\"transcript_row\">\n"
+        result += "                    <div class=\"transcript_speaker\"></div>\n"
+        result += "                    <div class=\"transcript_utterance\">\n"
+        result += "                      <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+        result += "                    </div> <!-- transcript_utterance -->\n"
+        result += "                  </div> <!-- transcript_row -->\n"
       end
       node.children.each do |child|
         childName = child.name
         if (childName == "u")
           unless child.attributes.empty?
             who = child.attributes["who"]
-            result += "                <div class=\"transcript_row\">\n"
-            result += "                  <div class=\"transcript_speaker\">"+ (who.nil? ? "" : who.value) + "</div>\n"
-            result += "                  <div class=\"transcript_utterance\">"+ parseNotations(child) + "</div>\n"
-            result += "                </div> <!-- transcript_row -->\n"
+            result += "                  <div class=\"transcript_row\">\n"
+            result += "                    <div class=\"transcript_speaker\">"+ (who.nil? ? "" : who.value) + "</div>\n"
+            result += "                    <div class=\"transcript_utterance\">"+ parseNotations(child) + "</div>\n"
+            result += "                  </div> <!-- transcript_row -->\n"
           end
         elsif (childName == "event" || childName == "gap" || childName == "vocal" || childName == "kinesic")
           unless child.attributes.empty?
             desc = child.attributes["desc"]
             unless desc.nil?
-              result += "                <div class=\"transcript_row\">\n"
-              result += "                  <div class=\"transcript_speaker\">""</div>\n"
-              result += "                  <div class=\"transcript_utterance\"><span class = \"transcript_notation\">["+ desc + "]</span></div>\n"
-              result += "                </div> <!-- transcript_row -->\n"
+              result += "                  <div class=\"transcript_row\">\n"
+              result += "                    <div class=\"transcript_speaker\">""</div>\n"
+              result += "                    <div class=\"transcript_utterance\"><span class = \"transcript_notation\">["+ desc + "]</span></div>\n"
+              result += "                  </div> <!-- transcript_row -->\n"
             end
           end
         end
       end
-      result += "              </div> <!-- transcript_chunk -->\n"
+      result += "                </div> <!-- transcript_chunk -->\n"
     end
 
-    result += "            </div> <!-- transcript_table -->\n"
+    result += "              </div> <!-- transcript_table -->\n"
     result += "            </div> <!-- transcript_scrollarea -->\n"
     result += "          </div> <!-- transcript_section -->"
 
