@@ -33,4 +33,7 @@ group :development, :test do
          gem 'database_cleaner'
          gem 'capybara'
          gem 'bcrypt-ruby'
+         gem 'rcov'
+         gem 'metric_fu'
+
 end
