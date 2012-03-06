@@ -35,5 +35,6 @@ group :development, :test do
          gem 'bcrypt-ruby'
          gem 'rcov'
          gem 'metric_fu'
+         gem 'cucumber'
 
 end

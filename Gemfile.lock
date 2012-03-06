@@ -369,6 +369,7 @@ DEPENDENCIES
   blacklight_advanced_search (= 1.1.1)
   capybara
   chronic
+  cucumber
   cucumber-rails
   daemons
   database_cleaner
