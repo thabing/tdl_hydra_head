@@ -1,3 +1,16 @@
+<div class="subnav">
+<div class="span8 offset3">
+   <ul class="nav nav-pills">  <%= form_tag catalog_index_path, :class=>"form-inline", :method => :get do %>
+    <i class="icon-search"></i>  <%= text_field_tag :q, params[:q], :class => "q input-medium" %>
+         <% unless search_fields.empty? %>
+             <%= select_tag(:search_field, options_for_select(search_fields, h(params[:search_field])), :title => "Targeted search options", :class=>"span2") %>
+             <% end %>
+    <button type="submit" class="btn">Search</button>&nbsp;
+     <%= link_to 'Advanced Search', params.merge(:controller=>"advanced", :action=>"index") , :class=>"advanced_search"%>
+     <% end %>
+    </ul>
+</div>
+  </div>
 <!--<div class="subnav">
 <div class="span8 offset3">
    <ul class="nav nav-pills">   <form class="form-inline">
@@ -8,12 +21,13 @@
 <option value="author">Author</option>
 <option value="subject">Subject</option></select>
     <button type="submit" class="btn">Search</button>&nbsp;
- <a href="#"> Advanced Search</a>
+     <%= link_to 'Advanced Search', params.merge(:controller=>"advanced", :action=>"index") , :class=>"advanced_search"%>
     </form>
     </ul>
 </div>
   </div>
-  -->
+-->
+<!--
 <div id="search" class="search">
   <%= form_tag catalog_index_path, :method => :get do %>
     <h2 class="search"><%= label_tag(:q, "Search ") %></h2>
@@ -31,3 +45,4 @@
 
   <hr/>
 </div>
+-->
