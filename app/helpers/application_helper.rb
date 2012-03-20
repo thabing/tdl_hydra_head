@@ -114,6 +114,9 @@ module ApplicationHelper
     result += "<div class=\"metadata_value\"><input type=\"button\" id=\"feedbackShowButton\" class=\"feedbackLink\" value=\"Have feedback?  Contact us.\" onclick=\"showFeedbackForm()\"/></div>\n"
     result += "</div></div>\n"
 
+    result += "<input id=\"feedbackToken\" name=\"feedbackToken\" type=\"hidden\" value=\"" + form_authenticity_token + "\" />\n"
+    result += "<input id=\"feedbackPid\" name=\"feedbackPid\" type=\"hidden\" value=\"" + pid + "\" />\n"
+
     result += "<noscript class=\"metadata_row\" id=\"feedbackNoScriptShowRow\"><div class=\"metadata_label\"></div><div class=\"metadata_values\">\n"
     result += "<div class=\"metadata_value\"><input type=\"submit\" id=\"feedbackNoScriptShowButton\" class=\"feedbackLink\" value=\"Have feedback?  Contact us.\"/></div>\n"
     result += "</div></noscript>\n"

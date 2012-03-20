@@ -4,8 +4,8 @@ class Notifier < ActionMailer::Base
   def feedback(params)
     @params = params
 
-    return mail(:to => "brian.goodmon@tufts.edu",
+    return mail(:to => Settings.tdl_feedback_address,
       :from => params[:email],
-      :subject => "TDL Content Feedback").deliver;
+      :subject => Settings.tdl_feedback_subject).deliver;
   end
 end

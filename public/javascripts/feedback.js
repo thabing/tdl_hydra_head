@@ -35,7 +35,40 @@ function hideFeedbackForm() {
 
 
 function submitFeedback() {
+    var params,
+    	message = document.getElementById("feedbackBody").value,
+        optionalEmail = document.getElementById("feedbackEmail").value;
+
+    if (message == null || message.length == 0) {
+		alert("Please enter a message.");
+		return;
+    }
+
+	if (optionalEmail == null || optionalEmail.length == 0) {
+		optionalEmail = "unknown@unknowable.com";	// feedback_controller.rb expects an email address -- make one up.
+	} else {
+		var regexp = new RegExp("\\w+@\\w+\\.\\w+");
+
+		if (!optionalEmail.match(regexp)) {
+			alert("Please enter a valid email address or leave the email address field blank.");
+			return;
+		}
+	}
+
+    params  = "name=Unknown";		// feedback_controller.rb expects a name -- make one up.
+    params += "&email=" + optionalEmail;
+    params += "&message=" + message;
+    params += "&pid=" + document.getElementById("feedbackPid").value;
+    params += "&authenticity_token=" + document.getElementById("feedbackToken").value;
+    params += "&utf8=#x2713;";
+
+    $.ajax({
+        type: "POST",
+        url: "/feedback",
+        data: encodeURI(params)
+    });
+
     hideFeedbackForm();
 
-    document.getElementById("feedbackShowButton").value = "Thank you for your feedback;  it has been sent.  Have more feedback?  Contact us.";
+	document.getElementById("feedbackShowButton").value = "Thank you for your feedback;  it has been sent.  Have more feedback?  Contact us.";
 }

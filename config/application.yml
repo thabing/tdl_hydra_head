@@ -2,6 +2,8 @@
 defaults: &defaults
   pdfpages:
     pagelocation: "#{Rails.root}/pdf_pages"
+  tdl_feedback_address: "brian.goodmon@tufts.edu"
+  tdl_feedback_subject: "TDL Content Feedback"
 
 development:
   <<: *defaults
@@ -15,3 +17,4 @@ test:
 
 production:
   <<: *defaults
+  tdl_feedback_address: "deborah.kaplan@tufts.edu"
