@@ -1,3 +1,14 @@
-<%= render :partial=>'search_form' %>
+<%= render :partial => 'shared/search_form' %>
+<div class="row">
 
-<h3>Welcome to the Tufts Digital Library</h3>
+  <%= render :partial => 'facet_nav' %>
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="span7">
+    <%= render :partial => 'welcome' %>
+  </div>
+
+  <div class="span9">
+    <%= render :partial => "collections" %>
+  </div>
+</div>
