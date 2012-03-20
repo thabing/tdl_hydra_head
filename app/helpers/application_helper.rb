@@ -288,7 +288,7 @@ module ApplicationHelper
       return "" unless respond_to?(:stylesheet_links)
       str = ""
       stylesheet_links.collect do |args|
-        if (args.to_a & %w(hydra/html_refactor)).empty?
+        if (args.to_a & %w(hydra/html_refactor yui)).empty?
           str+=stylesheet_link_tag(*args)
         end
       end.join("\n")
