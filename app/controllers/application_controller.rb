@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  helper BlacklightHelper
+
   # Adds Hydra behaviors into the application controller 
    include Hydra::Controller
   # Adds a few additional behaviors into the application controller 
@@ -9,7 +11,7 @@ class ApplicationController < ActionController::Base
  
   # look for layout file in /app/views/layouts/tdl.html.erb
   def layout_name
-	"tdl"
+	"tdl-bootstrap"
   end
 
   def add_remove_js_css
