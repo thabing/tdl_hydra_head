@@ -1,0 +1,42 @@
+<div class="subnav">
+  <ul class="nav nav-pills">
+    <li> <a href="#back"><i class="icon-arrow-left"></i> Back</a></li>
+  </ul>
+</div>
+
+
+<!-- LEFT SIDE/ FOR FLUID COLUMN TITLE ROW -->
+<div class="row-fluid">
+   <div class="span12">
+
+<h3></h3>
+      <h4></h4>
+
+   </div>
+
+<!-- nested row SIDE FOR DOC INFO TYPE OR GALLERY LINK -->
+<div class="row-fluid">
+
+<% render :partial=>'/catalog/facet_nav' %>
+<div class="span6">
+<h3>Search</h3>
+
+<form class="form-inline">
+  <i class="icon-search"></i> <input type="text" class="input-medium">
+<select class="span2" id="search_field" name="search_field" placeholder="Search" title="Targeted search options">
+<option value="all_fields">Keyword</option>
+<option value="title">Title</option>
+<option value="author">Author</option>
+<option value="subject">Subject</option></select>
+  <button type="submit" class="btn">Search</button>&nbsp;
+<a href="#"> Advanced Search</a>
+  </form>
+<div class="tooltip-demo well">
+         <h4>Basic Search Tips</h4>
+<p>Example body text. You can use Simple Search <a rel="tooltip" href="#" data-original-title="first tooltip">you probably</a> to find a document by symbol number or title. Simply enter a title or symbol number and the matching documents will be returned. The search engine knows that certain parts of the <a title="Another tooltip" rel="tooltip" href="#">have a</a> documents in the library--titles, symbol numbers, and so on--are important. Search results that match those special <a title="Another one here too" rel="tooltip" href="#">really ironic</a> fields will be ranked higher than ordinary search results.</p>
+
+        </div>​
+</div>
+</div>
+
+</div>
