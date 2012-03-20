@@ -1,14 +1,11 @@
 
 TdlHydraHead::Application.routes.draw do
-  get "search/index"
-
   get "contact/index"
-
   get "about/index"
-
   match '/imageviewer/:id', :to => 'imageviewer#show', :constraints => {:id => /.*/}, :as =>'imageviewer'
   match "/about" => "about#index"
-  match "/search" => "search#index"
+ #get "search/index"
+ # match "/search" => "search#index"
   match "/contact" => "contact#index"
 
 #  Blacklight.add_routes(self,
@@ -20,6 +17,7 @@ TdlHydraHead::Application.routes.draw do
   # good info here:
   # http://asciicasts.com/episodes/203-routing-in-rails-3
 #  match '/catalog/range_limit', :to=> 'catalog#range_limit', :as=>'catalog'
+  match '/search', :to => 'catalog#search', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/opensearch', :to => 'catalog#opensearch', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/facet/:id', :to => 'catalog#facet', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/:id', :to => 'catalog#show', :constraints => {:id => /.*/}, :as =>'catalog'
