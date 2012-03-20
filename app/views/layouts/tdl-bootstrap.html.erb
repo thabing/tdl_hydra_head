@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title><%= h(@page_title || application_name) %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+  <style type="text/css">
+     /* Override some defaults */
+     html, body {background: rgb(206,220,231); /* Old browsers */
+background: -moz-radial-gradient(center, ellipse cover,  rgba(206,220,231,1) 0%, rgba(89,106,114,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(206,220,231,1)), color-stop(100%,rgba(89,106,114,1))); /* Chrome,Safari4+ */
+background: -webkit-radial-gradient(center, ellipse cover,  rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-radial-gradient(center, ellipse cover,  rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%); /* Opera 12+ */
+background: -ms-radial-gradient(center, ellipse cover,  rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%); /* IE10+ */
+background: radial-gradient(center, ellipse cover,  rgba(206,220,231,1) 0%,rgba(89,106,114,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cedce7', endColorstr='#596a72',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  }
+.container > .content {
+       background-color: #fff;
+       padding: 10px 20px 20px 20px;
+       margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+       -webkit-border-radius: 0 0 6px 6px;
+       -moz-border-radius: 0 0 6px 6px;
+        border-radius: 0 0 6px 6px;
+       -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+       box-shadow: 0 1px 2px rgba(0,0,0,.15);
+     }
+@media (min-width: 499px) and (max-width: 799px) {
+{.container > .content {
+    background-color: #FFFFFF;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    margin-bottom: 0;
+    margin-left: -20px;
+    margin-right: -20px;
+   margin-top: -20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+}
+     </style>
+
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+  <!--  <link rel="apple-touch-icon" href="/assets/ico/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/ico/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/ico/apple-touch-icon-114x114.png">
+      -->
+    <%= raw(render_head_content) %>
+</head>
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
+
+
+<!-- Navbar
+================================================== -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <!--   <a class="brand" href="./index.html">Tufts Digital Library</a> -->
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li><%= link_to "Search", '/search'%></li>
+ <!--                   <li><a href="#browse">Browse</a></li> -->
+                    <li><%= link_to "About", about_path()%></li>
+                    <li><%= link_to "Contact", contact_path()%></li>
+                    <li><%= link_to "Home", catalog_path('/')%></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <%= render :partial=>'/user_util_links' %>      -->
+</div>
+
+<div class="container">
+    <div class="content">
+      <!-- HEADER -->
+      <div class="page-header">
+
+
+        <%= link_to(image_tag('/assets/img/tuftsdigitallibrarylogosmall.png',:alt=> "Tufts Digital Library logo"), catalog_path('/'), :class=>"work") %>
+
+      </div>
+
+
+      <%= render :partial=>'/flash_msg' %>
+      <%= yield %>
+    </div>
+    <%= render :partial=>'shared/footer' %>
+
+</div><!-- /container -->
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/google-code-prettify/prettify.js"></script>
+    <script src="/assets/js/bootstrap-transition.js"></script>
+    <script src="/assets/js/bootstrap-alert.js"></script>
+    <script src="/assets/js/bootstrap-modal.js"></script>
+    <script src="/assets/js/bootstrap-dropdown.js"></script>
+    <script src="/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="/assets/js/bootstrap-tab.js"></script>
+    <script src="/assets/js/bootstrap-tooltip.js"></script>
+    <script src="/assets/js/bootstrap-popover.js"></script>
+    <script src="/assets/js/bootstrap-button.js"></script>
+    <script src="/assets/js/bootstrap-collapse.js"></script>
+    <script src="/assets/js/bootstrap-carousel.js"></script>
+    <script src="/assets/js/bootstrap-typeahead.js"></script>
+    <script src="/assets/js/application.js"></script>
+
+
+</body>
+</html>
