@@ -1,0 +1,7 @@
+<% sidebar_items << capture do %>
+  <%= render :partial=>'/catalog/facets' %>
+<% end %>
+<!-- LEFT COLUMN FOR FACETS -->
+         <div class="span3">
+           <%= sidebar_items.join('').html_safe %>
+		</div>
