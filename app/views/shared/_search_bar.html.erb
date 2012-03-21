@@ -1,6 +1,7 @@
 <div class="subnav">
 <div class="span8 offset3">
-   <ul class="nav nav-pills">  <%= form_tag catalog_index_path, :class=>"form-inline", :method => :get do %>
+   <ul class="nav nav-pills">
+     <%= form_tag catalog_index_path, :class=>"form-inline", :method => :get do %>
     <i class="icon-search"></i>  <%= text_field_tag :q, params[:q], :class => "q input-medium" %>
          <% unless search_fields.empty? %>
              <%= select_tag(:search_field, options_for_select(search_fields, h(params[:search_field])), :title => "Targeted search options", :class=>"span2") %>
