@@ -1,14 +1,23 @@
 <%= render :partial => 'shared/search_bar' %>
-<div class="row">
 
-  <%= render :partial => 'facet_nav' %>
-
-  <!-- MAIN CONTENT AREA -->
-  <div class="span7">
-    <%= render :partial => 'dca_text/welcome' %>
+<!-- LEFT SIDE/ FOR FLUID COLUMN TITLE ROW -->
+<div class="row-fluid">
+  <div class="span12">
   </div>
 
-  <div class="span9">
-    <%= render :partial => "dca_text/collections" %>
+  <!-- nested row LEFT -->
+  <div class="row-fluid">
+
+    <%= render :partial => 'facet_nav' %>
+    <!-- nested Fluid RIGHT -->
+    <div class="row-fluid">
+      <!-- MAIN CONTENT AREA -->
+      <div class="span7">
+        <%= render :partial => 'dca_text/welcome' %>
+
+        <%= render :partial => "dca_text/collections" %>
+      </div>
+
+    </div>
   </div>
 </div>
