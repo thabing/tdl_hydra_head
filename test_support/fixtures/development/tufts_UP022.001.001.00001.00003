@@ -197,7 +197,8 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
                <dcadesc:subject>Faculty</dcadesc:subject>
             
                <dcadesc:subject>Portraits</dcadesc:subject>
-			      
+               <dcadesc:genre>Comedy</dcadesc:genre>
+
             </dca_dc:dc>
 </foxml:xmlContent>
 </foxml:datastreamVersion>
