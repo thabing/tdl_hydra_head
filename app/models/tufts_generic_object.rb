@@ -26,6 +26,16 @@ class TuftsGenericObject < ActiveFedora::Base
 
   has_metadata :name => "GENERIC-CONTENT", :type => TuftsGenericMeta
 
+  def to_solr(solr_doc=Hash.new, opts={})
+    super
+    models = self.relationships(:has_model)
+    unless models.include?("info:fedora/cm:Text.RCR") || models.include?("info:fedora/afmodel:TuftsRCR")
+      create_facets(self, solr_doc)
+    end
 
+    index_fulltext solr_doc
+
+    return solr_doc
+  end
 
 end

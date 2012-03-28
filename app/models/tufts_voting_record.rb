@@ -44,8 +44,18 @@ class TuftsVotingRecord < ActiveFedora::Base
   ##    super()
   #    ds = ActiveFedora::Datastream.new(:dsid=> "Access.xml", :label => "Access.xml", :controlGroup => "M", :dsLocation => "", :mimeType=> "text/xml")
   ##    add_datastream(ds)
-   #   ds = ActiveFedora::Datastream.new(:dsid=> "Archival.pdf", :label => "Archival.pdf", :controlGroup => "M", :dsLocation => "", :mimeType=> "text/xml")
-   #   add_datastream(ds)
+  #   ds = ActiveFedora::Datastream.new(:dsid=> "Archival.pdf", :label => "Archival.pdf", :controlGroup => "M", :dsLocation => "", :mimeType=> "text/xml")
+  #   add_datastream(ds)
   #end
+  def to_solr(solr_doc=Hash.new, opts={})
+    super
+    models = self.relationships(:has_model)
+    unless models.include?("info:fedora/cm:Text.RCR") || models.include?("info:fedora/afmodel:TuftsRCR")
+      create_facets(self, solr_doc)
+    end
 
+    index_fulltext solr_doc
+
+    return solr_doc
+  end
 end
