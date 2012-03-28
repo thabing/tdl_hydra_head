@@ -1198,7 +1198,7 @@ table .span12 {
   *margin-left: 0;
 }
 .icon-white {
-  background-image: url("../../../../../Documents/colelatimer/colelatimer.com/archive/dl/docs/assets/img/glyphicons-halflings-white.png");
+  background-image: url("/assets/img/glyphicons-halflings-white.png");
 }
 .icon-glass {
   background-position: 0      0;
