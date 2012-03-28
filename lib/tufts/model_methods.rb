@@ -9,17 +9,6 @@ require 'chronic'
 module Tufts
   module ModelMethods
 
-    def to_solr(solr_doc=Hash.new,opts={})
-        super
-        models = self.relationships(:has_model)
-        unless models.include?("info:fedora/cm:Text.RCR") || models.include?("info:fedora/afmodel:TuftsRCR")
-          create_facets(self,solr_doc)
-        end
-
-        index_fulltext solr_doc
-
-        return solr_doc
-    end
 
     def index_fulltext(solr_doc)
       full_text = ""
@@ -104,6 +93,7 @@ module Tufts
     # result set, in which case the fine tuning enabled by using the RDF instead of the Dublin core would become
     # less relevant.
 
+
     def index_collection_info(solr_doc)
 
       collections = self.relationships(:is_member_of_collection)
@@ -113,7 +103,7 @@ module Tufts
 
       if ead.first.nil?
         # there is no hasDescription
-        ead_title = get_collection_from_pid(ead_title)
+        ead_title = get_collection_from_pid(ead_title,pid)
         if ead_title.nil?
           COLLECTION_ERROR_LOG.error "Could not determine Collection for : #{self.pid}"
         else
@@ -134,7 +124,7 @@ module Tufts
           #"Faculty scholarship": PID in tufts:PB.001.001* or tufts:ddennett*
           #"Boston Streets": PID in tufts:UA069.005.DO.* should be merged with the facet hasDescription UA069.001.DO.MS102
 
-          ead_title = get_collection_from_pid(ead_title)
+          ead_title = get_collection_from_pid(ead_title,pid)
 
 
         end
@@ -148,7 +138,46 @@ module Tufts
          # end
     end
 
-  def get_collection_from_pid(ead_title)
+
+    def get_ead_title(document)
+      collections = document.relationships(:is_member_of_collection)
+      ead = document.relationships(:has_description)
+      pid = document.pid.to_s
+      ead_title = nil
+
+      if ead.first.nil?
+        # there is no hasDescription
+        ead_title = get_collection_from_pid(ead_title,pid)
+
+      else
+        ead = ead.first.gsub('info:fedora/', '')
+        ead_obj = TuftsEAD.load_instance(ead)
+        if ead_obj.nil?
+          Rails.logger.debug "EAD Nil " + ead
+        else
+          ead_title = ead_obj.datastreams["DCA-META"].get_values(:title).first
+          ead_title = Tufts::ModelUtilityMethods.clean_ead_title(ead_title)
+
+          #4 additional collections, unfortunately defined by regular expression parsing. If one of these has hasDescription PID takes precedence
+          #"Undergraduate scholarship": PID in tufts:UA005.*
+          #"Graduate scholarship": PID in tufts:UA015.012.*
+          #"Faculty scholarship": PID in tufts:PB.001.001* or tufts:ddennett*
+          #"Boston Streets": PID in tufts:UA069.005.DO.* should be merged with the facet hasDescription UA069.001.DO.MS102
+
+        end
+      end
+
+      if ead_title.blank?
+        return ""
+      else
+        result=""
+        result << "<dd>This object is in collection:</dd>"
+        result << "<dt>"+ link_to(ead_title,"/catalog/"+ead)+"</dt>"
+        raw result
+      end
+    end
+
+  def get_collection_from_pid(ead_title,pid)
     if pid.starts_with? "tufts:UA005"
       ead_title = "Undergraduate scholarship"
     elsif pid.starts_with? "tufts:UA015.012"
