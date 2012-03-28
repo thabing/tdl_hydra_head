@@ -1,4 +1,4 @@
-<% # main container for facets/limits menu   -%>
+<% # main container for facets/limits menu    -%>
 <div id="facets" class="facets">
   <div id="menu">
     <ul class="navmenu">
@@ -9,9 +9,10 @@
           <% if display_facet && display_facet.items.length > 0 %>
 
               <li>
-                <div class="menutop"><a href="#"><%= facet_field_labels[solr_fname] -%></a>
+                <div class="menutop">
+                  <a href="#"><%= facet_field_labels[solr_fname] -%></a>
 
-                  <div class="toggle">+</div>
+                  <div class="toggle toggle_icon">+</div>
                 </div>
                 <ul class="submenu">
                   <% paginator =
