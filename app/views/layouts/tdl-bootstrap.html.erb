@@ -116,9 +116,9 @@
 
 <script type="text/javascript">
 
-    $('.toggle:not(.toggle-open)').addClass('toggle-close').parents('li').children('ul').hide();
-    $('.menutop:not(.toggle-open)').addClass('toggle-close').parents('li').children('ul').hide();
-
+    $('.toggle:not(.toggle-close)').addClass('toggle-open');//.parents('li').children('ul').hide();
+    $('.menutop:not(.toggle-close)').addClass('toggle-open');//.parents('li').children('ul').hide();
+    $('#menu').find('.toggle_icon').empty('').append('&ndash;');
     if ($.browser.msie) {
         $('#menu ul.navmenu li:last-child .menutop').css('border-bottom', '1px solid #CCC');
     }
