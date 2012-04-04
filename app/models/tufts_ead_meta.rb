@@ -92,6 +92,25 @@
           t.head(:path => "head")
           t.controlaccess(:path => "controlaccess")
         }
+
+        t.dsc(:path => "dsc") {
+          t.c01(:path => "c01") {
+            t.did(:path => "did")
+            t.arrangement(:path => "arrangement")
+            t.scopecontent(:path => "scopecontent") {
+              t.note(:path => "note") {
+                t.p(:path => "p")
+              }
+              t.p(:path => "p")
+            }
+
+            t.c02(:path => "c02") {
+              t.did(:path => "did") {
+                t.unittitle(:path => "unittitle")
+              }
+            }
+          }
+        }
       }
 
 #     t.eadid(:proxy => [:eadheader, :eadid])
@@ -136,6 +155,13 @@
       t.userestrictp(:proxy => [:archdesc, :descgrp, :userestrict, :p])
       t.prefercitehead(:proxy => [:archdesc, :descgrp, :prefercite, :head])
       t.prefercitep(:proxy => [:archdesc, :descgrp, :prefercite, :p])
+
+      # Series Description
+      t.dscnotep(:proxy => [:archdesc, :dsc, :c01, :scopecontent, :note, :p])
+      t.dscp(:proxy => [:archdesc, :dsc, :c01, :scopecontent, :p])
+    
+      # Item List
+      t.items(:proxy => [:archdesc, :dsc, :c01, :c02, :did])
     end
 
 #    def self.xml_template
