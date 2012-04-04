@@ -26,5 +26,14 @@
           <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
           <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
           <%= showMetadataItem("File Size", "filesize", :filesize) %>
-          <%= showFeedbackForm(params[:id]) %>
-     </div>
+          <%= raw Tufts::FeedbackMethods.show_feedback_form(params[:id], form_authenticity_token) %>
+        </div>
+        <div id="ead_content">
+          <%= raw Tufts::EADMethods.show_title(@document_fedora) %>
+          <%= raw Tufts::EADMethods.show_summary(@document_fedora) %>
+          <%= raw Tufts::EADMethods.show_index_terms(@document_fedora) %>
+          <%= raw Tufts::EADMethods.show_hist_biog_note(@document_fedora) %>
+          <%= raw Tufts::EADMethods.show_scope_content(@document_fedora) %>
+          <%= raw Tufts::EADMethods.show_access_use(@document_fedora) %>
+          <%= raw Tufts::EADMethods.show_item_list(@document_fedora) %>
+        </div> <!-- id="ead_content" -->
