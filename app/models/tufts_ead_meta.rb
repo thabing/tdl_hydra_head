@@ -135,8 +135,8 @@
       t.physdesc(:proxy => [:archdesc, :did, :physdesc])
 
       # Index Terms
-      t.controllaccesshead(:proxy => [:archdesc, :controlaccess, :head])
-      t.controllaccesschildren(:proxy => [:archdesc, :controlaccess, :controlaccess])
+      t.controlaccesshead(:proxy => [:archdesc, :controlaccess, :head])
+      t.controlaccess(:proxy => [:archdesc, :controlaccess])
 
       # Historical or Biographical Note
       t.bioghisthead(:proxy => [:archdesc, :bioghist, :head])
@@ -161,7 +161,9 @@
       t.dscp(:proxy => [:archdesc, :dsc, :c01, :scopecontent, :p])
     
       # Item List
-      t.items(:proxy => [:archdesc, :dsc, :c01, :c02, :did])
+      t.items(:proxy => [:archdesc, :dsc, :c01, :c02])
+      t.itemdids(:proxy => [:archdesc, :dsc, :c01, :c02, :did])
+      t.itemcontrolaccesses(:proxy => [:archdesc, :dsc, :c01, :c02, :controlaccess])
     end
 
 #    def self.xml_template
