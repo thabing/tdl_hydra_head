@@ -167,7 +167,7 @@ module Tufts
         did = nil
         controlaccess = nil
 
-        item.children.each do |child|
+        item.element_children.each do |child|
           if child.name == "did"
             did = child
           elsif child.name == "controlaccess"
@@ -184,7 +184,7 @@ module Tufts
           physloc = nil
           note = nil
 
-          did.children.each do |didchild|
+          did.element_children.each do |didchild|
             if didchild.name == "unittitle"
               unittitle = didchild.text
             elsif didchild.name == "physdesc"
@@ -239,20 +239,18 @@ module Tufts
 
     def self.parse_controlaccess(controlaccess)
 			result = ""
-			
+
 			controlaccess.children.each do |controlaccesschild|
-				nodes = controlaccesschild.children
-				if (nodes != nil && nodes.size > 3)
+				nodes = controlaccesschild.element_children
+				if (nodes != nil && nodes.size > 1)
 					# the nodes of the <controlaccess> tags are:
-					# nodes[0] is whitespace
-					# nodes[1] is a <head> tag containing a label
-					# nodes[2] is whitespace
-					# nodes[3] could be one of many tags like <persname>, <corpname>, <subject> or <geogname>,
+					# nodes[0] is a <head> tag containing a label
+					# nodes[1] could be one of many tags like <persname>, <corpname>, <subject> or <geogname>,
 					# which can be empty even though nodes[1] contains a label;
 					# if that's the case, ignore the whole <controlaccess> tag
-					value = nodes[3].text
+					value = nodes[1].text
 					if (value != nil && value.size > 0)
-						label = nodes[1].text
+						label = nodes[0].text
 						result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">" + label.chomp(":") + "</div><div class=\"metadata_values\">" + value + "</div></div>\n"
 					end
 				end
@@ -260,6 +258,7 @@ module Tufts
 
 			return result
 		end
+
 
 	end
 end
