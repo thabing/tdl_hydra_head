@@ -142,7 +142,8 @@ namespace :tufts_dca do
   "tufts:la.speakerofthehouse.1820",
   "tufts:me.uscongress3.second.1825",
   "tufts:ky.clerkofthehouse.1813",
-  "tufts:MS115.001.DO.11090"
+  "tufts:MS115.001.DO.11090",
+  "tufts:UA069.001.DO.UA001"
 
     ]
 
