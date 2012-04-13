@@ -3,38 +3,6 @@
 <% javascript_includes << "feedback.js" %>
 <% stylesheet_links << "feedback/feedback.css" %>
 
-        <div class="document_viewer" id="cover_container">
-          <%= showMetadataItem("Creator", "creator", :creator) %>
-          <%= showMetadataItem("Source", "source2", :source2) %>
-          <%= showMetadataItem("Description", "description", :description) %>
-          <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
-          <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
-          <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
-          <%= showMetadataItem("Citable URL", "identifier", :identifier) %>
-          <%= showMetadataItem("Rights", "rights", :rights) %>
-          <%= showMetadataItem("Citation", "bibliographicCitation", :bibliographicCitation) %>
-          <%= showMetadataItem("Publisher", "publisher", :publisher) %>
-          <%= showMetadataItem("Type", "type2", :type2) %>
-          <%= showMetadataItem("Format", "format2", :format2) %>
-          <%= showMetadataItem("Person Name", "persname", :persname) %>
-          <%= showMetadataItem("Organizations", "corpname", :corpname) %>
-          <%= showMetadataItem("Places", "geogname", :geogname) %>
-          <%= showMetadataItem("Topics", "subject", :subject) %>
-          <%= showMetadataItem("Funder", "funder", :funder) %>
-          <%= showMetadataItem("Temporal", "temporal", :temporal) %>
-          <%= showMetadataItem("Resolution", "resolution", :resolution) %>
-          <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
-          <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
-          <%= showMetadataItem("File Size", "filesize", :filesize) %>
-          <%= raw Tufts::FeedbackMethods.show_feedback_form(params[:id], form_authenticity_token) %>
-        </div>
         <div id="ead_content">
-          <%= raw Tufts::EADMethods.show_title(@document_fedora) %>
-          <%= raw Tufts::EADMethods.show_summary(@document_fedora) %>
-          <%= raw Tufts::EADMethods.show_index_terms(@document_fedora) %>
-          <%= raw Tufts::EADMethods.show_hist_biog_note(@document_fedora) %>
-          <%= raw Tufts::EADMethods.show_scope_content(@document_fedora) %>
-          <%= raw Tufts::EADMethods.show_access_use(@document_fedora) %>
-          <%= raw Tufts::EADMethods.show_series_description(@document_fedora) %>
-          <%= raw Tufts::EADMethods.show_item_list(@document_fedora) %>
-        </div> <!-- id="ead_content" -->
+          <%= raw Tufts::EADMethods.show_overview_page(@document_fedora) %>
+        </div> <!-- ead_content -->

@@ -49,10 +49,14 @@
           }
           t.origination(:path => "origination") {
             t.persname(:path => "persname")
+            t.corpname(:path => "corpname")
+            t.famname(:path => "famname")
           }
           t.unittitle(:path => "unittitle")
           t.unitdate(:path => "unitdate")
           t.physdesc(:path => "physdesc")
+          t.unitid(:path => "unitid")
+          t.abstract(:path => "abstract")
         }
 
         t.bioghist(:path => "bioghist") {
@@ -113,57 +117,39 @@
         }
       }
 
-#     t.eadid(:proxy => [:eadheader, :eadid])
-#     t.titleproper(:proxy => [:eadheader, :filedesc, :titlestmt, :titleproper])
-#     t.publisher(:proxy => [:eadheader, :filedesc, :publicationstmt, :publisher])
-#     t.addressline(:proxy => [:eadheader, :filedesc, :publicationstmt, :address, :addressline])
-#     t.date(:proxy => [:eadheader, :filedesc, :publicationstmt, :date])
-
-      # Title Page
-      t.titleproper(:proxy => [:frontmatter, :titlepage, :titleproper])
-      t.num(:proxy => [:frontmatter, :titlepage, :num])
-      t.publisher(:proxy => [:frontmatter, :titlepage, :publisher])
-      t.addressline(:proxy => [:frontmatter, :titlepage, :address, :addressline])
-      t.date(:proxy => [:frontmatter, :titlepage, :date])
-
-      # Collection Summary
-      t.didhead(:proxy => [:archdesc, :did, :head])
-      t.repository(:proxy => [:archdesc, :did, :repository])
-      t.corpname(:proxy => [:archdesc, :did, :repository, :corpname])
+      # Overview
       t.unittitle(:proxy => [:archdesc, :did, :unittitle])
       t.unitdate(:proxy => [:archdesc, :did, :unitdate])
       t.physdesc(:proxy => [:archdesc, :did, :physdesc])
+      t.unitid(:proxy => [:archdesc, :did, :unitid])
+      t.abstract(:proxy => [:archdesc, :did, :abstract])
+      t.persname(:proxy => [:archdesc, :did, :origination, :persname])
+      t.corpname(:proxy => [:archdesc, :did, :origination, :corpname])
+      t.famname(:proxy => [:archdesc, :did, :origination, :famname])
 
-      # Index Terms
-      t.controlaccesshead(:proxy => [:archdesc, :controlaccess, :head])
-      t.controlaccess(:proxy => [:archdesc, :controlaccess])
-
-      # Historical or Biographical Note
-      t.bioghisthead(:proxy => [:archdesc, :bioghist, :head])
-      t.bioghistnotep(:proxy => [:archdesc, :bioghist, :note, :p])
-      t.bioghistp(:proxy => [:archdesc, :bioghist, :p])
-
-      # Collection Scope and Content
-      t.scopecontenthead(:proxy => [:archdesc, :scopecontent, :head])
-      t.scopecontentnotep(:proxy => [:archdesc, :scopecontent, :note, :p])
+      # Contents
       t.scopecontentp(:proxy => [:archdesc, :scopecontent, :p])
 
-      # Access and Use Information
-      t.accessrestricthead(:proxy => [:archdesc, :descgrp, :accessrestrict, :head])
+      # Series Descriptions
+      t.items(:proxy => [:archdesc, :dsc, :c01])
+
+			# Names and Subjects
+      t.controlaccess(:proxy => [:archdesc, :controlaccess, :controlaccess])
+
+			# Related Collections
+
+      # Access and Use
       t.accessrestrictp(:proxy => [:archdesc, :descgrp, :accessrestrict, :p])
-      t.userestricthead(:proxy => [:archdesc, :descgrp, :userestrict, :head])
       t.userestrictp(:proxy => [:archdesc, :descgrp, :userestrict, :p])
-      t.prefercitehead(:proxy => [:archdesc, :descgrp, :prefercite, :head])
       t.prefercitep(:proxy => [:archdesc, :descgrp, :prefercite, :p])
 
+			# Administrative Notes
+
+# OLD STUFF
       # Series Description
       t.dscnotep(:proxy => [:archdesc, :dsc, :c01, :scopecontent, :note, :p])
       t.dscp(:proxy => [:archdesc, :dsc, :c01, :scopecontent, :p])
     
-      # Item List
-      t.items(:proxy => [:archdesc, :dsc, :c01, :c02])
-      t.itemdids(:proxy => [:archdesc, :dsc, :c01, :c02, :did])
-      t.itemcontrolaccesses(:proxy => [:archdesc, :dsc, :c01, :c02, :controlaccess])
     end
 
 #    def self.xml_template

@@ -1,140 +1,240 @@
 module Tufts
   module EADMethods
 
-    def self.show_title(fedora_obj, datastream="Archival.xml")
-      titleproper = fedora_obj.datastreams[datastream].get_values(:titleproper).first
-      num = fedora_obj.datastreams[datastream].get_values(:num).first
-      publisher = fedora_obj.datastreams[datastream].get_values(:publisher).first
-      addresslines = fedora_obj.datastreams[datastream].get_values(:addressline)
-      date = fedora_obj.datastreams[datastream].get_values(:date).first
 
-      result = "<div class=\"title_section\">\n"
-      result << "            <h1 align=\"center\" class=\"title_section_title\">" + titleproper + "</h1>\n"
-      result << "            <h2 align=\"center\" class=\"title_section_publisher\">" + num + "</h2>\n"
-      result << "            <h2 align=\"center\" class=\"title_section_publisher\">" + publisher + "</h2>\n"
+		def self.show_overview_page(fedora_obj, datastream = "Archival.xml")
+			overview = show_overview(fedora_obj)
+      contents = show_contents(fedora_obj)
+      series_descriptions = show_series_descriptions(fedora_obj)
+      names_and_subjects = show_names_and_subjects(fedora_obj)
+      related_collections = show_related_collections(fedora_obj)
+      access_and_use = show_access_and_use(fedora_obj)
+      administrative_notes = show_administrative_notes(fedora_obj)
 
-      addresslines.each do |addressline|
-        result << "            <h3 align=\"center\" class=\"title_section_addressline\">" + addressline + "</h3>\n"
-      end
+			table_of_contents = "            <div id=\"tableOfContents\">\n"
+			table_of_contents << (overview == "" ? "" : "              <div><a href = \"#ead_overview\">Overview</div></a>\n")
+			table_of_contents << (contents == "" ? "" : "              <div><a href = \"#ead_contents\">Contents</div></a>\n")
+			table_of_contents << (series_descriptions == "" ? "" : "              <div><a href = \"#ead_series_descriptions\">Series Descriptions</a></div>\n")
+			table_of_contents << (names_and_subjects == "" ? "" : "              <div><a href = \"#ead_names_and_subjects\">Names and Subjects</a></div>\n")
+			table_of_contents << (related_collections == "" ? "" : "              <div><a href = \"#ead_related_collections\">Related Collections</a></div>\n")
+			table_of_contents << (access_and_use == nil ? "" : "              <div><a href = \"#ead_access_and_use\">Access and Use</a></div>\n")
+			table_of_contents << (administrative_notes == "" ? "" : "              <div><a href = \"#ead_administrative_notes\">Administrative Notes</a></div>\n")
+			table_of_contents << "            </div> <!-- tableOfContents -->\n"
 
-      result << "            <h3 align=\"center\" class=\"title_section_date\">" + date + "</h3>\n"
-      result << "          </div> <!-- title_section -->"
+			overview.sub!("TOCGOESHERE", table_of_contents)
 
-      return result
-    end
+			result = overview + contents + series_descriptions +
+			  names_and_subjects + related_collections + access_and_use + administrative_notes
+			result.chomp!  #remove the trailing \n
+
+			return result
+		end
 
 
-    def self.show_summary(fedora_obj, datastream="Archival.xml")
-      didhead = fedora_obj.datastreams[datastream].find_by_terms_and_value(:didhead)
-      unittitle = fedora_obj.datastreams[datastream].find_by_terms_and_value(:unittitle)
-      unitdate = fedora_obj.datastreams[datastream].find_by_terms_and_value(:unitdate)
-      physdesc = fedora_obj.datastreams[datastream].find_by_terms_and_value(:physdesc)
-      repository = fedora_obj.datastreams[datastream].find_by_terms_and_value(:repository)
+    def self.show_overview(fedora_obj, datastream = "Archival.xml"  )
+      unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
+      unitdate = fedora_obj.datastreams[datastream].get_values(:unitdate).first
+      physdesc = fedora_obj.datastreams[datastream].get_values(:physdesc).first
+      unitid = fedora_obj.datastreams[datastream].get_values(:unitid).first
+      abstract = fedora_obj.datastreams[datastream].get_values(:abstract).first
+      persname = fedora_obj.datastreams[datastream].find_by_terms_and_value(:persname)
       corpname = fedora_obj.datastreams[datastream].find_by_terms_and_value(:corpname)
+      famname = fedora_obj.datastreams[datastream].find_by_terms_and_value(:famname)
+      name = nil
+      rcr_url = nil
 
-      result = "<div class=\"summary_section\">\n"
-      result << "            <h4 class=\"summary_section_head\">" + didhead.first.text + "</h4>\n"
-      result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">" + unittitle.attribute("label").text.chomp(":") + "</div><div class=\"metadata_values\">" + unittitle.children.first.text + "</div></div>\n"
-      result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">" + unitdate.attribute("label").text.chomp(":") + "</div><div class=\"metadata_values\">" + unitdate.children.first.text + "</div></div>\n"
-      result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">" + physdesc.attribute("label").text.chomp(":") + "</div><div class=\"metadata_values\">" + physdesc.children.first.text + "</div></div>\n"
-      result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">" + repository.attribute("label").text.chomp(":") + "</div><div class=\"metadata_values\">" + corpname.children.first.text + "</div></div>\n"
-      result << "          </div> <!-- summary_section -->"
+			if !persname.empty?
+			  name, rcr_url = parse_origination(persname);
+			elsif !corpname.empty?
+				name, rcr_url = parse_origination(corpname);
+			elsif !famname.empty?
+				name, rcr_url = parse_origination(famname);
+			end
 
-      return result
-    end
+			# TBD - add collapsable list of associated RCRs if present
 
-
-    def self.show_index_terms(fedora_obj, datastream="Archival.xml")
-      controlaccesshead = fedora_obj.datastreams[datastream].find_by_terms_and_value(:controlaccesshead)
-      controlaccess = fedora_obj.datastreams[datastream].find_by_terms_and_value(:controlaccess)
-
-      result = "<div class=\"index_terms_section\">\n"
-      result << "            <h4 class=\"index_terms_section_head\">" + controlaccesshead.first.text.chomp(":") + "</h4>\n"
-      result << parse_controlaccess(controlaccess)
-      result << "          </div> <!-- index_terms_section -->"
-
-      return result
-    end
-
-
-    def self.show_hist_biog_note(fedora_obj, datastream="Archival.xml")
-      bioghisthead = fedora_obj.datastreams[datastream].find_by_terms_and_value(:bioghisthead)
-      bioghistnoteps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:bioghistnotep)
-      bioghistps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:bioghistp)
-
-      result = "<div class=\"hist_biog_note_section\">\n"
-      result << "            <h4 class=\"hist_biog_note_section_head\">" + bioghisthead.first.text + "</h4>\n"
-
-      bioghistnoteps.each do |bioghistnotep|
-        result << "            <p class=\"hist_biog_note_section_note_p\">" + bioghistnotep + "</p>\n"
-      end
-
-      bioghistps.each do |bioghistp|
-        result << "            <p class=\"hist_biog_note_section_p\">" + bioghistp + "</p>\n"
-      end
-
-      result << "          </div> <!-- hist_biog_note_section -->"
+      result = "<div id=\"ead_overview\">\n"
+      result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
+      result << "            <hr/>\n"
+      result << "TOCGOESHERE"
+      result << (physdesc == nil ? "" : "            <div>" + physdesc + "</div>\n")
+      result << (unitid == nil ? "" : "            <div>Call number: " + unitid + "</div>\n")
+      result << (abstract == nil ? "": "            <div>" + abstract + "</div>\n")
+      result << (name == nil ? "" : "            <div><a href=\"" + (rcr_url == nil ? "" : rcr_url) + "\">Read more about " + name + "</a></div>\n")
+      result << "          </div> <!-- ead_overview -->\n"
 
       return result
     end
 
 
-    def self.show_scope_content(fedora_obj, datastream="Archival.xml")
-      scopecontenthead = fedora_obj.datastreams[datastream].find_by_terms_and_value(:scopecontenthead)
-      scopecontentnoteps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:scopecontentnotep)
+    def self.show_contents(fedora_obj, datastream = "Archival.xml"  )
+      result = ""
       scopecontentps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:scopecontentp)
 
-      result = "<div class=\"scope_content_section\">\n"
-      result << "            <h4 class=\"scope_content_section_head\">" + scopecontenthead.first.text + "</h4>\n"
+			if !scopecontentps.empty?
+      	result = "          <div id=\"ead_contents\">\n"
+				result << "            <h4>Contents of the Collection</h4>\n"
 
-      scopecontentnoteps.each do |scopecontentnotep|
-        result << "            <p class=\"scope_content_section_note_p\">" + scopecontentnotep + "</p>\n"
+      	scopecontentps.each do |scopecontentp|
+					result << "            <div>" + scopecontentp.text + "</div>\n"
+      	end
+
+      	result << "          </div> <!-- ead_contents -->\n"
       end
-
-      scopecontentps.each do |scopecontentp|
-        result << "            <p class=\"scope_content_section_p\">" + scopecontentp + "</p>\n"
-      end
-
-      result << "          </div> <!-- scope_content_section -->"
 
       return result
-    end
+		end
 
 
-    def self.show_access_use(fedora_obj, datastream="Archival.xml")
-      accessrestricthead = fedora_obj.datastreams[datastream].find_by_terms_and_value(:accessrestricthead)
+    def self.show_series_descriptions(fedora_obj, datastream = "Archival.xml"  )
+      items = fedora_obj.datastreams[datastream].find_by_terms_and_value(:items)
+
+			if !items.empty?
+	      result = "          <div id=\"ead_series_descriptions\">\n"
+				result << "            <h4>Series Descriptions</h4>\n"
+
+      	items.each do |item|
+        	did = nil
+        	scopecontent = nil
+
+					item.element_children.each do |child|
+						if child.name == "did"
+							did = child
+						elsif child.name == "scopecontent"
+							scopecontent = child
+						end
+					end
+
+					# process the did element
+					if did != nil
+						unittitle = nil
+						unitdate = nil
+
+						did.element_children.each do |didchild|
+							if didchild.name == "unittitle"
+								unittitle = didchild.text
+							elsif didchild.name == "unitdate"
+								unitdate = didchild.text
+							end
+						end
+
+						if unittitle != nil && unittitle.size > 0
+              result << (unittitle == nil ? "" : "              <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
+						end
+					end
+
+					# process the scopecontent element
+					if scopecontent != nil
+						scopecontent.element_children.each do |scopecontentchild|
+							if scopecontentchild.name == "p"
+								p = scopecontentchild.text
+							  result << "            <div>" + p + "</div>\n"
+							end
+						end
+					end
+				end
+
+	      result << "          </div> <!-- ead_series_descriptions -->\n"
+			end
+
+      return result
+		end
+
+
+    def self.show_names_and_subjects(fedora_obj, datastream = "Archival.xml"  )
+    	result = ""
+      controlaccesses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:controlaccess)
+
+			if !controlaccesses.empty?
+      	result = "          <div id=\"ead_names_and_subjects\">\n"
+				result << "            <h4>Names and Subjects</h4>\n"
+      	result << parse_controlaccess(controlaccesses)
+      	result << "          </div> <!-- ead_names_and_subjects -->\n"
+      end
+
+      return result
+		end
+
+
+    def self.show_related_collections(fedora_obj, datastream = "Archival.xml"  )
+    	result = ""
+    	separatedmaterials = []  #TBD get from xml
+    	relatedmaterials = []  #TBD get from xml
+
+			if !separatedmaterials.empty? && ! relatedmaterials.empty?
+      	result = "          <div id=\"ead_related_collections\">\n"
+				result << "            <h4>Related Material</h4>\n"
+
+      	separatedmaterials.each do |separatedmaterial|
+					result << "            <div>" + separatedmaterial.text + "</div>\n"
+      	end
+
+      	relatedmaterials.each do |relatedmaterial|
+					result << "            <div>" + relatedmaterial.text + "</div>\n"
+      	end
+
+      	result << "          </div> <!-- ead_related_collections -->\n"
+      end
+
+      return result
+		end
+
+
+    def self.show_access_and_use(fedora_obj, datastream = "Archival.xml"  )
+      result = ""
       accessrestrictps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:accessrestrictp)
-      userestricthead = fedora_obj.datastreams[datastream].find_by_terms_and_value(:userestricthead)
       userestrictps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:userestrictp)
-      prefercitehead = fedora_obj.datastreams[datastream].find_by_terms_and_value(:prefercitehead)
       preferciteps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:prefercitep)
 
-      result = "<div class=\"access_use_section\">\n"
-      result << "            <h4 class=\"access_use_section_access_head\">" + accessrestricthead.first.text + "</h4>\n"
+			if !accessrestrictps.empty? && !userestrictps.empty? && !preferciteps.empty?
+      	result = "          <div id=\"ead_access_and_use\">\n"
+				result << "            <h4>Access and Use</h4>\n"
 
-      accessrestrictps.each do |accessrestrictp|
-        result << "            <p class=\"access_use_section_access_p\">" + accessrestrictp + "</p>\n"
+      	accessrestrictps.each do |accessrestrictp|
+        	result << "            <div>" + accessrestrictp.text + "</div>\n"
+      	end
+
+      	userestrictps.each do |userestrictp|
+        	result << "            <div>" + userestrictp.text + "</div>\n"
+      	end
+
+				# TBD -- do they want the prefercite?
+      	preferciteps.each do |prefercitep|
+        	result << "            <div>Preferred citation: " + prefercitep.text + "</div>\n"
+        end
+
+      	result << "          </div> <!-- ead_access_and_use -->\n"
       end
-
-      result << "            <h4 class=\"access_use_section_use_head\">" + userestricthead.first.text + "</h4>\n"
-
-      userestrictps.each do |userestrictp|
-        result << "            <p class=\"access_use_section_use_p\">" + userestrictp + "</p>\n"
-      end
-
-      result << "            <h4 class=\"access_use_section_cite_head\">" + prefercitehead.first.text + "</h4>\n"
-
-      preferciteps.each do |prefercitep|
-        result << "            <p class=\"access_use_section_cite_p\">" + prefercitep + "</p>\n"
-      end
-
-      result << "          </div> <!-- access_use_section -->"
 
       return result
-    end
+		end
 
 
-    def self.show_series_description(fedora_obj, datastream="Archival.xml")
+    def self.show_administrative_notes(fedora_obj, datastream = "Archival.xml"  )
+    	result = ""
+    	processinfos = []  #TBD get from xml
+    	acqinfos = []  #TBD get from xml
+
+			if !processinfos.empty? && !acqinfos.empty?
+      	result = "          <div id=\"ead_administrative_notes\">\n"
+				result << "            <h4>Administrative Notes</h4>\n"
+
+      	processinfos.each do |processinfo|
+        	result << "            <div>" + processinfo.text + "</div>\n"
+      	end
+
+      	acqinfos.each do |acqinfo|
+        	result << "            <div>" + acqinfo.text + "</div>\n"
+      	end
+
+      	result << "          </div> <!-- ead_administrative_notes -->\n"
+      end
+
+      return result
+		end
+
+# OLD STUFF
+    def self.show_series_description(fedora_obj, datastream = "Archival.xml"  )
       dscnoteps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:dscnotep)
       dscps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:dscp)
 
@@ -155,7 +255,7 @@ module Tufts
     end
 
 
-    def self.show_item_list(fedora_obj, datastream="Archival.xml")
+    def self.show_item_list(fedora_obj, datastream = "Archival.xml"  )
       items = fedora_obj.datastreams[datastream].find_by_terms_and_value(:items)
 
       result = "<div class=\"item_list_section\">\n"
@@ -237,21 +337,38 @@ module Tufts
     end
 
 
-    def self.parse_controlaccess(controlaccess)
+		def self.parse_origination(node)
+			name = nil
+		  rcr_url = nil
+
+			first_element = node.first
+
+			if first_element != nil
+				name = first_element.text
+				first_element_id = first_element.attribute("id")
+
+				if first_element_id != nil
+					rcr_url = first_persname_id.text
+				end
+			end
+
+			return name, rcr_url
+		end
+
+
+    def self.parse_controlaccess(controlaccesses)
 			result = ""
 
-			controlaccess.children.each do |controlaccesschild|
-				nodes = controlaccesschild.element_children
-				if (nodes != nil && nodes.size > 1)
-					# the nodes of the <controlaccess> tags are:
-					# nodes[0] is a <head> tag containing a label
-					# nodes[1] could be one of many tags like <persname>, <corpname>, <subject> or <geogname>,
-					# which can be empty even though nodes[1] contains a label;
-					# if that's the case, ignore the whole <controlaccess> tag
-					value = nodes[1].text
-					if (value != nil && value.size > 0)
-						label = nodes[0].text
-						result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">" + label.chomp(":") + "</div><div class=\"metadata_values\">" + value + "</div></div>\n"
+			controlaccesses.each do |controlaccess|
+			  controlaccess.element_children.each do |child|
+			    childname = child.name
+
+					if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
+					  childtext = child.text
+
+						if childtext.size > 0
+							result << "            <div>" +  childtext + "</div>\n"
+						end
 					end
 				end
 			end
