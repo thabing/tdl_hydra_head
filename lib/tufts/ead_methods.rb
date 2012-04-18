@@ -2,8 +2,26 @@ module Tufts
   module EADMethods
 
 
-		def self.show_overview_page(fedora_obj, datastream = "Archival.xml")
-			overview = show_overview(fedora_obj)
+    def self.show_landing_page(fedora_obj, datastream = "Archival.xml")
+      unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
+      unitdate = fedora_obj.datastreams[datastream].get_values(:unitdate).first
+      physdesc = fedora_obj.datastreams[datastream].get_values(:physdesc).first
+      abstract = fedora_obj.datastreams[datastream].get_values(:abstract).first
+
+      result = "<div id=\"ead_landing\">\n"
+      result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
+      result << "            <hr/>\n"
+      result << "            <div>This collection has:</div>\n"
+      result << (physdesc == nil ? "" : "            <div>" + physdesc + "</div>\n")
+      result << (abstract == nil ? "": "            <div>" + abstract + "</div>\n")
+      result << "          </div> <!-- ead_landing -->\n"
+
+      return result
+    end
+
+
+    def self.show_overview_page(fedora_obj, datastream = "Archival.xml")
+      overview = show_overview(fedora_obj)
       contents = show_contents(fedora_obj)
       series_descriptions = show_series_descriptions(fedora_obj)
       names_and_subjects = show_names_and_subjects(fedora_obj)
@@ -11,24 +29,24 @@ module Tufts
       access_and_use = show_access_and_use(fedora_obj)
       administrative_notes = show_administrative_notes(fedora_obj)
 
-			table_of_contents = "            <div id=\"tableOfContents\">\n"
-			table_of_contents << (overview == "" ? "" : "              <div><a href = \"#ead_overview\">Overview</div></a>\n")
-			table_of_contents << (contents == "" ? "" : "              <div><a href = \"#ead_contents\">Contents</div></a>\n")
-			table_of_contents << (series_descriptions == "" ? "" : "              <div><a href = \"#ead_series_descriptions\">Series Descriptions</a></div>\n")
-			table_of_contents << (names_and_subjects == "" ? "" : "              <div><a href = \"#ead_names_and_subjects\">Names and Subjects</a></div>\n")
-			table_of_contents << (related_collections == "" ? "" : "              <div><a href = \"#ead_related_collections\">Related Collections</a></div>\n")
-			table_of_contents << (access_and_use == nil ? "" : "              <div><a href = \"#ead_access_and_use\">Access and Use</a></div>\n")
-			table_of_contents << (administrative_notes == "" ? "" : "              <div><a href = \"#ead_administrative_notes\">Administrative Notes</a></div>\n")
-			table_of_contents << "            </div> <!-- tableOfContents -->\n"
+      table_of_contents = "            <div id=\"tableOfContents\">\n"
+      table_of_contents << (overview == "" ? "" : "              <div><a href = \"#ead_overview\">Overview</div></a>\n")
+      table_of_contents << (contents == "" ? "" : "              <div><a href = \"#ead_contents\">Contents</div></a>\n")
+      table_of_contents << (series_descriptions == "" ? "" : "              <div><a href = \"#ead_series_descriptions\">Series Descriptions</a></div>\n")
+      table_of_contents << (names_and_subjects == "" ? "" : "              <div><a href = \"#ead_names_and_subjects\">Names and Subjects</a></div>\n")
+      table_of_contents << (related_collections == "" ? "" : "              <div><a href = \"#ead_related_collections\">Related Collections</a></div>\n")
+      table_of_contents << (access_and_use == nil ? "" : "              <div><a href = \"#ead_access_and_use\">Access and Use</a></div>\n")
+      table_of_contents << (administrative_notes == "" ? "" : "              <div><a href = \"#ead_administrative_notes\">Administrative Notes</a></div>\n")
+      table_of_contents << "            </div> <!-- tableOfContents -->\n"
 
-			overview.sub!("TOCGOESHERE", table_of_contents)
+      overview.sub!("TOCGOESHERE", table_of_contents)
 
-			result = overview + contents + series_descriptions +
-			  names_and_subjects + related_collections + access_and_use + administrative_notes
-			result.chomp!  #remove the trailing \n
+      result = overview + contents + series_descriptions +
+        names_and_subjects + related_collections + access_and_use + administrative_notes
+      result.chomp!  #remove the trailing \n
 
-			return result
-		end
+      return result
+    end
 
 
     def self.show_overview(fedora_obj, datastream = "Archival.xml"  )
@@ -43,15 +61,15 @@ module Tufts
       name = nil
       rcr_url = nil
 
-			if !persname.empty?
-			  name, rcr_url = parse_origination(persname);
-			elsif !corpname.empty?
-				name, rcr_url = parse_origination(corpname);
-			elsif !famname.empty?
-				name, rcr_url = parse_origination(famname);
-			end
+      if !persname.empty?
+        name, rcr_url = parse_origination(persname);
+      elsif !corpname.empty?
+        name, rcr_url = parse_origination(corpname);
+      elsif !famname.empty?
+        name, rcr_url = parse_origination(famname);
+      end
 
-			# TBD - add collapsable list of associated RCRs if present
+      # TBD - add collapsable list of associated RCRs if present
 
       result = "<div id=\"ead_overview\">\n"
       result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
@@ -71,113 +89,141 @@ module Tufts
       result = ""
       scopecontentps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:scopecontentp)
 
-			if !scopecontentps.empty?
-      	result = "          <div id=\"ead_contents\">\n"
-				result << "            <h4>Contents of the Collection</h4>\n"
+      if !scopecontentps.empty?
+        result = "          <div id=\"ead_contents\">\n"
+        result << "            <h4>Contents of the Collection</h4>\n"
 
-      	scopecontentps.each do |scopecontentp|
-					result << "            <div>" + scopecontentp.text + "</div>\n"
-      	end
+        scopecontentps.each do |scopecontentp|
+          result << "            <div>" + scopecontentp.text + "</div>\n"
+        end
 
-      	result << "          </div> <!-- ead_contents -->\n"
+        result << "          </div> <!-- ead_contents -->\n"
       end
 
       return result
-		end
+    end
 
 
     def self.show_series_descriptions(fedora_obj, datastream = "Archival.xml"  )
       items = fedora_obj.datastreams[datastream].find_by_terms_and_value(:items)
 
-			if !items.empty?
-	      result = "          <div id=\"ead_series_descriptions\">\n"
-				result << "            <h4>Series Descriptions</h4>\n"
+      if !items.empty?
+        result = "          <div id=\"ead_series_descriptions\">\n"
+        result << "            <h4>Series Descriptions</h4>\n"
 
-      	items.each do |item|
-        	did = nil
-        	scopecontent = nil
+        level = 0
 
-					item.element_children.each do |child|
-						if child.name == "did"
-							did = child
-						elsif child.name == "scopecontent"
-							scopecontent = child
-						end
-					end
+        items.each do |item|
+          level += 1
+          result << show_series_description_item(item, level)
+        end
 
-					# process the did element
-					if did != nil
-						unittitle = nil
-						unitdate = nil
-
-						did.element_children.each do |didchild|
-							if didchild.name == "unittitle"
-								unittitle = didchild.text
-							elsif didchild.name == "unitdate"
-								unitdate = didchild.text
-							end
-						end
-
-						if unittitle != nil && unittitle.size > 0
-              result << (unittitle == nil ? "" : "              <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
-						end
-					end
-
-					# process the scopecontent element
-					if scopecontent != nil
-						scopecontent.element_children.each do |scopecontentchild|
-							if scopecontentchild.name == "p"
-								p = scopecontentchild.text
-							  result << "            <div>" + p + "</div>\n"
-							end
-						end
-					end
-				end
-
-	      result << "          </div> <!-- ead_series_descriptions -->\n"
-			end
+        result << "          </div> <!-- ead_series_descriptions -->\n"
+      end
 
       return result
-		end
+    end
+
+
+    def self.show_series_description_item(item, level)
+      # item is a c01 element, or a c02 element if this is a recursive call
+      # level is the number of this item (ie 1, 2.1, etc)
+
+      result = ""
+      did = nil
+      scopecontent = nil
+      c02s = Array.new
+
+      # find the pertinent child elements: did, scopecontent and c02
+      item.element_children.each do |child|
+        if child.name == "did"
+          did = child
+        elsif child.name == "scopecontent"
+          scopecontent = child
+        elsif child.name == "c02"
+          if child.attribute("level").text == "subseries"
+            c02s << child
+          end
+        end
+      end
+
+      # process the did element
+      if did != nil
+        unittitle = nil
+        unitdate = nil
+        noSubseries = c02s.empty?
+
+        did.element_children.each do |didchild|
+          if didchild.name == "unittitle"
+            unittitle = didchild.text
+          elsif didchild.name == "unitdate"
+            unitdate = didchild.text
+          end
+        end
+
+        # This should be a link if there are no subseries elements (ie, <c02 level="subseries"> tags).
+        if unittitle != nil && unittitle.size > 0
+          result << (unittitle == nil ? "" : "              <h4>" + (noSubseries ? "<a href=\"foo\">" : "") + level.to_s + ". " + unittitle + (unitdate == nil ? "" : " " + unitdate) + (noSubseries ? "</a>" : "") + "</h4>\n")
+        end
+      end
+
+      # process the scopecontent element
+      if scopecontent != nil
+        scopecontent.element_children.each do |scopecontentchild|
+          if scopecontentchild.name == "p"
+            p = scopecontentchild.text
+            result << "            <div>" + p + "</div>\n"
+          end
+        end
+      end
+
+      # process the subseries elements (ie, <c02 level="subseries"> tags), if any, by calling this method recursively
+      c02s.each do |c02|
+        level += 0.1
+        result << show_series_description_item(c02, level)
+      end
+
+      return result
+    end
 
 
     def self.show_names_and_subjects(fedora_obj, datastream = "Archival.xml"  )
-    	result = ""
+      result = ""
       controlaccesses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:controlaccess)
 
-			if !controlaccesses.empty?
-      	result = "          <div id=\"ead_names_and_subjects\">\n"
-				result << "            <h4>Names and Subjects</h4>\n"
-      	result << parse_controlaccess(controlaccesses)
-      	result << "          </div> <!-- ead_names_and_subjects -->\n"
+      if !controlaccesses.empty?
+        result = "          <div id=\"ead_names_and_subjects\">\n"
+        result << "            <h4>Names and Subjects</h4>\n"
+        result << parse_controlaccess(controlaccesses)
+        result << "          </div> <!-- ead_names_and_subjects -->\n"
       end
 
       return result
-		end
+    end
 
 
     def self.show_related_collections(fedora_obj, datastream = "Archival.xml"  )
-    	result = ""
-    	separatedmaterials = []  #TBD get from xml
-    	relatedmaterials = []  #TBD get from xml
+      result = ""
+      separatedmaterials = []  #TBD get from xml
+      relatedmaterials = []  #TBD get from xml
 
-			if !separatedmaterials.empty? && ! relatedmaterials.empty?
-      	result = "          <div id=\"ead_related_collections\">\n"
-				result << "            <h4>Related Material</h4>\n"
+      if !separatedmaterials.empty? && ! relatedmaterials.empty?
+        result = "          <div id=\"ead_related_collections\">\n"
+        result << "            <h4>Related Material</h4>\n"
 
-      	separatedmaterials.each do |separatedmaterial|
-					result << "            <div>" + separatedmaterial.text + "</div>\n"
-      	end
+        separatedmaterials.each do |separatedmaterial|
+          result << "            <div>" + separatedmaterial.text + "</div>\n"
+        end
 
-      	relatedmaterials.each do |relatedmaterial|
-					result << "            <div>" + relatedmaterial.text + "</div>\n"
-      	end
+        relatedmaterials.each do |relatedmaterial|
+          result << "            <div>" + relatedmaterial.text + "</div>\n"
+        end
 
-      	result << "          </div> <!-- ead_related_collections -->\n"
+        result << "          </div> <!-- ead_related_collections -->\n"
       end
 
       return result
-		end
+    end
 
 
     def self.show_access_and_use(fedora_obj, datastream = "Archival.xml"  )
@@ -186,196 +232,93 @@ module Tufts
       userestrictps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:userestrictp)
       preferciteps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:prefercitep)
 
-			if !accessrestrictps.empty? && !userestrictps.empty? && !preferciteps.empty?
-      	result = "          <div id=\"ead_access_and_use\">\n"
-				result << "            <h4>Access and Use</h4>\n"
+      if !accessrestrictps.empty? && !userestrictps.empty? && !preferciteps.empty?
+        result = "          <div id=\"ead_access_and_use\">\n"
+        result << "            <h4>Access and Use</h4>\n"
 
-      	accessrestrictps.each do |accessrestrictp|
-        	result << "            <div>" + accessrestrictp.text + "</div>\n"
-      	end
-
-      	userestrictps.each do |userestrictp|
-        	result << "            <div>" + userestrictp.text + "</div>\n"
-      	end
-
-				# TBD -- do they want the prefercite?
-      	preferciteps.each do |prefercitep|
-        	result << "            <div>Preferred citation: " + prefercitep.text + "</div>\n"
+        accessrestrictps.each do |accessrestrictp|
+          result << "            <div>" + accessrestrictp.text + "</div>\n"
         end
 
-      	result << "          </div> <!-- ead_access_and_use -->\n"
+        userestrictps.each do |userestrictp|
+          result << "            <div>" + userestrictp.text + "</div>\n"
+        end
+
+        # TBD -- do they want the prefercite?
+        preferciteps.each do |prefercitep|
+          result << "            <div>Preferred citation: " + prefercitep.text + "</div>\n"
+        end
+
+        result << "          </div> <!-- ead_access_and_use -->\n"
       end
 
       return result
-		end
+    end
 
 
     def self.show_administrative_notes(fedora_obj, datastream = "Archival.xml"  )
-    	result = ""
-    	processinfos = []  #TBD get from xml
-    	acqinfos = []  #TBD get from xml
+      result = ""
+      processinfos = []  #TBD get from xml
+      acqinfos = []  #TBD get from xml
 
-			if !processinfos.empty? && !acqinfos.empty?
-      	result = "          <div id=\"ead_administrative_notes\">\n"
-				result << "            <h4>Administrative Notes</h4>\n"
+      if !processinfos.empty? && !acqinfos.empty?
+        result = "          <div id=\"ead_administrative_notes\">\n"
+        result << "            <h4>Administrative Notes</h4>\n"
 
-      	processinfos.each do |processinfo|
-        	result << "            <div>" + processinfo.text + "</div>\n"
-      	end
+        processinfos.each do |processinfo|
+          result << "            <div>" + processinfo.text + "</div>\n"
+        end
 
-      	acqinfos.each do |acqinfo|
-        	result << "            <div>" + acqinfo.text + "</div>\n"
-      	end
+        acqinfos.each do |acqinfo|
+          result << "            <div>" + acqinfo.text + "</div>\n"
+        end
 
-      	result << "          </div> <!-- ead_administrative_notes -->\n"
+        result << "          </div> <!-- ead_administrative_notes -->\n"
       end
-
-      return result
-		end
-
-# OLD STUFF
-    def self.show_series_description(fedora_obj, datastream = "Archival.xml"  )
-      dscnoteps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:dscnotep)
-      dscps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:dscp)
-
-      result = "<div class=\"series_description_section\">\n"
-      result << "            <h4 class=\"series_description_section_label\">Series Description</h4>\n"
-
-      dscnoteps.each do |dscnotep|
-        result << "            <p class=\"series_description_section_note_p\">" + dscnotep + "</p>\n"
-      end
-
-      dscps.each do |dscp|
-        result << "            <p class=\"series_description_section_p\">" + dscp + "</p>\n"
-      end
-
-      result << "          </div> <!-- series_description_section -->"
 
       return result
     end
 
 
-    def self.show_item_list(fedora_obj, datastream = "Archival.xml"  )
-      items = fedora_obj.datastreams[datastream].find_by_terms_and_value(:items)
+    def self.parse_origination(node)
+      name = nil
+      rcr_url = nil
 
-      result = "<div class=\"item_list_section\">\n"
-      result << "            <h4 class=\"item_list_section_label\">Item List</h4>\n"
-      result << "            <hr>\n"
+      first_element = node.first
 
-      items.each do |item|
-        # find the did and controlaccess elements
-        did = nil
-        controlaccess = nil
+      if first_element != nil
+        name = first_element.text
+        first_element_id = first_element.attribute("id")
 
-        item.element_children.each do |child|
-          if child.name == "did"
-            did = child
-          elsif child.name == "controlaccess"
-            controlaccess = child
-          end
+        if first_element_id != nil
+          rcr_url = first_persname_id.text
         end
-
-        # process the did element
-        if did != nil
-          unittitle = nil
-          physdesc = nil
-          box = nil
-          item = nil
-          physloc = nil
-          note = nil
-
-          did.element_children.each do |didchild|
-            if didchild.name == "unittitle"
-              unittitle = didchild.text
-            elsif didchild.name == "physdesc"
-              physdesc = didchild.text
-            elsif didchild.name == "container"
-              if didchild.attribute("type").text == "box"
-                  box = didchild.text
-              elsif didchild.attribute("type").text == "item"
-                  item = didchild.text
-              end
-            elsif didchild.name == "physloc"
-              physloc = didchild.text
-            elsif didchild.name == "note"
-              note = didchild.text
-            end
-          end
-
-          if unittitle != nil && unittitle.size > 0
-            result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">Title</div><div class=\"metadata_values\">" + unittitle + "</div></div>\n"
-          end
-
-          if physdesc != nil && physdesc.size > 0
-            result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">Physical Description/Format</div><div class=\"metadata_values\">" + physdesc + "</div></div>\n"
-          end
-
-          if box != nil && box.size > 0
-            result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">Catalog Number</div><div class=\"metadata_values\">" + box + (item != nil && item.size > 0 ? "#" + item : "") + "</div></div>\n"
-          end
-
-          if physloc != nil && physloc.size > 0
-            result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">Location</div><div class=\"metadata_values\">" + physloc + "</div></div>\n"
-          end
-
-          if note != nil && note.size > 0
-            result << "            <div class=\"metadata_row\"><div class=\"metadata_label\">Note</div><div class=\"metadata_values\">" + note + "</div></div>\n"
-          end
-        end
-
-        # process the controlaccess element
-        if controlaccess != nil
-          result << parse_controlaccess(controlaccess)
-        end
-
-        result << "            <hr>\n"
       end
 
-      result << "          </div> <!-- item_list_section -->"
-
-      return result
+      return name, rcr_url
     end
-
-
-		def self.parse_origination(node)
-			name = nil
-		  rcr_url = nil
-
-			first_element = node.first
-
-			if first_element != nil
-				name = first_element.text
-				first_element_id = first_element.attribute("id")
-
-				if first_element_id != nil
-					rcr_url = first_persname_id.text
-				end
-			end
-
-			return name, rcr_url
-		end
 
 
     def self.parse_controlaccess(controlaccesses)
-			result = ""
+      result = ""
 
-			controlaccesses.each do |controlaccess|
-			  controlaccess.element_children.each do |child|
-			    childname = child.name
+      controlaccesses.each do |controlaccess|
+        controlaccess.element_children.each do |child|
+          childname = child.name
 
-					if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
-					  childtext = child.text
+          if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
+            childtext = child.text
 
-						if childtext.size > 0
-							result << "            <div>" +  childtext + "</div>\n"
-						end
-					end
-				end
-			end
+            if childtext.size > 0
+              result << "            <div>" +  childtext + "</div>\n"
+            end
+          end
+        end
+      end
 
-			return result
-		end
+      return result
+    end
 
 
-	end
+  end
 end

@@ -4,5 +4,8 @@
 <% stylesheet_links << "feedback/feedback.css" %>
 
         <div id="ead_content">
+          <%= raw Tufts::EADMethods.show_landing_page(@document_fedora) %>
+          <hr>
+          <hr>
           <%= raw Tufts::EADMethods.show_overview_page(@document_fedora) %>
         </div> <!-- ead_content -->
