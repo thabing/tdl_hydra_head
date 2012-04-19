@@ -134,7 +134,7 @@
       t.items(:proxy => [:archdesc, :dsc, :c01])
 
 			# Names and Subjects
-      t.controlaccess(:proxy => [:archdesc, :controlaccess, :controlaccess])
+      t.controlaccess(:proxy => [:archdesc, :controlaccess])
 
 			# Related Collections
 
@@ -144,11 +144,6 @@
       t.prefercitep(:proxy => [:archdesc, :descgrp, :prefercite, :p])
 
 			# Administrative Notes
-
-# OLD STUFF
-      # Series Description
-      t.dscnotep(:proxy => [:archdesc, :dsc, :c01, :scopecontent, :note, :p])
-      t.dscp(:proxy => [:archdesc, :dsc, :c01, :scopecontent, :p])
     
     end
 

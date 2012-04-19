@@ -204,8 +204,8 @@ module Tufts
 
     def self.show_related_collections(fedora_obj, datastream = "Archival.xml"  )
       result = ""
-      separatedmaterials = []  #TBD get from xml
-      relatedmaterials = []  #TBD get from xml
+      separatedmaterials = Array.new  #TBD get from xml
+      relatedmaterials = Array.new  #TBD get from xml
 
       if !separatedmaterials.empty? && ! relatedmaterials.empty?
         result = "          <div id=\"ead_related_collections\">\n"
@@ -244,7 +244,7 @@ module Tufts
           result << "            <div>" + userestrictp.text + "</div>\n"
         end
 
-        # TBD -- do they want the prefercite?
+        # TBD -- do they want the prefercite?  It's not on the design drawings...
         preferciteps.each do |prefercitep|
           result << "            <div>Preferred citation: " + prefercitep.text + "</div>\n"
         end
@@ -258,8 +258,8 @@ module Tufts
 
     def self.show_administrative_notes(fedora_obj, datastream = "Archival.xml"  )
       result = ""
-      processinfos = []  #TBD get from xml
-      acqinfos = []  #TBD get from xml
+      processinfos = Array.new  #TBD get from xml
+      acqinfos = Array.new  #TBD get from xml
 
       if !processinfos.empty? && !acqinfos.empty?
         result = "          <div id=\"ead_administrative_notes\">\n"
@@ -291,7 +291,7 @@ module Tufts
         first_element_id = first_element.attribute("id")
 
         if first_element_id != nil
-          rcr_url = first_persname_id.text
+          rcr_url = first_element_id.text
         end
       end
 
@@ -307,10 +307,12 @@ module Tufts
           childname = child.name
 
           if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
-            childtext = child.text
+            child_name = child.text
+            child_id = child.attribute("id")
+            child_url = (child_id == nil ? nil : child_id.text)
 
-            if childtext.size > 0
-              result << "            <div>" +  childtext + "</div>\n"
+            if child_name.size > 0
+              result << "            <div>" +  (child_url == nil ? "" : "<a href=\"" + child_url + "\">") + child_name + (child_url == nil ? "" : "</a>") + "</div>\n"
             end
           end
         end
