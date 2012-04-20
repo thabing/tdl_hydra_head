@@ -12,8 +12,8 @@ module Tufts
       #   result += "<a href=\"" + datastream_disseminator_url(params[:id], "ACCESS_MP3") + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
 
       #   the following line works in Safari, Chrome and Firefox but not in Opera
-      #result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + pid + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-      result += "<a href=\"/file_assets/" + pid +"\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+      result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + pid + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+      #latest from Mike: result += "<a href=\"/file_assets/" + pid +"\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
       #   the following test works in Safari, Chrome, Firefox and Opera, proving that Opera is capable of using the yahoo media player, as in current DL prod...
       #   result += "<a href=\"http://dl.tufts.edu/ProxyServlet/?url=http://repository01.lib.tufts.edu:8080/fedora/get/tufts:AC00001/bdef:TuftsAudio/getAudioFile&filename=tufts:AC00001.mp3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
 
@@ -102,13 +102,11 @@ module Tufts
         node.children.each do |child|
           childName = child.name
           if (childName == "u")
-            unless child.attributes.empty?
-              who = child.attributes["who"]
-              result << "                  <div class=\"transcript_row\">\n"
-              result << "                    <div class=\"transcript_speaker\">"+ (who.nil? ? "" : who.value) + "</div>\n"
-              result << "                    <div class=\"transcript_utterance\">"+ parse_notations(child) + "</div>\n"
-              result << "                  </div> <!-- transcript_row -->\n"
-            end
+            who = child.attributes["who"]
+            result << "                  <div class=\"transcript_row\">\n"
+            result << "                    <div class=\"transcript_speaker\">"+ (who.nil? ? "" : who.value) + "</div>\n"
+            result << "                    <div class=\"transcript_utterance\">"+ parse_notations(child) + "</div>\n"
+            result << "                  </div> <!-- transcript_row -->\n"
           elsif (childName == "event" || childName == "gap" || childName == "vocal" || childName == "kinesic")
             unless child.attributes.empty?
               desc = child.attributes["desc"]
