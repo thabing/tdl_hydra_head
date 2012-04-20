@@ -134,6 +134,7 @@ namespace :tufts_dca do
 	"tufts:UP029.020.031.00108",
 	"tufts:WP0001",
 	"tufts:sample001",
+	"tufts:sample002",
   "tufts:UA069.001.DO.MS124",
   "tufts:UA069.001.DO.MS134",
   "tufts:UA069.001.DO.UA015",
