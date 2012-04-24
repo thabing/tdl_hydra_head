@@ -3,12 +3,13 @@ module Tufts
 
 
     def self.show_landing_page(fedora_obj, datastream = "Archival.xml")
+      result = ""
       unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
       unitdate = fedora_obj.datastreams[datastream].get_values(:unitdate).first
       physdesc = fedora_obj.datastreams[datastream].get_values(:physdesc).first
       abstract = fedora_obj.datastreams[datastream].get_values(:abstract).first
 
-      result = "<div id=\"ead_landing\">\n"
+      result << "<div id=\"ead_landing\">\n"
       result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
       result << "            <hr/>\n"
       result << "            <div>This collection has:</div>\n"
@@ -21,6 +22,7 @@ module Tufts
 
 
     def self.show_overview_page(fedora_obj, datastream = "Archival.xml")
+      result = ""
       overview = show_overview(fedora_obj)
       contents = show_contents(fedora_obj)
       series_descriptions = show_series_descriptions(fedora_obj)
@@ -35,13 +37,13 @@ module Tufts
       table_of_contents << (series_descriptions == "" ? "" : "              <div><a href = \"#ead_series_descriptions\">Series Descriptions</a></div>\n")
       table_of_contents << (names_and_subjects == "" ? "" : "              <div><a href = \"#ead_names_and_subjects\">Names and Subjects</a></div>\n")
       table_of_contents << (related_collections == "" ? "" : "              <div><a href = \"#ead_related_collections\">Related Collections</a></div>\n")
-      table_of_contents << (access_and_use == nil ? "" : "              <div><a href = \"#ead_access_and_use\">Access and Use</a></div>\n")
+      table_of_contents << (access_and_use == "" ? "" : "              <div><a href = \"#ead_access_and_use\">Access and Use</a></div>\n")
       table_of_contents << (administrative_notes == "" ? "" : "              <div><a href = \"#ead_administrative_notes\">Administrative Notes</a></div>\n")
       table_of_contents << "            </div> <!-- tableOfContents -->\n"
 
       overview.sub!("TOCGOESHERE", table_of_contents)
 
-      result = overview + contents + series_descriptions +
+      result << overview + contents + series_descriptions +
         names_and_subjects + related_collections + access_and_use + administrative_notes
       result.chomp!  #remove the trailing \n
 
@@ -50,6 +52,7 @@ module Tufts
 
 
     def self.show_overview(fedora_obj, datastream = "Archival.xml"  )
+      result = ""
       unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
       unitdate = fedora_obj.datastreams[datastream].get_values(:unitdate).first
       physdesc = fedora_obj.datastreams[datastream].get_values(:physdesc).first
@@ -71,7 +74,7 @@ module Tufts
 
       # TBD - add collapsable list of associated RCRs if present
 
-      result = "<div id=\"ead_overview\">\n"
+      result << "<div id=\"ead_overview\">\n"
       result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
       result << "            <hr/>\n"
       result << "TOCGOESHERE"
@@ -90,7 +93,7 @@ module Tufts
       scopecontentps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:scopecontentp)
 
       if !scopecontentps.empty?
-        result = "          <div id=\"ead_contents\">\n"
+        result << "          <div id=\"ead_contents\">\n"
         result << "            <h4>Contents of the Collection</h4>\n"
 
         scopecontentps.each do |scopecontentp|
@@ -105,10 +108,11 @@ module Tufts
 
 
     def self.show_series_descriptions(fedora_obj, datastream = "Archival.xml"  )
+      result = ""
       items = fedora_obj.datastreams[datastream].find_by_terms_and_value(:items)
 
       if !items.empty?
-        result = "          <div id=\"ead_series_descriptions\">\n"
+        result << "          <div id=\"ead_series_descriptions\">\n"
         result << "            <h4>Series Descriptions</h4>\n"
 
         level = 0
@@ -192,10 +196,14 @@ module Tufts
       controlaccesses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:controlaccess)
 
       if !controlaccesses.empty?
-        result = "          <div id=\"ead_names_and_subjects\">\n"
-        result << "            <h4>Names and Subjects</h4>\n"
-        result << parse_controlaccess(controlaccesses)
-        result << "          </div> <!-- ead_names_and_subjects -->\n"
+        parsed_controlaccess = parse_controlaccess(controlaccesses)
+
+        if parsed_controlaccess != ""
+          result << "          <div id=\"ead_names_and_subjects\">\n"
+          result << "            <h4>Names and Subjects</h4>\n"
+          result << parsed_controlaccess
+          result << "          </div> <!-- ead_names_and_subjects -->\n"
+        end
       end
 
       return result
@@ -204,11 +212,11 @@ module Tufts
 
     def self.show_related_collections(fedora_obj, datastream = "Archival.xml"  )
       result = ""
-      separatedmaterials = Array.new  #TBD get from xml
-      relatedmaterials = Array.new  #TBD get from xml
+      separatedmaterials = fedora_obj.datastreams[datastream].find_by_terms_and_value(:separatedmaterial)
+      relatedmaterials = fedora_obj.datastreams[datastream].find_by_terms_and_value(:relatedmaterial)
 
       if !separatedmaterials.empty? && ! relatedmaterials.empty?
-        result = "          <div id=\"ead_related_collections\">\n"
+        result << "          <div id=\"ead_related_collections\">\n"
         result << "            <h4>Related Material</h4>\n"
 
         separatedmaterials.each do |separatedmaterial|
@@ -233,7 +241,7 @@ module Tufts
       preferciteps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:prefercitep)
 
       if !accessrestrictps.empty? && !userestrictps.empty? && !preferciteps.empty?
-        result = "          <div id=\"ead_access_and_use\">\n"
+        result << "          <div id=\"ead_access_and_use\">\n"
         result << "            <h4>Access and Use</h4>\n"
 
         accessrestrictps.each do |accessrestrictp|
@@ -258,11 +266,11 @@ module Tufts
 
     def self.show_administrative_notes(fedora_obj, datastream = "Archival.xml"  )
       result = ""
-      processinfos = Array.new  #TBD get from xml
-      acqinfos = Array.new  #TBD get from xml
+      processinfos = fedora_obj.datastreams[datastream].find_by_terms_and_value(:processinfo)
+      acqinfos = fedora_obj.datastreams[datastream].find_by_terms_and_value(:acqinfo)
 
       if !processinfos.empty? && !acqinfos.empty?
-        result = "          <div id=\"ead_administrative_notes\">\n"
+        result << "          <div id=\"ead_administrative_notes\">\n"
         result << "            <h4>Administrative Notes</h4>\n"
 
         processinfos.each do |processinfo|

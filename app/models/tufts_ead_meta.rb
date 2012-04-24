@@ -115,6 +115,12 @@
             }
           }
         }
+ 
+        t.separatedmaterial(:path => "separatedmaterial")
+        t.relatedmaterial(:path => "relatedmaterial")
+
+        t.processinfo(:path => "processinfo")
+        t.acqinfo(:path => "acqinfo")
       }
 
       # Overview
@@ -133,18 +139,22 @@
       # Series Descriptions
       t.items(:proxy => [:archdesc, :dsc, :c01])
 
-			# Names and Subjects
+      # Names and Subjects
       t.controlaccess(:proxy => [:archdesc, :controlaccess])
 
-			# Related Collections
+      # Related Collections
+      t.separatedmaterial(:proxy => [:archdesc, :separatedmaterial])
+      t.relatedmaterial(:proxy => [:archdesc, :relatedmaterial])
 
       # Access and Use
       t.accessrestrictp(:proxy => [:archdesc, :descgrp, :accessrestrict, :p])
       t.userestrictp(:proxy => [:archdesc, :descgrp, :userestrict, :p])
       t.prefercitep(:proxy => [:archdesc, :descgrp, :prefercite, :p])
 
-			# Administrative Notes
-    
+      # Administrative Notes
+      t.processinfo(:proxy => [:archdesc, :processinfo])
+      t.acqinfo(:proxy => [:archdesc, :acqinfo])
+
     end
 
 #    def self.xml_template
