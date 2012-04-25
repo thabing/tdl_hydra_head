@@ -12,6 +12,10 @@ module Tufts
       result << "<div id=\"ead_landing\">\n"
       result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
       result << "            <hr/>\n"
+      result << "            <a href=\"/catalog/eadoverview/" + fedora_obj.id + "\">View Collection Guide</a>\n"
+      result << "            <div>A short explanation of a collection guide</div>\n"
+      result << "            <a href=\"foo\">View Online Materials</a>\n"
+      result << "            <div>View digitized objects from this collection.  Not all materials in this collection are available online.  See collection guide or contact DCA for more information.</div>\n"
       result << "            <div>This collection has:</div>\n"
       result << (physdesc == nil ? "" : "            <div>" + physdesc + "</div>\n")
       result << (abstract == nil ? "": "            <div>" + abstract + "</div>\n")
