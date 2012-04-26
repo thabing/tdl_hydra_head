@@ -104,7 +104,7 @@ input#submit {
 
 .transcript_speaker {
   display: table-cell;
-  width: 30px;
+  width: 100px;
   color: darkgray;
   vertical-align: top;
   padding-right: 2em;

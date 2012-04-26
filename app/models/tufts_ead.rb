@@ -34,6 +34,9 @@ class TuftsEAD < ActiveFedora::Base
   # not.
   has_metadata :name => "FILE-META", :type => TuftsFileMeta
 
+  # Tufts specific needed metadata streams
+  has_metadata :name => "Archival.xml", :type => TuftsEADMeta
+
   #Our Binary streams
   #has_datastream :name=>"Access.xml", :type=>ActiveFedora::Datastream, :controlGroup=>'E'
   #has_datastream :name=>"Archival.pdf", :type=>ActiveFedora::Datastream, :controlGroup=>'E'

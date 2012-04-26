@@ -3,28 +3,9 @@
 <% javascript_includes << "feedback.js" %>
 <% stylesheet_links << "feedback/feedback.css" %>
 
-        <div class="document_viewer" id="cover_container">
-          <%= showMetadataItem("Creator", "creator", :creator) %>
-          <%= showMetadataItem("Source", "source2", :source2) %>
-          <%= showMetadataItem("Description", "description", :description) %>
-          <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
-          <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
-          <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
-          <%= showMetadataItem("Citable URL", "identifier", :identifier) %>
-          <%= showMetadataItem("Rights", "rights", :rights) %>
-          <%= showMetadataItem("Citation", "bibliographicCitation", :bibliographicCitation) %>
-          <%= showMetadataItem("Publisher", "publisher", :publisher) %>
-          <%= showMetadataItem("Type", "type2", :type2) %>
-          <%= showMetadataItem("Format", "format2", :format2) %>
-          <%= showMetadataItem("Person Name", "persname", :persname) %>
-          <%= showMetadataItem("Organizations", "corpname", :corpname) %>
-          <%= showMetadataItem("Places", "geogname", :geogname) %>
-          <%= showMetadataItem("Topics", "subject", :subject) %>
-          <%= showMetadataItem("Funder", "funder", :funder) %>
-          <%= showMetadataItem("Temporal", "temporal", :temporal) %>
-          <%= showMetadataItem("Resolution", "resolution", :resolution) %>
-          <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
-          <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
-          <%= showMetadataItem("File Size", "filesize", :filesize) %>
-          <%= showFeedbackForm(params[:id]) %>
-     </div>
+        <div id="ead_content">
+          <%= raw Tufts::EADMethods.show_landing_page(@document_fedora) %>
+          <hr>
+          <hr>
+          <%= raw Tufts::EADMethods.show_overview_page(@document_fedora) %>
+        </div> <!-- ead_content -->
