@@ -20,6 +20,7 @@ TdlHydraHead::Application.routes.draw do
   match '/search', :to => 'catalog#search', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/opensearch', :to => 'catalog#opensearch', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/facet/:id', :to => 'catalog#facet', :constraints => {:id => /.*/}, :as =>'catalog'
+  match '/catalog/eadoverview/:id', :to => 'catalog#eadoverview', :constraints => {:id => /.*/}, :as =>'eadoverview'
   match '/catalog/:id', :to => 'catalog#show', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/file_assets/advanced/:id', :to => 'file_assets#showAdvanced', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/file_assets/dimensions/:id', :to => 'file_assets#dimensions', :constraints => {:id => /.*/}, :as =>'file_asset'
