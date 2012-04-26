@@ -18,7 +18,6 @@ end
 #Calling ActiveFedora.init with a path as an argument has been removed.  Use ActiveFedora.init(:fedora_config_path=>/Users/mkorcy01/Desktop/tdl_hydra_head/config/fedora.yml)
 
 #ActiveFedora.init("#{Rails.root}/config/fedora.yml")
-#ActiveFedora.init(:fedora_config_path=>"/Users/mkorcy01/Desktop/tdl_hydra_head/config/fedora.yml")
 ActiveFedora.init(:fedora_config_path => "#{Rails.root}/config/fedora.yml")
 
 namespace :repo do
