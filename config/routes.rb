@@ -6,7 +6,7 @@ TdlHydraHead::Application.routes.draw do
   match "/about" => "about#index"
  #get "search/index"
  # match "/search" => "search#index"
-  match "/contact" => "contact#index"
+  match "/contact" => "contact#show"
 
 #  Blacklight.add_routes(self,
 #  map.connect '/catalog/', :controller => 'catalog', :action => 'index'
