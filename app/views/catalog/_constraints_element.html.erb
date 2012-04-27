@@ -1,0 +1,37 @@
+<%- # local params:
+    # label 
+    # value
+    # options =>
+    #   :remove => url for a remove constraint link
+    #   :classes => array of classes to add to container span
+    options ||= {}
+    options[:escape_label] = true unless options.has_key?(:escape_label)
+    options[:escape_value] = true unless options.has_key?(:escape_value)
+-%>
+<ul class="nav nav-pills" xmlns="http://www.w3.org/1999/html">
+
+
+      <%- unless label.blank? -%>
+        <li class="active"><%= options[:escape_label] ? h(label) : raw(label) %></li>
+      <%- end -%>
+      <%- unless value.blank? -%>
+        <li class="active"><%= options[:escape_value] ? h(value) : raw(value) %></li>
+      <%- end -%>
+      <%- unless options[:remove].blank? -%>
+        <% accessible_remove_label =               
+                if label.blank?
+                  "Remove constraint #{options[:escape_value] ? h(value) : value}"
+                else
+                  "Remove constraint #{options[:escape_value] ? h(value) : value}: #{options[:escape_value] ? h(value) : value}"
+                end              
+        %>
+        <li class="active">
+        <%= link_to(accessible_remove_label,
+					options[:remove],
+					:class=>'btnRemove imgReplace',
+          :alt=>'remove'
+				) %>
+        </li>
+      <%- end -%>
+
+</ul>
