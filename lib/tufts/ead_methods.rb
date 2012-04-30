@@ -57,63 +57,15 @@ module Tufts
 
     def self.show_internal_page(fedora_obj, item_id, datastream = "Archival.xml")
       result = ""
-      serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)
-      series = nil
+      unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
+      unitdate = fedora_obj.datastreams[datastream].get_values(:unitdate).first
+      series = show_series(fedora_obj, item_id, datastream)
 
-      # look for a c01 whose id matches item_id
-      serieses.each do |item|
-        if item.attribute("id").text == item_id
-          series = item;
-        else
-          # look for a c02 whose id matches item_id
-          item.element_children.each do |child|
-            if child.name == "c02"
-              if child.attribute("level").text == "subseries"
-                if child.attribute("id").text == item_id
-                  series = child
-                  break;
-                end
-              end
-            end
-          end
-        end
-
-        if !series.nil?
-          break
-        end
-      end
-
-      if !series.nil?
-        did = nil
-        scopecontent = nil
-
-        # find the pertinent child elements: did, scopecontent and c02
-        series.element_children.each do |child|
-          if child.name == "did"
-            did = child
-          elsif child.name == "scopecontent"
-            scopecontent = child
-          end
-        end
-
-        # process the did element
-        if did != nil
-          unittitle = nil
-          unitdate = nil
-
-          did.element_children.each do |didchild|
-            if didchild.name == "unittitle"
-              unittitle = didchild.text
-            elsif didchild.name == "unitdate"
-              unitdate = didchild.text
-            end
-          end
-        end
-
-        result << "<div id=\"ead_internal\">\n"
-        result << "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n"
-        result << "          </div> <!-- ead_internal -->\n"
-      end
+			result << "<div id=\"ead_internal\">\n"
+      result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
+      result << "            <hr/>\n"
+			result << series
+			result << "          </div> <!-- ead_internal -->\n"
 
       return result
     end
@@ -351,6 +303,70 @@ module Tufts
         end
 
         result << "          </div> <!-- ead_administrative_notes -->\n"
+      end
+
+      return result
+    end
+
+
+    def self.show_series(fedora_obj, item_id, datastream = "Archival.xml")
+      result = ""
+      serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)
+      series = nil
+
+      # look for a c01 whose id matches item_id
+      serieses.each do |item|
+        if item.attribute("id").text == item_id
+          series = item;
+        else
+          # look for a c02 whose id matches item_id
+          item.element_children.each do |child|
+            if child.name == "c02"
+              if child.attribute("level").text == "subseries"
+                if child.attribute("id").text == item_id
+                  series = child
+                  break;
+                end
+              end
+            end
+          end
+        end
+
+        if !series.nil?
+          break
+        end
+      end
+
+      if !series.nil?
+        did = nil
+        scopecontent = nil
+
+        # find the pertinent child elements: did, scopecontent and c02
+        series.element_children.each do |child|
+          if child.name == "did"
+            did = child
+          elsif child.name == "scopecontent"
+            scopecontent = child
+          end
+        end
+
+        # process the did element
+        if did != nil
+          unittitle = nil
+          unitdate = nil
+
+          did.element_children.each do |didchild|
+            if didchild.name == "unittitle"
+              unittitle = didchild.text
+            elsif didchild.name == "unitdate"
+              unitdate = didchild.text
+            end
+          end
+        end
+
+        result << "            <div id=\"ead_series\">\n"
+        result << "              <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n"
+        result << "            </div> <!-- ead_series -->\n"
       end
 
       return result
