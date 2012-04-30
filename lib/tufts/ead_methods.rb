@@ -400,10 +400,12 @@ module Tufts
       result << "              <div>This series is part of <a href = \"/catalog/" + ead_id + "\">" + ead_title + "</a></div>\n"
       result << (physdesc == nil ? "" : "              <div>" + physdesc + "</div>\n")
 
-      scopecontent.element_children.each do |scopecontent_child|
-        if scopecontent_child.name == "p"
-          result << "              <div>" + scopecontent_child.text + "</div>\n"
-        end
+      if !scopecontent.nil?
+				scopecontent.element_children.each do |scopecontent_child|
+					if scopecontent_child.name == "p"
+						result << "              <div>" + scopecontent_child.text + "</div>\n"
+					end
+				end
       end
 
       result << "            </div> <!-- series_overview -->\n"
