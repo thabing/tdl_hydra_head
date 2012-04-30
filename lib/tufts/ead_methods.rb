@@ -12,7 +12,7 @@ module Tufts
       result << "<div id=\"ead_landing\">\n"
       result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
       result << "            <hr/>\n"
-      result << "            <a href=\"/catalog/eadoverview/" + fedora_obj.id + "\">View Collection Guide</a>\n"
+      result << "            <a href=\"/catalog/ead/" + fedora_obj.id + "\">View Collection Guide</a>\n"
       result << "            <div>A short explanation of a collection guide</div>\n"
       result << "            <a href=\"foo\">View Online Materials</a>\n"
       result << "            <div>View digitized objects from this collection.  Not all materials in this collection are available online.  See collection guide or contact DCA for more information.</div>\n"
@@ -188,7 +188,7 @@ module Tufts
         # This should be a link if there are no subseries elements (ie, <c02 level="subseries"> tags).
         if unittitle != nil && unittitle.size > 0
           item_id = item.attribute("id").text
-          result << (unittitle == nil ? "" : "              <h4>" + (noSubseries ? "<a href=\"/catalog/eadinternal/" + ead_id.to_s + "/" + item_id + "\">" : "") + level.to_s + ". " + unittitle + (unitdate == nil ? "" : " " + unitdate) + (noSubseries ? "</a>" : "") + "</h4>\n")
+          result << (unittitle == nil ? "" : "              <h4>" + (noSubseries ? "<a href=\"/catalog/ead/" + ead_id.to_s + "/" + item_id + "\">" : "") + level.to_s + ". " + unittitle + (unitdate == nil ? "" : " " + unitdate) + (noSubseries ? "</a>" : "") + "</h4>\n")
         end
       end
 
