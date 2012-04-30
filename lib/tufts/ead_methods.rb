@@ -55,6 +55,70 @@ module Tufts
     end
 
 
+    def self.show_internal_page(fedora_obj, item_id, datastream = "Archival.xml")
+      result = ""
+      serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)
+      series = nil
+
+      # look for a c01 whose id matches item_id
+      serieses.each do |item|
+        if item.attribute("id").text == item_id
+          series = item;
+        else
+          # look for a c02 whose id matches item_id
+          item.element_children.each do |child|
+            if child.name == "c02"
+              if child.attribute("level").text == "subseries"
+                if child.attribute("id").text == item_id
+                  series = child
+                  break;
+                end
+              end
+            end
+          end
+        end
+
+        if !series.nil?
+          break
+        end
+      end
+
+      if !series.nil?
+        did = nil
+        scopecontent = nil
+
+        # find the pertinent child elements: did, scopecontent and c02
+        series.element_children.each do |child|
+          if child.name == "did"
+            did = child
+          elsif child.name == "scopecontent"
+            scopecontent = child
+          end
+        end
+
+        # process the did element
+        if did != nil
+          unittitle = nil
+          unitdate = nil
+
+          did.element_children.each do |didchild|
+            if didchild.name == "unittitle"
+              unittitle = didchild.text
+            elsif didchild.name == "unitdate"
+              unitdate = didchild.text
+            end
+          end
+        end
+
+        result << "<div id=\"ead_internal\">\n"
+        result << "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n"
+        result << "          </div> <!-- ead_internal -->\n"
+      end
+
+      return result
+    end
+
+
     def self.show_overview(fedora_obj, datastream = "Archival.xml"  )
       result = ""
       unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
@@ -76,7 +140,7 @@ module Tufts
         name, rcr_url = parse_origination(famname);
       end
 
-      # TBD - add collapsable list of associated RCRs if present
+      # TBD - add collapsible list of associated RCRs if present
 
       result << "<div id=\"ead_overview\">\n"
       result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
@@ -113,17 +177,17 @@ module Tufts
 
     def self.show_series_descriptions(fedora_obj, datastream = "Archival.xml"  )
       result = ""
-      items = fedora_obj.datastreams[datastream].find_by_terms_and_value(:items)
+      serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)  # I got a D in speling once
 
-      if !items.empty?
+      if !serieses.empty?
         result << "          <div id=\"ead_series_descriptions\">\n"
         result << "            <h4>Series Descriptions</h4>\n"
 
         level = 0
 
-        items.each do |item|
+        serieses.each do |item|
           level += 1
-          result << show_series_description_item(item, level)
+          result << show_series_description_item(item, level, fedora_obj.id)
         end
 
         result << "          </div> <!-- ead_series_descriptions -->\n"
@@ -133,7 +197,7 @@ module Tufts
     end
 
 
-    def self.show_series_description_item(item, level)
+    def self.show_series_description_item(item, level, ead_id)
       # item is a c01 element, or a c02 element if this is a recursive call
       # level is the number of this item (ie 1, 2.1, etc)
 
@@ -171,7 +235,8 @@ module Tufts
 
         # This should be a link if there are no subseries elements (ie, <c02 level="subseries"> tags).
         if unittitle != nil && unittitle.size > 0
-          result << (unittitle == nil ? "" : "              <h4>" + (noSubseries ? "<a href=\"foo\">" : "") + level.to_s + ". " + unittitle + (unitdate == nil ? "" : " " + unitdate) + (noSubseries ? "</a>" : "") + "</h4>\n")
+          item_id = item.attribute("id").text
+          result << (unittitle == nil ? "" : "              <h4>" + (noSubseries ? "<a href=\"/catalog/eadinternal/" + ead_id.to_s + "/" + item_id + "\">" : "") + level.to_s + ". " + unittitle + (unitdate == nil ? "" : " " + unitdate) + (noSubseries ? "</a>" : "") + "</h4>\n")
         end
       end
 
@@ -188,7 +253,7 @@ module Tufts
       # process the subseries elements (ie, <c02 level="subseries"> tags), if any, by calling this method recursively
       c02s.each do |c02|
         level += 0.1
-        result << show_series_description_item(c02, level)
+        result << show_series_description_item(c02, level, ead_id)
       end
 
       return result

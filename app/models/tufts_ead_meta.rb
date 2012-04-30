@@ -137,7 +137,7 @@
       t.scopecontentp(:proxy => [:archdesc, :scopecontent, :p])
 
       # Series Descriptions
-      t.items(:proxy => [:archdesc, :dsc, :c01])
+      t.series(:proxy => [:archdesc, :dsc, :c01])
 
       # Names and Subjects
       t.controlaccess(:proxy => [:archdesc, :controlaccess])
