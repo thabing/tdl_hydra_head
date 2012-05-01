@@ -1,0 +1,17 @@
+
+<tr class="document <%= cycle("even","odd") %>">
+  <td><%= @result_no += 1 %></td>
+  <td><%= link_to document[:title_t], "/catalog/" + document[:id]  %></td>
+  <td><%= document[:creator_t] %></td>
+  <td><%= format_date(DateTime.parse(document[:system_create_dt]).to_time) %></td>
+  <%if document[:type2_t].first == 'image' %>
+  <td><ul class="thumbnails">
+  <li>
+  <a href="#" class="thumbnail">
+  <img src="/file_assets/thumb/<%= document[:id] %>" alt="<%= document[:title] %>">
+  </a>
+  </li></ul></td>
+  <% else %>
+  <td>&nbsp;</td>
+  <% end %>
+</tr>
