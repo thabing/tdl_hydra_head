@@ -124,6 +124,19 @@ input#submit {
   font-style: italic;
 }
 
+.ead_contents_table {
+  display: table;
+}
+
+.ead_contents_row {
+  display: table-row;
+}
+
+.ead_contents_item {
+  display: table-cell;
+  padding-right: 2em;
+}
+
 /* Navigation */
 
 nav {
