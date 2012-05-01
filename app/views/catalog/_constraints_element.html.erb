@@ -1,3 +1,4 @@
+<%# This view is overridden to change the alt attribute to be a title in the link_to below in order to conform to the HTML5 validity standard.  This should ultimately be fixed in Blacklight.  -%>
 <%- # local params:
     # label 
     # value
@@ -8,14 +9,13 @@
     options[:escape_label] = true unless options.has_key?(:escape_label)
     options[:escape_value] = true unless options.has_key?(:escape_value)
 -%>
-<ul class="nav nav-pills" xmlns="http://www.w3.org/1999/html">
 
-
+<span class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
       <%- unless label.blank? -%>
-        <li class="active"><%= options[:escape_label] ? h(label) : raw(label) %></li>
+        <span class="filterName"><%= options[:escape_label] ? h(label) : label %></span> 
       <%- end -%>
       <%- unless value.blank? -%>
-        <li class="active"><%= options[:escape_value] ? h(value) : raw(value) %></li>
+        <span class="filterValue"><%= options[:escape_value] ? h(value) : value %></span>
       <%- end -%>
       <%- unless options[:remove].blank? -%>
         <% accessible_remove_label =               
@@ -24,14 +24,11 @@
                 else
                   "Remove constraint #{options[:escape_value] ? h(value) : value}: #{options[:escape_value] ? h(value) : value}"
                 end              
-        %>
-        <li class="active">
+        %>                
         <%= link_to(accessible_remove_label,
 					options[:remove],
 					:class=>'btnRemove imgReplace',
-          :alt=>'remove'
+          :title=>'remove'
 				) %>
-        </li>
       <%- end -%>
-
-</ul>
+</span>
