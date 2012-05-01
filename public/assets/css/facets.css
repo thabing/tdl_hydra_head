@@ -52,3 +52,88 @@
     {
         display:inline;
     }
+
+    /* ========================
+    Search Parameters
+    ======================== */
+      /* current search criteria are rendered right under search box, and appear
+       as part of same section. */
+    #appliedParams {
+      background-color: #F0F0F0;
+      border-right: 1px solid #AAAAAA;
+      border-left: 1px solid #AAAAAA;
+      border-bottom: 1px solid #AAAAAA;
+      padding: 1em 0.66em 0em 1em;
+      border-radius:0 0 4px 4px;
+      -moz-border-radius:0 0 4px 4px;
+      -webkit-border-radius:0 0 4px 4px;
+      margin-bottom: 1.5em;
+    }
+
+    #appliedParams .label {
+      /* just here for screen-readers, attributes copied from Jquery-ui
+         .ui-helper-hidden-accessible */
+      position: absolute;
+      left: -100000000px;
+    }
+
+    /* but don't hide it on show page, where there is no actual search box. */
+    .show #appliedParams .label {
+      position: static;
+      margin-top: 0;
+    }
+    .show #appliedParams {
+      /* it's the top, give it a top border with corners */
+      border-top: 1px solid #AAAAAA;
+      border-radius:4px 4px 4px 4px;
+      -moz-border-radius:4px 4px 4px 4px;
+      -webkit-border-radius:4px 4px 4px 4px;
+    }
+
+    .appliedFilter {
+      position: relative;
+      display:inline-block;
+      padding:3px 3px 3px 1.5em;
+      margin-bottom: 0.66em;
+      margin-right: 0.33em;
+      background:#e2edfe;
+      border:1px solid #c4dafe;
+      -moz-border-radius:15px 15px 15px 15px;
+      -webkit-border-radius:15px 15px 15px 15px;
+      border-radius: 15px 15px 15px 15px;
+    }
+    .appliedFilter .btnRemove{
+      display:block;
+      position:absolute;
+      z-index:5;
+      right:0px;
+      top:0;
+      width:32px;
+      height:100%;
+      background:url(../../images/blacklight/remove.gif) no-repeat center center;
+      border-left:1px solid #d0daea;
+      border-bottom: none;
+      text-indent:-99999px; /* text there for screen readers, hidden visually */
+      outline: none; /* the screen reader text indent above will make weird outlines on link clicking, unless we turn em off. */
+    }
+    .appliedFilter .btnRemove:active, .appliedFilter .btnRemove:focus {
+      /* we took outline away above; add a border instead, for accesibility
+         so someone tabbing to the link knows what link is active */
+      border: 1px dotted #FFD27A;
+    }
+
+    .appliedFilter .queryName, .appliedFilter .filterName {
+      /* ">" image */
+      padding-right:14px;
+      background:url(../../images/blacklight/separator.gif) no-repeat right center;
+    }
+
+    .filterValue {
+      padding-right:37px; /* leave room for close button */
+    }
+
+    .pagination #disabled {
+      color: #999;
+      cursor: default;
+    }
+
