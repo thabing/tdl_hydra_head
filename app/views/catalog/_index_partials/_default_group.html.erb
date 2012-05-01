@@ -1,0 +1,17 @@
+<table class="table">
+        <% unless params[:display_type] == 'list' %>
+       <thead>
+         <tr>
+           <th>#</th>
+           <th>Title</th>
+           <th>Creator</th>
+
+           <th>Date</th>
+            <th>Image</th>
+         </tr>
+       </thead>
+        <% end %>
+  <% docs.each_with_index do |document,counter| %>
+     <%= render_document_partial document, 'index', :counter => counter, :rsolr_response=> @response %>
+    <% end %>
+</table>

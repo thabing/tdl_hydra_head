@@ -1,5 +1,5 @@
-class ContactController < ApplicationController
-  def index
-  end
+# -*- encoding : utf-8 -*-
+class ContactController < FeedbackController
+
 
 end

@@ -1,0 +1,58 @@
+<%= render :partial => 'shared/search_bar' %>
+
+<!-- LEFT SIDE/ FOR FLUID COLUMN TITLE ROW -->
+<div class="row-fluid">
+  <div class="span12">
+  </div>
+
+  <!-- nested row LEFT -->
+  <div class="row-fluid">
+
+    <div class="span3"><p><h6></h6></p>
+
+    </div>
+
+
+    <!-- nested Fluid RIGHT -->
+    <div class="row">
+      <div class="span7">
+        <h2>Send Us Feedback</h2>
+
+        <% unless @errors.empty? %>
+            <strong>Please fix the following form errors:</strong>
+            <ul class="errors">
+              <% @errors.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+        <% end %>
+
+        <%= form_tag do %>
+            <fieldset>
+              <%= label_tag 'Your Name' %> <%= text_field_tag :name, params[:name] %>
+              <%= label_tag 'Your Email' %> <%= text_field_tag :email, params[:email] %>
+              <%= label_tag 'Your Message' %> <%= text_area_tag :message, params[:message] %>
+              <%#= show_simple_captcha(:image_style => 'random', :label => "Enter the characters you see into the text field") %>
+              <%= label_tag '' %><%= submit_tag 'Send!' %>
+            </fieldset>
+        <% end %>
+
+
+      </div>
+
+      <div class="span9">
+
+
+      </div>
+
+
+      <br/>
+    </div>
+    <div class="row">
+      <div class="span7 offset3">
+
+
+      </div>
+    </div>
+  </div>
+</div>

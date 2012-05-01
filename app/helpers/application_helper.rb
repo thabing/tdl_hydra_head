@@ -3,6 +3,9 @@ include Tufts::MetadataMethods
 
 module ApplicationHelper
 
+  def application_name
+        'Tufts Digital Library'
+  end
 
   def showImage(pid)
     result = "<img alt=\"\" src=\"" + file_asset_path(pid) + "\"/>"
