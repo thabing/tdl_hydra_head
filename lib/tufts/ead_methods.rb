@@ -57,28 +57,20 @@ module Tufts
 
     def self.show_internal_page(fedora_obj, item_id, datastream = "Archival.xml")
       result = ""
-      unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
-      unitdate = fedora_obj.datastreams[datastream].get_values(:unitdate).first
-      series, level = find_series(fedora_obj, item_id, datastream)
-      series_overview = show_series_overview(series, level, unittitle, fedora_obj.id)
+      series_overview, series = show_series_overview(fedora_obj, item_id, datastream)
       series_content_list = show_series_content_list(series)
       series_access_and_use = show_series_access_and_use(series)
 
-      table_of_contents = "              <div id=\"tableOfContents\">\n"
-      table_of_contents << (series_overview == "" ? "" : "                <div><a href = \"#series_overview\">Series Overview</div></a>\n")
-      table_of_contents << (series_content_list == "" ? "" : "                <div><a href = \"#series_content_list\">Detailed Contents List</div></a>\n")
-      table_of_contents << (series_access_and_use == "" ? "" : "                <div><a href = \"#series_access_and_use\">Access and Use</div></a>\n")
-      table_of_contents << "              </div> <!-- tableOfContents -->\n"
+      table_of_contents = "            <div id=\"tableOfContents\">\n"
+      table_of_contents << (series_overview == "" ? "" : "              <div><a href = \"#series_overview\">Series Overview</div></a>\n")
+      table_of_contents << (series_content_list == "" ? "" : "              <div><a href = \"#series_content_list\">Detailed Contents List</div></a>\n")
+      table_of_contents << (series_access_and_use == "" ? "" : "              <div><a href = \"#series_access_and_use\">Access and Use</div></a>\n")
+      table_of_contents << "            </div> <!-- tableOfContents -->\n"
 
       series_overview.sub!("TOCGOESHERE", table_of_contents)
 
-      result << "<div id=\"ead_internal\">\n"
-      result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
-      result << "            <hr/>\n"
-
       result << series_overview + series_content_list + series_access_and_use
-
-      result << "          </div> <!-- ead_internal -->"
+      result.chomp!  #remove the trailing \n
 
       return result
     end
@@ -322,7 +314,10 @@ module Tufts
     end
 
 
-    def self.find_series(fedora_obj, item_id, datastream = "Archival.xml")
+    def self.show_series_overview(fedora_obj, item_id, datastream = "Archival.xml")
+      result = ""
+      ead_title = fedora_obj.datastreams[datastream].get_values(:unittitle).first
+      ead_date = fedora_obj.datastreams[datastream].get_values(:unitdate).first
       serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)
       series = nil
       series_level = 0
@@ -356,13 +351,6 @@ module Tufts
         end
       end
 
-      return series, series_level.to_s + (subseries_level == 0 ? "" : "." + subseries_level.to_s) 
-    end
-
-
-    def self.show_series_overview(series, level, ead_title, ead_id)
-      result = ""
-
       if !series.nil?
         did = nil
         scopecontent = nil
@@ -391,26 +379,29 @@ module Tufts
             end
           end
         end
+
+        result << "<div id=\"series_overview\">\n"
+        result << (ead_title == nil ? "" : "            <h4>" + ead_title + (ead_date == nil ? "" : " " + ead_date) + "</h4>\n")
+        result << "            <hr/>\n"
+        result << "            <div>Series " + series_level.to_s + (subseries_level == 0 ? "" : "." + subseries_level.to_s) + "</div>\n"
+        result << "TOCGOESHERE"
+        result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
+        result << "            <div>This series is part of <a href = \"/catalog/" + fedora_obj.id + "\">" + ead_title + "</a></div>\n"
+        result << (physdesc == nil ? "" : "            <div>" + physdesc + "</div>\n")
+
+        # process the scopecontent element
+        if !scopecontent.nil?
+          scopecontent.element_children.each do |scopecontent_child|
+            if scopecontent_child.name == "p"
+              result << "            <div>" + scopecontent_child.text + "</div>\n"
+            end
+          end
+        end
+
+        result << "          </div> <!-- series_overview -->\n"
       end
 
-      result << "            <div id=\"series_overview\">\n"
-      result << "              <div>Series " + level + "</div>\n"
-      result << "TOCGOESHERE"
-      result << (unittitle == nil ? "" : "              <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
-      result << "              <div>This series is part of <a href = \"/catalog/" + ead_id + "\">" + ead_title + "</a></div>\n"
-      result << (physdesc == nil ? "" : "              <div>" + physdesc + "</div>\n")
-
-      if !scopecontent.nil?
-				scopecontent.element_children.each do |scopecontent_child|
-					if scopecontent_child.name == "p"
-						result << "              <div>" + scopecontent_child.text + "</div>\n"
-					end
-				end
-      end
-
-      result << "            </div> <!-- series_overview -->\n"
-
-      return result
+      return result, series
     end
 
 
