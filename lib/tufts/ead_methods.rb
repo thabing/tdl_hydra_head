@@ -452,11 +452,14 @@ module Tufts
     def self.show_series_content_item(item, indent)
       result = ""
       did = nil
+      daogrp = nil
       next_level_items = Array.new
 
       item.element_children.each do |item_child|
         if item_child.name == "did"
           did = item_child
+        elsif item_child.name == "daogrp"
+          daogrp = item_child
         elsif item_child.name == "c03" || item_child.name == "c04"
           next_level_items << item_child
         end
@@ -468,6 +471,8 @@ module Tufts
         physdesc = nil
         physloc = nil
         item_id = item.attribute("id")
+        page = nil
+        thumbnail = nil
 
         did.element_children.each do |did_child|
           if did_child.name == "unittitle"
@@ -481,8 +486,28 @@ module Tufts
           end
         end
 
+        if !daogrp.nil?
+          daogrp.element_children.each do |daogrp_child|
+            if daogrp_child.name == "daoloc"
+              daoloc_label = daogrp_child.attribute("label")
+              daoloc_href = daogrp_child.attribute("href")
+
+              if !daoloc_label.nil? && !daoloc_href.nil?
+                daoloc_label_text = daoloc_label.text
+                daoloc_href_text = daoloc_href.text
+
+                if daoloc_label_text == "page"
+                  page = daoloc_href_text
+                elsif daoloc_label_text == "thumbnail"
+                  thumbnail = daoloc_href_text
+                end
+              end
+            end
+          end
+        end
+
         result << "              <div class=\"ead_contents_row\">\n"
-        result << "                <div class=\"ead_contents_item\">" + (indent ? "&nbsp;&nbsp;" : "<b>") + (unittitle == nil ? "" : unittitle) + (unitdate == nil ? "" : " " + unitdate) + (indent ? "" : "</b>") + "</div>\n"
+        result << "                <div class=\"ead_contents_item\">" + (indent ? "&nbsp;&nbsp;" : "<b>") + (page == nil ? "" : "<a href=\"/content/" + page + "\">") + (unittitle == nil ? "" : unittitle) + (unitdate == nil ? "" : " " + unitdate) + (page == nil ? "" : "</a>") + (indent ? "" : "</b>") + "</div>\n"
         result << "                <div class=\"ead_contents_item\">" + (physdesc == nil ? "" : physdesc) + "</div>\n"
         result << "                <div class=\"ead_contents_item\">" + (physloc == nil ? "" : physloc) + "</div>\n"
         result << "                <div class=\"ead_contents_item\">" + (item_id == nil ? "" : item_id.text) + "</div>\n"
