@@ -36,7 +36,7 @@ module Tufts
       access_and_use = show_access_and_use(fedora_obj)
       administrative_notes = show_administrative_notes(fedora_obj)
 
-      table_of_contents << "            <div id=\"tableOfContents\">\n"
+      table_of_contents << "            <div id=\"tableOfContents\" class=\"ead_table_of_contents\">\n"
       table_of_contents << (overview == "" ? "" : "              <div><a href = \"#ead_overview\">Overview</div></a>\n")
       table_of_contents << (contents == "" ? "" : "              <div><a href = \"#ead_contents\">Contents</div></a>\n")
       table_of_contents << (series_descriptions == "" ? "" : "              <div><a href = \"#ead_series_descriptions\">Series Descriptions</a></div>\n")
@@ -63,7 +63,7 @@ module Tufts
       series_content_list = show_series_content_list(series)
       series_access_and_use = show_series_access_and_use(series)
 
-      table_of_contents << "            <div id=\"tableOfContents\">\n"
+      table_of_contents << "            <div id=\"tableOfContents\" class=\"ead_table_of_contents\">\n"
       table_of_contents << (series_overview == "" ? "" : "              <div><a href = \"#series_overview\">Series Overview</div></a>\n")
       table_of_contents << (series_content_list == "" ? "" : "              <div><a href = \"#series_content_list\">Detailed Contents List</div></a>\n")
       table_of_contents << (series_access_and_use == "" ? "" : "              <div><a href = \"#series_access_and_use\">Access and Use</div></a>\n")
@@ -92,11 +92,11 @@ module Tufts
       rcr_url = nil
 
       if !persname.empty?
-        name, rcr_url = parse_origination(persname);
+        name, rcr_url = parse_origination(persname)
       elsif !corpname.empty?
-        name, rcr_url = parse_origination(corpname);
+        name, rcr_url = parse_origination(corpname)
       elsif !famname.empty?
-        name, rcr_url = parse_origination(famname);
+        name, rcr_url = parse_origination(famname)
       end
 
       # TBD - add collapsible list of associated RCRs if present
@@ -332,7 +332,7 @@ module Tufts
         subseries_level = 0
   
         if item.attribute("id").text == item_id
-          series = item;
+          series = item
         else
           # look for a c02 whose id matches item_id
           item.element_children.each do |element_child|
@@ -342,7 +342,7 @@ module Tufts
 
                 if element_child.attribute("id").text == item_id
                   series = element_child
-                  break;
+                  break
                 end
               end
             end
@@ -390,8 +390,8 @@ module Tufts
         result << (ead_title == nil ? "" : "            <h4>" + ead_title + (ead_date == nil ? "" : " " + ead_date) + "</h4>\n")
         result << "            <div>Not all materials in this collection are available online</div>\n"
         result << "            <hr/>\n"
-        result << "            <div>Series " + series_level.to_s + (subseries_level == 0 ? "" : "." + subseries_level.to_s) + "</div>\n"
         result << "TOCGOESHERE"
+        result << "            <div>Series " + series_level.to_s + (subseries_level == 0 ? "" : "." + subseries_level.to_s) + "</div>\n"
         result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
         result << "            <div>This series is part of <a href = \"/catalog/" + ead_id + "\">" + ead_title + "</a></div>\n"
         result << (physdesc == nil ? "" : "            <div>" + physdesc + "</div>\n")
@@ -438,45 +438,59 @@ module Tufts
         result << "              </div> <!-- ead_contents_row -->\n"
 
         items.each do |item|
-          did = nil
-
-          item.element_children.each do |item_child|
-            if item_child.name == "did"
-              did = item_child
-              break
-            end
-          end
-
-          if !did.nil?
-            unittitle = nil
-            unitdate = nil
-            physdesc = nil
-            physloc = nil
-            item_id = item.attribute("id")
-
-            did.element_children.each do |did_child|
-              if did_child.name == "unittitle"
-                unittitle = did_child.text
-              elsif did_child.name == "unitdate"
-                unitdate = did_child.text
-              elsif did_child.name == "physdesc"
-                physdesc = did_child.text
-              elsif did_child.name == "physloc"
-                physloc = did_child.text
-              end
-            end
-
-            result << "              <div class=\"ead_contents_row\">\n"
-            result << "                <div class=\"ead_contents_item\"><b>" + (unittitle == nil ? "" : unittitle) + (unitdate == nil ? "" : " " + unitdate) + "</b></div>\n"
-            result << "                <div class=\"ead_contents_item\">" + (physdesc == nil ? "" : physdesc) + "</div>\n"
-            result << "                <div class=\"ead_contents_item\">" + (physloc == nil ? "" : physloc) + "</div>\n"
-            result << "                <div class=\"ead_contents_item\">" + (item_id == nil ? "" : item_id.text) + "</div>\n"
-            result << "              </div> <!-- ead_contents_row -->\n"
-          end
+          result << show_series_content_item(item, false)
         end
 
         result << "            </div> <!-- ead_contents_table -->\n"
         result << "          </div> <!-- series_content_list -->\n"
+      end
+
+      return result
+    end
+
+
+    def self.show_series_content_item(item, indent)
+      result = ""
+      did = nil
+      next_level_items = Array.new
+
+      item.element_children.each do |item_child|
+        if item_child.name == "did"
+          did = item_child
+        elsif item_child.name == "c03" || item_child.name == "c04"
+          next_level_items << item_child
+        end
+      end
+
+      if !did.nil?
+        unittitle = nil
+        unitdate = nil
+        physdesc = nil
+        physloc = nil
+        item_id = item.attribute("id")
+
+        did.element_children.each do |did_child|
+          if did_child.name == "unittitle"
+            unittitle = did_child.text
+          elsif did_child.name == "unitdate"
+            unitdate = did_child.text
+          elsif did_child.name == "physdesc"
+            physdesc = did_child.text
+          elsif did_child.name == "physloc"
+            physloc = did_child.text
+          end
+        end
+
+        result << "              <div class=\"ead_contents_row\">\n"
+        result << "                <div class=\"ead_contents_item\">" + (indent ? "&nbsp;&nbsp;" : "<b>") + (unittitle == nil ? "" : unittitle) + (unitdate == nil ? "" : " " + unitdate) + (indent ? "" : "</b>") + "</div>\n"
+        result << "                <div class=\"ead_contents_item\">" + (physdesc == nil ? "" : physdesc) + "</div>\n"
+        result << "                <div class=\"ead_contents_item\">" + (physloc == nil ? "" : physloc) + "</div>\n"
+        result << "                <div class=\"ead_contents_item\">" + (item_id == nil ? "" : item_id.text) + "</div>\n"
+        result << "              </div> <!-- ead_contents_row -->\n"
+
+        next_level_items.each do |next_level_item|
+          result << show_series_content_item(next_level_item, true)
+        end
       end
 
       return result

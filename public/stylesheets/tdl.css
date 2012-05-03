@@ -137,6 +137,16 @@ input#submit {
   padding-right: 2em;
 }
 
+.ead_table_of_contents {
+  width: 200px;
+  float: right;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #cccccc;
+  padding-left: .25em;
+  padding-right: .25em;
+}
+
 /* Navigation */
 
 nav {
