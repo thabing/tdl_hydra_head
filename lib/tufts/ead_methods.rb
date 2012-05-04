@@ -507,7 +507,7 @@ module Tufts
         end
 
         result << "              <div class=\"ead_contents_row\">\n"
-        result << "                <div class=\"ead_contents_item\">" + (indent ? "&nbsp;&nbsp;" : "<b>") + (page == nil ? "" : "<a href=\"/" + page + "\">") + (unittitle == nil ? "" : unittitle) + (unitdate == nil ? "" : " " + unitdate) + (page == nil ? "" : "</a>") + (indent ? "" : "</b>") + "</div>\n"
+        result << "                <div class=\"ead_contents_item\">" + (indent ? "&nbsp;&nbsp;" : "<b>") + (page == nil ? "" : "<a href=\"/catalog/" + page + "\">") + (unittitle == nil ? "" : unittitle) + (unitdate == nil ? "" : " " + unitdate) + (page == nil ? "" : "</a>") + (indent ? "" : "</b>") + "</div>\n"
         result << "                <div class=\"ead_contents_item\">" + (physdesc == nil ? "" : physdesc) + "</div>\n"
         result << "                <div class=\"ead_contents_item\">" + (physloc == nil ? "" : physloc) + "</div>\n"
         result << "                <div class=\"ead_contents_item\">" + (item_id == nil ? "" : item_id.text) + "</div>\n"
