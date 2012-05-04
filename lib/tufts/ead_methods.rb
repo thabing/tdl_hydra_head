@@ -108,7 +108,7 @@ module Tufts
       result << (physdesc == nil ? "" : "            <div>" + physdesc + "</div>\n")
       result << (unitid == nil ? "" : "            <div>Call number: " + unitid + "</div>\n")
       result << (abstract == nil ? "": "            <div>" + abstract + "</div>\n")
-      result << (name == nil ? "" : "            <div><a href=\"" + (rcr_url == nil ? "" : rcr_url) + "\">Read more about " + name + "</a></div>\n")
+      result << (name == nil ? "" : "            <div><a href=\"" + (rcr_url == nil ? "" : "/catalog/tufts:" + rcr_url) + "\">Read more about " + name + "</a></div>\n")
       result << "          </div> <!-- ead_overview -->\n"
 
       return result
@@ -507,7 +507,7 @@ module Tufts
         end
 
         result << "              <div class=\"ead_contents_row\">\n"
-        result << "                <div class=\"ead_contents_item\">" + (indent ? "&nbsp;&nbsp;" : "<b>") + (page == nil ? "" : "<a href=\"/content/" + page + "\">") + (unittitle == nil ? "" : unittitle) + (unitdate == nil ? "" : " " + unitdate) + (page == nil ? "" : "</a>") + (indent ? "" : "</b>") + "</div>\n"
+        result << "                <div class=\"ead_contents_item\">" + (indent ? "&nbsp;&nbsp;" : "<b>") + (page == nil ? "" : "<a href=\"/" + page + "\">") + (unittitle == nil ? "" : unittitle) + (unitdate == nil ? "" : " " + unitdate) + (page == nil ? "" : "</a>") + (indent ? "" : "</b>") + "</div>\n"
         result << "                <div class=\"ead_contents_item\">" + (physdesc == nil ? "" : physdesc) + "</div>\n"
         result << "                <div class=\"ead_contents_item\">" + (physloc == nil ? "" : physloc) + "</div>\n"
         result << "                <div class=\"ead_contents_item\">" + (item_id == nil ? "" : item_id.text) + "</div>\n"
