@@ -102,7 +102,7 @@ namespace :tufts_dca do
     task :load do
       TDL_FIXTURES.each do |fixture|
         ENV["pid"] = fixture
-        ENV["path"] = 'test_support/fixtures/development'
+        ENV["path"] = 'test_support/fixtures/tdldev'
         Rake::Task["repo:load"].reenable
         Rake::Task["repo:load"].invoke
       end
