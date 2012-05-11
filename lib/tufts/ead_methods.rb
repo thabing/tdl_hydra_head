@@ -12,14 +12,14 @@ module Tufts
       result << "<div id=\"ead_landing\">\n"
       result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
       result << "            <hr/>\n"
-      result << "            <a href=\"/catalog/eadoverview/" + fedora_obj.id + "\">View Collection Guide</a>\n"
+      result << "            <a href=\"/catalog/ead/" + fedora_obj.id + "\">View Collection Guide</a>\n"
       result << "            <div>A short explanation of a collection guide</div>\n"
       result << "            <a href=\"foo\">View Online Materials</a>\n"
       result << "            <div>View digitized objects from this collection.  Not all materials in this collection are available online.  See collection guide or contact DCA for more information.</div>\n"
       result << "            <div>This collection has:</div>\n"
       result << (physdesc == nil ? "" : "            <div>" + physdesc + "</div>\n")
       result << (abstract == nil ? "": "            <div>" + abstract + "</div>\n")
-      result << "          </div> <!-- ead_landing -->\n"
+      result << "          </div> <!-- ead_landing -->"
 
       return result
     end
@@ -27,6 +27,7 @@ module Tufts
 
     def self.show_overview_page(fedora_obj, datastream = "Archival.xml")
       result = ""
+      table_of_contents = ""
       overview = show_overview(fedora_obj)
       contents = show_contents(fedora_obj)
       series_descriptions = show_series_descriptions(fedora_obj)
@@ -35,7 +36,7 @@ module Tufts
       access_and_use = show_access_and_use(fedora_obj)
       administrative_notes = show_administrative_notes(fedora_obj)
 
-      table_of_contents = "            <div id=\"tableOfContents\">\n"
+      table_of_contents << "            <div id=\"tableOfContents\" class=\"ead_table_of_contents\">\n"
       table_of_contents << (overview == "" ? "" : "              <div><a href = \"#ead_overview\">Overview</div></a>\n")
       table_of_contents << (contents == "" ? "" : "              <div><a href = \"#ead_contents\">Contents</div></a>\n")
       table_of_contents << (series_descriptions == "" ? "" : "              <div><a href = \"#ead_series_descriptions\">Series Descriptions</a></div>\n")
@@ -49,6 +50,28 @@ module Tufts
 
       result << overview + contents + series_descriptions +
         names_and_subjects + related_collections + access_and_use + administrative_notes
+      result.chomp!  #remove the trailing \n
+
+      return result
+    end
+
+
+    def self.show_internal_page(fedora_obj, item_id, datastream = "Archival.xml")
+      result = ""
+      table_of_contents = ""
+      series_overview, series = show_series_overview(fedora_obj, item_id, datastream)
+      series_content_list = show_series_content_list(series)
+      series_access_and_use = show_series_access_and_use(series)
+
+      table_of_contents << "            <div id=\"tableOfContents\" class=\"ead_table_of_contents\">\n"
+      table_of_contents << (series_overview == "" ? "" : "              <div><a href = \"#series_overview\">Series Overview</div></a>\n")
+      table_of_contents << (series_content_list == "" ? "" : "              <div><a href = \"#series_content_list\">Detailed Contents List</div></a>\n")
+      table_of_contents << (series_access_and_use == "" ? "" : "              <div><a href = \"#series_access_and_use\">Access and Use</div></a>\n")
+      table_of_contents << "            </div> <!-- tableOfContents -->\n"
+
+      series_overview.sub!("TOCGOESHERE", table_of_contents)
+
+      result << series_overview + series_content_list + series_access_and_use
       result.chomp!  #remove the trailing \n
 
       return result
@@ -69,14 +92,14 @@ module Tufts
       rcr_url = nil
 
       if !persname.empty?
-        name, rcr_url = parse_origination(persname);
+        name, rcr_url = parse_origination(persname)
       elsif !corpname.empty?
-        name, rcr_url = parse_origination(corpname);
+        name, rcr_url = parse_origination(corpname)
       elsif !famname.empty?
-        name, rcr_url = parse_origination(famname);
+        name, rcr_url = parse_origination(famname)
       end
 
-      # TBD - add collapsable list of associated RCRs if present
+      # TBD - add collapsible list of associated RCRs if present
 
       result << "<div id=\"ead_overview\">\n"
       result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
@@ -85,7 +108,7 @@ module Tufts
       result << (physdesc == nil ? "" : "            <div>" + physdesc + "</div>\n")
       result << (unitid == nil ? "" : "            <div>Call number: " + unitid + "</div>\n")
       result << (abstract == nil ? "": "            <div>" + abstract + "</div>\n")
-      result << (name == nil ? "" : "            <div><a href=\"" + (rcr_url == nil ? "" : rcr_url) + "\">Read more about " + name + "</a></div>\n")
+      result << (name == nil ? "" : "            <div><a href=\"" + (rcr_url == nil ? "" : "/catalog/tufts:" + rcr_url) + "\">Read more about " + name + "</a></div>\n")
       result << "          </div> <!-- ead_overview -->\n"
 
       return result
@@ -113,17 +136,17 @@ module Tufts
 
     def self.show_series_descriptions(fedora_obj, datastream = "Archival.xml"  )
       result = ""
-      items = fedora_obj.datastreams[datastream].find_by_terms_and_value(:items)
+      serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)  # I got a D in speling once
 
-      if !items.empty?
+      if !serieses.empty?
         result << "          <div id=\"ead_series_descriptions\">\n"
         result << "            <h4>Series Descriptions</h4>\n"
 
         level = 0
 
-        items.each do |item|
+        serieses.each do |item|
           level += 1
-          result << show_series_description_item(item, level)
+          result << show_series_description_item(item, level, fedora_obj.id)
         end
 
         result << "          </div> <!-- ead_series_descriptions -->\n"
@@ -133,7 +156,7 @@ module Tufts
     end
 
 
-    def self.show_series_description_item(item, level)
+    def self.show_series_description_item(item, level, ead_id)
       # item is a c01 element, or a c02 element if this is a recursive call
       # level is the number of this item (ie 1, 2.1, etc)
 
@@ -143,14 +166,14 @@ module Tufts
       c02s = Array.new
 
       # find the pertinent child elements: did, scopecontent and c02
-      item.element_children.each do |child|
-        if child.name == "did"
-          did = child
-        elsif child.name == "scopecontent"
-          scopecontent = child
-        elsif child.name == "c02"
-          if child.attribute("level").text == "subseries"
-            c02s << child
+      item.element_children.each do |element_child|
+        if element_child.name == "did"
+          did = element_child
+        elsif element_child.name == "scopecontent"
+          scopecontent = element_child
+        elsif element_child.name == "c02"
+          if element_child.attribute("level").text == "subseries"
+            c02s << element_child
           end
         end
       end
@@ -161,25 +184,26 @@ module Tufts
         unitdate = nil
         noSubseries = c02s.empty?
 
-        did.element_children.each do |didchild|
-          if didchild.name == "unittitle"
-            unittitle = didchild.text
-          elsif didchild.name == "unitdate"
-            unitdate = didchild.text
+        did.element_children.each do |did_child|
+          if did_child.name == "unittitle"
+            unittitle = did_child.text
+          elsif did_child.name == "unitdate"
+            unitdate = did_child.text
           end
         end
 
         # This should be a link if there are no subseries elements (ie, <c02 level="subseries"> tags).
         if unittitle != nil && unittitle.size > 0
-          result << (unittitle == nil ? "" : "              <h4>" + (noSubseries ? "<a href=\"foo\">" : "") + level.to_s + ". " + unittitle + (unitdate == nil ? "" : " " + unitdate) + (noSubseries ? "</a>" : "") + "</h4>\n")
+          item_id = item.attribute("id").text
+          result << (unittitle == nil ? "" : "              <h4>" + (noSubseries ? "<a href=\"/catalog/ead/" + ead_id.to_s + "/" + item_id + "\">" : "") + level.to_s + ". " + unittitle + (unitdate == nil ? "" : " " + unitdate) + (noSubseries ? "</a>" : "") + "</h4>\n")
         end
       end
 
       # process the scopecontent element
       if scopecontent != nil
-        scopecontent.element_children.each do |scopecontentchild|
-          if scopecontentchild.name == "p"
-            p = scopecontentchild.text
+        scopecontent.element_children.each do |scopecontent_child|
+          if scopecontent_child.name == "p"
+            p = scopecontent_child.text
             result << "            <div>" + p + "</div>\n"
           end
         end
@@ -188,7 +212,7 @@ module Tufts
       # process the subseries elements (ie, <c02 level="subseries"> tags), if any, by calling this method recursively
       c02s.each do |c02|
         level += 0.1
-        result << show_series_description_item(c02, level)
+        result << show_series_description_item(c02, level, ead_id)
       end
 
       return result
@@ -219,7 +243,7 @@ module Tufts
       separatedmaterials = fedora_obj.datastreams[datastream].find_by_terms_and_value(:separatedmaterial)
       relatedmaterials = fedora_obj.datastreams[datastream].find_by_terms_and_value(:relatedmaterial)
 
-      if !separatedmaterials.empty? && ! relatedmaterials.empty?
+      if !separatedmaterials.empty? || !relatedmaterials.empty?
         result << "          <div id=\"ead_related_collections\">\n"
         result << "            <h4>Related Material</h4>\n"
 
@@ -244,7 +268,7 @@ module Tufts
       userestrictps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:userestrictp)
       preferciteps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:prefercitep)
 
-      if !accessrestrictps.empty? && !userestrictps.empty? && !preferciteps.empty?
+      if !accessrestrictps.empty? || !userestrictps.empty? || !preferciteps.empty?
         result << "          <div id=\"ead_access_and_use\">\n"
         result << "            <h4>Access and Use</h4>\n"
 
@@ -273,7 +297,7 @@ module Tufts
       processinfos = fedora_obj.datastreams[datastream].find_by_terms_and_value(:processinfo)
       acqinfos = fedora_obj.datastreams[datastream].find_by_terms_and_value(:acqinfo)
 
-      if !processinfos.empty? && !acqinfos.empty?
+      if !processinfos.empty? || !acqinfos.empty?
         result << "          <div id=\"ead_administrative_notes\">\n"
         result << "            <h4>Administrative Notes</h4>\n"
 
@@ -286,6 +310,252 @@ module Tufts
         end
 
         result << "          </div> <!-- ead_administrative_notes -->\n"
+      end
+
+      return result
+    end
+
+
+    def self.show_series_overview(fedora_obj, item_id, datastream = "Archival.xml")
+      result = ""
+      ead_id = fedora_obj.id
+      ead_title = fedora_obj.datastreams[datastream].get_values(:unittitle).first
+      ead_date = fedora_obj.datastreams[datastream].get_values(:unitdate).first
+      serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)
+      series = nil
+      series_level = 0
+      subseries_level = 0
+
+      # look for a c01 whose id matches item_id
+      serieses.each do |item|
+        series_level += 1
+        subseries_level = 0
+  
+        if item.attribute("id").text == item_id
+          series = item
+        else
+          # look for a c02 whose id matches item_id
+          item.element_children.each do |element_child|
+            if element_child.name == "c02"
+              if element_child.attribute("level").text == "subseries"
+                subseries_level += 1
+
+                if element_child.attribute("id").text == item_id
+                  series = element_child
+                  break
+                end
+              end
+            end
+          end
+        end
+
+        if !series.nil?
+          break
+        end
+      end
+
+      if !series.nil?
+        did = nil
+        scopecontent = nil
+        unittitle = nil
+        unitdate = nil
+        physdesc = nil
+
+        # find the pertinent child elements: did, scopecontent
+        series.element_children.each do |element_child|
+          if element_child.name == "did"
+            did = element_child
+          elsif element_child.name == "scopecontent"
+            scopecontent = element_child
+          end
+        end
+
+        # process the did element
+        if did != nil
+          did.element_children.each do |did_child|
+            if did_child.name == "unittitle"
+              unittitle = did_child.text
+            elsif did_child.name == "unitdate"
+              unitdate = did_child.text
+            elsif did_child.name == "physdesc"
+              physdesc = did_child.text
+            end
+          end
+        end
+
+        result << "<div id=\"series_overview\">\n"
+        result << "            <div><a href = \"/catalog/ead/" + ead_id + "\">< Collection Guide Overview</a></div>\n"
+        result << "            <div><a href = \"foo\">Download collection guide (PDF)</a></div>\n"
+        result << "            <div><a href = \"foo\">View all online materials in this collection</a></div>\n"
+        result << (ead_title == nil ? "" : "            <h4>" + ead_title + (ead_date == nil ? "" : " " + ead_date) + "</h4>\n")
+        result << "            <div>Not all materials in this collection are available online</div>\n"
+        result << "            <hr/>\n"
+        result << "TOCGOESHERE"
+        result << "            <div>Series " + series_level.to_s + (subseries_level == 0 ? "" : "." + subseries_level.to_s) + "</div>\n"
+        result << (unittitle == nil ? "" : "            <h4>" + unittitle + (unitdate == nil ? "" : " " + unitdate) + "</h4>\n")
+        result << "            <div>This series is part of <a href = \"/catalog/" + ead_id + "\">" + ead_title + "</a></div>\n"
+        result << (physdesc == nil ? "" : "            <div>" + physdesc + "</div>\n")
+
+        # process the scopecontent element
+        if !scopecontent.nil?
+          scopecontent.element_children.each do |scopecontent_child|
+            if scopecontent_child.name == "p"
+              result << "            <div>" + scopecontent_child.text + "</div>\n"
+            end
+          end
+        end
+
+        result << "          </div> <!-- series_overview -->\n"
+      end
+
+      return result, series
+    end
+
+
+    def self.show_series_content_list(series)
+      result = ""
+      items = Array.new
+
+      series.element_children.each do |series_child|
+        child_name = series_child.name
+
+        if child_name == "c02" || child_name == "c03"
+          items << series_child
+        end
+      end
+
+      if !items.empty?
+        result << "          <div id=\"series_content_list\">\n"
+        result << "            <h4>Detailed Contents List</h4>\n"
+        result << "            <div><a href=\"/foo\">Expand all folders</a></div>\n"
+        result << "            <div><a href=\"/foo\">Contact DCA</a> to view material that isn't online</div>\n"
+        result << "            <div class=\"ead_contents_table\">\n"
+        result << "              <div class=\"ead_contents_row\">\n"
+        result << "                <div class=\"ead_contents_item\"><b>Title</b></div>\n"
+        result << "                <div class=\"ead_contents_item\">Type</div>\n"
+        result << "                <div class=\"ead_contents_item\">Location</div>\n"
+        result << "                <div class=\"ead_contents_item\">Id</div>\n"
+        result << "              </div> <!-- ead_contents_row -->\n"
+
+        items.each do |item|
+          result << show_series_content_item(item, false)
+        end
+
+        result << "            </div> <!-- ead_contents_table -->\n"
+        result << "          </div> <!-- series_content_list -->\n"
+      end
+
+      return result
+    end
+
+
+    def self.show_series_content_item(item, indent)
+      result = ""
+      did = nil
+      daogrp = nil
+      next_level_items = Array.new
+
+      item.element_children.each do |item_child|
+        if item_child.name == "did"
+          did = item_child
+        elsif item_child.name == "daogrp"
+          daogrp = item_child
+        elsif item_child.name == "c03" || item_child.name == "c04"
+          next_level_items << item_child
+        end
+      end
+
+      if !did.nil?
+        unittitle = nil
+        unitdate = nil
+        physdesc = nil
+        physloc = nil
+        item_id = item.attribute("id")
+        page = nil
+        thumbnail = nil
+
+        did.element_children.each do |did_child|
+          if did_child.name == "unittitle"
+            unittitle = did_child.text
+          elsif did_child.name == "unitdate"
+            unitdate = did_child.text
+          elsif did_child.name == "physdesc"
+            physdesc = did_child.text
+          elsif did_child.name == "physloc"
+            physloc = did_child.text
+          end
+        end
+
+        if !daogrp.nil?
+          daogrp.element_children.each do |daogrp_child|
+            if daogrp_child.name == "daoloc"
+              daoloc_label = daogrp_child.attribute("label")
+              daoloc_href = daogrp_child.attribute("href")
+
+              if !daoloc_label.nil? && !daoloc_href.nil?
+                daoloc_label_text = daoloc_label.text
+                daoloc_href_text = daoloc_href.text
+
+                if daoloc_label_text == "page"
+                  page = daoloc_href_text
+                elsif daoloc_label_text == "thumbnail"
+                  thumbnail = daoloc_href_text
+                end
+              end
+            end
+          end
+        end
+
+        result << "              <div class=\"ead_contents_row\">\n"
+        result << "                <div class=\"ead_contents_item\">" + (indent ? "&nbsp;&nbsp;" : "<b>") + (page == nil ? "" : "<a href=\"/catalog/" + page + "\">") + (unittitle == nil ? "" : unittitle) + (unitdate == nil ? "" : " " + unitdate) + (page == nil ? "" : "</a>") + (indent ? "" : "</b>") + "</div>\n"
+        result << "                <div class=\"ead_contents_item\">" + (physdesc == nil ? "" : physdesc) + "</div>\n"
+        result << "                <div class=\"ead_contents_item\">" + (physloc == nil ? "" : physloc) + "</div>\n"
+        result << "                <div class=\"ead_contents_item\">" + (item_id == nil ? "" : item_id.text) + "</div>\n"
+        result << "              </div> <!-- ead_contents_row -->\n"
+
+        next_level_items.each do |next_level_item|
+          result << show_series_content_item(next_level_item, true)
+        end
+      end
+
+      return result
+    end
+
+
+    def self.show_series_access_and_use(series)
+      result = ""
+      access_restrict = nil
+      use_restrict = nil
+
+      series.element_children.each do |series_child|
+        if series_child.name == "accessrestrict"
+          access_restrict = series_child
+        elsif series_child.name == "userestrict"
+          use_restrict = series_child
+        end
+      end
+
+      if !access_restrict.nil? || !use_restrict.nil?
+        result << "          <div id=\"series_access_and_use\">\n"
+        result << "            <h4>Access and Use</h4>\n"
+
+        if !access_restrict.nil?
+          access_restrict.element_children.each do |access_child|
+            if access_child.name == "p"
+              result << "            <div>" + access_child.text + "</div>\n"
+            end
+          end
+        end
+
+        if !use_restrict.nil?
+          use_restrict.element_children.each do |use_child|
+            if use_child.name == "p"
+              result << "            <div>" + use_child.text + "</div>\n"
+            end
+          end
+        end
+
+        result << "          <div> <!-- series_access_and_use -->\n"
       end
 
       return result
@@ -315,16 +585,16 @@ module Tufts
       result = ""
 
       controlaccesses.each do |controlaccess|
-        controlaccess.element_children.each do |child|
-          childname = child.name
+        controlaccess.element_children.each do |element_child|
+          childname = element_child.name
 
           if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
-            child_name = child.text
-            child_id = child.attribute("id")
+            child_name = element_child.text
+            child_id = element_child.attribute("id")
             child_url = (child_id == nil ? nil : child_id.text)
 
             if child_name.size > 0
-              result << "            <div>" +  (child_url == nil ? "" : "<a href=\"" + child_url + "\">") + child_name + (child_url == nil ? "" : "</a>") + "</div>\n"
+              result << "            <div>" +  (child_url == nil ? "" : "<a href=\"/catalog/" + child_url + "\">") + child_name + (child_url == nil ? "" : "</a>") + "</div>\n"
             end
           end
         end
