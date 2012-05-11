@@ -4,6 +4,8 @@ defaults: &defaults
     pagelocation: "#{Rails.root}/pdf_pages"
   tdl_feedback_address: "brian.goodmon@tufts.edu"
   tdl_feedback_subject: "TDL Content Feedback"
+  local_object_store: "#{Rails.root}/local_object_store"
+  trim_bucket_url: "http://bucket01.lib.tufts.edu"
 
 development:
   <<: *defaults
@@ -11,10 +13,11 @@ development:
 
 tdldev:
   <<: *defaults
-
+  local_object_store: "/tdr"
 test:
   <<: *defaults
-
+  local_object_store: "/tdr"
 production:
   <<: *defaults
   tdl_feedback_address: "deborah.kaplan@tufts.edu"
+  local_object_store: "/tdr"
