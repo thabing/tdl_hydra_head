@@ -5,7 +5,7 @@
 # Since we're new to opinionated metadata rather than drive yourself nuts make sure to read
 # the rdoc: http://rubydoc.info/gems/om/1.2.2/frames
 #
-  class TuftsRcrMeta < ActiveFedora::NokogiriDatastream
+  class TuftsRcrMeta < TuftsDatastream
 
     set_terminology do |t|
       t.root(:path => "eac-cpf", "xmlns" => "urn:isbn:1-931666-33-4",

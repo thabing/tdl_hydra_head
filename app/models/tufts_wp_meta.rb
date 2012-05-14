@@ -5,7 +5,7 @@
 # Since we're new to opinionated metadata rather than drive yourself nuts make sure to read
 # the rdoc: http://rubydoc.info/gems/om/1.2.2/frames
 #
-  class TuftsWpMeta < ActiveFedora::NokogiriDatastream
+  class TuftsWpMeta < TuftsDatastream
 
     set_terminology do |t|
       t.root(:path => "tuftsWildlifePathologyRecord", "xmlns" => "http://dca.lib.tufts.edu/schema/twp/twp.xsd")

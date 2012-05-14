@@ -32,7 +32,8 @@ module Tufts
             when "info:fedora/afmodel:TuftsPdf", "info:fedora/afmodel:TuftsTEI"
               model_s="Text"
             when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI"
-              nokogiri_doc = Nokogiri::XML(self.datastreams['Archival.xml'].content)
+              #nokogiri_doc = Nokogiri::XML(self.datastreams['Archival.xml'].content)
+              nokogiri_doc = Nokogiri::XML(File.open(convert_url_to_local_path(@file_asset.datastreams["Archival.xml"].dsLocation)).read)
               full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
             else
               model_s="Unclassified"

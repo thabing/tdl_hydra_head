@@ -5,7 +5,7 @@
 # Since we're new to opinionated metadata rather than drive yourself nuts make sure to read
 # the rdoc: http://rubydoc.info/gems/om/1.2.2/frames
 #
-  class TuftsEADMeta < ActiveFedora::NokogiriDatastream
+  class TuftsEADMeta < TuftsDatastream
 
     set_terminology do |t|
       t.root(:path => "ead", :xmlns => "http://dca.tufts.edu/schema/ead", :schema => "http://dca.lib.tufts.edu/schema/ead/ead.xsd")
