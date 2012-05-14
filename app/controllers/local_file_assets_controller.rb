@@ -164,20 +164,19 @@ From file_assets/_new.html.haml
 
         if (mapped_model_names.include?("info:fedora/afmodel:TuftsImage"))
           if @file_asset.datastreams.include?("Thumbnail.png")
-            send_datastream_inline @file_asset.datastreams["Thumbnail.png"]
-
+            send_file(convert_url_to_local_path(@file_asset.datastreams["Thumbnail.png"].dsLocation))
           end
         end
 
         if (mapped_model_names.include?("info:fedora/afmodel:TuftsImageText"))
           if @file_asset.datastreams.include?("Thumbnail.png")
-            send_datastream @file_asset.datastreams["Thumbnail.png"]
+            send_file(convert_url_to_local_path(@file_asset.datastreams["Thumbnail.png"].dsLocation))
           end
         end
 
         if (mapped_model_names.include?("info:fedora/afmodel:TuftsWP"))
           if @file_asset.datastreams.include?("Thumbnail.png")
-            send_datastream @file_asset.datastreams["Thumbnail.png"]
+            send_file(convert_url_to_local_path(@file_asset.datastreams["Thumbnail.png"].dsLocation))
           end
         end
       end
