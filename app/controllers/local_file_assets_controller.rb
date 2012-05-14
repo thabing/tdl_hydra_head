@@ -8,7 +8,7 @@ class LocalFileAssetsController < ApplicationController
   include Blacklight::SolrHelper
   include TuftsFileAssetsHelper
 #  before_filter :require_fedora
-  before_filter :require_solr, :only=>[:index, :create, :show, :destroy]
+  before_filter :require_solr, :only => [:index, :create, :show, :destroy]
   prepend_before_filter :sanitize_update_params
 
   helper :hydra_uploader
@@ -26,21 +26,21 @@ class LocalFileAssetsController < ApplicationController
     else
       container_uri = "info:fedora/#{params[:asset_id]}"
       escaped_uri = container_uri.gsub(/(:)/, '\\:')
-      extra_controller_params =  {:q=>"is_part_of_s:#{escaped_uri}"}
-      @response, @document_list = get_search_results( extra_controller_params )
+      extra_controller_params = {:q => "is_part_of_s:#{escaped_uri}"}
+      @response, @document_list = get_search_results(extra_controller_params)
 
       # Including this line so permissions tests can be run against the container
       @container_response, @document = get_solr_response_for_doc_id(params[:asset_id])
 
       # Including these lines for backwards compatibility (until we can use Rails3 callbacks)
-      @container =  ActiveFedora::Base.load_instance(params[:asset_id])
-      @solr_result = @container.file_objects(:response_format=>:solr)
+      @container = ActiveFedora::Base.load_instance(params[:asset_id])
+      @solr_result = @container.file_objects(:response_format => :solr)
     end
 
     # Load permissions_solr_doc based on params[:asset_id]
     #load_permissions_from_solr(params[:asset_id])
 
-    render :action=>params[:action], :layout=>layout
+    render :action => params[:action], :layout => layout
   end
 
   def new
@@ -49,7 +49,7 @@ From file_assets/_new.html.haml
 =render :partial=>"fluid_infusion/uploader"
 =render :partial=>"fluid_infusion/uploader_js"
 =end
-    render :partial=>"new", :layout=>false
+    render :partial => "new", :layout => false
   end
 
   # Creates and Saves a File Asset to contain the the Uploaded file
@@ -79,10 +79,10 @@ From file_assets/_new.html.haml
     end
 
     if !params[:asset_id].nil?
-      redirect_params = {:controller=>"catalog", :id=>params[:asset_id], :action=>:edit}
+      redirect_params = {:controller => "catalog", :id => params[:asset_id], :action => :edit}
     end
 
-    redirect_params ||= {:action=>:index}
+    redirect_params ||= {:action => :index}
 
     redirect_to redirect_params
   end
@@ -143,42 +143,42 @@ From file_assets/_new.html.haml
 
 
   def showThumb
-      @file_asset = FileAsset.find(params[:id])
-      if (@file_asset.nil?)
-        logger.warn("No such file asset: " + params[:id])
-        flash[:notice]= "No such file asset."
-        redirect_to(:action => 'index', :q => nil, :f => nil)
-      else
-        # get containing object for this FileAsset
-        pid = @file_asset.container_id
-        @downloadable = false
-        # A FileAsset is downloadable iff the user has read or higher access to a parent
-        @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
-        if reader?
-          @downloadable = true
-        end
+    @file_asset = FileAsset.find(params[:id])
+    if (@file_asset.nil?)
+      logger.warn("No such file asset: " + params[:id])
+      flash[:notice]= "No such file asset."
+      redirect_to(:action => 'index', :q => nil, :f => nil)
+    else
+      # get containing object for this FileAsset
+      pid = @file_asset.container_id
+      @downloadable = false
+      # A FileAsset is downloadable iff the user has read or higher access to a parent
+      @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
+      if reader?
+        @downloadable = true
+      end
 
-        mapped_model_names = ModelNameHelper.map_model_names(@file_asset.relationships(:has_model))
+      mapped_model_names = ModelNameHelper.map_model_names(@file_asset.relationships(:has_model))
 
 
-        if (mapped_model_names.include?("info:fedora/afmodel:TuftsImage"))
-          if @file_asset.datastreams.include?("Thumbnail.png")
-            send_file(convert_url_to_local_path(@file_asset.datastreams["Thumbnail.png"].dsLocation))
-          end
-        end
-
-        if (mapped_model_names.include?("info:fedora/afmodel:TuftsImageText"))
-          if @file_asset.datastreams.include?("Thumbnail.png")
-            send_file(convert_url_to_local_path(@file_asset.datastreams["Thumbnail.png"].dsLocation))
-          end
-        end
-
-        if (mapped_model_names.include?("info:fedora/afmodel:TuftsWP"))
-          if @file_asset.datastreams.include?("Thumbnail.png")
-            send_file(convert_url_to_local_path(@file_asset.datastreams["Thumbnail.png"].dsLocation))
-          end
+      if (mapped_model_names.include?("info:fedora/afmodel:TuftsImage"))
+        if @file_asset.datastreams.include?("Thumbnail.png")
+          send_file(convert_url_to_local_path(@file_asset.datastreams["Thumbnail.png"].dsLocation))
         end
       end
+
+      if (mapped_model_names.include?("info:fedora/afmodel:TuftsImageText"))
+        if @file_asset.datastreams.include?("Thumbnail.png")
+          send_file(convert_url_to_local_path(@file_asset.datastreams["Thumbnail.png"].dsLocation))
+        end
+      end
+
+      if (mapped_model_names.include?("info:fedora/afmodel:TuftsWP"))
+        if @file_asset.datastreams.include?("Thumbnail.png")
+          send_file(convert_url_to_local_path(@file_asset.datastreams["Thumbnail.png"].dsLocation))
+        end
+      end
+    end
   end
 
   def dimensions
@@ -204,41 +204,29 @@ From file_assets/_new.html.haml
 
       if (mapped_model_names.include?("info:fedora/afmodel:TuftsImage"))
         if @file_asset.datastreams.include?("Advanced.jpg")
-          imagesize = ImageSize.new @file_asset.datastreams["Advanced.jpg"].content
+          imagesize = ImageSize.new File.open(convert_url_to_local_path(@file_asset.datastreams["Advanced.jpg"].dsLocation)).read
 
-          render :json => {:height=> imagesize.get_height, :width=> imagesize.get_width}
+
+          render :json => {:height => imagesize.get_height, :width => imagesize.get_width}
         end
       end
 
       if (mapped_model_names.include?("info:fedora/afmodel:TuftsImageText"))
         if @file_asset.datastreams.include?("Advanced.jpg")
-          imagesize = ImageSize.new @file_asset.datastreams["Advanced.jpg"].content
-          render :json => {:height=> imagesize.get_height, :width=> imagesize.get_width}
+          imagesize = ImageSize.new File.open(convert_url_to_local_path(@file_asset.datastreams["Advanced.jpg"].dsLocation)).read
+          render :json => {:height => imagesize.get_height, :width => imagesize.get_width}
         end
       end
 
       if (mapped_model_names.include?("info:fedora/afmodel:TuftsWP"))
         if @file_asset.datastreams.include?("Basic.jpg")
-          imagesize = ImageSize.new @file_asset.datastreams["Advanced.jpg"].content
-          render :json => {:height=> imagesize.get_height, :width=> imagesize.get_width}.to_s
+          imagesize = ImageSize.new File.open(convert_url_to_local_path(@file_asset.datastreams["Advanced.jpg"].dsLocation)).read
+          render :json => {:height => imagesize.get_height, :width => imagesize.get_width}.to_s
         end
       end
     end
 
 
-
-  end
-
-  def convert_url_to_local_path(url)
-    local_object_store = Settings.local_object_store
-
-    if local_object_store.match(/^\#\{Rails.root\}/)
-      local_object_store = "#{Rails.root}" + local_object_store.gsub("\#\{Rails.root\}","")
-    end
-
-    url = local_object_store << url.gsub(Settings.trim_bucket_url,"")
-
-    return url
   end
 
   def show
@@ -302,10 +290,10 @@ From file_assets/_new.html.haml
           send_file(convert_url_to_local_path(@file_asset.datastreams["Archival.pdf"].dsLocation))
         end
       end
-     # else
-     #   flash[:notice]= "You do not have sufficient access privileges to download this document, which has been marked private."
-     #   redirect_to(:action => 'index', :q => nil , :f => nil)
-     # end
+      # else
+      #   flash[:notice]= "You do not have sufficient access privileges to download this document, which has been marked private."
+      #   redirect_to(:action => 'index', :q => nil , :f => nil)
+      # end
     end
   end
 
