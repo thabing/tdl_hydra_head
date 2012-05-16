@@ -1,0 +1,18 @@
+<p> <%= showMetadataItem(nil, "description", :description,nil) %>
+<dl>
+  <%= get_collection_link_for_object() %>
+  <%= get_appears_in_text() %>
+
+  <%= get_subject_terms() %>
+  <%= get_genre() %>
+  <%= get_handle() %>
+  <%= get_original_publication() %>
+
+
+
+</dl>
+<hr>
+<%=raw show_pid params[:id] %>
+<div class="metadata_row" id="cite"><div class="metadata_label">To cite</div><div class="metadata_values"><a href="http://sites.tufts.edu/dca/research-help/copyright-and-citations/">DCA Citation Guide</a></div></div>
+<%=raw show_rights() %>
+</p>

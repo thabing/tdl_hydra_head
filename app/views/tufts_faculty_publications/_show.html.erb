@@ -1,36 +1,38 @@
-<% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << "feedback/feedback.js" %>
-<% stylesheet_links << "feedback/feedback.css" %>
+<div class="subnav">
+  <ul class="nav nav-pills pull-left">
+    <li>
+      <!--<%= link_to "Back up to list", request.env["HTTP_REFERER"] %> -->
 
-<div class="document_viewer" id="cover_container">
+      <a href="#back"><i class="icon-arrow-left"></i> Back to Search Results</a>
+    </li>
+  </ul>
 
-    <div class="document_viewer" id="cover_container">
-          <%= showMetadataItem("Creator", "creator", :creator) %>
-          <%= showMetadataItem("Source", "source2", :source2) %>
-          <%= showMetadataItem("Description", "description", :description) %>
-          <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
-          <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
-          <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
-          <%= showMetadataItem("Citable URL", "identifier", :identifier) %>
-          <%= showMetadataItem("Rights", "rights", :rights) %>
-          <%= showMetadataItem("Citation", "bibliographicCitation", :bibliographicCitation) %>
-          <%= showMetadataItem("Publisher", "publisher", :publisher) %>
-          <%= showMetadataItem("Type", "type2", :type2) %>
-          <%= showMetadataItem("Format", "format2", :format2) %>
-          <%= showMetadataItem("Person Name", "persname", :persname) %>
-          <%= showMetadataItem("Organizations", "corpname", :corpname) %>
-          <%= showMetadataItem("Places", "geogname", :geogname) %>
-          <%= showMetadataItem("Topics", "subject", :subject) %>
-          <%= showMetadataItem("Funder", "funder", :funder) %>
-          <%= showMetadataItem("Temporal", "temporal", :temporal) %>
-          <%= showMetadataItem("Resolution", "resolution", :resolution) %>
-          <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
-          <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
-          <%= showMetadataItem("File Size", "filesize", :filesize) %>
-          <%= showFeedbackForm(params[:id]) %>
-        </div>
-        <div>
-          <%= showPDFLink(params[:id]) %>
-        </div>
+  <ul class="nav nav-pills pull-right">
+    <li><a href="#plugins"><i class="icon-picture"/></i> Download JPG Image</a></li>
+    <li><a href="http://sites.tufts.edu/dca/research-help/image-requests/"><i class="icon-envelope"/></i>  Request Larger Image</a></li>
+
+  </ul>
+</div>
+
+<!-- LEFT SIDE FOR OBJECT TITLE -->
+<div class="row">
+  <div class="span12">
+    <%= show_title() %>
+    <%= show_creator() %>
+    <%= show_date() %>
+    <hr>
+    <div class="row">
+      <div class="span6">
+        <%= render :partial => 'tufts_images/image_pane' %>
+
+      </div>
+
+
+      <div class="span6">
+        <%= render :partial => 'tufts_images/metadata_pane' %>
+      </div>
+
+
+    </div>
+  </div>
 </div>
