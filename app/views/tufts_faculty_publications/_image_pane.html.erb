@@ -1,9 +1,9 @@
 <ul class="thumbnails">
   <li class="span6">
     <a class="thumbnail" href="#">
-
+      <%= showImage(params[:id]) %>
     </a>
     <br>
-    <p></p>
+    <p><%= render_book_viewer_link(params[:id]) %></p>
   </li>
 </ul>
