@@ -1,13 +1,30 @@
-class PdfPageController < ApplicationController
+class PdfPagesController < ApplicationController
+  include Hydra::AccessControlsEnforcement
+  include Hydra::AssetsControllerHelper
+  include Hydra::FileAssetsHelper
+  include Hydra::RepositoryController
+  include MediaShelf::ActiveFedoraHelper
+  include Blacklight::SolrHelper
+  include TuftsFileAssetsHelper
+#  before_filter :require_fedora
+  before_filter :require_solr, :only => [:index, :create, :show, :destroy]
+  prepend_before_filter :sanitize_update_params
 
-  def convert_url_to_local_path(url)
-    local_object_store = Settings.local_object_store
+  helper :hydra_uploader
+
+  def convert_url_to_local_path(url,page_number,pid)
+    local_object_store = Settings.pdf_pages.page_location
 
     if local_object_store.match(/^\#\{Rails.root\}/)
       local_object_store = "#{Rails.root}" + local_object_store.gsub("\#\{Rails.root\}", "")
     end
 
+    page_part = "-#{page_number}.png"
+    url = url.gsub('.archival.pdf',page_part)
+    pid = pid.gsub('tufts:','')
+    url = url.insert url.rindex('/')+1,pid + '/'
     url = local_object_store << url.gsub(Settings.trim_bucket_url, "")
+
     url = url.gsub('archival_pdf','access_pdf_pageimages')
     return url
   end
@@ -32,12 +49,12 @@ class PdfPageController < ApplicationController
       end
 
       mapped_model_names = ModelNameHelper.map_model_names(@file_asset.relationships(:has_model))
-      pdf_pages = Settings.pdfpages.pagelocation
+     # pdf_pages = Settings.pdfpages.pagelocation
       #file name format PB.002.001.00001-0.png
       # pid-pagenumber.png
       # /pdf_pages/data05/tufts/central/dca/PB/access_pdf_pageimages/PB.002.001.00001
 
-      send_file(convert_url_to_local_path(@file_asset.datastreams["Archival.pdf"].dsLocation))
+      send_file(convert_url_to_local_path(@file_asset.datastreams["Archival.pdf"].dsLocation,params[:pageNumber],params[:id]))
     end
   end
 
