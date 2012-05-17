@@ -1,7 +1,7 @@
 # config/application.yml
 defaults: &defaults
-  pdfpages:
-    pagelocation: "#{Rails.root}/pdf_pages"
+  pdf_pages:
+    page_location: "#{Rails.root}/pdf_pages"
   tdl_feedback_address: "brian.goodmon@tufts.edu"
   tdl_feedback_subject: "TDL Content Feedback"
   local_object_store: "#{Rails.root}/local_object_store"
