@@ -7,20 +7,6 @@
 #
   class TuftsAudioTextMeta < TuftsDatastream
 
-
-    def convert_url_to_local_path(url)
-        local_object_store = Settings.local_object_store
-
-        if local_object_store.match(/^\#\{Rails.root\}/)
-          local_object_store = "#{Rails.root}" + local_object_store.gsub("\#\{Rails.root\}","")
-        end
-
-        url = local_object_store << url.gsub(Settings.trim_bucket_url,"")
-
-        return url
-      end
-
-
     set_terminology do |t|
       t.root(:path => "TEI.2", :namespace_prefix => nil, :xmlns => "", :schema => "http://dca.tufts.edu/schema/tei/tei2.dtd")
 
