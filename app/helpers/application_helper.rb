@@ -20,6 +20,12 @@ module ApplicationHelper
     return raw(result)
   end
 
+  def render_book_viewer_link(pid)
+    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\">full view</a>"
+    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
+    return raw(result)
+  end
+
 
   #http://ap.rubyonrails.org/classes/ActionController/Streaming.html#M000045
   def showGenericObjects(pid)
