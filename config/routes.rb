@@ -29,6 +29,7 @@ TdlHydraHead::Application.routes.draw do
   match '/local_file_assets/:id', :to => 'local_file_assets#show', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/file_assets/:id', :to => 'local_file_assets#show', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/proxy/:id', :to => 'proxy#show', :constraints => {:id => /.*/}, :as =>'proxy'
+  match '/pdf_pages/:id/:pageNumber', :to => 'pdf_pages#show', :constraints => {:id => /.*/, :pageNumber => /.*/}, :as =>'pdf_page'
   #match '/bucketproxy/:id/:index', :to => 'bucketproxy#show', :constraints => {:id => /.*/}, :as =>'bucketproxy'
   #match "/myApi.js" => lambda { |env| [200, {}, "Hello World"] }
   #mount FooBar, :at => '/foo'
