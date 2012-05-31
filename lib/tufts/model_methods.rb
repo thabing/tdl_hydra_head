@@ -58,8 +58,9 @@ module Tufts
       names = fedora_object.datastreams["DCA-META"].get_values(name_field)
 
       names.each {|name|
-
+          unless name.downcase.include? 'unknown'
             ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "names_facet", "#{name}")
+          end
         }
 
       } #end name_field
@@ -72,8 +73,9 @@ module Tufts
       names = fedora_object.datastreams["DCA-META"].get_values(name_field)
 
       names.each {|name|
-
+          unless name.downcase.include? 'unknown'
             ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "subject_facet", "#{name}")
+          end
         }
 
       } #end name_field
