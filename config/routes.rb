@@ -3,6 +3,8 @@ TdlHydraHead::Application.routes.draw do
   get "contact/index"
   get "about/index"
   match '/imageviewer/:id', :to => 'imageviewer#show', :constraints => {:id => /.*/}, :as =>'imageviewer'
+  match '/bookreader/:id', :to => 'imageviewer#show_book', :constraints => {:id => /.*/}, :as =>'bookreader'
+
   match "/about" => "about#index"
  #get "search/index"
  # match "/search" => "search#index"
@@ -29,7 +31,9 @@ TdlHydraHead::Application.routes.draw do
   match '/local_file_assets/:id', :to => 'local_file_assets#show', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/file_assets/:id', :to => 'local_file_assets#show', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/proxy/:id', :to => 'proxy#show', :constraints => {:id => /.*/}, :as =>'proxy'
+  match '/pdf_pages/:id/metadata', :to => 'pdf_pages#dimensions', :constraints => {:id => /.*/}, :as =>'pdf_page'
   match '/pdf_pages/:id/:pageNumber', :to => 'pdf_pages#show', :constraints => {:id => /.*/, :pageNumber => /.*/}, :as =>'pdf_page'
+
   #match '/bucketproxy/:id/:index', :to => 'bucketproxy#show', :constraints => {:id => /.*/}, :as =>'bucketproxy'
   #match "/myApi.js" => lambda { |env| [200, {}, "Hello World"] }
   #mount FooBar, :at => '/foo'
