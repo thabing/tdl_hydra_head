@@ -3203,8 +3203,9 @@ BookReader.prototype.initNavbar = function() {
         //+         '<button class="BRicon fit"></button>'
         +         '<button class="BRicon zoom_in"></button>'
         +         '<button class="BRicon zoom_out"></button>'
-        +         '<button class="BRicon book_left"></button>'
-        +         '<button class="BRicon book_right"></button>'
+            +         '<button class="BRicon book_right"></button>'
+            +         '<button class="BRicon book_left"></button>'
+
         +     '</div>'
         +     '<div id="BRnavpos">' // Page slider and nav line
         //+         '<div id="BRfiller"></div>'
