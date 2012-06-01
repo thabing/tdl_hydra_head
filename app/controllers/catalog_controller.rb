@@ -27,6 +27,10 @@ class CatalogController < ApplicationController
     return
   end
 
+  def enforce_show_book_permissions
+      return
+  end
+
   def enforce_opensearch_permissions
     return
   end
