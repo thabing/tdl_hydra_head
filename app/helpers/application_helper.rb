@@ -7,11 +7,17 @@ module ApplicationHelper
         'Tufts Digital Library'
   end
 
-  def showImage(pid)
-    result = "<img alt=\"\" src=\"" + file_asset_path(pid) + "\"/>"
+  def showPdfImage(pid)
+    result = "<img alt=\"\" src=\"/pdf_pages/" + pid + "/0\"/>"
 
     return raw(result)
   end
+
+  def showImage(pid)
+      result = "<img alt=\"\" src=\"" + file_asset_path(pid) + "\"/>"
+
+      return raw(result)
+    end
 
 
   def render_image_viewer_link(pid)
@@ -21,8 +27,8 @@ module ApplicationHelper
   end
 
   def render_book_viewer_link(pid)
-    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\">full view</a>"
-    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
+    result = "<a href=\"/bookreader/" + pid +"#page/1/mode/2up" + "\">full view</a>"
+    result = "<a href=\"/bookreader/" + pid +"#page/1/mode/2up" + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
     return raw(result)
   end
 
