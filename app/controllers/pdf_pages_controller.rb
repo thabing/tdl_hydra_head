@@ -23,7 +23,10 @@ class PdfPagesController < ApplicationController
     url = url.gsub('.archival.pdf', page_part)
     pid = pid.gsub('tufts:', '')
     url = url.insert url.rindex('/')+1, pid + '/'
-    url = local_object_store << url.gsub(Settings.trim_bucket_url, "")
+    url = url.gsub(Settings.trim_bucket_url, "")
+
+    url = local_object_store << "/dcadata02" << url[url.index("/",1)..url.length]
+
 
     url = url.gsub('archival_pdf', 'access_pdf_pageimages')
     return url
@@ -39,8 +42,8 @@ class PdfPagesController < ApplicationController
     pid = pid.gsub('tufts:', '')
     url = url[0,url.rindex('/')+1]
     url = url.insert url.rindex('/')+1, pid + '/book_meta.json'
-    url = local_object_store << url.gsub(Settings.trim_bucket_url, "")
-
+    url = url.gsub(Settings.trim_bucket_url, "")
+    url = local_object_store << "/dcadata02" << url[url.index("/",1)..url.length]
     url = url.gsub('archival_pdf', 'access_pdf_pageimages')
     return url
   end
