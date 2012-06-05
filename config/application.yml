@@ -13,11 +13,17 @@ development:
 
 tdldev:
   <<: *defaults
+  pdf_pages:
+    page_location: "/tdr"
   local_object_store: "/tdr"
 test:
   <<: *defaults
+  pdf_pages:
+    page_location: "/tdr"
   local_object_store: "/tdr"
 production:
   <<: *defaults
+  pdf_pages:
+    page_location: "/tdr"
   tdl_feedback_address: "deborah.kaplan@tufts.edu"
   local_object_store: "/tdr"
