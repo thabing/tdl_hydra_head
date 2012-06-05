@@ -187,7 +187,7 @@ module Tufts
       ead_title = "Graduate scholarship"
     elsif (pid.starts_with? "tufts:PB.001.001") || (pid.starts_with? "tufts:ddennett")
       ead_title = "Faculty scholarship"
-    elseif pid.starts_with? "tufts:UA069.005.DO"
+    elsif pid.starts_with? "tufts:UA069.005.DO"
       ead_title = "Boston Streets"
     end
 
