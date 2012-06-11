@@ -22,7 +22,7 @@ module Tufts
     end
 
     def show_title
-      showMetadataItem(nil, "title", :title, "h4")
+      showMetadataItem(nil, "title", :title, nil)
 
     end
 
