@@ -2,6 +2,53 @@ module Tufts
   module EADMethods
 
 
+    def self.title(fedora_obj, datastream = "Archival.xml")
+      result = ""
+      unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
+      unitdate = fedora_obj.datastreams[datastream].get_values(:unitdate).first
+
+      if !unittitle.nil?
+        result << unittitle + (unitdate == nil ? "" : ", " + unitdate)
+      end
+
+      return result
+    end
+
+
+    def self.physdesc(fedora_obj, datastream = "Archival.xml")
+      result = ""
+      physdescs = fedora_obj.datastreams[datastream].get_values(:physdesc).first
+
+      if !physdescs.nil?
+        physdescs.split(";").each do |physdesc|
+          result << (result.empty? ? "" : "<br>") + physdesc.lstrip.rstrip
+        end
+      end
+
+      return result
+    end
+
+
+    def self.abstract(fedora_obj, datastream = "Archival.xml")
+      result = ""
+      abstract = fedora_obj.datastreams[datastream].get_values(:abstract).first
+
+      if !abstract.nil?
+        result << abstract
+      end
+
+      return result
+    end
+
+
+    def self.finding_aid_url(fedora_obj)
+      return "/catalog/ead/" + fedora_obj.id
+    end
+
+# old stuff before Ilene's styles were implemented
+=begin
+
+
     def self.show_landing_page(fedora_obj, datastream = "Archival.xml")
       result = ""
       unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
@@ -23,6 +70,7 @@ module Tufts
 
       return result
     end
+=end
 
 
     def self.show_overview_page(fedora_obj, datastream = "Archival.xml")
