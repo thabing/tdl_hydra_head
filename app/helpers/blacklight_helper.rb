@@ -17,7 +17,7 @@ module BlacklightHelper
         link_to add_facet_params_and_redirect(facet_solr_field, item.value), :class => "facet_select" do
           out = text_for_link
 
-          out +="<span class='numbercount'> "+ format_num(item.hits) +" </span>"
+          out +="<span class='numbercount'> ("+ format_num(item.hits) +")</span>"
           out.html_safe
         end
       end
