@@ -2,6 +2,18 @@ module Tufts
   module EADMethods
 
 
+    # I'm not proud of these global variables.  This needs a bit more work...
+    $current_ead_id = ""
+    $current_serieses = []
+    $current_series_id = 0
+    $current_subseries_id = 0
+    $current_series_level = "0"
+    $current_subseries_level = "0"
+    $current_did = nil
+    $current_scopecontent = nil
+    $current_c02s = []
+
+
     def self.title(fedora_obj, datastream = "Archival.xml")
       result = ""
       unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
@@ -41,9 +53,311 @@ module Tufts
     end
 
 
+    def self.unitid(fedora_obj, datastream = "Archival.xml")
+      result = ""
+      unitid = fedora_obj.datastreams[datastream].get_values(:unitid).first
+
+      if !unitid.nil?
+        result << unitid
+      end
+
+      return result
+    end
+
+
     def self.finding_aid_url(fedora_obj)
       return "/catalog/ead/" + fedora_obj.id
     end
+
+
+    def self.read_more_about(fedora_obj, datastream = "Archival.xml")
+      result = ""
+      persname = fedora_obj.datastreams[datastream].find_by_terms_and_value(:persname)
+      corpname = fedora_obj.datastreams[datastream].find_by_terms_and_value(:corpname)
+      famname = fedora_obj.datastreams[datastream].find_by_terms_and_value(:famname)
+      name = nil
+      rcr_url = nil
+
+      if !persname.empty?
+        name, rcr_url = parse_origination(persname)
+      elsif !corpname.empty?
+        name, rcr_url = parse_origination(corpname)
+      elsif !famname.empty?
+        name, rcr_url = parse_origination(famname)
+      end
+
+      if !name.nil?
+        result << "<a href=\"" + (rcr_url == nil ? "" : "/catalog/tufts:" + rcr_url) + "\">" + name + "</a>"
+      end
+
+      return result
+    end
+
+
+    def self.get_contents(fedora_obj, datastream = "Archival.xml")
+      result = []
+      scopecontentps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:scopecontentp)
+
+      scopecontentps.each do |scopecontentp|
+        result << scopecontentp.text
+      end
+
+      return result
+    end
+
+
+    def self.get_series_count(fedora_obj, datastream = "Archival.xml")
+      $current_ead_id = fedora_obj.id
+      $current_serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)  # I got a D in speling once
+
+      return $current_serieses.size
+    end
+
+
+    def self.parse_series(series_index)
+      series = $current_serieses[series_index]
+
+      $current_series_id = series.attribute("id").text
+      $current_series_level = (series_index + 1).to_s
+
+      $current_did = nil
+      $current_scopecontent = nil
+      $current_c02s = []
+
+      # find the pertinent child elements: did, scopecontent and c02
+      series.element_children.each do |element_child|
+        if element_child.name == "did"
+          $current_did = element_child
+        elsif element_child.name == "scopecontent"
+          $current_scopecontent = element_child
+        elsif element_child.name == "c02"
+          if element_child.attribute("level").text == "subseries"
+            $current_c02s << element_child
+          end
+        end
+      end
+    end
+
+
+    def self.get_series_title()
+      result = ""
+
+      # process the did element
+      if $current_did != nil
+        unittitle = nil
+        unitdate = nil
+        noSubseries = $current_c02s.empty?
+
+        $current_did.element_children.each do |did_child|
+          if did_child.name == "unittitle"
+            unittitle = did_child.text
+          elsif did_child.name == "unitdate"
+            unitdate = did_child.text
+          end
+        end
+
+        # This should be a link if there are no subseries elements (ie, <c02 level="subseries"> tags).
+        if unittitle != nil && unittitle.size > 0
+          if !unittitle.nil?
+            result << ((noSubseries ? "<a href=\"/catalog/ead/" + $current_ead_id + "/" + $current_series_id + "\">" : "") + $current_series_level + ". " + unittitle + (unitdate == nil ? "" : ", " + unitdate) + (noSubseries ? "</a>" : ""))
+          end
+        end
+      end
+
+      return result
+    end
+
+
+    def self.get_series_paragraphs()
+      result = []
+
+      # process the scopecontent element
+      if $current_scopecontent != nil
+        $current_scopecontent.element_children.each do |scopecontent_child|
+          if scopecontent_child.name == "p"
+            result << scopecontent_child.text
+          end
+        end
+      end
+
+      return result
+    end
+
+
+    def self.get_subseries_count()
+      return $current_c02s.size
+    end
+
+
+    def self.parse_subseries(subseries_index)
+      c02 = $current_c02s[subseries_index]
+
+      $current_subseries_id = c02.attribute("id").text
+      $current_subseries_level = (subseries_index + 1).to_s
+
+      $current_did = nil
+      $current_scopecontent = nil
+
+      # find the pertinent child elements: did, scopecontent and c02
+      c02.element_children.each do |element_child|
+        if element_child.name == "did"
+          $current_did = element_child
+        elsif element_child.name == "scopecontent"
+          $current_scopecontent = element_child
+        end
+      end
+    end
+
+
+    def self.get_subseries_title()
+      result = ""
+
+      # process the did element
+      if $current_did != nil
+        unittitle = nil
+        unitdate = nil
+
+        $current_did.element_children.each do |did_child|
+          if did_child.name == "unittitle"
+            unittitle = did_child.text
+          elsif did_child.name == "unitdate"
+            unitdate = did_child.text
+          end
+        end
+
+        if unittitle != nil && unittitle.size > 0
+          if !unittitle.nil?
+            result << ("<a href=\"/catalog/ead/" + $current_ead_id + "/" + $current_subseries_id + "\">" + $current_series_level + "."  + $current_subseries_level + ". " + unittitle + (unitdate == nil ? "" : ", " + unitdate) + "</a>")
+          end
+        end
+      end
+
+      return result
+    end
+
+
+    def self.get_subseries_paragraphs()
+      result = []
+
+      # process the scopecontent element
+      if $current_scopecontent != nil
+        $current_scopecontent.element_children.each do |scopecontent_child|
+          if scopecontent_child.name == "p"
+            result << scopecontent_child.text
+          end
+        end
+      end
+
+      return result
+    end
+
+
+    def self.get_names_and_subjects(fedora_obj, datastream = "Archival.xml")
+      result = []
+      controlaccesses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:controlaccess)
+
+      controlaccesses.each do |controlaccess|
+        controlaccess.element_children.each do |element_child|
+          childname = element_child.name
+
+          if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
+            child_name = element_child.text
+            child_id = element_child.attribute("id")
+            child_url = (child_id == nil ? nil : child_id.text)
+
+            if child_name.size > 0
+              result << ((child_url == nil ? "" : "<a href=\"/catalog/" + child_url + "\">") + child_name + (child_url == nil ? "" : "</a>"))
+            end
+          end
+        end
+      end
+
+      return result
+    end
+
+
+    def self.get_related_material(fedora_obj, datastream = "Archival.xml")
+      result = []
+      separatedmaterials = fedora_obj.datastreams[datastream].find_by_terms_and_value(:separatedmaterial)
+      relatedmaterials = fedora_obj.datastreams[datastream].find_by_terms_and_value(:relatedmaterial)
+
+      separatedmaterials.each do |separatedmaterial|
+        result << separatedmaterial.text
+      end
+
+      relatedmaterials.each do |relatedmaterial|
+        result << relatedmaterial.text
+      end
+
+      return result
+    end
+
+
+    def self.get_access_and_use(fedora_obj, datastream = "Archival.xml")
+      result = []
+      accessrestrictps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:accessrestrictp)
+      userestrictps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:userestrictp)
+      preferciteps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:prefercitep)
+
+      accessrestrictps.each do |accessrestrictp|
+        result << accessrestrictp.text
+      end
+
+      userestrictps.each do |userestrictp|
+        result << userestrictp.text
+      end
+
+      # TBD -- do they want the prefercite?  It's not on the design drawings...
+      preferciteps.each do |prefercitep|
+        result << "Preferred citation: " + prefercitep.text
+      end
+
+      return result
+    end
+
+
+    def self.get_processing_notes(fedora_obj, datastream = "Archival.xml")
+      result = []
+      processinfos = fedora_obj.datastreams[datastream].find_by_terms_and_value(:processinfo)
+
+      processinfos.each do |processinfo|
+        result << processinfo.text
+      end
+
+      return result
+    end
+
+
+    def self.get_acquisition_info(fedora_obj, datastream = "Archival.xml")
+      result = []
+      acqinfos = fedora_obj.datastreams[datastream].find_by_terms_and_value(:acqinfo)
+
+      acqinfos.each do |acqinfo|
+        result << acqinfo.text
+      end
+
+      return result
+    end
+
+
+    def self.parse_origination(node)
+      name = nil
+      rcr_url = nil
+
+      first_element = node.first
+
+      if first_element != nil
+        name = first_element.text
+        first_element_id = first_element.attribute("id")
+
+        if first_element_id != nil
+          rcr_url = first_element_id.text
+        end
+      end
+
+      return name, rcr_url
+    end
+
 
 # old stuff before Ilene's styles were implemented
 =begin
@@ -70,7 +384,6 @@ module Tufts
 
       return result
     end
-=end
 
 
     def self.show_overview_page(fedora_obj, datastream = "Archival.xml")
@@ -104,29 +417,7 @@ module Tufts
     end
 
 
-    def self.show_internal_page(fedora_obj, item_id, datastream = "Archival.xml")
-      result = ""
-      table_of_contents = ""
-      series_overview, series = show_series_overview(fedora_obj, item_id, datastream)
-      series_content_list = show_series_content_list(series)
-      series_access_and_use = show_series_access_and_use(series)
-
-      table_of_contents << "            <div id=\"tableOfContents\" class=\"ead_table_of_contents\">\n"
-      table_of_contents << (series_overview == "" ? "" : "              <div><a href = \"#series_overview\">Series Overview</div></a>\n")
-      table_of_contents << (series_content_list == "" ? "" : "              <div><a href = \"#series_content_list\">Detailed Contents List</div></a>\n")
-      table_of_contents << (series_access_and_use == "" ? "" : "              <div><a href = \"#series_access_and_use\">Access and Use</div></a>\n")
-      table_of_contents << "            </div> <!-- tableOfContents -->\n"
-
-      series_overview.sub!("TOCGOESHERE", table_of_contents)
-
-      result << series_overview + series_content_list + series_access_and_use
-      result.chomp!  #remove the trailing \n
-
-      return result
-    end
-
-
-    def self.show_overview(fedora_obj, datastream = "Archival.xml"  )
+    def self.show_overview(fedora_obj, datastream = "Archival.xml")
       result = ""
       unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
       unitdate = fedora_obj.datastreams[datastream].get_values(:unitdate).first
@@ -163,7 +454,7 @@ module Tufts
     end
 
 
-    def self.show_contents(fedora_obj, datastream = "Archival.xml"  )
+    def self.show_contents(fedora_obj, datastream = "Archival.xml")
       result = ""
       scopecontentps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:scopecontentp)
 
@@ -182,7 +473,7 @@ module Tufts
     end
 
 
-    def self.show_series_descriptions(fedora_obj, datastream = "Archival.xml"  )
+    def self.show_series_descriptions(fedora_obj, datastream = "Archival.xml")
       result = ""
       serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)  # I got a D in speling once
 
@@ -267,7 +558,7 @@ module Tufts
     end
 
 
-    def self.show_names_and_subjects(fedora_obj, datastream = "Archival.xml"  )
+    def self.show_names_and_subjects(fedora_obj, datastream = "Archival.xml")
       result = ""
       controlaccesses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:controlaccess)
 
@@ -286,7 +577,7 @@ module Tufts
     end
 
 
-    def self.show_related_collections(fedora_obj, datastream = "Archival.xml"  )
+    def self.show_related_collections(fedora_obj, datastream = "Archival.xml")
       result = ""
       separatedmaterials = fedora_obj.datastreams[datastream].find_by_terms_and_value(:separatedmaterial)
       relatedmaterials = fedora_obj.datastreams[datastream].find_by_terms_and_value(:relatedmaterial)
@@ -310,7 +601,7 @@ module Tufts
     end
 
 
-    def self.show_access_and_use(fedora_obj, datastream = "Archival.xml"  )
+    def self.show_access_and_use(fedora_obj, datastream = "Archival.xml")
       result = ""
       accessrestrictps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:accessrestrictp)
       userestrictps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:userestrictp)
@@ -340,7 +631,7 @@ module Tufts
     end
 
 
-    def self.show_administrative_notes(fedora_obj, datastream = "Archival.xml"  )
+    def self.show_administrative_notes(fedora_obj, datastream = "Archival.xml")
       result = ""
       processinfos = fedora_obj.datastreams[datastream].find_by_terms_and_value(:processinfo)
       acqinfos = fedora_obj.datastreams[datastream].find_by_terms_and_value(:acqinfo)
@@ -359,6 +650,52 @@ module Tufts
 
         result << "          </div> <!-- ead_administrative_notes -->\n"
       end
+
+      return result
+    end
+
+
+    def self.parse_controlaccess(controlaccesses)
+      result = ""
+
+      controlaccesses.each do |controlaccess|
+        controlaccess.element_children.each do |element_child|
+          childname = element_child.name
+
+          if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
+            child_name = element_child.text
+            child_id = element_child.attribute("id")
+            child_url = (child_id == nil ? nil : child_id.text)
+
+            if child_name.size > 0
+              result << "            <div>" +  (child_url == nil ? "" : "<a href=\"/catalog/" + child_url + "\">") + child_name + (child_url == nil ? "" : "</a>") + "</div>\n"
+            end
+          end
+        end
+      end
+
+      return result
+    end
+=end
+
+
+    def self.show_internal_page(fedora_obj, item_id, datastream = "Archival.xml")
+      result = ""
+      table_of_contents = ""
+      series_overview, series = show_series_overview(fedora_obj, item_id, datastream)
+      series_content_list = show_series_content_list(series)
+      series_access_and_use = show_series_access_and_use(series)
+
+      table_of_contents << "            <div id=\"tableOfContents\" class=\"ead_table_of_contents\">\n"
+      table_of_contents << (series_overview == "" ? "" : "              <div><a href = \"#series_overview\">Series Overview</div></a>\n")
+      table_of_contents << (series_content_list == "" ? "" : "              <div><a href = \"#series_content_list\">Detailed Contents List</div></a>\n")
+      table_of_contents << (series_access_and_use == "" ? "" : "              <div><a href = \"#series_access_and_use\">Access and Use</div></a>\n")
+      table_of_contents << "            </div> <!-- tableOfContents -->\n"
+
+      series_overview.sub!("TOCGOESHERE", table_of_contents)
+
+      result << series_overview + series_content_list + series_access_and_use
+      result.chomp!  #remove the trailing \n
 
       return result
     end
@@ -604,48 +941,6 @@ module Tufts
         end
 
         result << "          <div> <!-- series_access_and_use -->\n"
-      end
-
-      return result
-    end
-
-
-    def self.parse_origination(node)
-      name = nil
-      rcr_url = nil
-
-      first_element = node.first
-
-      if first_element != nil
-        name = first_element.text
-        first_element_id = first_element.attribute("id")
-
-        if first_element_id != nil
-          rcr_url = first_element_id.text
-        end
-      end
-
-      return name, rcr_url
-    end
-
-
-    def self.parse_controlaccess(controlaccesses)
-      result = ""
-
-      controlaccesses.each do |controlaccess|
-        controlaccess.element_children.each do |element_child|
-          childname = element_child.name
-
-          if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
-            child_name = element_child.text
-            child_id = element_child.attribute("id")
-            child_url = (child_id == nil ? nil : child_id.text)
-
-            if child_name.size > 0
-              result << "            <div>" +  (child_url == nil ? "" : "<a href=\"/catalog/" + child_url + "\">") + child_name + (child_url == nil ? "" : "</a>") + "</div>\n"
-            end
-          end
-        end
       end
 
       return result

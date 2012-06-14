@@ -1,8 +1,170 @@
-<% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << "feedback.js" %>
-<% stylesheet_links << "feedback/feedback.css" %>
+<%
+    contents = Tufts::EADMethods.get_contents(@document_fedora)
+    series_count = Tufts::EADMethods.get_series_count(@document_fedora)
+    names_and_subjects = Tufts::EADMethods.get_names_and_subjects(@document_fedora)
+    related_material = Tufts::EADMethods.get_related_material(@document_fedora)
+    access_and_use = Tufts::EADMethods.get_access_and_use(@document_fedora)
+    processing_notes = Tufts::EADMethods.get_processing_notes(@document_fedora)
+    acquisition_info = Tufts::EADMethods.get_acquisition_info(@document_fedora)
+%>
 
-        <div id="ead_content">
-          <%= raw Tufts::EADMethods.show_overview_page(@document_fedora) %>
-        </div> <!-- ead_content -->
+
+<div class="row">
+  <div class="span9 offset3">
+    <h2><%= raw Tufts::EADMethods.title(@document_fedora) %></h2>
+  </div>
+</div>
+
+<hr>
+<br>
+
+<div class="row">
+  <div class="span3">
+    <h6> On this page:</h6>
+    <ul class="nav nav-tabs nav-stacked">
+      <li class="active"><a href="#overview">Overview</a></li>
+<%  if !contents.empty? %>
+      <li><a href="#contents">Contents</a></li>
+<%  end %>
+<%  if series_count > 0 %>
+      <li><a href="#series_descriptions">Series Description</a></li>
+<%  end %>
+<%  if !names_and_subjects.empty? %>
+      <li><a href="#names_and_subjects">Names and Subjects</a></li>
+<%  end %>
+<%  if !related_material.empty? %>
+      <li><a href="#related_material">Related Material</a></li>
+<%  end %>
+<%  if !access_and_use.empty? %>
+      <li><a href="#access_and_use">Access and Use</a></li>
+<%  end %>
+<%  if !(processing_notes.empty? && acquisition_info.empty?) %>
+      <li><a href="#administrative_notes">Administrative Notes</a></li>
+<%  end %>
+    </ul>
+  </div>
+
+  <div class="span6" id="overview">
+    <div class="collection_desc graytext">
+      <%= raw Tufts::EADMethods.physdesc(@document_fedora) %>
+      <br>
+      Call Number: <%= raw Tufts::EADMethods.unitid(@document_fedora) %>
+    </div>
+
+    <p><%= raw Tufts::EADMethods.abstract(@document_fedora) %></p>
+    <p>Read more about <%= raw Tufts::EADMethods.read_more_about(@document_fedora) %></p>
+
+    <h4>Contributers</h4>
+    <ul>
+      <li><a href="#">Ballou, Hosea</a></li>
+      <li><a href="#">Bacow, Lawrence</a></li>
+      <li><a href="#">Monaco, Anthony</a></li>
+    </ul>
+
+<%  if !contents.empty? %>
+    <h4 id="contents">Contents of the Collection </h4>
+<%    contents.each do |paragraph| %>
+    <p>
+      <%= raw paragraph %>
+    </p>
+<%    end %>
+<%  end %>
+
+<%  if series_count > 0 %>
+    <h4 id="series_descriptions">Series Description</h4>
+<%
+      series_index = 0
+      while series_index < series_count
+        Tufts::EADMethods.parse_series(series_index)
+        title = Tufts::EADMethods.get_series_title()
+        paragraphs = Tufts::EADMethods.get_series_paragraphs()
+        subseries_count = Tufts::EADMethods.get_subseries_count()
+%>
+    <p>
+      <strong><%= raw title %></strong>
+<%      paragraphs.each do |paragraph| %>
+      <br>
+      <%= raw paragraph %>
+<%      end %>
+    </p>
+<%      if subseries_count > 0 %>
+    <div class="indent_box30">
+<%        subseries_index = 0
+          while subseries_index < subseries_count
+            Tufts::EADMethods.parse_subseries(subseries_index)
+            description = Tufts::EADMethods.get_subseries_title()
+            paragraphs = Tufts::EADMethods.get_subseries_paragraphs()
+%>
+      <p>
+        <%= raw description %>
+<%          paragraphs.each do |paragraph| %>
+        <br>
+        <%= raw paragraph %>
+<%          end %>
+      </p>
+<%          subseries_index += 1 %>
+<%        end %>
+    </div>
+<%      end %>
+<%      series_index += 1 %>
+<%    end %>
+<%  end %>
+
+<%  if !names_and_subjects.empty? %>
+    <h4 id="names_and_subjects">Names and Subjects</h4>
+    <ul>
+<%    names_and_subjects.each do |list_item| %>
+      <li><%= raw list_item %></li>
+<%    end %>
+    </ul>
+<%  end %>
+
+<%  if !related_material.empty? %>
+    <h4 id="related_material">Related Material</h4>
+    <ul>
+<%    related_material.each do |list_item| %>
+      <li><%= raw list_item %></li>
+<%    end %>
+    </ul>
+<%  end %>
+
+<%  if !access_and_use.empty? %>
+    <h4 id="access_and_use">Access and Use</h4>
+<%    access_and_use.each do |paragraph| %>
+    <p><%= raw paragraph %></p>
+<%    end %>
+<%  end %>
+
+<%  if !(processing_notes.empty? && acquisition_info.empty?) %>
+    <h4 id="administrative_notes">Administrative Notes</h4>
+<%    if !processing_notes.empty? %>
+    <p>
+      <strong>Processing Notes</strong>
+<%      processing_notes.each do |paragraph| %>      
+      <br>
+      <%= raw paragraph %>
+<%      end %>
+    </p>
+<%    end %>
+<%    if !acquisition_info.empty? %>
+    <p>
+      <strong>Acquisition Information</strong>
+<%      acquisition_info.each do |paragraph| %>      
+      <br>
+      <%= raw paragraph %>
+<%      end %>
+    </p>
+<%    end %>
+<%  end %>
+
+    <br>
+    <br>
+  </div>
+
+  <div class="span3">
+    <div class="tooltip-demo well">
+      <a href="#"><h5>View Online Materials<i class="icon-arrow-right margintoparrow"></i></h5></a>
+      <a href="#">Contact DCA</a> to view materials that are not online.
+    </div>
+  </div>
+</div>
