@@ -108,7 +108,7 @@ function BookReader() {
                           {reduce: 0.3, autofit: null},
                           {reduce: 0.4, autofit: null},
                           {reduce: 0.5, autofit: null},
-                           {reduce: 1, autofit: 'height'},
+                           {reduce: 1, autofit: null},
                            {reduce: 2, autofit: null},
                            {reduce: 3, autofit: null},
                            {reduce: 4, autofit: null},
