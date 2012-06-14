@@ -83,8 +83,20 @@
         <ul class="nav">
           <li><%= link_to "Search", '/search' %></li>
           <li><%= link_to "About", about_path() %></li>
+          <%- if "contact" == @current_action -%>
+                        <li class="active">
+                    <%- end -%>
           <li><%= link_to "Contact", contact_path() %></li>
+          <%- if "contact" == @current_action -%>
+                        </li>
+                    <%- end -%>
+          <%- if "index" == @current_action -%>
+              <li class="active">
+          <%- end -%>
           <li><%= link_to "Home", catalog_path('/') %></li>
+          <%- if "index" == @current_action -%>
+                        </li>
+                    <%- end -%>
         </ul>
       </div>
     </div>
