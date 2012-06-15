@@ -180,9 +180,33 @@ Blacklight.configure(:shared) do |config|
   # since we aren't specifying it otherwise. 
   config[:search_fields] << {
     :key => "all_fields",  
-    :display_label => 'All Fields'   
+    :display_label => 'Keyword'
   }
-
+  config[:search_fields] << {
+      :key =>'author',
+      :display_label => 'Creator',
+      :solr_parameters => {
+        :"spellcheck.dictionary" => "author"
+      },
+      :solr_local_parameters => {
+        :qf => "$author_qf",
+        :pf => "$author_pf"
+      }
+  }
+  # Specifying a :qt only to show it's possible, and so our internal automated
+    # tests can test it. In this case it's the same as
+    # config[:default_solr_parameters][:qt], so isn't actually neccesary.
+    config[:search_fields] << {
+      :key => 'subject',
+      :qt=> 'search',
+      :solr_parameters => {
+        :"spellcheck.dictionary" => "subject"
+      },
+      :solr_local_parameters => {
+        :qf => "$subject_qf",
+        :pf => "$subject_pf"
+      }
+  }
   # Now we see how to over-ride Solr request handler defaults, in this
   # case for a BL "search field", which is really a dismax aggregate
   # of Solr search fields. 
@@ -201,31 +225,9 @@ Blacklight.configure(:shared) do |config|
       :pf => "$title_pf"
     }
   }
-  config[:search_fields] << {
-    :key =>'author',     
-    :solr_parameters => {
-      :"spellcheck.dictionary" => "author" 
-    },
-    :solr_local_parameters => {
-      :qf => "$author_qf",
-      :pf => "$author_pf"
-    }
-  }
 
-  # Specifying a :qt only to show it's possible, and so our internal automated
-  # tests can test it. In this case it's the same as 
-  # config[:default_solr_parameters][:qt], so isn't actually neccesary. 
-  config[:search_fields] << {
-    :key => 'subject', 
-    :qt=> 'search',
-    :solr_parameters => {
-      :"spellcheck.dictionary" => "subject"
-    },
-    :solr_local_parameters => {
-      :qf => "$subject_qf",
-      :pf => "$subject_pf"
-    }
-  }
+
+
   
   # "sort results by" select (pulldown)
   # label in pulldown is followed by the name of the SOLR field to sort by and
