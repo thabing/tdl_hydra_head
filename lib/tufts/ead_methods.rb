@@ -20,6 +20,18 @@ module Tufts
       physdescs = fedora_obj.datastreams[datastream].get_values(:physdesc).first
 
       if !physdescs.nil?
+        result << physdescs.lstrip.rstrip
+      end
+
+      return result
+    end
+
+
+    def self.physdesc_split(fedora_obj, datastream = "Archival.xml")
+      result = ""
+      physdescs = fedora_obj.datastreams[datastream].get_values(:physdesc).first
+
+      if !physdescs.nil?
         physdescs.split(";").each do |physdesc|
           result << (result.empty? ? "" : "<br>") + physdesc.lstrip.rstrip
         end
