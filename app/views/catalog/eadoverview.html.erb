@@ -1,6 +1,6 @@
 <%
     contents = Tufts::EADMethods.get_contents(@document_fedora)
-    series_count = Tufts::EADMethods.get_series_count(@document_fedora)
+    serieses = Tufts::EADMethods.get_serieses(@document_fedora)
     names_and_subjects = Tufts::EADMethods.get_names_and_subjects(@document_fedora)
     related_material = Tufts::EADMethods.get_related_material(@document_fedora)
     access_and_use = Tufts::EADMethods.get_access_and_use(@document_fedora)
@@ -26,7 +26,7 @@
 <%  if !contents.empty? %>
       <li><a href="#contents">Contents</a></li>
 <%  end %>
-<%  if series_count > 0 %>
+<%  if !serieses.empty? %>
       <li><a href="#series_descriptions">Series Description</a></li>
 <%  end %>
 <%  if !names_and_subjects.empty? %>
@@ -70,15 +70,17 @@
 <%    end %>
 <%  end %>
 
-<%  if series_count > 0 %>
+<%  if !serieses.empty? %>
     <h4 id="series_descriptions">Series Description</h4>
 <%
+      ead_id = @document_fedora.id
+      series_count = serieses.size
       series_index = 0
       while series_index < series_count
-        Tufts::EADMethods.parse_series(series_index)
-        title = Tufts::EADMethods.get_series_title()
-        paragraphs = Tufts::EADMethods.get_series_paragraphs()
-        subseries_count = Tufts::EADMethods.get_subseries_count()
+        series_level = (series_index + 1).to_s
+        series_id, did, scopecontent, c02s = Tufts::EADMethods.get_series_elements(serieses[series_index])
+        title = Tufts::EADMethods.get_series_title(did, ead_id, series_id, series_level, c02s.empty?)
+        paragraphs = Tufts::EADMethods.get_series_paragraphs(scopecontent)
 %>
     <p>
       <strong><%= raw title %></strong>
@@ -87,13 +89,19 @@
       <%= raw paragraph %>
 <%      end %>
     </p>
-<%      if subseries_count > 0 %>
+<%
+        subseries_count = c02s.size
+        if subseries_count > 0
+%>
     <div class="indent_box30">
-<%        subseries_index = 0
+<%
+          subseries_index = 0
           while subseries_index < subseries_count
-            Tufts::EADMethods.parse_subseries(subseries_index)
-            description = Tufts::EADMethods.get_subseries_title()
-            paragraphs = Tufts::EADMethods.get_subseries_paragraphs()
+            subseries_level = (subseries_index + 1).to_s
+            # note: ignore 4th return value from get_series_elements because it will always be nil (c02s don't have sub-c02s)
+            subseries_id, did, scopecontent = Tufts::EADMethods.get_series_elements(c02s[subseries_index])
+            description = Tufts::EADMethods.get_series_title(did, ead_id, subseries_id, series_level + "." + subseries_level, true)
+            paragraphs = Tufts::EADMethods.get_series_paragraphs(scopecontent)
 %>
       <p>
         <%= raw description %>
@@ -102,13 +110,17 @@
         <%= raw paragraph %>
 <%          end %>
       </p>
-<%          subseries_index += 1 %>
-<%        end %>
+<%
+            subseries_index += 1
+          end
+%>
     </div>
-<%      end %>
-<%      series_index += 1 %>
-<%    end %>
-<%  end %>
+<%
+        end
+        series_index += 1
+      end
+    end
+%>
 
 <%  if !names_and_subjects.empty? %>
     <h4 id="names_and_subjects">Names and Subjects</h4>

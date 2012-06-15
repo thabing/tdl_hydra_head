@@ -2,18 +2,6 @@ module Tufts
   module EADMethods
 
 
-    # I'm not proud of these global variables.  This needs a bit more work...
-    $current_ead_id = ""
-    $current_serieses = []
-    $current_series_id = 0
-    $current_subseries_id = 0
-    $current_series_level = "0"
-    $current_subseries_level = "0"
-    $current_did = nil
-    $current_scopecontent = nil
-    $current_c02s = []
-
-
     def self.title(fedora_obj, datastream = "Archival.xml")
       result = ""
       unittitle = fedora_obj.datastreams[datastream].get_values(:unittitle).first
@@ -106,49 +94,44 @@ module Tufts
     end
 
 
-    def self.get_series_count(fedora_obj, datastream = "Archival.xml")
-      $current_ead_id = fedora_obj.id
-      $current_serieses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)  # I got a D in speling once
-
-      return $current_serieses.size
+    def self.get_serieses(fedora_obj, datastream = "Archival.xml")  # I got a D in speling once
+      return fedora_obj.datastreams[datastream].find_by_terms_and_value(:series)
     end
 
 
-    def self.parse_series(series_index)
-      series = $current_serieses[series_index]
-
-      $current_series_id = series.attribute("id").text
-      $current_series_level = (series_index + 1).to_s
-
-      $current_did = nil
-      $current_scopecontent = nil
-      $current_c02s = []
+    def self.get_series_elements(series)
+      series_id = series.attribute("id").text
+      did = nil
+      scopecontent = nil
+      c02s = []
 
       # find the pertinent child elements: did, scopecontent and c02
       series.element_children.each do |element_child|
         if element_child.name == "did"
-          $current_did = element_child
+          did = element_child
         elsif element_child.name == "scopecontent"
-          $current_scopecontent = element_child
+          scopecontent = element_child
         elsif element_child.name == "c02"
-          if element_child.attribute("level").text == "subseries"
-            $current_c02s << element_child
+          level = element_child.attribute("level")
+          if !level.nil? && level.text == "subseries"
+            c02s << element_child
           end
         end
       end
+
+      return series_id, did, scopecontent, c02s
     end
 
 
-    def self.get_series_title()
+    def self.get_series_title(did, ead_id, series_id, series_level, no_subseries)
       result = ""
 
       # process the did element
-      if $current_did != nil
+      if did != nil
         unittitle = nil
         unitdate = nil
-        noSubseries = $current_c02s.empty?
 
-        $current_did.element_children.each do |did_child|
+        did.element_children.each do |did_child|
           if did_child.name == "unittitle"
             unittitle = did_child.text
           elsif did_child.name == "unitdate"
@@ -159,7 +142,7 @@ module Tufts
         # This should be a link if there are no subseries elements (ie, <c02 level="subseries"> tags).
         if unittitle != nil && unittitle.size > 0
           if !unittitle.nil?
-            result << ((noSubseries ? "<a href=\"/catalog/ead/" + $current_ead_id + "/" + $current_series_id + "\">" : "") + $current_series_level + ". " + unittitle + (unitdate == nil ? "" : ", " + unitdate) + (noSubseries ? "</a>" : ""))
+            result << ((no_subseries ? "<a href=\"/catalog/ead/" + ead_id + "/" + series_id + "\">" : "") + series_level + ". " + unittitle + (unitdate == nil ? "" : ", " + unitdate) + (no_subseries ? "</a>" : ""))
           end
         end
       end
@@ -168,80 +151,12 @@ module Tufts
     end
 
 
-    def self.get_series_paragraphs()
+    def self.get_series_paragraphs(scopecontent)
       result = []
 
       # process the scopecontent element
-      if $current_scopecontent != nil
-        $current_scopecontent.element_children.each do |scopecontent_child|
-          if scopecontent_child.name == "p"
-            result << scopecontent_child.text
-          end
-        end
-      end
-
-      return result
-    end
-
-
-    def self.get_subseries_count()
-      return $current_c02s.size
-    end
-
-
-    def self.parse_subseries(subseries_index)
-      c02 = $current_c02s[subseries_index]
-
-      $current_subseries_id = c02.attribute("id").text
-      $current_subseries_level = (subseries_index + 1).to_s
-
-      $current_did = nil
-      $current_scopecontent = nil
-
-      # find the pertinent child elements: did, scopecontent and c02
-      c02.element_children.each do |element_child|
-        if element_child.name == "did"
-          $current_did = element_child
-        elsif element_child.name == "scopecontent"
-          $current_scopecontent = element_child
-        end
-      end
-    end
-
-
-    def self.get_subseries_title()
-      result = ""
-
-      # process the did element
-      if $current_did != nil
-        unittitle = nil
-        unitdate = nil
-
-        $current_did.element_children.each do |did_child|
-          if did_child.name == "unittitle"
-            unittitle = did_child.text
-          elsif did_child.name == "unitdate"
-            unitdate = did_child.text
-          end
-        end
-
-        if unittitle != nil && unittitle.size > 0
-          if !unittitle.nil?
-            result << ("<a href=\"/catalog/ead/" + $current_ead_id + "/" + $current_subseries_id + "\">" + $current_series_level + "."  + $current_subseries_level + ". " + unittitle + (unitdate == nil ? "" : ", " + unitdate) + "</a>")
-          end
-        end
-      end
-
-      return result
-    end
-
-
-    def self.get_subseries_paragraphs()
-      result = []
-
-      # process the scopecontent element
-      if $current_scopecontent != nil
-        $current_scopecontent.element_children.each do |scopecontent_child|
+      if scopecontent != nil
+        scopecontent.element_children.each do |scopecontent_child|
           if scopecontent_child.name == "p"
             result << scopecontent_child.text
           end
