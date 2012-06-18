@@ -19,7 +19,7 @@
 
 <div class="row">
   <div class="span3">
-    <h6> On this page:</h6>
+    <h6>On this page:</h6>
     <ul class="nav nav-tabs nav-stacked">
       <li><a href="#overview">Overview</a></li>
 <%  if !contents.empty? %>
@@ -63,11 +63,11 @@
 <%  if !contents.empty? %>
     <h4 id="contents">Contents of the Collection </h4>
 <%    contents.each do |paragraph| %>
-    <p>
-      <%= raw paragraph %>
-    </p>
-<%    end %>
-<%  end %>
+    <p><%= raw paragraph %></p>
+<%
+      end
+    end
+%>
 
 <%  if !serieses.empty? %>
     <h4 id="series_descriptions">Series Description</h4>
@@ -81,14 +81,11 @@
         title = Tufts::EADMethods.get_series_title(did, ead_id, series_id, series_level, c02s.empty?)
         paragraphs = Tufts::EADMethods.get_series_paragraphs(scopecontent)
 %>
-    <p>
-      <strong><%= raw title %></strong>
+    <h5><%= raw title %></h5>
 <%      paragraphs.each do |paragraph| %>
-      <br>
-      <%= raw paragraph %>
-<%      end %>
-    </p>
+    <p><%= raw paragraph %></p>
 <%
+        end
         subseries_count = c02s.size
         if subseries_count > 0
 %>
@@ -99,17 +96,14 @@
             subseries_level = (subseries_index + 1).to_s
             # note: ignore 4th return value from get_series_elements because it will always be nil (c02s don't have sub-c02s)
             subseries_id, did, scopecontent = Tufts::EADMethods.get_series_elements(c02s[subseries_index])
-            description = Tufts::EADMethods.get_series_title(did, ead_id, subseries_id, series_level + "." + subseries_level, true)
+            title = Tufts::EADMethods.get_series_title(did, ead_id, subseries_id, series_level + "." + subseries_level, true)
             paragraphs = Tufts::EADMethods.get_series_paragraphs(scopecontent)
 %>
-      <p>
-        <%= raw description %>
+      <h6><%= raw title %></h6>
 <%          paragraphs.each do |paragraph| %>
-        <br>
-        <%= raw paragraph %>
-<%          end %>
-      </p>
+      <p><%= raw paragraph %></p>
 <%
+            end
             subseries_index += 1
           end
 %>
@@ -143,30 +137,30 @@
     <h4 id="access_and_use">Access and Use</h4>
 <%    access_and_use.each do |paragraph| %>
     <p><%= raw paragraph %></p>
-<%    end %>
-<%  end %>
+<%
+      end
+    end
+%>
 
 <%  if !(processing_notes.empty? && acquisition_info.empty?) %>
     <h4 id="administrative_notes">Administrative Notes</h4>
 <%    if !processing_notes.empty? %>
-    <p>
-      <strong>Processing Notes</strong>
-<%      processing_notes.each do |paragraph| %>      
-      <br>
-      <%= raw paragraph %>
-<%      end %>
-    </p>
-<%    end %>
+    <h5>Processing Notes</h5>
+<%      processing_notes.each do |paragraph| %>
+    <p><%= raw paragraph %></p>
+<%
+        end
+      end
+%>
 <%    if !acquisition_info.empty? %>
-    <p>
-      <strong>Acquisition Information</strong>
-<%      acquisition_info.each do |paragraph| %>      
-      <br>
-      <%= raw paragraph %>
-<%      end %>
-    </p>
-<%    end %>
-<%  end %>
+    <h5>Acquisition Information</h5>
+<%      acquisition_info.each do |paragraph| %>
+    <p><%= raw paragraph %></p>
+<%
+        end
+      end
+    end
+%>
 
     <br>
     <br>
