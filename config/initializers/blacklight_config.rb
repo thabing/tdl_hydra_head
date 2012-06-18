@@ -45,18 +45,18 @@ Blacklight.configure(:shared) do |config|
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
     :field_names => (facet_fields = [
+      "object_type_facet",
       "names_facet",
       "year_facet",
       "subject_facet",
-      "collection_facet",
-      "object_type_facet"
+      "collection_facet"
     ]),
     :labels => {
+        "object_type_facet" => "Format",
         "names_facet" => "Names",
         "year_facet"=>"Year",
         "subject_facet"=>"Subject",
-        "collection_facet"=>"Collection",
-        "object_type_facet"   => "Format"
+        "collection_facet"=>"Collection"
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
     # * If left unset, then all facet values returned by solr will be displayed.
