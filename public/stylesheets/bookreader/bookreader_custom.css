@@ -18,6 +18,17 @@
     
 }
 
+#BRtoolbar a {
+    text-decoration: none;
+    color: #000;
+    margin-left: 15px;
+}
+
+div.overview_link {
+    margin-top: 14px;
+
+
+}
 
 a.logo {
     

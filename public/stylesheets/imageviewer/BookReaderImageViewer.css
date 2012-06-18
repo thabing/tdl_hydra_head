@@ -3,7 +3,31 @@
  */
 
 /* Hide print and embed functionality */
-#BRtoolbar {
+
+div#BookReader {
+ top: 0px;
+ left: 0px;
+ right: 0px;
+}
+#BRreturn
+{
+    display:none;
+}
+
+.BRicon.share {
+    display: none;
+
+}
+
+#overview_link {
+
+}
+
+.BRicon.play {
+    display: none;
+
+}
+.BRicon.info {
     display: none;
 }
 
@@ -22,14 +46,3 @@
     background-repeat: no-repeat;
 }
 
-#BRcontainer {
-    top:20px;
-    bottom:0;
-    width:100%;
-    z-index: 1;
-    overflow-x:auto;
-    overflow-y:scroll;
-    position:absolute;
-    background-color: #9A9B9D;
-    _height: expression(documentElement.clientHeight);
-}
