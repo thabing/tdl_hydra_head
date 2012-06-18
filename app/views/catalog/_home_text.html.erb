@@ -1,5 +1,3 @@
-<%= render :partial => 'shared/search_bar' %>
-
 <!-- LEFT SIDE/ FOR FLUID COLUMN TITLE ROW -->
 <div class="row-fluid">
   <div class="span12">
@@ -10,15 +8,28 @@
 
     <%= render :partial => 'facet_nav' %>
     <!-- nested Fluid RIGHT -->
-    <div class="row">
+    <div class="row-fluid">
       <!-- MAIN CONTENT AREA -->
-      <div class="span7">
+      <div class="span9 offset3">
         <%= render :partial => 'dca_text/welcome' %>
       </div>
       <div class="span9">
         <%= render :partial => "dca_text/collections" %>
       </div>
+      <div class="pull-right"><a href="#">
+        <h5>View more featured exhibits and collections <i class="icon-arrow-right margintoparrow"> </i></h5></a>
+      </div>
 
+      <br/>
+
+      <div class="span7">
+
+        <h4>Availability</h4>
+
+        <p>Upgrades to the Tufts Digital Library are scheduled for Thursdays 9-9:30 AM. The digital library may not be
+          available during this time.</p>
+
+      </div>
 
     </div>
 
