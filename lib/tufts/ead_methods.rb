@@ -94,6 +94,14 @@ module Tufts
     end
 
 
+    def self.get_contributors(fedora_obj, datastream = "Archival.xml")
+      # Note that this is totally faked up!
+      result = ["<a href=\"#\">Ballou, Hosea</a>", "<a href=\"#\">Bacow, Lawrence</a>", "<a href=\"#\">Monaco, Anthony</a>"]
+
+      return result
+    end
+
+
     def self.get_contents(fedora_obj, datastream = "Archival.xml")
       result = []
       scopecontentps = fedora_obj.datastreams[datastream].find_by_terms_and_value(:scopecontentp)

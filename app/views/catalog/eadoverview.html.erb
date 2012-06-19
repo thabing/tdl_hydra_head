@@ -1,4 +1,5 @@
 <%
+    contributors = Tufts::EADMethods.get_contributors(@document_fedora)
     contents = Tufts::EADMethods.get_contents(@document_fedora)
     serieses = Tufts::EADMethods.get_serieses(@document_fedora)
     names_and_subjects = Tufts::EADMethods.get_names_and_subjects(@document_fedora)
@@ -19,9 +20,15 @@
 
 <div class="row">
   <div class="span3">
+    &nbsp;
+  </div>
+  <div class="span3 EAC_TOC">
     <h6>On this page:</h6>
     <ul class="nav nav-tabs nav-stacked">
       <li><a href="#overview">Overview</a></li>
+<%  if !contributors.empty? %>
+      <li><a href="#contributors">Contributors</a></li>
+<%  end %>
 <%  if !contents.empty? %>
       <li><a href="#contents">Contents</a></li>
 <%  end %>
@@ -53,12 +60,14 @@
     <p><%= raw Tufts::EADMethods.abstract(@document_fedora) %></p>
     <p>Read more about <%= raw Tufts::EADMethods.read_more_about(@document_fedora) %></p>
 
-    <h4>Contributers</h4>
+<%  if !contributors.empty? %>
+    <h4 id="contributors">Contributors</h4>
     <ul>
-      <li><a href="#">Ballou, Hosea</a></li>
-      <li><a href="#">Bacow, Lawrence</a></li>
-      <li><a href="#">Monaco, Anthony</a></li>
+<%    contributors.each do |list_item| %>
+      <li><%= raw list_item %></li>
+<%    end %>
     </ul>
+<%  end %>
 
 <%  if !contents.empty? %>
     <h4 id="contents">Contents of the Collection </h4>
@@ -81,7 +90,7 @@
         title = Tufts::EADMethods.get_series_title(did, ead_id, series_id, series_level, c02s.empty?)
         paragraphs = Tufts::EADMethods.get_series_paragraphs(scopecontent)
 %>
-    <h5><%= raw title %></h5>
+    <h5 class="EAD_H5"><%= raw title %></h5>
 <%      paragraphs.each do |paragraph| %>
     <p><%= raw paragraph %></p>
 <%
@@ -99,7 +108,7 @@
             title = Tufts::EADMethods.get_series_title(did, ead_id, subseries_id, series_level + "." + subseries_level, true)
             paragraphs = Tufts::EADMethods.get_series_paragraphs(scopecontent)
 %>
-      <h6><%= raw title %></h6>
+      <h6 class="EAD_H6"><%= raw title %></h6>
 <%          paragraphs.each do |paragraph| %>
       <p><%= raw paragraph %></p>
 <%
@@ -145,7 +154,7 @@
 <%  if !(processing_notes.empty? && acquisition_info.empty?) %>
     <h4 id="administrative_notes">Administrative Notes</h4>
 <%    if !processing_notes.empty? %>
-    <h5>Processing Notes</h5>
+    <h5 class="EAD_H5">Processing Notes</h5>
 <%      processing_notes.each do |paragraph| %>
     <p><%= raw paragraph %></p>
 <%
@@ -153,7 +162,7 @@
       end
 %>
 <%    if !acquisition_info.empty? %>
-    <h5>Acquisition Information</h5>
+    <h5 class="EAD_H5">Acquisition Information</h5>
 <%      acquisition_info.each do |paragraph| %>
     <p><%= raw paragraph %></p>
 <%

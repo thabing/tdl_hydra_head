@@ -147,6 +147,23 @@ input#submit {
   padding-right: .25em;
 }
 
+.EAC_TOC {
+  position: fixed;
+  top: 192px;
+  left: 91px;
+}
+
+.EAD_H5 {
+  font-weight: 500;
+  color: #333333;
+}
+
+.EAD_H6 {
+  text-transform: none;
+  font-size: 14px;
+  font-weight: normal;
+}
+
 /* Navigation */
 
 nav {
