@@ -124,30 +124,6 @@ input#submit {
   font-style: italic;
 }
 
-/*.ead_contents_table {
-  display: table;
-}
-
-.ead_contents_row {
-  display: table-row;
-}
-
-.ead_contents_item {
-  display: table-cell;
-  padding-right: 2em;
-}
-
-.ead_table_of_contents {
-  width: 200px;
-  float: right;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #cccccc;
-  padding-left: .25em;
-  padding-right: .25em;
-}*/
-
-
 .EAD_TOC {
   position: relative;
   top: 0px;
