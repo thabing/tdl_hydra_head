@@ -1,6 +1,5 @@
-   <%= render_back_to_overview_link %>
     <div id="ImageInfo" data-pid="<%= params[:id] %>"></div>
-    <div id="BookReader" style="left:10px; right:10px; top:10px; bottom:2em;">
+    <div id="BookReader">
         Internet Archive BookReader Demo  2  <br/>
 
         <noscript>
@@ -11,3 +10,11 @@
         <script type="text/javascript" src="/javascripts/advancedimageviewer/BookReaderImageViewer.js"></script>
 
     </div>
+    <script type="text/javascript">
+    <!--
+        $(document).ready(function() {
+            $('a.logo').closest('span').append('<div class="overview_link"><%= render_back_to_overview_link %><div>');
+        });
+     // -->
+    </script>
+

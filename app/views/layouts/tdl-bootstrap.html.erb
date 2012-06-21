@@ -124,10 +124,13 @@
 <!-- /container -->
 
 <script type="text/javascript">
+    $('.toggle:not(.toggle-close):lt(1)').addClass('toggle-open');//.parents('li').children('ul').hide();
+    $('.menutop:not(.toggle-close):lt(1)').addClass('toggle-open');//.parents('li').children('ul').hide();
+    $('.toggle:not(.toggle-close):gt(0)').addClass('toggle-closed');//.parents('li').children('ul').hide();
+    $('.menutop:not(.toggle-close):gt(0)').addClass('toggle-closed');//.parents('li').children('ul').hide();
+    $('.toggle:not(.toggle-close):gt(0)').parents('li').children('ul').hide();
+    $('#menu').find('.toggle_icon:lt(1)').empty('').append('&ndash;');
 
-    $('.toggle:not(.toggle-close)').addClass('toggle-open');//.parents('li').children('ul').hide();
-    $('.menutop:not(.toggle-close)').addClass('toggle-open');//.parents('li').children('ul').hide();
-    $('#menu').find('.toggle_icon').empty('').append('&ndash;');
     if ($.browser.msie) {
         $('#menu ul.navmenu li:last-child .menutop').css('border-bottom', '1px solid #CCC');
     }
