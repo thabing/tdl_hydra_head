@@ -1,8 +1,145 @@
-<% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << "feedback.js" %>
-<% stylesheet_links << "feedback/feedback.css" %>
+<%
+    series, series_level = Tufts::EADMethods.get_series(@document_fedora, @item_id)
+    series_title, series_physdesc, series_scopecontents = Tufts::EADMethods.get_series_info(series)
+    series_items = Tufts::EADMethods.get_series_items(series)
+    series_access_and_use = Tufts::EADMethods.get_series_access_and_use(series)
+%>
 
-        <div id="ead_content">
-          <%= raw Tufts::EADMethods.show_internal_page(@document_fedora, @item_id) %>
-        </div> <!-- ead_content -->
+
+<div class="row">
+  <div class="span9 offset3">
+    <h2>Series&nbsp;<%= series_level %>.&nbsp;&nbsp;<%= series_title %></h2>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="span3">
+    <div class="EAD_TOC">
+      <h6>On this page:</h6>
+      <ul class="nav nav-tabs nav-stacked">
+        <li><a href="#series_overview">Series Overview</a></li>
+<%  if !series_items.empty? %>
+        <li><a href="#detailed_contents_list">Detailed Contents List</a></li>
+<%  end %>
+<%  if !series_access_and_use.empty? %>
+        <li><a href="#access_and_use">Access and Use</a></li>
+<%  end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="span6" id="series_overview">
+    <div class="collection_desc graytext">
+      This series is part of <a href="<%= Tufts::EADMethods.collection_url(@document_fedora)%>"><%= Tufts::EADMethods.title(@document_fedora)%></a>
+      <br>
+      <%= series_physdesc %>
+    </div>
+
+<%  series_scopecontents.each do |paragraph| %>
+    <p><%= raw paragraph %></p>
+<%  end %>
+  </div>
+
+  <div class="span3 ">
+    <div class="tooltip-demo well">
+      <a href="#"><h5>View Online Materials<i class="icon-arrow-right margintoparrow"></i></h5></a>
+      <p><a href="#">Contact DCA </a>to view materials that are not online.</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span9 offset3">
+    <h4 id="detailed_contents_list">Detailed Contents List</h4>
+    <br> 
+    <table cellpadding="0" cellspacing="0" class="table" width="679px" style="border:0">
+      <thead>
+        <tr class="table_options">
+          <td colspan="5">
+            <div class="left" style="margin-bottom: 2px">
+              <button class="btn btn-mini">expand all folders</button>
+              <button class="btn btn-mini">close all folders</button>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="table_header">
+          <td class="collapse_td">&nbsp;</td>
+          <td class="active" valign="bottom"><a href="#">Title</a></td>
+          <td class="locator_td" valign="bottom"><a href="#"></a></td>
+          <td class="id_td"  align="left" valign="bottom">&nbsp;</td>
+          <td class="availableonline_td" align="center" valign="bottom">Available Online</td>
+        </tr>
+      </thead>
+
+<%
+    series_items.each do |series_item|
+      series_title, series_labels, series_values, available_online, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
+      expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<img src=\"assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\">")
+%>
+      <tr>
+        <td class="collapse_td"><%= raw expand_collapse %></td>
+        <td><span class="table_title"><%= raw series_title %></span></td>
+        <td class="smalltext locator_td"><%= raw series_labels %></td>
+        <td class="smalltext id_td" align="left"><%= raw series_values %></td>
+<%
+      if thumbnail.nil? || thumbnail.empty?
+        if available_online
+%>
+        <td align="center" class="availableonline_td"><center><i class="icon-ok"></i></center></td>
+<%      else %>
+        <td align="center" class="availableonline_td">&nbsp</td>
+<%
+        end
+      else
+%>
+        <td align="center" class="availableonline_td">
+          <center>
+            <ul class="thumbnails">
+              <li class="nothumbnailmargin"><a href="#" class="thumbnail"><img src="<%= thumbnail %>" alt=""/></a></li>
+            </ul>
+          </center>
+        </td>
+<%    end %>
+      </tr>
+<%
+      next_level_items.each do |next_level_item|
+        series_title, series_labels, series_values, available_online, thumbnail = Tufts::EADMethods.get_series_item_info(next_level_item)
+%>
+      <tr>
+        <td class="collapse_td">&nbsp;</td>
+        <td><span class="table_title indent"><%= raw series_title %></span></td>
+        <td class="smalltext locator_td"><%= raw series_labels %></td>
+        <td class="smalltext id_td" align="left"><%= raw series_values %></td>
+<%    if thumbnail.nil? || thumbnail.empty? %>
+        <td align="center" class="availableonline_td">&nbsp</td>
+<%    else %>
+        <td align="center" class="availableonline_td">
+          <center>
+            <ul class="thumbnails">
+              <li class="nothumbnailmargin"><a href="#" class="thumbnail"><img src="<%= thumbnail %>" alt=""/></a></li>
+            </ul>
+          </center>
+        </td>
+<%    end %>
+      </tr>
+<%
+      end
+    end
+%>
+    </table>
+
+<%  if !series_access_and_use.empty? %>
+    <h4 id="access_and_use">Access and Use</h4>
+<%    series_access_and_use.each do |paragraph| %>
+    <p><%= raw paragraph %></p>
+<%
+      end
+    end
+%>
+
+    <br>
+  </div>
+</div>

@@ -20,34 +20,33 @@
 
 <div class="row">
   <div class="span3">
-    &nbsp;
-  </div>
-  <div class="span3 EAC_TOC">
-    <h6>On this page:</h6>
-    <ul class="nav nav-tabs nav-stacked">
-      <li><a href="#overview">Overview</a></li>
+    <div class="EAD_TOC">
+      <h6>On this page:</h6>
+      <ul class="nav nav-tabs nav-stacked">
+        <li><a href="#overview">Overview</a></li>
 <%  if !contributors.empty? %>
-      <li><a href="#contributors">Contributors</a></li>
+        <li><a href="#contributors">Contributors</a></li>
 <%  end %>
 <%  if !contents.empty? %>
-      <li><a href="#contents">Contents</a></li>
+        <li><a href="#contents">Contents</a></li>
 <%  end %>
 <%  if !serieses.empty? %>
-      <li><a href="#series_descriptions">Series Description</a></li>
+        <li><a href="#series_descriptions">Series Description</a></li>
 <%  end %>
 <%  if !names_and_subjects.empty? %>
-      <li><a href="#names_and_subjects">Names and Subjects</a></li>
+        <li><a href="#names_and_subjects">Names and Subjects</a></li>
 <%  end %>
 <%  if !related_material.empty? %>
-      <li><a href="#related_material">Related Material</a></li>
+        <li><a href="#related_material">Related Material</a></li>
 <%  end %>
 <%  if !access_and_use.empty? %>
-      <li><a href="#access_and_use">Access and Use</a></li>
+        <li><a href="#access_and_use">Access and Use</a></li>
 <%  end %>
 <%  if !(processing_notes.empty? && acquisition_info.empty?) %>
-      <li><a href="#administrative_notes">Administrative Notes</a></li>
+        <li><a href="#administrative_notes">Administrative Notes</a></li>
 <%  end %>
-    </ul>
+      </ul>
+    </div>
   </div>
 
   <div class="span6" id="overview">

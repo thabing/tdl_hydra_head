@@ -124,7 +124,7 @@ input#submit {
   font-style: italic;
 }
 
-.ead_contents_table {
+/*.ead_contents_table {
   display: table;
 }
 
@@ -145,13 +145,16 @@ input#submit {
   border-color: #cccccc;
   padding-left: .25em;
   padding-right: .25em;
+}*/
+
+
+.EAD_TOC {
+  position: relative;
+  top: 0px;
+  left: 0px;
 }
 
-.EAC_TOC {
-  position: fixed;
-  top: 192px;
-  left: 91px;
-}
+/* EAD_H5 and EAD_H6 override styles set elsewhere to style the headers as desired for the EAD pages. */
 
 .EAD_H5 {
   font-weight: 500;
