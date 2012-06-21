@@ -19,8 +19,8 @@
 <hr>
 
 <div class="row">
-  <div class="span3">
-    <div class="EAD_TOC">
+  <div class="span3" id="floating_table_of_contents_column">
+    <div class="EAD_TOC" id="floating_table_of_contents">
       <h6>On this page:</h6>
       <ul class="nav nav-tabs nav-stacked">
         <li><a href="#overview">Overview</a></li>
@@ -181,3 +181,17 @@
     </div>
   </div>
 </div>
+
+<script language="javascript">
+$(window).scroll(function(){
+    var column_top = $('#floating_table_of_contents_column').position().top;
+    var window_top = $(window).scrollTop();
+    var new_toc_top = window_top - column_top;
+
+    if (new_toc_top < 0) {
+      new_toc_top = 0;
+    }
+
+    $('#floating_table_of_contents').css('top', new_toc_top );
+});
+</script>
