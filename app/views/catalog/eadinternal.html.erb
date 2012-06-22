@@ -3,6 +3,8 @@
     series_title, series_physdesc, series_scopecontents = Tufts::EADMethods.get_series_info(series)
     series_items = Tufts::EADMethods.get_series_items(series)
     series_access_and_use = Tufts::EADMethods.get_series_access_and_use(series)
+
+    @page_title = "Series " + series_level + ": " + series_title + " - " + application_name
 %>
 
 

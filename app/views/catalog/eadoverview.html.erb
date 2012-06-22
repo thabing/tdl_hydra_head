@@ -1,4 +1,5 @@
 <%
+    title = raw Tufts::EADMethods.title(@document_fedora)
     contributors = Tufts::EADMethods.get_contributors(@document_fedora)
     contents = Tufts::EADMethods.get_contents(@document_fedora)
     serieses = Tufts::EADMethods.get_serieses(@document_fedora)
@@ -7,12 +8,14 @@
     access_and_use = Tufts::EADMethods.get_access_and_use(@document_fedora)
     processing_notes = Tufts::EADMethods.get_processing_notes(@document_fedora)
     acquisition_info = Tufts::EADMethods.get_acquisition_info(@document_fedora)
+
+    @page_title = title + " - " + application_name
 %>
 
 
 <div class="row">
   <div class="span9 offset3">
-    <h2><%= raw Tufts::EADMethods.title(@document_fedora) %></h2>
+    <h2><%= title %></h2>
   </div>
 </div>
 
