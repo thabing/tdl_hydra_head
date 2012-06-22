@@ -167,7 +167,7 @@ module Tufts
         # This should be a link if there are no subseries elements (ie, <c02 level="subseries"> tags).
         if unittitle != nil && unittitle.size > 0
           if !unittitle.nil?
-            result << ((no_subseries ? "<a href=\"/catalog/ead/" + ead_id + "/" + series_id + "\">" : "") + series_level + ". " + unittitle + (unitdate.nil? ? "" : ", " + unitdate) + (no_subseries ? "</a>" : ""))
+            result << ( (series_level.nil? ? "" : series_level + ". ") + (no_subseries ? "<a href=\"/catalog/ead/" + ead_id + "/" + series_id + "\">" : "") + unittitle + (unitdate.nil? ? "" : ", " + unitdate) + (no_subseries ? "</a>" : ""))
           end
         end
       end

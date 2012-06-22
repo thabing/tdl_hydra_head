@@ -79,6 +79,7 @@
 
 <%  if !serieses.empty? %>
     <h4 id="series_descriptions">Series Description</h4>
+    <ol>
 <%
       ead_id = @document_fedora.id
       series_count = serieses.size
@@ -86,18 +87,19 @@
       while series_index < series_count
         series_level = (series_index + 1).to_s
         series_id, did, scopecontent, c02s = Tufts::EADMethods.get_series_elements(serieses[series_index])
-        title = Tufts::EADMethods.get_series_title(did, ead_id, series_id, series_level, c02s.empty?)
+        title = Tufts::EADMethods.get_series_title(did, ead_id, series_id, nil, c02s.empty?)
         paragraphs = Tufts::EADMethods.get_series_paragraphs(scopecontent)
 %>
-    <h5 class="EAD_H5"><%= raw title %></h5>
+      <li>
+        <h5 class="EAD_H5"><%= raw title %></h5>
 <%      paragraphs.each do |paragraph| %>
-    <p><%= raw paragraph %></p>
+        <p><%= raw paragraph %></p>
 <%
         end
         subseries_count = c02s.size
         if subseries_count > 0
 %>
-    <div class="indent_box30">
+        <ol style="list-style-type: none;">
 <%
           subseries_index = 0
           while subseries_index < subseries_count
@@ -107,21 +109,25 @@
             title = Tufts::EADMethods.get_series_title(did, ead_id, subseries_id, series_level + "." + subseries_level, true)
             paragraphs = Tufts::EADMethods.get_series_paragraphs(scopecontent)
 %>
-      <h6 class="EAD_H6"><%= raw title %></h6>
+          <li>
+            <h6 class="EAD_H6"><%= raw title %></h6>
 <%          paragraphs.each do |paragraph| %>
-      <p><%= raw paragraph %></p>
+            <p><%= raw paragraph %></p>
 <%
             end
             subseries_index += 1
-          end
 %>
-    </div>
+          </li>
+<%        end %>
+        </ol>
 <%
         end
         series_index += 1
-      end
-    end
 %>
+      </li>
+<%    end %>
+    </ol>
+<%  end %>
 
 <%  if !names_and_subjects.empty? %>
     <h4 id="names_and_subjects">Names and Subjects</h4>
