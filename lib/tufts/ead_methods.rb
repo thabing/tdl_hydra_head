@@ -100,8 +100,24 @@ module Tufts
 
 
     def self.get_contributors(fedora_obj, datastream = "Archival.xml")
-      # Note that this is totally faked up!
-      result = ["<a href=\"#\">Ballou, Hosea</a>", "<a href=\"#\">Bacow, Lawrence</a>", "<a href=\"#\">Monaco, Anthony</a>"]
+      result = []
+      controlaccesses = fedora_obj.datastreams[datastream].find_by_terms_and_value(:controlaccess)
+
+      controlaccesses.each do |controlaccess|
+        controlaccess.element_children.each do |element_child|
+          childname = element_child.name
+
+          if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
+            child_name = element_child.text
+            child_id = element_child.attribute("id")
+            child_url = (child_id.nil? ? nil : child_id.text)
+
+            if child_name.size > 0 && !child_url.nil?
+              result << "<a href=\"/catalog/" + child_url + "\">" + child_name + "</a>"
+            end
+          end
+        end
+      end
 
       return result
     end
