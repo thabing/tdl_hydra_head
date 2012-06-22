@@ -50,11 +50,11 @@
   </div>
 
   <div class="span6" id="overview">
-    <div class="collection_desc graytext">
+    <p>
       <%= raw Tufts::EADMethods.physdesc(@document_fedora) %>
       <br>
       Call Number: <%= raw Tufts::EADMethods.unitid(@document_fedora) %>
-    </div>
+    </p>
 
     <p><%= raw Tufts::EADMethods.abstract(@document_fedora) %></p>
     <p>Read more about <%= raw Tufts::EADMethods.read_more_about(@document_fedora) %></p>

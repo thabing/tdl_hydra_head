@@ -9,11 +9,7 @@
     <div class="row">
       <div class="span6">
         <h4>This collection has:</h4>
-
-        <div class="collection_desc graytext">
-          <%= raw Tufts::EADMethods.physdesc_split(@document_fedora) %>
-        </div>
-
+        <p><%= raw Tufts::EADMethods.physdesc_split(@document_fedora) %></p>
         <p><%= raw Tufts::EADMethods.abstract(@document_fedora) %></p>
       </div>
 

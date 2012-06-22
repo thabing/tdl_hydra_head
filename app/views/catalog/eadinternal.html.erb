@@ -31,11 +31,11 @@
   </div>
 
   <div class="span6" id="series_overview">
-    <div class="collection_desc graytext">
+    <p>
       This series is part of <a href="<%= Tufts::EADMethods.collection_url(@document_fedora)%>"><%= Tufts::EADMethods.title(@document_fedora)%></a>
       <br>
       <%= series_physdesc %>
-    </div>
+    </p>
 
 <%  series_scopecontents.each do |paragraph| %>
     <p><%= raw paragraph %></p>
