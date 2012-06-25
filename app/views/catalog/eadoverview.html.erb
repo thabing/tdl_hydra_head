@@ -50,6 +50,9 @@
 <%  end %>
       </ul>
     </div>
+    <div>  <!-- placeholder div to maintain containing column width when TOC becomes fixed -->
+      &nbsp;
+    </div>
   </div>
 
   <div class="span6" id="overview">
@@ -192,15 +195,23 @@
 </div>
 
 <script language="javascript">
-$(window).scroll(function(){
+
+$(window).scroll(handleTOC);
+$(window).resize(handleTOC);
+
+function handleTOC(eventObj) {
     var column_top = $('#floating_table_of_contents_column').position().top;
     var window_top = $(window).scrollTop();
-    var new_toc_top = window_top - column_top;
 
-    if (new_toc_top < 0) {
-      new_toc_top = 0;
+    if (window_top - column_top < 0) {
+      // page is scrolled up to the point at which TOC should move with page
+      $('#floating_table_of_contents').css('position', 'relative');
+      $('#floating_table_of_contents').css('left', '0px');
+    } else {
+      // page is scrolled down to the point at which TOC should stick at top
+      $('#floating_table_of_contents').css('position', 'fixed');
+      $('#floating_table_of_contents').css('left', $('#floating_table_of_contents_column').offset().left);
     }
+}
 
-    $('#floating_table_of_contents').css('top', new_toc_top );
-});
 </script>
