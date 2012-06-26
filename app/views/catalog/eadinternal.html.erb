@@ -4,13 +4,18 @@
     series_items = Tufts::EADMethods.get_series_items(series)
     series_access_and_use = Tufts::EADMethods.get_series_access_and_use(series)
 
-    @page_title = "Series " + series_level + ": " + series_title + " - " + application_name
+    collection_title = Tufts::EADMethods.title(@document_fedora)
+    series_full_title = "Series " + series_level + ": " + series_title
+    @page_title = series_full_title + " - " + application_name
 %>
 
 
 <div class="row">
-  <div class="span9 offset3">
-    <h2>Series&nbsp;<%= series_level %>:&nbsp;<%= series_title %></h2>
+  <div class="span12">
+    <a href="<%= Tufts::EADMethods.finding_aid_url(@document_fedora) %>"><i class="icon-arrow-left"></i><%= collection_title %></a> > <%= series_full_title %>
+  </div>
+  <div class="span12">
+    <h2><%= series_title %></h2>
   </div>
 </div>
 
@@ -37,7 +42,7 @@
 
   <div class="span6" id="series_overview">
     <p>
-      This series is part of <a href="<%= Tufts::EADMethods.collection_url(@document_fedora)%>"><%= Tufts::EADMethods.title(@document_fedora)%></a>
+      This series is part of <a href="<%= Tufts::EADMethods.collection_url(@document_fedora)%>"><%= collection_title %></a>
       <br>
       <%= series_physdesc %>
     </p>
@@ -59,13 +64,13 @@
   <div class="span9 offset3">
     <h4 id="detailed_contents_list">Detailed Contents List</h4>
     <br> 
-    <table cellpadding="0" cellspacing="0" class="table" width="679px" style="border:0">
+    <table id = "theTable" cellpadding="0" cellspacing="0" class="table" width="679px" style="border:0">
       <thead>
         <tr class="table_options">
           <td colspan="5">
             <div class="left" style="margin-bottom: 2px">
-              <button class="btn btn-mini">expand all folders</button>
-              <button class="btn btn-mini">close all folders</button>
+              <button class="btn btn-mini" onclick="displayAll(true)">expand all folders</button>
+              <button class="btn btn-mini" onclick="displayAll(false)">close all folders</button>
             </div>
           </td>
         </tr>
@@ -80,11 +85,13 @@
       </thead>
 
 <%
+    row = 2
     series_items.each do |series_item|
+      row_s = row.to_s
       series_title, series_labels, series_values, available_online, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
-      expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<img src=\"assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\">")
+      expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<a href=\"javascript:toggleDisplay('img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\"><img id=\"img" + row_s + "\" src=\"/assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\" /></a>")
 %>
-      <tr>
+      <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
         <td class="collapse_td"><%= raw expand_collapse %></td>
         <td><span class="table_title"><%= raw series_title %></span></td>
         <td class="smalltext locator_td"><%= raw series_labels %></td>
@@ -103,7 +110,7 @@
         <td align="center" class="availableonline_td">
           <center>
             <ul class="thumbnails">
-              <li class="nothumbnailmargin"><a href="#" class="thumbnail"><img src="<%= thumbnail %>" alt=""/></a></li>
+              <li class="nothumbnailmargin"><a href="#" class="thumbnail">-- image --<!--<img src="<%= thumbnail %>" alt=""/>--></a></li>
             </ul>
           </center>
         </td>
@@ -118,20 +125,22 @@
         <td><span class="table_title indent"><%= raw series_title %></span></td>
         <td class="smalltext locator_td"><%= raw series_labels %></td>
         <td class="smalltext id_td" align="left"><%= raw series_values %></td>
-<%    if thumbnail.nil? || thumbnail.empty? %>
+<%      if thumbnail.nil? || thumbnail.empty? %>
         <td align="center" class="availableonline_td">&nbsp</td>
-<%    else %>
+<%      else %>
         <td align="center" class="availableonline_td">
           <center>
             <ul class="thumbnails">
-              <li class="nothumbnailmargin"><a href="#" class="thumbnail"><img src="<%= thumbnail %>" alt=""/></a></li>
+              <li class="nothumbnailmargin"><a href="#" class="thumbnail">-- image --<!--<img src="<%= thumbnail %>" alt=""/>--></a></li>
             </ul>
           </center>
         </td>
-<%    end %>
+<%      end %>
       </tr>
 <%
+        row += 1
       end
+      row += 1
     end
 %>
     </table>
@@ -167,6 +176,47 @@ function handleTOC(eventObj) {
       $('#floating_table_of_contents').css('position', 'fixed');
       $('#floating_table_of_contents').css('left', $('#floating_table_of_contents_column').offset().left);
     }
+}
+
+function toggleDisplay(imgName, firstRow, lastRow) {
+  var img = document.getElementById(imgName);
+  var table = document.getElementById("theTable");
+  var rows = table.rows;
+  var display = (img.src.indexOf("button_expand.png") != -1);
+  var imgSrc = (display ? "/assets/img/button_collapse.png" : "/assets/img/button_expand.png");
+  var rowDisplay = (display ? "" : "none");
+  var rowIndex;
+
+  img.src = imgSrc;
+
+  for (rowIndex = firstRow; rowIndex <= lastRow; rowIndex++) {
+    rows[rowIndex].style.display = rowDisplay;
+  }
+}
+
+function displayAll(display) {
+  var table = document.getElementById("theTable");
+  var rows = table.rows;
+  var imgSrcCurrent = (display ? "button_expand.png" : "button_collapse.png");
+  var imgSrc = (display ? "button_collapse.png" : "button_expand.png");
+  var rowDisplay = (display ? "" : "none");
+  var rowIndex;
+  var rowCount = rows.length;
+
+  for (rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+    var row = rows[rowIndex];
+
+    if (row.className == "table_options" || row.className == "table_header") {
+      // do nothing
+    } else if (row.className == "folderRow") {
+      var cellInnerHTML = row.cells[0].innerHTML;
+
+      // This is super hacky:
+      row.cells[0].innerHTML = cellInnerHTML.replace(imgSrcCurrent, imgSrc);
+    } else {
+      row.style.display = rowDisplay;
+    }
+  }
 }
 
 </script>
