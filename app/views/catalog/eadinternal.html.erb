@@ -93,7 +93,7 @@
 %>
       <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
         <td class="collapse_td"><%= raw expand_collapse %></td>
-        <td><span class="table_title"><%= raw series_title %></span></td>
+        <td class="table_title"><%= raw series_title %></td>
         <td class="smalltext locator_td"><%= raw series_labels %></td>
         <td class="smalltext id_td" align="left"><%= raw series_values %></td>
 <%
@@ -122,7 +122,7 @@
 %>
       <tr>
         <td class="collapse_td">&nbsp;</td>
-        <td><span class="table_title indent"><%= raw series_title %></span></td>
+        <td class="table_title indent"><%= raw series_title %></td>
         <td class="smalltext locator_td"><%= raw series_labels %></td>
         <td class="smalltext id_td" align="left"><%= raw series_values %></td>
 <%      if thumbnail.nil? || thumbnail.empty? %>
@@ -166,15 +166,27 @@ $(window).resize(handleTOC);
 function handleTOC(eventObj) {
     var column_top = $('#floating_table_of_contents_column').position().top;
     var window_top = $(window).scrollTop();
+    var toc_top = window_top - column_top;
 
-    if (window_top - column_top < 0) {
-      // page is scrolled up to the point at which TOC should move with page
+    if ((eventObj.type == "resize") || (toc_top < 0)) {
+      // resizing, or page is scrolled up to the point at which TOC should move with page
       $('#floating_table_of_contents').css('position', 'relative');
       $('#floating_table_of_contents').css('left', '0px');
+
+      if (eventObj.type == "resize") {
+        if (toc_top < 0) {
+          // resizing with page scrolled up, so TOC should be at top of column
+          $('#floating_table_of_contents').css('top', '0px');
+        } else {
+          // resizing with page scrolled down, so TOC should be pushed down in column
+          $('#floating_table_of_contents').css('top', toc_top);
+        }
+      }
     } else {
       // page is scrolled down to the point at which TOC should stick at top
       $('#floating_table_of_contents').css('position', 'fixed');
       $('#floating_table_of_contents').css('left', $('#floating_table_of_contents_column').offset().left);
+      $('#floating_table_of_contents').css('top', '0px');
     }
 }
 
@@ -218,5 +230,7 @@ function displayAll(display) {
     }
   }
 }
+
+$(document).ready(displayAll(false));
 
 </script>
