@@ -1,7 +1,23 @@
+<div class="row">
+  <%- unless localized_params[:q].nil? -%>
+  <div class="span2" style="text-align: right;">
+    <h6>You searched for:</h6>
+  </div>
+  <div class="span7">
+    <ul class="nav nav-pills">
+      <%= render_constraints_query(localized_params) %>
+    </ul>
+  </div>
+  <%- end -%>
+  <%- unless localized_params[:f].nil? -%>
+  <div class="span2" style="text-align: right;">
+    <h6>Limited to:</h6>
+  </div>
+  <div class="span7">
+    <ul class="nav nav-pills">
+      <%= render_constraints_filters(localized_params) %>
+    </ul>
+  </div>
+  <%- end -%>
 
-<div class="span8">
-<h5>You searched for:</h5>
-  <%= render_constraints(localized_params) %>
-<hr>
-<h5></h5>
 </div>

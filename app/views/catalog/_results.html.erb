@@ -11,22 +11,20 @@
 
     <%= render :partial => 'facet_nav' %>
     <!-- nested Fluid RIGHT -->
-    <div class="row">
+    <div class="row-fluid">
       <!-- MAIN CONTENT AREA -->
-      <div class="row">
-      <%= render :partial => 'did_you_mean' %>
-      <%= render 'constraints', :localized_params => params %>
+      <!-- commenting out did you mean because we haven't implemented -->
+      <%#=  render :partial => 'did_you_mean' %>
+
       <div class="span9">
-
-        <h2>Search Results</h2>
-        <div class="pageEntriesInfo">
-          <%= render_pagination_info @response, :entry_name => 'item' %>
-          <% if false %>
-          <%= link_to "start over", catalog_index_path, :id => "startOverLink" %>
-          <% end %>
-        </div>
         <br/>
-
+        <h2><%=@response.total %> Results</h2>
+        <% if false %>
+          <%= render_pagination_info @response, :entry_name => 'item' %>                                                                                     l
+          <%= link_to "start over", catalog_index_path, :id => "startOverLink" %>
+        <% end %>
+        <%= render 'constraints', :localized_params => params %>
+        <br>
         <%= render 'sort_and_per_page' %>
         <% if false %>
         <%= render 'results_pagination' %>
@@ -38,9 +36,6 @@
         <%= render 'results_pagination' %>
       </div>
     </div>
-
-    </div>
-
   </div>
 </div>
 
