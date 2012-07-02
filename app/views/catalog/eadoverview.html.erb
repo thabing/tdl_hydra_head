@@ -205,15 +205,27 @@ $(window).resize(handleTOC);
 function handleTOC(eventObj) {
     var column_top = $('#floating_table_of_contents_column').position().top;
     var window_top = $(window).scrollTop();
+    var toc_top = window_top - column_top;
 
-    if (window_top - column_top < 0) {
-      // page is scrolled up to the point at which TOC should move with page
+    if ((eventObj.type == "resize") || (toc_top < 0)) {
+      // resizing, or page is scrolled up to the point at which TOC should move with page
       $('#floating_table_of_contents').css('position', 'relative');
       $('#floating_table_of_contents').css('left', '0px');
+
+      if (eventObj.type == "resize") {
+        if (toc_top < 0) {
+          // resizing with page scrolled up, so TOC should be at top of column
+          $('#floating_table_of_contents').css('top', '0px');
+        } else {
+          // resizing with page scrolled down, so TOC should be pushed down in column
+          $('#floating_table_of_contents').css('top', toc_top);
+        }
+      }
     } else {
       // page is scrolled down to the point at which TOC should stick at top
       $('#floating_table_of_contents').css('position', 'fixed');
       $('#floating_table_of_contents').css('left', $('#floating_table_of_contents_column').offset().left);
+      $('#floating_table_of_contents').css('top', '0px');
     }
 }
 
