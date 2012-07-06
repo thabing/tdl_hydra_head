@@ -24,11 +24,11 @@
 
 <hr>
 
-<div class="row">
+<div class="row" id="outermost">
   <div class="span3" id="floating_table_of_contents_column">
     <div class="EAD_TOC" id="floating_table_of_contents">
       <h6>On this page:</h6>
-      <ul class="nav nav-tabs nav-stacked">
+      <ul class="nav nav-tabs nav-stacked" style="margin: 0px;">
         <li><a href="#overview">Overview</a></li>
 <%  if !contributors.empty? %>
         <li><a href="#contributors">Contributors</a></li>
@@ -203,29 +203,38 @@ $(window).scroll(handleTOC);
 $(window).resize(handleTOC);
 
 function handleTOC(eventObj) {
-    var column_top = $('#floating_table_of_contents_column').position().top;
+    var outermost = $('#outermost')
+    var column = $('#floating_table_of_contents_column')
+    var toc = $('#floating_table_of_contents')
     var window_top = $(window).scrollTop();
-    var toc_top = window_top - column_top;
+    var outermost_height = outermost.height();
+    var toc_top = window_top - column.position().top;
+    var toc_space = outermost.position().top + outermost_height - window_top;
+    var toc_height = toc.height();
+    var toc_at_top = (toc_top < 0);
+    var toc_at_bottom = (toc_space < toc_height);
 
-    if ((eventObj.type == "resize") || (toc_top < 0)) {
-      // resizing, or page is scrolled up to the point at which TOC should move with page
-      $('#floating_table_of_contents').css('position', 'relative');
-      $('#floating_table_of_contents').css('left', '0px');
+    if ((eventObj.type == "resize") || toc_at_top || toc_at_bottom) {
+      // browser is resizing, or page is scrolled up or down to the point at which TOC should stick
+      // to the top or bottom 
+      toc.css('position', 'relative');
+      toc.css('left', '0px');
 
-      if (eventObj.type == "resize") {
-        if (toc_top < 0) {
-          // resizing with page scrolled up, so TOC should be at top of column
-          $('#floating_table_of_contents').css('top', '0px');
-        } else {
-          // resizing with page scrolled down, so TOC should be pushed down in column
-          $('#floating_table_of_contents').css('top', toc_top);
-        }
+      if (toc_at_top) {
+        // TOC should be at top of column
+        toc.css('top', '0px');
+      } else if (toc_at_bottom) {
+        // TOC should be at bottom of column
+        toc.css('top', outermost_height - toc_height);
+      } else {
+        // resizing
+        toc.css('top', toc_top);
       }
     } else {
-      // page is scrolled down to the point at which TOC should stick at top
-      $('#floating_table_of_contents').css('position', 'fixed');
-      $('#floating_table_of_contents').css('left', $('#floating_table_of_contents_column').offset().left);
-      $('#floating_table_of_contents').css('top', '0px');
+      // TOC should float
+      toc.css('position', 'fixed');
+      toc.css('left', column.offset().left);
+      toc.css('top', '0px');
     }
 }
 
