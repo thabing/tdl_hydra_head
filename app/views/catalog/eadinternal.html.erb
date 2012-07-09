@@ -1,3 +1,6 @@
+<% javascript_includes << "ead/floating_table_of_contents.js" %>
+<% javascript_includes << "ead/expand_collapse.js" %>
+
 <%
     series, series_level = Tufts::EADMethods.get_series(@document_fedora, @item_id)
     series_title, series_physdesc, series_scopecontents = Tufts::EADMethods.get_series_info(series)
@@ -155,89 +158,3 @@
     <br>
   </div>
 </div>
-
-<script language="javascript">
-
-$(window).scroll(handleTOC);
-$(window).resize(handleTOC);
-
-function handleTOC(eventObj) {
-    var outermost = $('#outermost')
-    var column = $('#floating_table_of_contents_column')
-    var toc = $('#floating_table_of_contents')
-    var window_top = $(window).scrollTop();
-    var outermost_height = outermost.height();
-    var toc_top = window_top - column.position().top;
-    var toc_space = outermost.position().top + outermost_height - window_top;
-    var toc_height = toc.height();
-    var toc_at_top = (toc_top < 0);
-    var toc_at_bottom = (toc_space < toc_height);
-
-    if ((eventObj.type == "resize") || toc_at_top || toc_at_bottom) {
-      // browser is resizing, or page is scrolled up or down to the point at which TOC should stick
-      // to the top or bottom 
-      toc.css('position', 'relative');
-      toc.css('left', '0px');
-
-      if (toc_at_top) {
-        // TOC should be at top of column
-        toc.css('top', '0px');
-      } else if (toc_at_bottom) {
-        // TOC should be at bottom of column
-        toc.css('top', outermost_height - toc_height);
-      } else {
-        // resizing
-        toc.css('top', toc_top);
-      }
-    } else {
-      // TOC should float
-      toc.css('position', 'fixed');
-      toc.css('left', column.offset().left);
-      toc.css('top', '0px');
-    }
-}
-
-function toggleDisplay(imgName, firstRow, lastRow) {
-  var img = document.getElementById(imgName);
-  var table = document.getElementById("theTable");
-  var rows = table.rows;
-  var display = (img.src.indexOf("button_expand.png") != -1);
-  var imgSrc = (display ? "/assets/img/button_collapse.png" : "/assets/img/button_expand.png");
-  var rowDisplay = (display ? "" : "none");
-  var rowIndex;
-
-  img.src = imgSrc;
-
-  for (rowIndex = firstRow; rowIndex <= lastRow; rowIndex++) {
-    rows[rowIndex].style.display = rowDisplay;
-  }
-}
-
-function displayAll(display) {
-  var table = document.getElementById("theTable");
-  var rows = table.rows;
-  var imgSrcCurrent = (display ? "button_expand.png" : "button_collapse.png");
-  var imgSrc = (display ? "button_collapse.png" : "button_expand.png");
-  var rowDisplay = (display ? "" : "none");
-  var rowIndex;
-  var rowCount = rows.length;
-
-  for (rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-    var row = rows[rowIndex];
-
-    if (row.className == "table_options" || row.className == "table_header") {
-      // do nothing
-    } else if (row.className == "folderRow") {
-      var cellInnerHTML = row.cells[0].innerHTML;
-
-      // This is super hacky:
-      row.cells[0].innerHTML = cellInnerHTML.replace(imgSrcCurrent, imgSrc);
-    } else {
-      row.style.display = rowDisplay;
-    }
-  }
-}
-
-$(document).ready(displayAll(false));
-
-</script>
