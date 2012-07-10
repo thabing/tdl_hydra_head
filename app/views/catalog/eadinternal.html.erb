@@ -1,3 +1,6 @@
+<% javascript_includes << "ead/floating_table_of_contents.js" %>
+<% javascript_includes << "ead/expand_collapse.js" %>
+
 <%
     series, series_level = Tufts::EADMethods.get_series(@document_fedora, @item_id)
     series_title, series_physdesc, series_scopecontents = Tufts::EADMethods.get_series_info(series)
@@ -21,11 +24,11 @@
 
 <hr>
 
-<div class="row">
+<div class="row" id="outermost">
   <div class="span3" id="floating_table_of_contents_column">
     <div class="EAD_TOC" id="floating_table_of_contents">
       <h6>On this page:</h6>
-      <ul class="nav nav-tabs nav-stacked">
+      <ul class="nav nav-tabs nav-stacked" style="margin: 0px;">
         <li><a href="#series_overview">Series Overview</a></li>
 <%  if !series_items.empty? %>
         <li><a href="#detailed_contents_list">Detailed Contents List</a></li>
@@ -58,9 +61,7 @@
       <p><a href="#">Contact DCA</a> to view materials that are not online.</p>
     </div>
   </div>
-</div>
 
-<div class="row">
   <div class="span9 offset3">
     <h4 id="detailed_contents_list">Detailed Contents List</h4>
     <br> 
@@ -89,7 +90,7 @@
     series_items.each do |series_item|
       row_s = row.to_s
       series_title, series_labels, series_values, available_online, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
-      expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<a href=\"javascript:toggleDisplay('img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\"><img id=\"img" + row_s + "\" src=\"/assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\" /></a>")
+      expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<a href=\"javascript:toggleDisplay('#img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\"><img id=\"img" + row_s + "\" src=\"/assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\" /></a>")
 %>
       <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
         <td class="collapse_td"><%= raw expand_collapse %></td>
@@ -110,7 +111,7 @@
         <td align="center" class="availableonline_td">
           <center>
             <ul class="thumbnails">
-              <li class="nothumbnailmargin"><a href="#" class="thumbnail">-- image --<!--<img src="<%= thumbnail %>" alt=""/>--></a></li>
+              <li class="nothumbnailmargin"><a href="#" class="thumbnail"><img src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
             </ul>
           </center>
         </td>
@@ -131,7 +132,7 @@
         <td align="center" class="availableonline_td">
           <center>
             <ul class="thumbnails">
-              <li class="nothumbnailmargin"><a href="#" class="thumbnail">-- image --<!--<img src="<%= thumbnail %>" alt=""/>--></a></li>
+              <li class="nothumbnailmargin"><a href="#" class="thumbnail"><img src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
             </ul>
           </center>
         </td>
@@ -157,80 +158,3 @@
     <br>
   </div>
 </div>
-
-<script language="javascript">
-
-$(window).scroll(handleTOC);
-$(window).resize(handleTOC);
-
-function handleTOC(eventObj) {
-    var column_top = $('#floating_table_of_contents_column').position().top;
-    var window_top = $(window).scrollTop();
-    var toc_top = window_top - column_top;
-
-    if ((eventObj.type == "resize") || (toc_top < 0)) {
-      // resizing, or page is scrolled up to the point at which TOC should move with page
-      $('#floating_table_of_contents').css('position', 'relative');
-      $('#floating_table_of_contents').css('left', '0px');
-
-      if (eventObj.type == "resize") {
-        if (toc_top < 0) {
-          // resizing with page scrolled up, so TOC should be at top of column
-          $('#floating_table_of_contents').css('top', '0px');
-        } else {
-          // resizing with page scrolled down, so TOC should be pushed down in column
-          $('#floating_table_of_contents').css('top', toc_top);
-        }
-      }
-    } else {
-      // page is scrolled down to the point at which TOC should stick at top
-      $('#floating_table_of_contents').css('position', 'fixed');
-      $('#floating_table_of_contents').css('left', $('#floating_table_of_contents_column').offset().left);
-      $('#floating_table_of_contents').css('top', '0px');
-    }
-}
-
-function toggleDisplay(imgName, firstRow, lastRow) {
-  var img = document.getElementById(imgName);
-  var table = document.getElementById("theTable");
-  var rows = table.rows;
-  var display = (img.src.indexOf("button_expand.png") != -1);
-  var imgSrc = (display ? "/assets/img/button_collapse.png" : "/assets/img/button_expand.png");
-  var rowDisplay = (display ? "" : "none");
-  var rowIndex;
-
-  img.src = imgSrc;
-
-  for (rowIndex = firstRow; rowIndex <= lastRow; rowIndex++) {
-    rows[rowIndex].style.display = rowDisplay;
-  }
-}
-
-function displayAll(display) {
-  var table = document.getElementById("theTable");
-  var rows = table.rows;
-  var imgSrcCurrent = (display ? "button_expand.png" : "button_collapse.png");
-  var imgSrc = (display ? "button_collapse.png" : "button_expand.png");
-  var rowDisplay = (display ? "" : "none");
-  var rowIndex;
-  var rowCount = rows.length;
-
-  for (rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-    var row = rows[rowIndex];
-
-    if (row.className == "table_options" || row.className == "table_header") {
-      // do nothing
-    } else if (row.className == "folderRow") {
-      var cellInnerHTML = row.cells[0].innerHTML;
-
-      // This is super hacky:
-      row.cells[0].innerHTML = cellInnerHTML.replace(imgSrcCurrent, imgSrc);
-    } else {
-      row.style.display = rowDisplay;
-    }
-  }
-}
-
-$(document).ready(displayAll(false));
-
-</script>
