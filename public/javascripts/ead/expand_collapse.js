@@ -9,7 +9,9 @@ function toggleDisplay(imgName, firstRow, lastRow) {
   img.attr('src', imgSrc);
 
   for (rowIndex = firstRow; rowIndex <= lastRow; rowIndex++) {
-    $(rows[rowIndex]).css('display', rowDisplay);
+    var row = $(rows[rowIndex]);
+
+    row.css('display', rowDisplay);
   }
 }
 
