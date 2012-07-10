@@ -1,24 +1,21 @@
 function toggleDisplay(imgName, firstRow, lastRow) {
-  var img = document.getElementById(imgName);
-  var table = document.getElementById("theTable");
-  var rows = table.rows;
-  var display = (img.src.indexOf("button_expand.png") != -1);
+  var img = $(imgName);
+  var rows = $("#theTable tr");
+  var display = (img.attr('src').indexOf("button_expand.png") != -1);
   var imgSrc = (display ? "/assets/img/button_collapse.png" : "/assets/img/button_expand.png");
   var rowDisplay = (display ? "" : "none");
   var rowIndex;
 
-  img.src = imgSrc;
+  img.attr('src', imgSrc);
 
   for (rowIndex = firstRow; rowIndex <= lastRow; rowIndex++) {
-    rows[rowIndex].style.display = rowDisplay;
+    $(rows[rowIndex]).css('display', rowDisplay);
   }
 }
 
 function displayAll(display) {
-  var table = document.getElementById("theTable");
-  var rows = table.rows;
-  var imgSrcCurrent = (display ? "button_expand.png" : "button_collapse.png");
-  var imgSrc = (display ? "button_collapse.png" : "button_expand.png");
+  var rows = $("#theTable tr");
+  var imgSrc = (display ? "/assets/img/button_collapse.png" : "/assets/img/button_expand.png");
   var rowDisplay = (display ? "" : "none");
   var rowIndex;
   var rowCount = rows.length;
@@ -29,12 +26,9 @@ function displayAll(display) {
     if (row.className == "table_options" || row.className == "table_header") {
       // do nothing
     } else if (row.className == "folderRow") {
-      var cellInnerHTML = row.cells[0].innerHTML;
-
-      // This is super hacky:
-      row.cells[0].innerHTML = cellInnerHTML.replace(imgSrcCurrent, imgSrc);
+      $(row).find('img').attr('src', imgSrc);
     } else {
-      row.style.display = rowDisplay;
+      $(row).css('display', rowDisplay);
     }
   }
 }

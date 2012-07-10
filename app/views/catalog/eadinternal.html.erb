@@ -90,7 +90,7 @@
     series_items.each do |series_item|
       row_s = row.to_s
       series_title, series_labels, series_values, available_online, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
-      expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<a href=\"javascript:toggleDisplay('img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\"><img id=\"img" + row_s + "\" src=\"/assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\" /></a>")
+      expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<a href=\"javascript:toggleDisplay('#img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\"><img id=\"img" + row_s + "\" src=\"/assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\" /></a>")
 %>
       <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
         <td class="collapse_td"><%= raw expand_collapse %></td>
