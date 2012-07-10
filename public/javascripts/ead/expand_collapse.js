@@ -21,14 +21,15 @@ function displayAll(display) {
   var rowCount = rows.length;
 
   for (rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-    var row = rows[rowIndex];
+    var row = $(rows[rowIndex]);
+    var className = row.attr('class');
 
-    if (row.className == "table_options" || row.className == "table_header") {
+    if (className == "table_options" || className == "table_header") {
       // do nothing
-    } else if (row.className == "folderRow") {
-      $(row).find('img').attr('src', imgSrc);
+    } else if (className == "folderRow") {
+      row.find('img').attr('src', imgSrc);
     } else {
-      $(row).css('display', rowDisplay);
+      row.css('display', rowDisplay);
     }
   }
 }
