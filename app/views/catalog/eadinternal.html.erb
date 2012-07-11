@@ -89,7 +89,7 @@
     row = 2
     series_items.each do |series_item|
       row_s = row.to_s
-      series_title, series_labels, series_values, available_online, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
+      series_title, series_labels, series_values, page, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
       expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<a href=\"javascript:toggleDisplay('#img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\"><img id=\"img" + row_s + "\" src=\"/assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\" /></a>")
 %>
       <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
@@ -99,11 +99,11 @@
         <td class="smalltext id_td" align="left"><%= raw series_values %></td>
 <%
       if thumbnail.nil? || thumbnail.empty?
-        if available_online
+        if page.nil? || page.empty?
 %>
-        <td align="center" class="availableonline_td"><center><i class="icon-ok"></i></center></td>
-<%      else %>
         <td align="center" class="availableonline_td">&nbsp</td>
+<%      else %>
+        <td align="center" class="availableonline_td"><center><i class="icon-ok"></i></center></td>
 <%
         end
       else
@@ -111,7 +111,7 @@
         <td align="center" class="availableonline_td">
           <center>
             <ul class="thumbnails">
-              <li class="nothumbnailmargin"><a href="/catalog/<%= thumbnail %>" class="thumbnail"><img src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
+              <li class="nothumbnailmargin"><a href="/catalog/<%= page %>" class="thumbnail"><img src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
             </ul>
           </center>
         </td>
