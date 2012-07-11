@@ -230,6 +230,34 @@ h7 {
     color: #de6020;
 }
 
+
+h8 {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+h8 a {
+  font-size: 12px;
+  font-weight: bold;
+      color: #0755AC;
+
+}
+
+
+h9 {
+  font-size: 12px;
+  color: #333;
+    font-weight: bold;
+
+ }
+
+h9 a{
+  font-size: 12px;
+    color: #0755AC;
+    font-weight: bold;
+
+ }
+
 .page-header {
     /* margin-bottom: 10px;*/
     /* margin-left: 0;*/
@@ -307,121 +335,131 @@ hr {
 }
 
 table {
-    max-width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    border-top: 1px solid #ddd;
+  max-width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  	   border-top: 1px solid #ddd; 
 
 }
+
+
+.table_notopborder {
+  max-width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  	   border-top: none; 
+
+}
+
+ 
+
 
 .table {
-    width: 100%;
-    margin-bottom: 18px;
-
+  width: 100%;
+  margin-bottom: 18px;
+ 
+}
+.table th, .table td{
+  padding: 2px; 
+  
+  line-height: 18px;
+  text-align: left;
+  vertical-align: top;
+ /* border-top: 1px solid #ddd;*/
+ border-top:0;
+  border-bottom: 1px solid #ddd;
 }
 
-.table th, td {
-    padding: 2px;
 
-    line-height: 18px;
-    text-align: left;
-    vertical-align: top;
-    /* border-top: 1px solid #ddd;*/
-    border-bottom: 1px solid #ddd;
-}
+ 
 
-.table_title {
-    color: black;
+.table th {
+  font-weight: bold;
 }
+.table thead th {
+  vertical-align: bottom;
+}
+.table thead:first-child tr th, .table thead:first-child tr td {
+  border-top: 0;
+}
+.table tbody + tbody {
+  border-top: 2px solid #ddd;
+}
+.table_title{
+ 	 color: #0755AC;}
 
 .table_header {
-    font-size: 12px;
-    vertical-align: bottom;
-    color: #666;
-    border-bottom: 1px solid #999999;
-    /*  border-top: 1px solid #999999;*/
+	font-size: 12px;
+	vertical-align:bottom;
+	color: #666;
+ 	  border-bottom: 1px solid #999999;
+	 /*  border-top: 1px solid #999999;*/
+	 
+	
+  	}
+	.table_header td{ padding:2px;}
+	
 
+.table_header a{
+	font-size: 12px;
+	color: #666;
+	}
+	
+	.table_header .active{
+		color: #4c4d4e;}
+	
+	
+.table_options{
+	background-color: #eeeeee; /* Old browsers */
+  background-repeat: repeat-x; /* Repeat the gradient */
+  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* FF3.6+ */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* Chrome 10+,Safari 5.1+ */
+  background-image: -ms-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* IE10+ */
+  background-image: -o-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* Opera 11.10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+  background-image: linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* W3C */  
+	 
+	 font-size:11px;
+	}
+	
+	.table_options td{ padding:2px; 	padding-top:4px;
 }
 
-.table_header td {
-    padding: 2px;
+.table .collapse_td{padding:0; padding-top:3px; width: 10px;}
+ .table .locator_td{ width: 65px; text-align: right; padding-right:7px;}
+
+.table .id_td{ width: 150px;}
+.table  .availableonline_td{width: 100px;}
+
+.table  .expanded_table{border:0; margin:0;}
+
+.table .expanded_table_last_row{border-bottom: 0;}
+	
+.table .indent{
+	padding-left: 35px;
+ 	 }
+	
+.smalltext{ font-size:11px; }
+
+
+.noborder{
+	
+	  	   border-top: 0;
+}
+	
+  .noborder td{
+ 	border-bottom:0;
+	}
+
+  .noborder  td {
+  padding: 2px;
+  line-height: 18px;
+  
+  border-bottom: 0;
 }
 
-.table_header a {
-    font-size: 12px;
-    color: #666;
-}
-
-.table_header .active {
-    color: #4c4d4e;
-}
-
-.table_options {
-    background-color: #eeeeee; /* Old browsers */
-    background-repeat: repeat-x; /* Repeat the gradient */
-    background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* FF3.6+ */
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #eeeeee)); /* Chrome,Safari4+ */
-    background-image: -webkit-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* Chrome 10+,Safari 5.1+ */
-    background-image: -ms-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* IE10+ */
-    background-image: -o-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* Opera 11.10+ */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#f5f5f5', endColorstr = '#eeeeee', GradientType = 0); /* IE6-9 */
-    background-image: linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* W3C */
-
-    font-size: 11px;
-}
-
-.table_options td {
-    padding: 2px;
-    padding-top: 4px;
-}
-
-.collapse_td {
-    padding: 0;
-    padding-top: 3px;
-    width: 10px;
-}
-
-.table .locator_td {
-    width: 65px;
-    text-align: right;
-    padding-right: 7px;
-}
-
-.table .id_td {
-    width: 150px;
-}
-
-.availableonline_td {
-    width: 100px;
-}
-
-.expanded_table {
-    border: 0;
-    margin: 0;
-}
-
-.indent {
-    padding-left: 35px;
-}
-
-.table .indent {
-    padding-left: 35px;
-}
-
-.smalltext {
-    font-size: 11px;
-}
-
-.noborder {
-    border: 0;
-}
-
-.noborder  td {
-    padding: 2px;
-    line-height: 18px;
-
-    border-bottom: 0;
-}
+ 
 
 .dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover {
     color: #ffffff;
@@ -798,6 +836,13 @@ a.thumbnail:hover {
 .thumbnail .caption {
     padding: 9px;
     min-height: 40px;
+ }
+ 
+.thumbnail .caption h5 {
+    font-size: 14px;
+    color: #0755AC;
+    margin-bottom: 0;
+
 }
 
 /* Subnav */
@@ -1126,3 +1171,157 @@ a.thumbnail:hover {
 	overflow:scroll;
 	
 	}
+	
+	IMG.centerimage{
+		display: block;
+    margin-left: auto;
+    margin-right: auto
+		}
+		
+		
+.form_nopadding{
+	padding-bottom:0;
+	margin-bottom:0;
+	
+	}
+	
+	
+	
+.ebook_table th{
+	text-align:left;
+	color: #666;
+		border-bottom: 1px #ddd solid;
+padding-top:3px;
+padding-bottom:3px;
+
+	}
+	
+.ebook_tabs{
+margin-bottom: 0;	
+	padding-bottom: 0;
+	}
+	
+	
+ .search_title{
+	color: #666;
+	text-transform:uppercase;
+	font-size:11px;
+	padding-top:3px;
+
+	}
+	
+.search_excerpt{
+	padding-bottom:3px;
+
+	border-bottom: 1px #ddd solid;
+		}
+		
+.ebook_content{
+		border-left: 1px #ddd solid;
+	border-right: 1px #ddd solid;
+	border-bottom: 1px #ddd solid;
+padding: 10px;
+padding-top:15px;
+	}
+	
+	
+.ebook_content a{
+		 color: #666;
+	
+	}
+	
+.ebook_content a:hover{
+		 color: #666;
+	
+	text-decoration:underline;
+	}
+	
+	.ebook_content .active{
+		 font-weight: bold;
+	
+	}
+	
+	
+	.ebook_content ul{
+		  list-style:none;
+		  margin-left: 0;
+	}
+	
+	.ebook_content li{
+		padding-bottom: 3px;
+		}
+		
+ul .sublist{margin-left: 10px}
+	
+	
+	.bookcover{
+		background-color: #ccc;
+		font-size:15px;
+		font-weight: bold;
+		height: 170px;
+		width: 130px;
+	padding: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align:left;
+		}
+		
+		.bookcover2{
+			background:url(../img/bookcover2.png) no-repeat;
+ 		font-size:15px;
+		font-weight: bold;
+		height: 215px;
+		width: 149px;
+	padding: 20px;
+	padding-top: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align:left;
+	color: #ffffff;
+		}
+		
+		 
+		
+  .chapter_title{
+	color: #666;
+	text-transform:uppercase;
+	font-size:11px;
+	line-height: 13px;
+ 
+	}
+	
+	
+td.pagenumber{ width: 65px;
+ vertical-align:top;
+ text-align:right; 
+ padding-right: 10px;}
+ 
+  
+ .bookviewer_table{ width: 95%;  
+
+ }
+ 
+ .centertext{
+	 text-align:center;
+	 }
+	 
+.morelink{
+	color:  #0755AC;
+margin-left: 300px;	}
+
+.morelink a{
+	color:  #0755AC;
+ }
+ 
+ .modal_650wide
+ {  width: 650px;
+    max-height: 800px;
+	  margin: -350px 0 0 -340px;
+}
+
+ .modal_950wide
+ {  width: 950px;
+    max-height: 800px;
+	  margin: -350px 0 0 -477px;
+}
+ 

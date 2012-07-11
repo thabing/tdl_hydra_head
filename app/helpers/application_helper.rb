@@ -78,7 +78,7 @@ module ApplicationHelper
     return "" unless respond_to?(:javascript_includes)
     str = ""
     javascript_includes.collect do |args|
-      if (args.to_a & %w(hydra/hydra-head jquery.form.js spin.min.js catalog/show custom)).empty?
+      if (args.to_a & %w(hydra/hydra-head jquery.form.js spin.min.js jquery-1.4.2.min.js catalog/show custom)).empty?
         str +=javascript_include_tag(*args)
       end
     end.join("\n")

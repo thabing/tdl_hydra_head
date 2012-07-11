@@ -1043,7 +1043,7 @@ table {
 .table th, .table td {
   padding: 8px;
   line-height: 18px;
-  text-align: left;
+  text-align: left; 
   vertical-align: top;
   border-top: 1px solid #ddd;
 }
