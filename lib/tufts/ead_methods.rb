@@ -446,10 +446,14 @@ module Tufts
                 daoloc_label_text = daoloc_label.text
                 daoloc_href_text = daoloc_href.text
 
-                if daoloc_label_text == "page"
-                  page = daoloc_href_text
-                elsif daoloc_label_text == "thumbnail"
-                  thumbnail = daoloc_href_text
+#               if daoloc_label_text == "page"
+#                 page = daoloc_href_text
+#               elsif daoloc_label_text == "thumbnail"
+#                 thumbnail = daoloc_href_text
+                if daoloc_label_text == "page" && !item_id.nil?
+                  page = "tufts:" + item_id
+                elsif daoloc_label_text == "thumbnail" && !item_id.nil?
+                  thumbnail = "tufts:" + item_id
                 end
               end
             end
