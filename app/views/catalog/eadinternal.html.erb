@@ -87,12 +87,16 @@
     row = 2
     series_items.each do |series_item|
       row_s = row.to_s
-      series_title, series_labels, series_values, page, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
+      series_title, series_paragraphs, series_labels, series_values, page, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
       expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<a href=\"javascript:toggleDisplay('#img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\"><img id=\"img" + row_s + "\" src=\"/assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\" /></a>")
 %>
       <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
         <td class="collapse_td"><%= raw expand_collapse %></td>
-        <td class="table_title"><%= raw series_title %></td>
+        <td class="table_title"><%= raw series_title %>
+<%    series_paragraphs.each do |series_paragraph| %>
+          <br><%= raw series_paragraph %>
+<%      end %>
+        </td>
         <td class="smalltext locator_td"><%= raw series_labels %></td>
         <td class="smalltext id_td" align="left"><%= raw series_values %></td>
 <%
@@ -117,11 +121,15 @@
       </tr>
 <%
       next_level_items.each do |next_level_item|
-        series_title, series_labels, series_values, available_online, thumbnail = Tufts::EADMethods.get_series_item_info(next_level_item)
+        series_title, series_paragraphs, series_labels, series_values, available_online, thumbnail = Tufts::EADMethods.get_series_item_info(next_level_item)
 %>
       <tr>
         <td class="collapse_td">&nbsp;</td>
-        <td class="table_title indent"><%= raw series_title %></td>
+        <td class="table_title indent"><%= raw series_title %>
+<%      series_paragraphs.each do |series_paragraph| %>
+          <br><%= raw series_paragraph %>
+<%      end %>
+        </td>
         <td class="smalltext locator_td"><%= raw series_labels %></td>
         <td class="smalltext id_td" align="left"><%= raw series_values %></td>
 <%      if thumbnail.nil? || thumbnail.empty? %>

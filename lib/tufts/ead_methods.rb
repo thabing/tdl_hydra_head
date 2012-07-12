@@ -397,11 +397,13 @@ module Tufts
 
     def self.get_series_item_info(item)
       title = ""
+      paragraphs = []
       labels = ""
       values = ""
       next_level_items = []
       did = nil
       daogrp = nil
+      scopecontent = nil
 
       item_id = item.attribute("id")
       item_type = item.attribute("level")
@@ -411,6 +413,8 @@ module Tufts
           did = item_child
         elsif item_child.name == "daogrp"
           daogrp = item_child
+        elsif item_child.name == "scopecontent"
+          scopecontent = item_child
         elsif item_child.name == "c03" || item_child.name == "c04"
           next_level_items << item_child
         end
@@ -492,7 +496,15 @@ module Tufts
         end
       end
 
-      return title, labels, values, page, thumbnail, next_level_items
+      if !scopecontent.nil?
+        scopecontent.element_children.each do |scopecontent_child|
+          if scopecontent_child.name == "p"
+            paragraphs << scopecontent_child.text
+          end
+        end
+      end
+
+      return title, paragraphs, labels, values, page, thumbnail, next_level_items
     end
 
 
