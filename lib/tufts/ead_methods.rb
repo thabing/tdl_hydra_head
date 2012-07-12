@@ -492,7 +492,7 @@ module Tufts
         end
       end
 
-      return title, labels, values, available_online, thumbnail, next_level_items
+      return title, labels, values, page, thumbnail, next_level_items
     end
 
 

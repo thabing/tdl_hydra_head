@@ -7,16 +7,14 @@
     series_items = Tufts::EADMethods.get_series_items(series)
     series_access_and_use = Tufts::EADMethods.get_series_access_and_use(series)
 
-    collection_title = Tufts::EADMethods.title(@document_fedora)
-    series_full_title = "Series " + series_level + ": " + series_title
-    @page_title = series_full_title + " - " + application_name
+    # @collection_title and @series_full_title are also used in the _subnav.html.erb partial
+    @collection_title = Tufts::EADMethods.title(@document_fedora)
+    @series_full_title = "Series " + series_level + ": " + series_title
+    @page_title = @series_full_title + " - " + application_name
 %>
 
 
 <div class="row">
-  <div class="span12">
-    <a href="<%= Tufts::EADMethods.finding_aid_url(@document_fedora) %>"><i class="icon-arrow-left"></i><%= collection_title %></a> > <%= series_full_title %>
-  </div>
   <div class="span12">
     <h2><%= series_title %></h2>
   </div>
@@ -45,7 +43,7 @@
 
   <div class="span6" id="series_overview">
     <p>
-      This series is part of <a href="<%= Tufts::EADMethods.collection_url(@document_fedora)%>"><%= collection_title %></a>
+      This series is part of <a href="<%= Tufts::EADMethods.collection_url(@document_fedora)%>"><%= @collection_title %></a>
       <br>
       <%= series_physdesc %>
     </p>
@@ -57,7 +55,7 @@
 
   <div class="span3 ">
     <div class="tooltip-demo well">
-      <a href="#"><h5>View Online Materials<i class="icon-arrow-right margintoparrow"></i></h5></a>
+      <a href="#"><h5>View Online Materials <i class="icon-arrow-right margintoparrow"></i></h5></a>
       <p><a href="#">Contact DCA</a> to view materials that are not online.</p>
     </div>
   </div>
@@ -89,7 +87,7 @@
     row = 2
     series_items.each do |series_item|
       row_s = row.to_s
-      series_title, series_labels, series_values, available_online, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
+      series_title, series_labels, series_values, page, thumbnail, next_level_items = Tufts::EADMethods.get_series_item_info(series_item)
       expand_collapse = (next_level_items.nil? || next_level_items.empty? ? "&nbsp;" : "<a href=\"javascript:toggleDisplay('#img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\"><img id=\"img" + row_s + "\" src=\"/assets/img/button_collapse.png\" width=\"11\" height=\"11\" alt=\"collapse\" /></a>")
 %>
       <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
@@ -99,11 +97,11 @@
         <td class="smalltext id_td" align="left"><%= raw series_values %></td>
 <%
       if thumbnail.nil? || thumbnail.empty?
-        if available_online
+        if page.nil? || page.empty?
 %>
-        <td align="center" class="availableonline_td"><center><i class="icon-ok"></i></center></td>
-<%      else %>
         <td align="center" class="availableonline_td">&nbsp</td>
+<%      else %>
+        <td align="center" class="availableonline_td"><center><i class="icon-ok"></i></center></td>
 <%
         end
       else
@@ -111,7 +109,7 @@
         <td align="center" class="availableonline_td">
           <center>
             <ul class="thumbnails">
-              <li class="nothumbnailmargin"><a href="#" class="thumbnail"><img src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
+              <li class="nothumbnailmargin"><a href="/catalog/<%= page %>" class="thumbnail"><img src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
             </ul>
           </center>
         </td>
@@ -132,7 +130,7 @@
         <td align="center" class="availableonline_td">
           <center>
             <ul class="thumbnails">
-              <li class="nothumbnailmargin"><a href="#" class="thumbnail"><img src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
+              <li class="nothumbnailmargin"><a href="/catalog/<%= page %>" class="thumbnail"><img src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
             </ul>
           </center>
         </td>
