@@ -168,7 +168,7 @@ module Tufts
       result = ""
 
       # process the did element
-      if did != nil
+      if !did.nil?
         unittitle = nil
         unitdate = nil
 
@@ -181,10 +181,8 @@ module Tufts
         end
 
         # This should be a link if there are no subseries elements (ie, <c02 level="subseries"> tags).
-        if unittitle != nil && unittitle.size > 0
-          if !unittitle.nil?
-            result << ( (series_level.nil? ? "" : series_level + ". ") + (no_subseries ? "<a href=\"/catalog/ead/" + ead_id + "/" + series_id + "\">" : "") + unittitle + (unitdate.nil? ? "" : ", " + unitdate) + (no_subseries ? "</a>" : ""))
-          end
+        if !unittitle.nil? && unittitle.size > 0
+          result << ( (series_level.nil? ? "" : series_level + ". ") + (no_subseries ? "<a href=\"/catalog/ead/" + ead_id + "/" + series_id + "\">" : "") + unittitle + (unitdate.nil? ? "" : ", " + unitdate) + (no_subseries ? "</a>" : ""))
         end
       end
 
@@ -196,7 +194,7 @@ module Tufts
       result = []
 
       # process the scopecontent element
-      if scopecontent != nil
+      if !scopecontent.nil?
         scopecontent.element_children.each do |scopecontent_child|
           if scopecontent_child.name == "p"
             result << scopecontent_child.text
@@ -353,7 +351,7 @@ module Tufts
         end
 
         # process the did element
-        if did != nil
+        if !did.nil?
           did.element_children.each do |did_child|
             if did_child.name == "unittitle"
               unittitle = did_child.text
@@ -547,11 +545,11 @@ module Tufts
 
       first_element = node.first
 
-      if first_element != nil
+      if !first_element.nil?
         name = first_element.text
         first_element_id = first_element.attribute("id")
 
-        if first_element_id != nil
+        if !first_element_id.nil?
           rcr_url = first_element_id.text
         end
       end
