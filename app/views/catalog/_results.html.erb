@@ -58,10 +58,10 @@
           </tr>
           <tr class="table_header">
             <td width="5">&nbsp;</td>
-            <td width="310" class="active"><a href="#"> Title <img src="assets/img/arrow_up.gif"></a></td>
-            <td height="10"><a href="#">Creator <img src="assets/img/arrow_down.gif"> </a></td>
+            <td width="310"  class="active"><a class="sortable_header" data-sort="none" href="#"> Title <img id="title_header" src="assets/img/arrow_both.gif"></a></td>
+            <td height="10"><a class="sortable_header" data-sort="none" href="#">Creator <img id="creator_header" src="assets/img/arrow_both.gif"> </a></td>
 
-            <td width="95"><a href="#">Date <img src="assets/img/arrow_down.gif"></a></td>
+            <td width="95"><a class="sortable_header" data-sort="none" href="#">Date <img id="date_header" src="assets/img/arrow_both.gif"></a></td>
             <td width="70" align="left">&nbsp; </td>
           </tr>
           </thead>
@@ -74,6 +74,34 @@
     </div>
   </div>
 </div>
+<script>
+
+    $('.sortable_header').on('click', function (e) {
+        //get the current sort state of the column.
+        sort_controls.sort_col = $(this).text().trim();
+        var sort_direction = $(this).data('sort');
+        switch (sort_direction)
+        {
+            case "none":
+                sort_controls.sort_direction = "asc";
+                break;
+            case "asc":
+                sort_controls.sort_direction = "desc";
+                break;
+            case "desc":
+                sort_controls.sort_direction = "asc";
+                break;
+        }
+
+        sort_controls.updateSortButton();
+        $('#sort_form').submit();
+
+
+    });
+
+
+
+</script>
 
 
 
