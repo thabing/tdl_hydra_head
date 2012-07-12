@@ -1,12 +1,16 @@
 <div class="subnav">
   <% if "index" == @current_action %>
     <%= render :partial =>"shared/search_bar" %>
+  <% elsif "eadoverview" == @current_action %>
+    <div class="span12" style="padding-top:5px">
+      <a href="<%= Tufts::EADMethods.collection_url(@document_fedora) %>"><i class="icon-arrow-left"></i>Collection Home</a>
+    </div>
+  <% elsif "eadinternal" == @current_action %>
+    <div class="span12" style="padding-top:5px">
+      <a href="<%= Tufts::EADMethods.finding_aid_url(@document_fedora) %>"><i class="icon-arrow-left"></i><%= @collection_title %></a> > <%= @series_full_title %>
+    </div>
   <% else %>
-      <div class="span6" style="padding-top:5px">
-
-        </div>
-
-        <div class="span6" style="padding-top:5px"></div>
-
+    <div class="span6" style="padding-top:5px"></div>
+    <div class="span6" style="padding-top:5px"></div>
   <% end %>
 </div>

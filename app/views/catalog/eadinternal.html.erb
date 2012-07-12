@@ -7,16 +7,14 @@
     series_items = Tufts::EADMethods.get_series_items(series)
     series_access_and_use = Tufts::EADMethods.get_series_access_and_use(series)
 
-    collection_title = Tufts::EADMethods.title(@document_fedora)
-    series_full_title = "Series " + series_level + ": " + series_title
-    @page_title = series_full_title + " - " + application_name
+    // @collection_title and @series_full_title are also used in the _subnav.html.erb partial
+    @collection_title = Tufts::EADMethods.title(@document_fedora)
+    @series_full_title = "Series " + series_level + ": " + series_title
+    @page_title = @series_full_title + " - " + application_name
 %>
 
 
 <div class="row">
-  <div class="span12">
-    <a href="<%= Tufts::EADMethods.finding_aid_url(@document_fedora) %>"><i class="icon-arrow-left"></i><%= collection_title %></a> > <%= series_full_title %>
-  </div>
   <div class="span12">
     <h2><%= series_title %></h2>
   </div>
@@ -45,7 +43,7 @@
 
   <div class="span6" id="series_overview">
     <p>
-      This series is part of <a href="<%= Tufts::EADMethods.collection_url(@document_fedora)%>"><%= collection_title %></a>
+      This series is part of <a href="<%= Tufts::EADMethods.collection_url(@document_fedora)%>"><%= @collection_title %></a>
       <br>
       <%= series_physdesc %>
     </p>
