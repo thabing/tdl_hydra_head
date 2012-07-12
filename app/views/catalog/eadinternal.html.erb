@@ -7,7 +7,7 @@
     series_items = Tufts::EADMethods.get_series_items(series)
     series_access_and_use = Tufts::EADMethods.get_series_access_and_use(series)
 
-    // @collection_title and @series_full_title are also used in the _subnav.html.erb partial
+    # @collection_title and @series_full_title are also used in the _subnav.html.erb partial
     @collection_title = Tufts::EADMethods.title(@document_fedora)
     @series_full_title = "Series " + series_level + ": " + series_title
     @page_title = @series_full_title + " - " + application_name
