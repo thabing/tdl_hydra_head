@@ -1,9 +1,10 @@
-
 function SortAndPerPageControls(sort_fields) {
     this.perpage_count = 25;
-    this.sort_col = $('#sort').find('option:selected').val().split(" ",1)[0];
+    this.sort_val = $('#sort').find('option:selected').val();
+    this.sort_col = (this.sort_val != undefined) ? this.sort_val.split(" ", 1)[0] : "Relevance";
     this.sort_fields = sort_fields;
-
+    this.sort_direction = this.sort_val.split(" ", 2)[1]
+    this.sort_direction = this.sort_direction.substring(0, this.sort_direction.length - 1);
 
     var a = this.getParameterByName("per_page");
     if (a != "")
@@ -12,7 +13,10 @@ function SortAndPerPageControls(sort_fields) {
     a = this.getParameterByName("sort");
     if (a != "score" && a != "") {
         this.sort_col = a;
+        this.sort_direction = this.sort_val.split(" ", 2)[1]
+        this.sort_direction = this.sort_direction.substring(0, this.sort_direction.length - 1);
     }
+
 
     this.updatePerPageButton('#perpage_button');
     this.updateSortButton('#sort_button');
@@ -41,29 +45,75 @@ SortAndPerPageControls.prototype.updatePerPageButton = function () {
 SortAndPerPageControls.prototype.updateSortButton = function () {
 
     var sort = $('#sort');
-    var sort_type = this.sort_col.split(" ",1)[0];
-    switch (sort_type)
-    {
+    var sort_type = this.sort_col.split(" ", 2)[0];
+    if (this.sort_direction == undefined)
+        this.sort_direction = this.sort_col.split(" ", 2)[1];
+    var dir = "";
+    switch (sort_type) {
         case "score":
         case "Relevance":
-          this.updateSortText('relevance');
-          sort.find("option:contains('relevance')").prop("selected", "selected");
-          break;
+            this.updateSortText('relevance');
+            sort.find("option:contains('relevance')").prop("selected", "selected");
+            $(function () {
+                $('#title_header').attr('src', "assets/img/arrow_both.gif").parent().data('sort', 'none');
+                $('#creator_header').attr('src', "assets/img/arrow_both.gif").parent().data('sort', 'none');
+                $('#date_header').attr('src', "assets/img/arrow_both.gif").parent().data('sort', 'none');
+            });
+            break;
         case "title_sort":
         case "Title":
-          this.updateSortText('title');
-          sort.find("option:contains('title')").prop("selected", "selected");
-          break;
+            this.updateSortText('title');
+            if (this.sort_direction == undefined || this.sort_direction == "asc") {
+                sort.find("option:contains('title ascending')").prop("selected", "selected");
+                dir = "asc";
+            }
+            else {
+                sort.find("option:contains('title descending')").prop("selected", "selected");
+                dir = "desc"
+            }
+            $(function () {
+                $('#title_header').attr('src',  (dir=="desc") ? "assets/img/arrow_down.gif" : "assets/img/arrow_up.gif").parent().data('sort', dir);
+                $('#creator_header').attr('src', "assets/img/arrow_both.gif").parent().data('sort', 'none');
+                $('#date_header').attr('src', "assets/img/arrow_both.gif").parent().data('sort', 'none');
+            });
+            break;
         case "author_sort":
         case "Creator":
-          this.updateSortText('creator');
-          sort.find("option:contains('author')").prop("selected", "selected");
-          break;
+            this.updateSortText('creator');
+            if (this.sort_direction == undefined || this.sort_direction == "asc") {
+                sort.find("option:contains('author ascending')").prop("selected", "selected");
+                dir = "asc";
+            }
+            else {
+                sort.find("option:contains('author descending')").prop("selected", "selected");
+                dir = "desc"
+            }
+
+            $(function () {
+                $('#title_header').attr('src', "assets/img/arrow_both.gif").parent().data('sort', 'none');
+                $('#creator_header').attr('src', (dir=="desc") ? "assets/img/arrow_down.gif" : "assets/img/arrow_up.gif").parent().data('sort', dir);
+                $('#date_header').attr('src', "assets/img/arrow_both.gif").parent().data('sort', 'none');
+            });
+            break;
         case "pub_date_sort":
         case "Date":
-          this.updateSortText('date');
-          sort.find("option:contains('year')").prop("selected", "selected");
-          break;
+            this.updateSortText('date');
+            if (this.sort_direction == undefined || this.sort_direction == "asc") {
+                sort.find("option:contains('year ascending')").prop("selected", "selected");
+                dir = "asc";
+            }
+            else {
+                sort.find("option:contains('year descending')").prop("selected", "selected");
+                dir = "desc"
+            }
+
+
+            $(function () {
+                $('#title_header').attr('src', "assets/img/arrow_both.gif").parent().data('sort', 'none');
+                $('#creator_header').attr('src', "assets/img/arrow_both.gif").parent().data('sort', 'none');
+                $('#date_header').attr('src', (dir=="desc") ? "assets/img/arrow_down.gif" : "assets/img/arrow_up.gif").parent().data('sort', dir);
+            });
+            break;
     }
 
 };

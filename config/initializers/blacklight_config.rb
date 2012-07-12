@@ -22,7 +22,7 @@ Blacklight.configure(:shared) do |config|
 
   config[:default_solr_params] = {
     :qt => "search",
-    :per_page => 10 
+    :per_page => 25
   }
  
   # solr field values given special treatment in the show (single result) view
@@ -236,9 +236,12 @@ Blacklight.configure(:shared) do |config|
   # label is key, solr field is value
   config[:sort_fields] ||= []
   config[:sort_fields] << ['relevance', 'score desc, pub_date_sort desc, title_sort asc']
-  config[:sort_fields] << ['year', 'pub_date_sort desc, title_sort asc']
-  config[:sort_fields] << ['author', 'author_sort asc, title_sort asc']
-  config[:sort_fields] << ['title', 'title_sort asc, pub_date_sort desc']
+  config[:sort_fields] << ['year descending', 'pub_date_sort desc, title_sort asc']
+  config[:sort_fields] << ['author ascending', 'author_sort asc, title_sort asc']
+  config[:sort_fields] << ['title ascending', 'title_sort asc, pub_date_sort desc']
+  config[:sort_fields] << ['year ascending', 'pub_date_sort asc, title_sort asc']
+  config[:sort_fields] << ['author descending', 'author_sort desc, title_sort asc']
+  config[:sort_fields] << ['title descending', 'title_sort desc, pub_date_sort desc']
   
   # If there are more than this many search results, no spelling ("did you 
   # mean") suggestion is offered.
