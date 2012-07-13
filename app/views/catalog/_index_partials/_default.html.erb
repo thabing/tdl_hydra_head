@@ -9,7 +9,7 @@
     <%= document[:creator_t] %>
   </td>
   <td>
-    <%= format_date(DateTime.parse(document[:system_create_dt]).to_time) %>
+    <%= document[:temporal_t] %>
   </td>
   <% if document[:type2_t].first == 'image' %>
       <td width="70" align="center">
