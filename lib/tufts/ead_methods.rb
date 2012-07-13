@@ -107,7 +107,7 @@ module Tufts
         controlaccess.element_children.each do |element_child|
           childname = element_child.name
 
-          if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
+          if childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname"
             child_name = element_child.text
             child_id = element_child.attribute("id")
             child_url = (child_id.nil? ? nil : child_id.text)
@@ -190,7 +190,7 @@ module Tufts
     end
 
 
-    def self.get_series_paragraphs(scopecontent)
+    def self.get_scopecontent_paragraphs(scopecontent)
       result = []
 
       # process the scopecontent element
@@ -198,6 +198,12 @@ module Tufts
         scopecontent.element_children.each do |scopecontent_child|
           if scopecontent_child.name == "p"
             result << scopecontent_child.text
+          elsif scopecontent_child.name == "note"
+            scopecontent_child.element_children.each do |note_child|
+              if note_child.name == "p"
+                result << note_child.text
+              end
+            end
           end
         end
       end
@@ -214,7 +220,7 @@ module Tufts
         controlaccess.element_children.each do |element_child|
           childname = element_child.name
 
-          if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
+          if childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname"
             child_name = element_child.text
             child_id = element_child.attribute("id")
             child_url = (child_id.nil? ? nil : child_id.text)
@@ -364,13 +370,7 @@ module Tufts
         end
 
         # process the scopecontent element
-        if !scopecontent.nil?
-          scopecontent.element_children.each do |scopecontent_child|
-            if scopecontent_child.name == "p"
-              paragraphs << scopecontent_child.text
-            end
-          end
-        end
+        paragraphs = get_scopecontent_paragraphs(scopecontent)
 
         title = (unittitle.nil? ? "" : unittitle + (unitdate.nil? ? "" : ", " + unitdate))
       end
@@ -494,13 +494,7 @@ module Tufts
         end
       end
 
-      if !scopecontent.nil?
-        scopecontent.element_children.each do |scopecontent_child|
-          if scopecontent_child.name == "p"
-            paragraphs << scopecontent_child.text
-          end
-        end
-      end
+      paragraphs = get_scopecontent_paragraphs(scopecontent)
 
       return title, paragraphs, labels, values, page, thumbnail, next_level_items
     end
