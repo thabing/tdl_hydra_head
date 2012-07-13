@@ -92,7 +92,7 @@
 %>
       <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
         <td class="collapse_td"><%= raw expand_collapse %></td>
-        <td class="table_title"><%= raw series_title %>
+        <td class="ead_table_title"><%= raw (next_level_items.nil? || next_level_items.empty? ? series_title : "<a href=\"javascript:toggleDisplay('#img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\">" + series_title + "</a>") %>
 <%    series_paragraphs.each do |series_paragraph| %>
           <br><%= raw series_paragraph %>
 <%      end %>
