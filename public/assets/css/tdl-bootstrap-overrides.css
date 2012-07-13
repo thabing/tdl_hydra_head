@@ -388,6 +388,10 @@ table {
 .table_title{
  	 color: #0755AC;}
 
+table .ead_table_title a {
+ 	 color: #4c4d4e;
+}
+
 .table_header {
 	font-size: 12px;
 	vertical-align:bottom;

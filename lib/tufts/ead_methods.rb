@@ -107,7 +107,7 @@ module Tufts
         controlaccess.element_children.each do |element_child|
           childname = element_child.name
 
-          if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
+          if childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname"
             child_name = element_child.text
             child_id = element_child.attribute("id")
             child_url = (child_id.nil? ? nil : child_id.text)
@@ -168,7 +168,7 @@ module Tufts
       result = ""
 
       # process the did element
-      if did != nil
+      if !did.nil?
         unittitle = nil
         unitdate = nil
 
@@ -181,10 +181,8 @@ module Tufts
         end
 
         # This should be a link if there are no subseries elements (ie, <c02 level="subseries"> tags).
-        if unittitle != nil && unittitle.size > 0
-          if !unittitle.nil?
-            result << ( (series_level.nil? ? "" : series_level + ". ") + (no_subseries ? "<a href=\"/catalog/ead/" + ead_id + "/" + series_id + "\">" : "") + unittitle + (unitdate.nil? ? "" : ", " + unitdate) + (no_subseries ? "</a>" : ""))
-          end
+        if !unittitle.nil? && unittitle.size > 0
+          result << ( (series_level.nil? ? "" : series_level + ". ") + (no_subseries ? "<a href=\"/catalog/ead/" + ead_id + "/" + series_id + "\">" : "") + unittitle + (unitdate.nil? ? "" : ", " + unitdate) + (no_subseries ? "</a>" : ""))
         end
       end
 
@@ -192,14 +190,20 @@ module Tufts
     end
 
 
-    def self.get_series_paragraphs(scopecontent)
+    def self.get_scopecontent_paragraphs(scopecontent)
       result = []
 
       # process the scopecontent element
-      if scopecontent != nil
+      if !scopecontent.nil?
         scopecontent.element_children.each do |scopecontent_child|
           if scopecontent_child.name == "p"
             result << scopecontent_child.text
+          elsif scopecontent_child.name == "note"
+            scopecontent_child.element_children.each do |note_child|
+              if note_child.name == "p"
+                result << note_child.text
+              end
+            end
           end
         end
       end
@@ -216,7 +220,7 @@ module Tufts
         controlaccess.element_children.each do |element_child|
           childname = element_child.name
 
-          if (childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname")
+          if childname == "persname" || childname == "corpname" || childname == "subject" || childname == "geogname"
             child_name = element_child.text
             child_id = element_child.attribute("id")
             child_url = (child_id.nil? ? nil : child_id.text)
@@ -353,7 +357,7 @@ module Tufts
         end
 
         # process the did element
-        if did != nil
+        if !did.nil?
           did.element_children.each do |did_child|
             if did_child.name == "unittitle"
               unittitle = did_child.text
@@ -366,13 +370,7 @@ module Tufts
         end
 
         # process the scopecontent element
-        if !scopecontent.nil?
-          scopecontent.element_children.each do |scopecontent_child|
-            if scopecontent_child.name == "p"
-              paragraphs << scopecontent_child.text
-            end
-          end
-        end
+        paragraphs = get_scopecontent_paragraphs(scopecontent)
 
         title = (unittitle.nil? ? "" : unittitle + (unitdate.nil? ? "" : ", " + unitdate))
       end
@@ -496,13 +494,7 @@ module Tufts
         end
       end
 
-      if !scopecontent.nil?
-        scopecontent.element_children.each do |scopecontent_child|
-          if scopecontent_child.name == "p"
-            paragraphs << scopecontent_child.text
-          end
-        end
-      end
+      paragraphs = get_scopecontent_paragraphs(scopecontent)
 
       return title, paragraphs, labels, values, page, thumbnail, next_level_items
     end
@@ -547,11 +539,11 @@ module Tufts
 
       first_element = node.first
 
-      if first_element != nil
+      if !first_element.nil?
         name = first_element.text
         first_element_id = first_element.attribute("id")
 
-        if first_element_id != nil
+        if !first_element_id.nil?
           rcr_url = first_element_id.text
         end
       end
