@@ -9,6 +9,45 @@ require 'chronic'
 module Tufts
   module ModelMethods
 
+    #  config[:sort_fields] << ['relevance', 'score desc, pub_date_sort desc, title_sort asc']
+    #  config[:sort_fields] << ['year descending', 'pub_date_sort desc, title_sort asc']
+    #  config[:sort_fields] << ['author ascending', 'author_sort asc, title_sort asc']
+    #  config[:sort_fields] << ['title ascending', 'title_sort asc, pub_date_sort desc']
+    #  config[:sort_fields] << ['year ascending', 'pub_date_sort asc, title_sort asc']
+    #  config[:sort_fields] << ['author descending', 'author_sort desc, title_sort asc']
+    #  config[:sort_fields] << ['title descending', 'title_sort desc, pub_date_sort desc']
+
+    def index_sort_fields(fedora_object, solr_doc)
+      #PUBDATESORT
+      dates = fedora_object.datastreams["DCA-META"].get_values(:dateCreated)
+
+      if dates.empty?
+        dates = fedora_object.datastreams["DCA-META"].get_values(:temporal)
+      end
+
+
+      unless dates.empty?
+        ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_sort", "#{dates[0]}")
+      end
+
+      #CREATOR SORT
+      names = fedora_object.datastreams["DCA-META"].get_values(:creator)
+
+
+      unless names.empty?
+        ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "author_sort", "#{names[0]}")
+      end
+
+      #TITLE SORT
+
+      titles = fedora_object.datastreams["DCA-META"].get_values(:title)
+
+
+      unless titles.empty?
+        ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "title_sort", "#{titles[0]}")
+      end
+
+    end
 
     def index_fulltext(solr_doc)
       full_text = ""

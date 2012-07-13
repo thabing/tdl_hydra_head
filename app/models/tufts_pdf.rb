@@ -52,6 +52,8 @@ class TuftsPdf < ActiveFedora::Base
       create_facets(self, solr_doc)
     end
 
+    index_sort_fields self,solr_doc
+
     index_fulltext solr_doc
 
     return solr_doc
