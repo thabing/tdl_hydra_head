@@ -1,12 +1,15 @@
 <div class="row">
-  <%- unless localized_params[:q].nil? -%>
+  <%- unless localized_params[:q].nil? || localized_params[:q].length()==0 -%>
   <div class="span2" style="text-align: right;">
     <h6>You searched for:</h6>
   </div>
   <div class="span7">
+
+
     <ul class="nav nav-pills">
       <%= render_constraints_query(localized_params) %>
     </ul>
+
   </div>
   <%- end -%>
   <%- unless localized_params[:f].nil? -%>
