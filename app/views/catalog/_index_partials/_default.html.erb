@@ -35,9 +35,7 @@
       <td width="70" align="center">
         <ul class="thumbnails">
           <li class="nothumbnailmargin">
-            <a href="#" class="thumbnail">
-              <img src="/file_assets/thumb/<%= document[:id] %>" alt="<%= document[:title] %>">
-            </a>
+		<%= link_to image_tag("/file_assets/thumb/"+document[:id] , :alt=>document[:title]), "/catalog/" + document[:id],:class=>"thumbnail" %>
           </li>
         </ul>
       </td>
