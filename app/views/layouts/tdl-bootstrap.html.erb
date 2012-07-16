@@ -82,11 +82,18 @@
       <!--   <a class="brand" href="./index.html">Tufts Digital Library</a> -->
       <div class="nav-collapse">
         <ul class="nav">
-          <li <%- if "search" == @current_action -%> class ="active" <%- end -%>><%= link_to "Search", '/search' %></li>
-          <li <%- if "about" == @current_action -%> class ="active" <%- end -%>><%= link_to "About", about_path() %></li>
-          <li <%- if "contact" == @current_action -%> class ="active" <%- end -%>><%= link_to "Contact", contact_path() %></li>
-          <li <%- if "index" == @current_action -%> class ="active" <%- end -%>><%= link_to "Home", catalog_path('/') %></li>
-
+          <li
+          <%- if "search" == @current_action -%> class="active"
+          <%- end -%>><%= link_to "Search", '/search' %></li>
+          <li
+          <%- if "about" == @current_action -%> class="active"
+          <%- end -%>><%= link_to "About", about_path() %></li>
+          <li
+          <%- if "contact" == @current_action -%> class="active"
+          <%- end -%>><%= link_to "Contact", contact_path() %></li>
+          <li
+          <%- if "index" == @current_action -%> class="active"
+          <%- end -%>><%= link_to "Home", catalog_path('/') %></li>
 
 
         </ul>
@@ -104,7 +111,7 @@
 
     <%= link_to(image_tag('/assets/img/tuftsdigitallibrarylogosmall.png', :alt => "Tufts Digital Library logo"), catalog_path('/'), :class => "work") %>
     <%- if "show" == @current_action || "eadoverview" == @current_action || "eadinternal" == @current_action -%>
-        <button href="#" class="btn btn-blue pull-right"> Comments about this page?
+        <button href="#comment_modal" data-toggle="modal" class="btn btn-blue pull-right"> Comments about this page?
           <i class="icon-comment icon-white"></i></button>
     <%- end -%>
 
@@ -123,6 +130,66 @@
 
 </div>
 <!-- /container -->
+<!--comment modal-->
+
+<div class="modal fade" id="comment_modal">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Send Comment</h3>
+  </div>
+
+
+  <div class="modal-body">
+
+    <form class="form-inline comment_form">
+
+      <fieldset>
+
+        <div class="control-group">
+          <label for="input01" class="control-label">Title</label>
+
+          <div class="controls">
+            <input type="text" placeholder="Object Title" id="input01" class="input-xlarge"
+            <%- if "show" == @current_action || "eadoverview" == @current_action || "eadinternal" == @current_action -%>
+                value="  <%= show_title().to_s().strip! %>"
+            <%- end -%>
+            />
+
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+
+        <div class="control-group">
+          <label class="control-label" for="textarea">Comment</label>
+
+          <div class="controls">
+            <textarea class="input-xlarge" id="textarea" rows="3"></textarea>
+          </div>
+        </div>
+
+
+        <div class="control-group">
+          <label for="input01" class="control-label">Email Address (optional):</label>
+
+          <div class="controls">
+            <input type="text" placeholder="" id="input01" class="input-xlarge"/>
+
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+
+        <div class="pull-right" style="margin-right: 16px">
+          <button class="btn btn-primary" type="submit">Send</button>
+          <button class="btn">Cancel</button>
+        </div>
+      </fieldset>
+    </form>
+
+
+  </div>
+</div>
 
 <script type="text/javascript">
     $('.toggle:not(.toggle-close):lt(1)').addClass('toggle-open');//.parents('li').children('ul').hide();
