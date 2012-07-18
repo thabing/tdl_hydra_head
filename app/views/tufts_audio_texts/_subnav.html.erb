@@ -1,0 +1,8 @@
+<div class="span6" style="padding-top:5px">
+  <% if refered_from_our_site? %>
+    <a href="<%= request.env["HTTP_REFERER"]%>"><i class="icon-arrow-left"></i> Back to Search Results</a>
+  <% end %>
+</div>
+<div class="span6" style="padding-top:5px">
+  <a href="#plugins"><i class="icon-headphones"/></i> Download Audio File</a> &nbsp;<a href="#plugins"><i class="icon-file"/></i> Download Transcript</a>
+</div>
