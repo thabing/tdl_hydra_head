@@ -6,9 +6,11 @@
     </span>
   </td>
   <td class="creator_td">
-    <% document[:creator_t].each { |creator| %>
+    <% unless document[:creator_t].nil?
+       document[:creator_t].each { |creator| %>
      <%= creator %><br/>
-    <%} %>
+    <%}
+     end%>
   </td>
   <td class="date_td">
     <%
