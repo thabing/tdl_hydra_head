@@ -53,7 +53,7 @@ input#submit {
 .participant_id {
   display: table-cell;
   width: 30px;
-  color: darkgray;
+  font-weight: bold;
   vertical-align: top;
   padding-right: 2em;
   padding-top: .25em;
@@ -104,8 +104,8 @@ input#submit {
 
 .transcript_speaker {
   display: table-cell;
-  width: 100px;
-  color: darkgray;
+  width: 30px;
+  font-weight: bold;
   vertical-align: top;
   padding-right: 2em;
   padding-top: .25em;
