@@ -1,14 +1,18 @@
 <tr>
-  <td><%= @result_no += 1 %></td>
-  <td width="308">
+  <td class="number_td"><%= @result_no += 1 %></td>
+  <td class="title_td">
     <span class="table_title">
       <%= link_to document[:title_t][0], "/catalog/" + document[:id] %>
     </span>
   </td>
-  <td width="70">
-    <%= document[:creator_t] %>
+  <td class="creator_td">
+    <% unless document[:creator_t].nil?
+       document[:creator_t].each { |creator| %>
+     <%= creator %><br/>
+    <%}
+     end%>
   </td>
-  <td>
+  <td class="date_td">
     <%
        date = document[:temporal_t]
        valid_date = Time.new
@@ -32,16 +36,14 @@
     <%= valid_date.strftime("%Y")  %>
   </td>
   <% if document[:type2_t].first == 'image' %>
-      <td width="70" align="center">
+      <td class="thumbnail_td" align="center">
         <ul class="thumbnails">
           <li class="nothumbnailmargin">
-            <a href="#" class="thumbnail">
-              <img src="/file_assets/thumb/<%= document[:id] %>" alt="<%= document[:title] %>">
-            </a>
+            <%= link_to image_tag("/file_assets/thumb/"+document[:id] , :alt=>document[:title]), "/catalog/" + document[:id],:class=>"thumbnail" %>
           </li>
         </ul>
       </td>
   <% else %>
-      <td>&nbsp;</td>
+      <td class="thumbnail_td">&nbsp;</td>
   <% end %>
 </tr>

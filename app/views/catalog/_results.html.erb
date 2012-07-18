@@ -57,12 +57,12 @@
 
           </tr>
           <tr class="table_header">
-            <td width="5">&nbsp;</td>
-            <td width="310"  class="active"><a class="sortable_header" data-sort="none" href="#"> Title <img id="title_header" src="assets/img/arrow_both.gif"></a></td>
-            <td height="10"><a class="sortable_header" data-sort="none" href="#">Creator <img id="creator_header" src="assets/img/arrow_both.gif"> </a></td>
+            <td class="number_td">&nbsp;</td>
+            <td class="title_td active"><a data-sort="none" href="#"> Title <img id="title_header" src="assets/img/arrow_both.gif"></a></td>
+            <td class="creator_td"><a data-sort="none" href="#">Creator <img id="creator_header" src="assets/img/arrow_both.gif"> </a></td>
 
-            <td width="95"><a class="sortable_header" data-sort="none" href="#">Date <img id="date_header" src="assets/img/arrow_both.gif"></a></td>
-            <td width="70" align="left">&nbsp; </td>
+            <td class="date_td"><a data-sort="none" href="#">Date <img id="date_header" src="assets/img/arrow_both.gif"></a></td>
+            <td class="thumbnail_td" align="left">&nbsp; </td>
           </tr>
           </thead>
           <%= render :partial => 'document_list', :response => 'rsolr_response' %>
