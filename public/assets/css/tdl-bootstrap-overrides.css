@@ -435,6 +435,15 @@ table {
 .table  .expanded_table{border:0; margin:0;}
 
 .table .expanded_table_last_row{border-bottom: 0;}
+
+.table .thumbnail_td {width: 70px;}
+
+.table .date_td {width: 95px;}
+.table .number_td {width: 10px; font-size: 11px;}
+.table .title_td {width: 310px;}
+.table .creator_td {width: 116px; height: 10px;  }
+
+.table .date_td {  width: 80px;}
 	
 .table .indent{
 	padding-left: 35px;
@@ -459,6 +468,12 @@ table {
   border-bottom: 0;
 }
 
+
+ .borderbottom  td {
+    
+  border-bottom: 1px dotted #ddd;
+  margin-bottom: 5px;
+}
  
 
 .dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover {
@@ -1316,12 +1331,54 @@ margin-left: 300px;	}
  .modal_650wide
  {  width: 650px;
     max-height: 800px;
-	  margin: -350px 0 0 -340px;
+	  margin: -300px 0 0 -340px;
 }
 
  .modal_950wide
  {  width: 950px;
-    max-height: 800px;
-	  margin: -350px 0 0 -477px;
+    max-height: 600px;
+	 /* margin: -350px 0 0 -477px;*/
+	  	  margin: -300px 0 0 -477px;
+
+}
+  
+  
+  .modal.fade {
+   -webkit-transition: none;
+ -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+ }
+ 
+ .active_orange a{ color: #de6020;}
+ 
+ 
+ #static_thumbnail
+{
+    text-align:center;
+    overflow: hidden;
+	margin-bottom: 10px;
+}
+
+ #static_thumbnail li
+{
+ 
+    font-size:small;
+    float: left;
+    left: -50%;
+    position: relative;
+    padding: 0;
+    margin: 0;
 }
  
+  #static_thumbnail ul
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    float: left;
+    left: 50%;
+    position: relative;
+    text-align: center;
+}
