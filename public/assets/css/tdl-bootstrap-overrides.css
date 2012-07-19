@@ -1382,3 +1382,7 @@ margin-left: 300px;	}
     position: relative;
     text-align: center;
 }
+
+IMG.thumbnailwidth{
+		width: 60px;
+		}
