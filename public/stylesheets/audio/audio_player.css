@@ -119,9 +119,10 @@
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
+		display: none;  /* added this to hide the playlist area */
 	}
 
-	/* bkg -- added this to override the style in yui.css that puts a disc bullet on the playlist list items */
+	/* added this to override the style in yui.css that puts a disc bullet on the playlist list items */
 	ul li {
 		list-style: none;
 	}
