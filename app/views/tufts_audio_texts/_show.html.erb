@@ -12,18 +12,18 @@
   <div class="row">
     <div class="span12">
 <%  metadata[:titles].each do |title| %>
-      <h2><%= raw title %></h2>
+      <h2><%= raw title.text %></h2>
 <%  end %>
 <%  metadata[:creators].each do |creator| %>
-      <%= raw creator %><br>
+      <%= raw creator.text %><br>
 <%  end %>
 <%  unless metadata[:dates].nil? || metadata[:dates].empty? %>
 <%    metadata[:dates].each do |date| %>
-      <%= raw date %><br>
+      <%= raw date.text %><br>
 <%    end %>
 <%  else %>
 <%    metadata[:temporals].each do |temporal| %>
-      <%= raw temporal %><br>
+      <%= raw temporal.text %><br>
 <%    end %>
 <%  end %>
     </div>  <!-- span12 -->
@@ -63,77 +63,77 @@
 <%  unless metadata[:creators].empty? %>
               <dd>Creator</dd>
 <%    metadata[:creators].each do |creator| %>
-              <dt><%= raw creator %></dt>
+              <dt><%= raw creator.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:sources].empty? %>
               <dd>Source</dd>
 <%    metadata[:sources].each do |source| %>
-              <dt><%= raw source %></dt>
+              <dt><%= raw source.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:descriptions].empty? %>
               <dd>Description</dd>
 <%    metadata[:descriptions].each do |description| %>
-              <dt><%= raw description %></dt>
+              <dt><%= raw description.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:citable_urls].empty? %>
               <dd>Citable URL</dd>
 <%    metadata[:citable_urls].each do |citable_url| %>
-              <dt><%= raw citable_url %></dt>
+              <dt><%= raw citable_url.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:citations].empty? %>
               <dd>Citation</dd>
 <%    metadata[:citations].each do |citation| %>
-              <dt><%= raw citation %></dt>
+              <dt><%= raw citation.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:publishers].empty? %>
               <dd>Publisher</dd>
 <%    metadata[:publishers].each do |publisher| %>
-              <dt><%= raw publisher %></dt>
+              <dt><%= raw publisher.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:types].empty? %>
               <dd>Type</dd>
 <%    metadata[:types].each do |type| %>
-              <dt><%= raw type %></dt>
+              <dt><%= raw type.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:formats].empty? %>
               <dd>Format</dd>
 <%    metadata[:formats].each do |format| %>
-              <dt><%= raw format %></dt>
+              <dt><%= raw format.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:places].empty? %>
               <dd>Places</dd>
 <%    metadata[:places].each do |place| %>
-              <dt><%= raw place %></dt>
+              <dt><%= raw place.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:topics].empty? %>
               <dd>Topics</dd>
 <%    metadata[:topics].each do |topic| %>
-              <dt><%= raw topic %></dt>
+              <dt><%= raw topic.text %></dt>
 <%    end %>
 <%  end %>
 
 <%  unless metadata[:temporals].empty? %>
               <dd>Temporal</dd>
 <%    metadata[:temporals].each do |temporal| %>
-              <dt><%= raw temporal %></dt>
+              <dt><%= raw temporal.text %></dt>
 <%    end %>
 <%  end %>
             </dl>
