@@ -9,9 +9,8 @@ module Tufts
         :titles => datastream.find_by_terms_and_value(:title),
         :creators => datastream.find_by_terms_and_value(:creator),
         :dates => datastream.find_by_terms_and_value(:dateCreated2),
-        :abstract => show_more_or_less("Abstract or summary goes here. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", 400),
-        :sources => datastream.find_by_terms_and_value(:source2),
         :descriptions => datastream.find_by_terms_and_value(:description),
+        :sources => datastream.find_by_terms_and_value(:source2),
         :citable_urls => datastream.find_by_terms_and_value(:identifier),
         :citations => datastream.find_by_terms_and_value(:bibliographicCitation),
         :publishers => datastream.find_by_terms_and_value(:publisher),
@@ -174,22 +173,6 @@ module Tufts
             end
           end
         end
-      end
-
-      return result
-    end
-
-
-    def self.show_more_or_less(text, length)
-      result = ""
-
-      if text.length <= length
-        result << text
-      else
-        result << (text[0..(length - 1)] +
-          "<span id=\"readmore\" style="">...  <a href=\"javascript:readmore();\">read more</a></span><span id=\"readless\" style=\"display:none\">" +
-          text[length..text.length] +
-          "  <a href=\"javascript:readless();\">read less</a></span>")
       end
 
       return result

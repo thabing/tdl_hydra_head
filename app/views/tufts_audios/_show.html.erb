@@ -1,6 +1,6 @@
 <% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
 <% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << "yahooMediaPlayer.js" %>
+<% javascript_includes << "audio/yahooMediaPlayer.js" %>
 <% javascript_includes << "audio/audio_player.js" %>
 <% stylesheet_links << "audio/audio_player.css" %>
 <% javascript_includes << "feedback.js" %>
@@ -29,8 +29,8 @@
           <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
           <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
           <%= showMetadataItem("File Size", "filesize", :filesize) %>
-          <%= showFeedbackForm(params[:id]) %>
+          <%= raw Tufts::FeedbackMethods.show_feedback_form(params[:id], form_authenticity_token) %>
         </div>
         <div>
-          <%= showAudioPlayer(params[:id]) %>
+          <%= raw Tufts::AudioMethods.show_audio_player(params[:id]) %>
         </div>
