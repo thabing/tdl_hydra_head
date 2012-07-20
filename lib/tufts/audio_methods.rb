@@ -5,6 +5,13 @@ module Tufts
     def self.get_metadata(fedora_obj)
       datastream = fedora_obj.datastreams["DCA-META"]
 
+      # create the union (ie, without duplicates) of subject, geogname, persname, and corpname
+      subjects = []
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:subject))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:geogname))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:persname))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:corpname))
+
       return {
         :titles => datastream.find_by_terms_and_value(:title),
         :creators => datastream.find_by_terms_and_value(:creator),
@@ -16,8 +23,7 @@ module Tufts
         :publishers => datastream.find_by_terms_and_value(:publisher),
         :types => datastream.find_by_terms_and_value(:type2),
         :formats => datastream.find_by_terms_and_value(:format2),
-        :places => datastream.find_by_terms_and_value(:geogname),
-        :topics => datastream.find_by_terms_and_value(:subject),
+        :subjects => subjects,
         :temporals => datastream.find_by_terms_and_value(:temporal)
       }
     end

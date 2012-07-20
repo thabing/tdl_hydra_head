@@ -109,17 +109,10 @@
 <%    end %>
 <%  end %>
 
-<%  unless metadata[:places].empty? %>
-              <dd>Places</dd>
-<%    metadata[:places].each do |place| %>
-              <dt><%= raw place.text %></dt>
-<%    end %>
-<%  end %>
-
-<%  unless metadata[:topics].empty? %>
-              <dd>Topics</dd>
-<%    metadata[:topics].each do |topic| %>
-              <dt><%= raw topic.text %></dt>
+<%  unless metadata[:subjects].empty? %>
+              <dd>Subject</dd>
+<%    metadata[:subjects].each do |subject| %>
+              <dt><%= raw subject.text %></dt>
 <%    end %>
 <%  end %>
 
