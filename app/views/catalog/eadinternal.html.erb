@@ -1,5 +1,7 @@
 <% javascript_includes << "ead/floating_table_of_contents.js" %>
 <% javascript_includes << "ead/expand_collapse.js" %>
+<% stylesheet_links << "ead/ead.css" %>
+
 
 <%
     series, series_level = Tufts::EADMethods.get_series(@document_fedora, @item_id)
