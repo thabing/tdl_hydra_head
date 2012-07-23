@@ -82,7 +82,7 @@ module Tufts
     end
 
 
-    def self.show_transcript(fedora_obj, datastream="ARCHIVAL_XML")
+    def self.show_transcript(fedora_obj, active_timestamps, datastream="ARCHIVAL_XML")
       timepoints = Hash.new
       node_sets = fedora_obj.datastreams[datastream].find_by_terms_and_value(:when)
 
@@ -125,7 +125,13 @@ module Tufts
           result << "                  <div class=\"transcript_row\">\n"
           result << "                    <div class=\"transcript_speaker\"></div>\n"
           result << "                    <div class=\"transcript_utterance\">\n"
-          result << "                      <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+
+          if (active_timestamps)
+            result << "                      <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+          else
+            result << "                      " + string_minutes + ":" + string_just_seconds + "\n"
+          end
+
           result << "                    </div> <!-- transcript_utterance -->\n"
           result << "                  </div> <!-- transcript_row -->\n"
         end
