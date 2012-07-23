@@ -48,7 +48,7 @@
 
         <div class="tab-content">
           <div class="tab-pane" id="2">
-            <a href="#" class="pull-right"><h6>view transcript only <i class="icon-share"/></i></h6></a>
+            <a href="/catalog/transcriptonly/<%= params[:id] %>" class="pull-right"><h6>view transcript only <i class="icon-share"/></i></h6></a>
             <br>
             <div class="transcriptbox">
               <%= raw Tufts::AudioMethods.show_transcript(@document_fedora) %>
