@@ -1,6 +1,10 @@
 <% stylesheet_links << "audio/audio.css" %>
 
-<% metadata = Tufts::AudioMethods.get_metadata(@document_fedora) %>
+<%
+    metadata = Tufts::AudioMethods.get_metadata(@document_fedora)
+
+    @page_title = metadata[:titles].first.text + " - " + application_name
+%>
 
 
   <div class="row">
