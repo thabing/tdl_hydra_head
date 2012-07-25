@@ -1,8 +1,35 @@
 module Tufts
   module AudioMethods
 
-    def self.show_audio_player(pid)
 
+    def self.get_metadata(fedora_obj)
+      datastream = fedora_obj.datastreams["DCA-META"]
+
+      # create the union (ie, without duplicates) of subject, geogname, persname, and corpname
+      subjects = []
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:subject))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:geogname))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:persname))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:corpname))
+
+      return {
+        :titles => datastream.find_by_terms_and_value(:title),
+        :creators => datastream.find_by_terms_and_value(:creator),
+        :dates => datastream.find_by_terms_and_value(:dateCreated2),
+        :descriptions => datastream.find_by_terms_and_value(:description),
+        :sources => datastream.find_by_terms_and_value(:source2),
+        :citable_urls => datastream.find_by_terms_and_value(:identifier),
+        :citations => datastream.find_by_terms_and_value(:bibliographicCitation),
+        :publishers => datastream.find_by_terms_and_value(:publisher),
+        :types => datastream.find_by_terms_and_value(:type2),
+        :formats => datastream.find_by_terms_and_value(:format2),
+        :subjects => subjects,
+        :temporals => datastream.find_by_terms_and_value(:temporal)
+      }
+    end
+
+
+    def self.show_audio_player(pid)
       result = "<div id=\"playerDiv\"><div id=\"controls\"></div><ul id=\"playlist\"><li>"
 
       #   the following line is what we would ultimately want but it doesn't work yet
@@ -12,8 +39,11 @@ module Tufts
       #   result += "<a href=\"" + datastream_disseminator_url(params[:id], "ACCESS_MP3") + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
 
       #   the following line works in Safari, Chrome and Firefox but not in Opera
-      result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + pid + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-      #latest from Mike: result += "<a href=\"/file_assets/" + pid +"\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+      #   result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + pid + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+
+      #   the correct way, from Mike: 
+      result += "<a href=\"/file_assets/" + pid +"\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+
       #   the following test works in Safari, Chrome, Firefox and Opera, proving that Opera is capable of using the yahoo media player, as in current DL prod...
       #   result += "<a href=\"http://dl.tufts.edu/ProxyServlet/?url=http://repository01.lib.tufts.edu:8080/fedora/get/tufts:AC00001/bdef:TuftsAudio/getAudioFile&filename=tufts:AC00001.mp3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
 
@@ -22,10 +52,9 @@ module Tufts
       return result
     end
 
-    def self.show_transcript(fedora_obj, datastream="ARCHIVAL_XML")
-      result = "<div class=\"participant_section\">\n"
-      result << "            <h1 class=\"participant_header\">Interview Participants</h1>\n"
-      result << "            <div class=\"participant_table\">\n"
+
+    def self.show_participants(fedora_obj, datastream="ARCHIVAL_XML")
+      result = "<div class=\"participant_table\">\n"
 
       participant_number = 0
       node_sets = fedora_obj.datastreams[datastream].find_by_terms_and_value(:participants)
@@ -37,19 +66,23 @@ module Tufts
             id = child.attributes["id"]
             role = child.attributes["role"]
             sex = child.attributes["sex"]
-            result << "              <div class=\"participant_row\" id=\"participant" + participant_number.to_s + "\">\n"
-            result << "                <div class=\"participant_id\">" + (id.nil? ? "" : id) + ":</div>\n"
-            result << "                <div class=\"participant_name\">" + child.text + "</div>\n"
-            result << "                <div class=\"participant_role\">" + (role.nil? ? "" : role) + "</div>\n"
-            result << "                <div class=\"participant_sex\">" + (sex.nil? ? "" : sex) + "</div>\n"
-            result << "              </div> <!-- participant_row -->\n"
+            result << "        <div class=\"participant_row\" id=\"participant" + participant_number.to_s + "\">\n"
+            result << "          <div class=\"participant_id\">" + (id.nil? ? "" : id) + "</div>\n"
+            result << "          <div class=\"participant_name\">" + child.text + "</div>\n"
+            result << "          <div class=\"participant_role\">" + (role.nil? ? "" : role) + "</div>\n"
+            result << "          <div class=\"participant_sex\">" + (sex.nil? ? "" : sex) + "</div>\n"
+            result << "        </div> <!-- participant_row -->\n"
           end
         end
       end
 
-      result << "            </div> <!-- participant_table -->\n"
-      result << "          </div> <!-- participant_section -->\n"
+      result << "      </div> <!-- participant_table -->\n"
 
+      return result
+    end
+
+
+    def self.show_transcript(fedora_obj, active_timestamps, datastream="ARCHIVAL_XML")
       timepoints = Hash.new
       node_sets = fedora_obj.datastreams[datastream].find_by_terms_and_value(:when)
 
@@ -63,10 +96,7 @@ module Tufts
         end
       end
 
-      result << "          <div class=\"transcript_section\">\n"
-      result << "            <h1 class=\"transcript_header\">Transcript</h1>\n"
-      result << "            <div class=\"transcript_scrollarea\">\n"
-      result << "              <div class=\"transcript_table\">\n"
+      result = "<div class=\"transcript_table\">\n"
 
       node_sets = fedora_obj.datastreams[datastream].find_by_terms_and_value(:u)
 
@@ -95,7 +125,13 @@ module Tufts
           result << "                  <div class=\"transcript_row\">\n"
           result << "                    <div class=\"transcript_speaker\"></div>\n"
           result << "                    <div class=\"transcript_utterance\">\n"
-          result << "                      <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+
+          if (active_timestamps)
+            result << "                      <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+          else
+            result << "                      " + string_minutes + ":" + string_just_seconds + "\n"
+          end
+
           result << "                    </div> <!-- transcript_utterance -->\n"
           result << "                  </div> <!-- transcript_row -->\n"
         end
@@ -123,13 +159,13 @@ module Tufts
       end
 
       result << "              </div> <!-- transcript_table -->\n"
-      result << "            </div> <!-- transcript_scrollarea -->\n"
-      result << "          </div> <!-- transcript_section -->"
 
       return result
     end
 
+
     private # all methods that follow will be made private: not accessible for outside objects
+
 
     def self.parse_notations(node)
       result = ""

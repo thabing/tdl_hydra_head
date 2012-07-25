@@ -1,40 +1,147 @@
-<% javascript_includes << ['custom', {:plugin => :hydra_repository, :media => "all"}] %>
-<% javascript_includes << ["catalog/show", {:plugin => :hydra_repository, :media => "all"}] %>
-<% javascript_includes << "yahooMediaPlayer.js" %>
+<% javascript_includes << "audio/yahooMediaPlayer.js" %>
 <% javascript_includes << "audio/audio_player.js" %>
 <% javascript_includes << "audio/transcript_scroller.js" %>
+<% javascript_includes << "read_more_or_less.js" %>
 <% stylesheet_links << "audio/audio_player.css" %>
-<% javascript_includes << "feedback.js" %>
-<% stylesheet_links << "feedback/feedback.css" %>
+<% stylesheet_links << "audio/audio.css" %>
 
-<div class="document_viewer" id="cover_container">
-  <%= showMetadataItem("Creator", "creator", :creator) %>
-  <%= showMetadataItem("Source", "source2", :source2) %>
-  <%= showMetadataItem("Description", "description", :description) %>
-  <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
-  <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
-  <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
-  <%= showMetadataItem("Citable URL", "identifier", :identifier) %>
-  <%= showMetadataItem("Rights", "rights", :rights) %>
-  <%= showMetadataItem("Citation", "bibliographicCitation", :bibliographicCitation) %>
-  <%= showMetadataItem("Publisher", "publisher", :publisher) %>
-  <%= showMetadataItem("Type", "type2", :type2) %>
-  <%= showMetadataItem("Format", "format2", :format2) %>
-  <%= showMetadataItem("Person Name", "persname", :persname) %>
-  <%= showMetadataItem("Organizations", "corpname", :corpname) %>
-  <%= showMetadataItem("Places", "geogname", :geogname) %>
-  <%= showMetadataItem("Topics", "subject", :subject) %>
-  <%= showMetadataItem("Funder", "funder", :funder) %>
-  <%= showMetadataItem("Temporal", "temporal", :temporal) %>
-  <%= showMetadataItem("Resolution", "resolution", :resolution) %>
-  <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
-  <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
-  <%= showMetadataItem("File Size", "filesize", :filesize) %>
-  <%= raw Tufts::FeedbackMethods.show_feedback_form(params[:id], form_authenticity_token) %>
-</div>
-<div>
-  <%= raw Tufts::AudioMethods.show_audio_player(params[:id]) %>
-</div>
-<div id="transcript">
-  <%= raw Tufts::AudioMethods.show_transcript(@document_fedora) %>
-</div> <!-- id="transcript" -->
+
+<% metadata = Tufts::AudioMethods.get_metadata(@document_fedora) %>
+
+
+  <div class="row">
+    <div class="span12">
+<%  metadata[:titles].each do |title| %>
+      <h2><%= raw title.text %></h2>
+<%  end %>
+<%  metadata[:creators].each do |creator| %>
+      <%= raw creator.text %><br>
+<%  end %>
+<%  unless metadata[:dates].nil? || metadata[:dates].empty? %>
+<%    metadata[:dates].each do |date| %>
+      <%= raw date.text %><br>
+<%    end %>
+<%  else %>
+<%    metadata[:temporals].each do |temporal| %>
+      <%= raw temporal.text %><br>
+<%    end %>
+<%  end %>
+    </div>  <!-- span12 -->
+  </div>  <!-- row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="span6">
+      <%= raw Tufts::AudioMethods.show_audio_player(params[:id]) %><br>
+      <br>
+      <b>Interview Participants</b><br>
+      <%= raw Tufts::AudioMethods.show_participants(@document_fedora) %>
+    </div>  <!-- span6 -->
+
+    <div class="span6">
+      <div class="tabbable">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#1" data-toggle="tab">Information</a></li>
+          <li><a href="#2" data-toggle="tab">Transcript</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane" id="2">
+            <a href="/catalog/transcriptonly/<%= params[:id] %>" class="pull-right"><h6>view transcript only <i class="icon-share"/></i></h6></a>
+            <br>
+            <div class="transcriptbox">
+              <%= raw Tufts::AudioMethods.show_transcript(@document_fedora, true) %>
+            </div>  <!-- transcriptbox -->
+          </div>  <!-- tab-pane -->
+
+          <div class="tab-pane active" id="1">
+<%  unless metadata[:descriptions].empty? %>
+            <p><%= raw Tufts::MetadataMethods.read_more_or_less(metadata[:descriptions].first.text, 400) %></p>
+<%  end %>
+            <dl>
+<%  unless metadata[:creators].empty? %>
+              <dd>Creator</dd>
+<%    metadata[:creators].each do |creator| %>
+              <dt><%= raw creator.text %></dt>
+<%    end %>
+<%  end %>
+
+<%  unless metadata[:sources].empty? %>
+              <dd>Source</dd>
+<%    metadata[:sources].each do |source| %>
+              <dt><%= raw source.text %></dt>
+<%    end %>
+<%  end %>
+
+<%  unless metadata[:citable_urls].empty? %>
+              <dd>Citable URL</dd>
+<%    metadata[:citable_urls].each do |citable_url| %>
+              <dt><%= raw citable_url.text %></dt>
+<%    end %>
+<%  end %>
+
+<%  unless metadata[:citations].empty? %>
+              <dd>Citation</dd>
+<%    metadata[:citations].each do |citation| %>
+              <dt><%= raw citation.text %></dt>
+<%    end %>
+<%  end %>
+
+<%  unless metadata[:publishers].empty? %>
+              <dd>Publisher</dd>
+<%    metadata[:publishers].each do |publisher| %>
+              <dt><%= raw publisher.text %></dt>
+<%    end %>
+<%  end %>
+
+<%  unless metadata[:types].empty? %>
+              <dd>Type</dd>
+<%    metadata[:types].each do |type| %>
+              <dt><%= raw type.text %></dt>
+<%    end %>
+<%  end %>
+
+<%  unless metadata[:formats].empty? %>
+              <dd>Format</dd>
+<%    metadata[:formats].each do |format| %>
+              <dt><%= raw format.text %></dt>
+<%    end %>
+<%  end %>
+
+<%  unless metadata[:subjects].empty? %>
+              <dd>Subject</dd>
+<%    metadata[:subjects].each do |subject| %>
+              <dt><%= raw subject.text %></dt>
+<%    end %>
+<%  end %>
+
+<%  unless metadata[:temporals].empty? %>
+              <dd>Temporal</dd>
+<%    metadata[:temporals].each do |temporal| %>
+              <dt><%= raw temporal.text %></dt>
+<%    end %>
+<%  end %>
+            </dl>
+
+            <div class="tooltip-demo well">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" class="noborder">
+                <tr>
+                  <td width="50">ID:</td>
+                  <td><%= params[:id] %></td>
+                </tr>
+                <tr>
+                  <td>To Cite:</td>
+                  <td><a href="#">DCA Citation Guide</a></td>
+                </tr>
+                <tr>
+                  <td>Usage:</td>
+                  <td><a href="#">Detailed Rights</a></td>
+                </tr>
+              </table>
+            </div>  <!-- tooltip-demo well -->
+          </div>  <!-- tab-pane -->
+        </div>  <!-- tab-content -->
+      </div>  <!-- tabbable -->
+    </div>  <!-- span6 -->
+  </div>  <!-- row --> 
