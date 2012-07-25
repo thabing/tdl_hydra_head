@@ -110,7 +110,7 @@
 
 
     <%= link_to(image_tag('/assets/img/tuftsdigitallibrarylogosmall.png', :alt => "Tufts Digital Library logo"), catalog_path('/'), :class => "work") %>
-    <%- if "show" == @current_action || "eadoverview" == @current_action || "eadinternal" == @current_action -%>
+    <%- if "show" == @current_action || "eadoverview" == @current_action || "eadinternal" == @current_action || "transcriptonly" == @current_action -%>
         <button href="#comment_modal" data-toggle="modal" class="btn btn-blue pull-right" style="margin-top:10px; margin-right:10px;"> Comments about this page?
           <i class="icon-comment icon-white"></i></button>
     <%- end -%>
@@ -141,16 +141,16 @@
 
   <div class="modal-body">
 
-    <form class="form-inline comment_form">
+    <form class="form-inline comment_form" action="javascript:submitFeedback2();">
 
       <fieldset>
 
         <div class="control-group">
-          <label for="input01" class="control-label">Title</label>
+          <label for="inputTitle" class="control-label">Title</label>
 
           <div class="controls">
-            <input type="text" placeholder="Object Title" id="input01" class="input-xlarge"
-            <%- if "show" == @current_action || "eadoverview" == @current_action || "eadinternal" == @current_action -%>
+            <input type="text" placeholder="Object Title" id="inputTitle" class="input-xlarge"
+            <%- if "show" == @current_action || "eadoverview" == @current_action || "eadinternal" == @current_action || "transcriptonly" == @current_action -%>
                 value="  <%= show_title().to_s().strip! %>"
             <%- end -%>
             />
@@ -161,19 +161,19 @@
 
 
         <div class="control-group">
-          <label class="control-label" for="textarea">Comment</label>
+          <label class="control-label" for="inputComment">Comment</label>
 
           <div class="controls">
-            <textarea class="input-xlarge" id="textarea" rows="3"></textarea>
+            <textarea class="input-xlarge" id="inputComment" rows="3"></textarea>
           </div>
         </div>
 
 
         <div class="control-group">
-          <label for="input01" class="control-label">Email Address (optional):</label>
+          <label for="inputEmail" class="control-label">Email Address (optional):</label>
 
           <div class="controls">
-            <input type="text" placeholder="" id="input01" class="input-xlarge"/>
+            <input type="text" placeholder="" id="inputEmail" class="input-xlarge"/>
 
             <p class="help-block"></p>
           </div>
@@ -238,6 +238,7 @@
 <script src="/assets/js/bootstrap-carousel.js"></script>
 <script src="/assets/js/bootstrap-typeahead.js"></script>
 <script src="/assets/js/application.js"></script>
+<script src="/javascripts/feedback.js"></script>
 
 
 </body>
