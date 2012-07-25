@@ -182,7 +182,7 @@ module Tufts
 
 
         end
-
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_id_facet", ead)
           ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", ead_title)
       end
 
