@@ -34,7 +34,7 @@ function hideFeedbackForm() {
 }
 
 
-function submitFeedback2() {
+function submitFeedback2(pid) {
   var params,
       message = document.getElementById("inputComment").value,
       optionalEmail = document.getElementById("inputEmail").value;
@@ -58,18 +58,20 @@ function submitFeedback2() {
   params  = "name=Unknown";		// feedback_controller.rb expects a name -- make one up.
   params += "&email=" + optionalEmail;
   params += "&message=" + message;
-  params += "&pid=" + document.getElementById("inputTitle").value;
-//  params += "&authenticity_token=" + document.getElementById("feedbackToken").value;
+//params += "&authenticity_token=" + document.getElementById("feedbackToken").value;
   params += "&utf8=#x2713;";
 
-alert("submitFeedback2() params are " + params);
+  if (pid != null && pid != "") {
+    params += "&pid=" + pid;
+  }
+
   $.ajax({
     type: "POST",
     url: "/feedback",
     data: encodeURI(params)
   });
 
-  // hide the modal comment window here...
+  $('#comment_modal').modal('hide')
 }
 
 
