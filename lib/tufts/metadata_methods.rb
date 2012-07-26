@@ -27,7 +27,7 @@ module Tufts
     end
 
     def showMetadataItem(label, tagID, metadataKey, *args)
-      return showMetadataItemForDatastream("DCA-META", label, tagID, metadataKey, args[0])
+      return showMetadataItemForDatastreamWrap("DCA-META", label, tagID, metadataKey, args[0])
     end
 
     def show_pid(pid)
@@ -36,7 +36,11 @@ module Tufts
       result += pid +"</div></div>"
     end
 
-    def showMetadataItemForDatastream(datastream, label, tagID, metadataKey, wrap_tag)
+    def showMetadataItemForDatastream(datastream, label, tagID, metadataKey)
+      return showMetadataItemForDatastreamWrap(datastream, label, tagID, metadataKey, nil)
+    end
+
+    def showMetadataItemForDatastreamWrap(datastream, label, tagID, metadataKey, wrap_tag)
       result = ""
 
       unless get_values_from_datastream(@document_fedora, datastream, [metadataKey]).first.empty?
