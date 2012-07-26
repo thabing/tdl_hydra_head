@@ -19,7 +19,7 @@
     <div class="span6" style="padding-top:5px">
       <a href="/file_assets/<%= params[:id] %>"><i class="icon-headphones"/></i> Download Audio File</a> &nbsp;<a href="/file_assets/transcript/<%= params[:id] %>"><i class="icon-file"/></i> Download Transcript</a>
     </div>
-  <% else %>
+  <% elsif !@document.nil? %>
       <% format = document_partial_name(@document) %>
       <%= render :partial=>"#{format}/subnav"%>
   <% end %>
