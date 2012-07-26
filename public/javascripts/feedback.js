@@ -1,4 +1,4 @@
-function submitFeedback(pid, form_authenticity_token) {
+function submitFeedback(url, authenticity_token) {
   var params,
       message = document.getElementById("inputComment").value,
       optionalEmail = document.getElementById("inputEmail").value;
@@ -22,11 +22,14 @@ function submitFeedback(pid, form_authenticity_token) {
   params  = "name=Unknown";		// feedback_controller.rb expects a name -- make one up.
   params += "&email=" + optionalEmail;
   params += "&message=" + message;
-  params += "&authenticity_token=" + form_authenticity_token;
   params += "&utf8=#x2713;";
 
-  if (pid != null && pid != "") {
-    params += "&pid=" + pid;
+  if (url != null && url != "") {
+    params += "&url=" + url;
+  }
+
+  if (authenticity_token != null && authenticity_token != "") {
+    params += "&authenticity_token=" + authenticity_token;
   }
 
   $.ajax({
