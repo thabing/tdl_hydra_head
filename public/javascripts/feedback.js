@@ -34,7 +34,7 @@ function hideFeedbackForm() {
 }
 
 
-function submitFeedback2(pid) {
+function submitFeedback2(pid, form_authenticity_token) {
   var params,
       message = document.getElementById("inputComment").value,
       optionalEmail = document.getElementById("inputEmail").value;
@@ -58,7 +58,7 @@ function submitFeedback2(pid) {
   params  = "name=Unknown";		// feedback_controller.rb expects a name -- make one up.
   params += "&email=" + optionalEmail;
   params += "&message=" + message;
-//params += "&authenticity_token=" + document.getElementById("feedbackToken").value;
+  params += "&authenticity_token=" + form_authenticity_token;
   params += "&utf8=#x2713;";
 
   if (pid != null && pid != "") {

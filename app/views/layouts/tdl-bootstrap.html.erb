@@ -141,7 +141,7 @@
 
   <div class="modal-body">
 
-    <form class="form-inline comment_form" action="javascript:submitFeedback2(<%= raw ("show" == @current_action || "eadoverview" == @current_action || "eadinternal" == @current_action || "transcriptonly" == @current_action) ? "'http://#{request.host}:#{request.port}#{request.fullpath}'" : "''" %>);">
+    <form class="form-inline comment_form" action="javascript:submitFeedback2(<%= raw ("show" == @current_action || "eadoverview" == @current_action || "eadinternal" == @current_action || "transcriptonly" == @current_action) ? "'http://#{request.host}:#{request.port}#{request.fullpath}'" : "''" %>, '<%= form_authenticity_token %>');">
 
       <fieldset>
 
