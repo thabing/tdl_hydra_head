@@ -41,15 +41,16 @@ module Tufts
     end
 
     def showMetadataItemForDatastreamWrap(datastream, label, tagID, metadataKey, wrap_tag)
+      value_array = get_values_from_datastream(@document_fedora, datastream, [metadataKey])
       result = ""
 
-      unless get_values_from_datastream(@document_fedora, datastream, [metadataKey]).first.empty?
+      unless value_array.first.empty?
 
         unless label.nil?
           result += "<div class=\"metadata_row\" id=\"" + tagID + "\"><div class=\"metadata_label\">" + label + "</div><div class=\"metadata_values\">"
         end
 
-        get_values_from_datastream(@document_fedora, datastream, [metadataKey]).each do |metadataItem|
+        value_array.each do |metadataItem|
           if wrap_tag.nil?
             result += Sanitize.clean(RedCloth.new(metadataItem, [:sanitize_html]).to_html)
           else
