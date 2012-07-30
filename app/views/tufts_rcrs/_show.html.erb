@@ -1,5 +1,53 @@
 <% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
 <% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
+<%
+   title = Tufts::RCRMethods.title(@document_fedora)
+   dates = Tufts::RCRMethods.dates(@document_fedora)
+%>
+        <div class="row">
+          <div class="span12">
+            <h2><%= title + ((dates.nil? || dates.empty?) ? "" : (", " + dates)) %></h2>
+          </div>  <!-- span12 -->
+        </div>  <!-- row -->
+
+        <hr>
+
+        <div class="row">
+          <div class="span6 offset1">
+            <p><%= Tufts::RCRMethods.abstract(@document_fedora)%></p>
+            <h4>History of <%= title %></h4>
+<% Tufts::RCRMethods.history(@document_fedora).each do |paragraph| %>
+            <p><%= paragraph %></p>
+<% end %>
+            <p><%= Tufts::RCRMethods.structure_or_genealogy(@document_fedora) %></p>
+          </div>  <!-- span6 offset1 -->
+
+          <div class="span4 offset1">
+            <div class="tooltip-demo well">
+              <dl>
+                <dd><span class="browntext">Collections</span></dd>
+                <ul>
+                  <li><a href="#">Boston School of Occupational Therapy, records</a></li>
+                  <li><a href="#">Tufts BSOT notes</a></li>
+                </ul>
+              </dl>
+
+              <dl>
+                <dd><span class="browntext">Relationships</span></dd>
+                Part of:
+                <ul>
+                  <li><a href="#">Tufts College (1940-1960)</a></li>
+                  <li><a href="#">College of Special Studies (1945-1977)</a></li>
+                </ul>
+                Succeeded by:
+                <ul>
+                  <li><a href="#">Department of Occupational Therapy (1960-1960)</a></li>
+                </ul>
+              </dl>
+            </div>  <!-- tooltip-demo well -->
+          </div>  <!-- span4 offset1 -->
+        </div>  <!-- row -->
+
 
         <div class="document_viewer" id="cover_container">
           <%= showMetadataItem("Creator", "creator", :creator) %>
