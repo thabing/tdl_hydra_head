@@ -19,7 +19,14 @@
 <% Tufts::RCRMethods.history(@document_fedora).each do |paragraph| %>
             <p><%= paragraph %></p>
 <% end %>
-            <p><%= Tufts::RCRMethods.structure_or_genealogy(@document_fedora) %></p>
+<% Tufts::RCRMethods.structure_or_genealogy_p(@document_fedora).each do |paragraph| %>
+            <p><%= paragraph %></p>
+<% end %>
+            <ul>
+<% Tufts::RCRMethods.structure_or_genealogy_items(@document_fedora).each do |item| %>
+              <li><%= item %></li>
+<% end %>
+            </ul>
           </div>  <!-- span6 offset1 -->
 
           <div class="span4 offset1">
@@ -47,44 +54,3 @@
             </div>  <!-- tooltip-demo well -->
           </div>  <!-- span4 offset1 -->
         </div>  <!-- row -->
-
-
-        <div class="document_viewer" id="cover_container">
-          <%= showMetadataItem("Creator", "creator", :creator) %>
-          <%= showMetadataItem("Source", "source2", :source2) %>
-          <%= showMetadataItem("Description", "description", :description) %>
-          <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
-          <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
-          <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
-          <%= showMetadataItem("Citable URL", "identifier", :identifier) %>
-          <%= showMetadataItem("Rights", "rights", :rights) %>
-          <%= showMetadataItem("Citation", "bibliographicCitation", :bibliographicCitation) %>
-          <%= showMetadataItem("Publisher", "publisher", :publisher) %>
-          <%= showMetadataItem("Type", "type2", :type2) %>
-          <%= showMetadataItem("Format", "format2", :format2) %>
-          <%= showMetadataItem("Person Name", "persname", :persname) %>
-          <%= showMetadataItem("Organizations", "corpname", :corpname) %>
-          <%= showMetadataItem("Places", "geogname", :geogname) %>
-          <%= showMetadataItem("Topics", "subject", :subject) %>
-          <%= showMetadataItem("Funder", "funder", :funder) %>
-          <%= showMetadataItem("Temporal", "temporal", :temporal) %>
-          <%= showMetadataItem("Resolution", "resolution", :resolution) %>
-          <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
-          <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
-          <%= showMetadataItem("File Size", "filesize", :filesize) %>
-        </div>
-        <div>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Record ID", "recordId", :recordId) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Maintenance Status", "maintenanceStatus", :maintenanceStatus) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Maintenance Agency", "maintenanceAgency", :maintenanceAgency) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Language Declaration", "languageDeclaration", :languageDeclaration) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Convention Declaration", "conventionDeclaration", :conventionDeclaration) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Maintenance History", "maintenanceHistory", :maintenanceHistory) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Sources", "sources", :sources) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Identity", "identity", :identity) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Description", "description", :description) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Biographical History", "biogHist", :biogHist) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Structure or Genealogy", "structureOrGenealogy", :structureOrGenealogy) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "CPF Relation", "cpfRelation", :cpfRelation) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Resource Relation", "resourceRelation", :resourceRelation) %>
-       </div>

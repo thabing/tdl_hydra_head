@@ -36,7 +36,12 @@
         t.abstract(:path => "abstract")
         t.p(:path => "p")
       }
-      t.structureOrGenealogy(:path => "structureOrGenealogy")
+      t.structureOrGenealogy(:path => "structureOrGenealogy") {
+        t.p(:path => "p")
+        t.list(:path => "list") {
+          t.item(:path => "item")
+        }
+      }
       t.cpfRelation(:path => "cpfRelation")
       t.resourceRelation(:path => "resourceRelation")
 
@@ -48,7 +53,8 @@
       # Body
       t.bioghist_abstract(:proxy => [:description, :biogHist, :abstract])
       t.bioghist_p(:proxy => [:description, :biogHist, :p])
-      t.structure_or_genealogy(:proxy => [:description, :structureOrGenealogy])
+      t.structure_or_genealogy_p(:proxy => [:description, :structureOrGenealogy, :p])
+      t.structure_or_genealogy_item(:proxy => [:description, :structureOrGenealogy, :list, :item])
     end
 
 

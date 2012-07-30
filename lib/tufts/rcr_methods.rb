@@ -29,8 +29,13 @@ module Tufts
     end
 
 
-    def self.structure_or_genealogy(fedora_obj, datastream = "RCR-CONTENT")
-      return fedora_obj.datastreams[datastream].get_values(:structure_or_genealogy).first
+    def self.structure_or_genealogy_p(fedora_obj, datastream = "RCR-CONTENT")
+      return fedora_obj.datastreams[datastream].get_values(:structure_or_genealogy_p)
+    end
+
+
+    def self.structure_or_genealogy_items(fedora_obj, datastream = "RCR-CONTENT")
+      return fedora_obj.datastreams[datastream].get_values(:structure_or_genealogy_item)
     end
 
 
