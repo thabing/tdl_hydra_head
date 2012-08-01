@@ -88,7 +88,7 @@ module Tufts
           end
         end
 
-				role_array = result_hash.fetch(role, nil)
+        role_array = result_hash.fetch(role, nil)
 
         if role_array.nil?
           role_array = []
@@ -99,6 +99,30 @@ module Tufts
       end
 
       return result_hash;
+    end
+
+
+    def self.collections(fedora_obj, datastream = "RCR-CONTENT")
+      result_array = [];
+      collections = fedora_obj.datastreams[datastream].find_by_terms_and_value(:resource_relations)
+
+      collections.each do |collection|
+        name = ""
+        pid = collection.attribute("id").text  # xml:id in the EAC
+
+        collection.element_children.each do |child|
+          childname = child.name
+
+          if childname == "relationEntry"
+            name = child.text
+            break
+          end
+        end
+
+        result_array << {:name => name, :pid => pid}
+      end
+
+      return result_array;
     end
 
 

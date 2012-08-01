@@ -34,8 +34,12 @@
               <dl>
                 <dd><span class="browntext">Collections</span></dd>
                 <ul>
-                  <li><a href="#">Boston School of Occupational Therapy, records</a></li>
-                  <li><a href="#">Tufts BSOT notes</a></li>
+<%
+   collection_array = Tufts::RCRMethods.collections(@document_fedora)
+   collection_array.each do |collection|
+%>
+                  <li><a href="/catalog/tufts:UA069.001.DO.<%= collection[:pid] %>"><%= collection[:name] %></a></li>
+<% end %>
                 </ul>
               </dl>
 

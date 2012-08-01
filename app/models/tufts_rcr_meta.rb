@@ -50,7 +50,9 @@
             t.toDate(:path => "toDate")
           }
         }
-        t.resourceRelation(:path => "resourceRelation")
+        t.resourceRelation(:path => "resourceRelation") {
+          t.relationEntry(:path => "relationEntry")
+        }
       }
 
       # Title
@@ -67,6 +69,8 @@
       #Relationships
       t.cpf_relations(:proxy => [:relations, :cpfRelation])
 
+      #Collections
+      t.resource_relations(:proxy => [:relations, :resourceRelation])
     end
 
 
