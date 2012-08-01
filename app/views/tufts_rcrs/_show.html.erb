@@ -3,7 +3,6 @@
 <%
    title = Tufts::RCRMethods.title(@document_fedora)
    dates = Tufts::RCRMethods.dates(@document_fedora)
-   relationships = Tufts::RCRMethods.relationships(@document_fedora)
 %>
         <div class="row">
           <div class="span12">
@@ -42,10 +41,20 @@
 
               <dl>
                 <dd><span class="browntext">Relationships</span></dd>
-<% relationships.each do |relationship| %>
-                <%= relationship[:role] %>:
+<%
+   relationship_hash = Tufts::RCRMethods.relationships(@document_fedora)
+   roles = relationship_hash.keys
+   roles.each do |role|
+%>
+                <%= role %>:
                 <ul>
+<%
+     relationships = relationship_hash.fetch(role, [])
+
+     relationships.each do |relationship|
+%>
                   <li><a href="/catalog/tufts:<%= relationship[:pid] %>"><%= relationship[:name] %> (<%= relationship[:from_date] %> - <%= relationship[:to_date] %>)</a></li>
+<%   end %>
                 </ul>
 <% end %>
               </dl>
