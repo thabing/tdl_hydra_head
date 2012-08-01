@@ -2,23 +2,23 @@ module Tufts
   module RCRMethods
 
 
-    @relashionship_map = {:isPartOf => "Part of",
-      :reportsTo => "Reports to",
-      :hasReport => "Has report",
-      :isPartOf => "Part of",
-      :hasPart => "Has part",
-      :isMemberOf => "Member of",
-      :hasMember => "Has member",
-      :isPrecededBy => "Preceded by",
-      :isFollowedBy => "Followed by",
-      :isAssociatedWith => "Associated with",
-      :isChildOf => "Child of",
-      :isParentOf => "Parent of",
-      :isCousinOf => "Cousin of",
-      :isSiblingOf => "Sibling of",
-      :IsSpouseOf => "Spouse of",
-      :isGrandchildOf => "Grandchild of",
-      :isGrandparentOf => "Grandparent of"}
+    @relationship_map = {"isPartOf" => "Part of",
+      "reportsTo" => "Reports to",
+      "hasReport" => "Has report",
+      "isPartOf" => "Part of",
+      "hasPart" => "Has part",
+      "isMemberOf" => "Member of",
+      "hasMember" => "Has member",
+      "isPrecededBy" => "Preceded by",
+      "isFollowedBy" => "Followed by",
+      "isAssociatedWith" => "Associated with",
+      "isChildOf" => "Child of",
+      "isParentOf" => "Parent of",
+      "isCousinOf" => "Cousin of",
+      "isSiblingOf" => "Sibling of",
+      "IsSpouseOf" => "Spouse of",
+      "isGrandchildOf" => "Grandchild of",
+      "isGrandparentOf" => "Grandparent of"}
 
 
     def self.title(fedora_obj, datastream = "RCR-CONTENT")
@@ -63,7 +63,7 @@ module Tufts
       relationships = fedora_obj.datastreams[datastream].find_by_terms_and_value(:cpf_relations)
 
       relationships.each do |relationship|
-        role = relationship_map.fetch(relationship.attribute("arcrole").text.sub("http://dca.lib.tufts.edu/ontology/rcr#", ""), "Unknown relationship")  # xlink:arcrole in the EAC
+        role = @relationship_map.fetch(relationship.attribute("arcrole").text.sub("http://dca.lib.tufts.edu/ontology/rcr#", ""), "Unknown relationship")  # xlink:arcrole in the EAC
         name = ""
         pid = ""
         from_date = ""
@@ -87,8 +87,6 @@ module Tufts
             end
           end
         end
-
-        relationship_hash = {:role => role, :name => name, :pid => pid, :from_date => from_date, :to_date => to_date}
 
 				role_array = result_hash.fetch(role, nil)
 
