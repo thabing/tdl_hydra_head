@@ -3,6 +3,7 @@
 <%
    title = Tufts::RCRMethods.title(@document_fedora)
    dates = Tufts::RCRMethods.dates(@document_fedora)
+   relationships = Tufts::RCRMethods.relationships(@document_fedora)
 %>
         <div class="row">
           <div class="span12">
@@ -41,15 +42,12 @@
 
               <dl>
                 <dd><span class="browntext">Relationships</span></dd>
-                Part of:
+<% relationships.each do |relationship| %>
+                <%= relationship[:role] %>:
                 <ul>
-                  <li><a href="#">Tufts College (1940-1960)</a></li>
-                  <li><a href="#">College of Special Studies (1945-1977)</a></li>
+                  <li><a href="/catalog/tufts:<%= relationship[:pid] %>"><%= relationship[:name] %> (<%= relationship[:from_date] %> - <%= relationship[:to_date] %>)</a></li>
                 </ul>
-                Succeeded by:
-                <ul>
-                  <li><a href="#">Department of Occupational Therapy (1960-1960)</a></li>
-                </ul>
+<% end %>
               </dl>
             </div>  <!-- tooltip-demo well -->
           </div>  <!-- span4 offset1 -->

@@ -42,8 +42,16 @@
           t.item(:path => "item")
         }
       }
-      t.cpfRelation(:path => "cpfRelation")
-      t.resourceRelation(:path => "resourceRelation")
+      t.relations(:path => "relations") {
+        t.cpfRelation(:path => "cpfRelation") {
+          t.relationEntry(:path => "relationEntry")
+          t.dateRange(:path => "dateRange") {
+            t.fromDate(:path => "fromDate")
+            t.toDate(:path => "toDate")
+          }
+        }
+        t.resourceRelation(:path => "resourceRelation")
+      }
 
       # Title
       t.title(:proxy => [:identity, :nameEntry, :part])
@@ -55,6 +63,10 @@
       t.bioghist_p(:proxy => [:description, :biogHist, :p])
       t.structure_or_genealogy_p(:proxy => [:description, :structureOrGenealogy, :p])
       t.structure_or_genealogy_item(:proxy => [:description, :structureOrGenealogy, :list, :item])
+
+      #Relationships
+      t.cpf_relations(:proxy => [:relations, :cpfRelation])
+
     end
 
 
