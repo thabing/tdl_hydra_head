@@ -28,7 +28,7 @@ module Tufts
 
     def self.dates(fedora_obj, datastream = "RCR-CONTENT")
       return fedora_obj.datastreams[datastream].get_values(:fromDate).first +
-        " - " +
+        "-" +
         fedora_obj.datastreams[datastream].get_values(:toDate).first
     end
 

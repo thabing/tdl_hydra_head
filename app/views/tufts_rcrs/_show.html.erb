@@ -53,7 +53,7 @@
 
      relationships.each do |relationship|
 %>
-                  <li><a href="/catalog/tufts:<%= relationship[:pid] %>"><%= relationship[:name] %> (<%= relationship[:from_date] %> - <%= relationship[:to_date] %>)</a></li>
+                  <li><a href="/catalog/tufts:<%= relationship[:pid] %>"><%= relationship[:name] %> (<%= relationship[:from_date] %>-<%= relationship[:to_date] %>)</a></li>
 <%   end %>
                 </ul>
 <% end %>
