@@ -19,10 +19,12 @@ module ApplicationHelper
       return raw(result)
     end
 
+  def render_image_viewer_path(pid)
+    imageviewer_path(pid) +"#page/1/mode/1up"
+  end
 
   def render_image_viewer_link(pid)
-    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\">full view</a>"
-    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
+    result = "<a href=\"" + render_image_viewer_path(pid) + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
     return raw(result)
   end
 
