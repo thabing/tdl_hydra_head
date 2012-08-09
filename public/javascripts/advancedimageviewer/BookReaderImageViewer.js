@@ -341,6 +341,7 @@ br.numLeafs = 1;
 // Book title and the URL used for the book title link
 br.bookTitle= 'Open Library BookReader Presentation';
 br.bookUrl  = 'http://openlibrary.org';
+br.logoURL = '/';
 
 // Override the path used to find UI images
 br.imagesBaseURL = '/images/BookReader/';
