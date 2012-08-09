@@ -9,6 +9,34 @@ require 'chronic'
 module Tufts
   module ModelMethods
 
+    def self.get_metadata(fedora_obj)
+      datastream = fedora_obj.datastreams["DCA-META"]
+
+      # create the union (ie, without duplicates) of subject, geogname, persname, and corpname
+      subjects = []
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:subject))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:geogname))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:persname))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:corpname))
+
+      return {
+          :titles => datastream.find_by_terms_and_value(:title),
+          :creators => datastream.find_by_terms_and_value(:creator),
+          :dates => datastream.find_by_terms_and_value(:dateCreated2),
+          :descriptions => datastream.find_by_terms_and_value(:description),
+          :sources => datastream.find_by_terms_and_value(:source2),
+          :citable_urls => datastream.find_by_terms_and_value(:identifier),
+          :citations => datastream.find_by_terms_and_value(:bibliographicCitation),
+          :publishers => datastream.find_by_terms_and_value(:publisher),
+          :genres => datastream.find_by_terms_and_value(:genre),
+          :types => datastream.find_by_terms_and_value(:type2),
+          :formats => datastream.find_by_terms_and_value(:format2),
+          :rights => datastream.find_by_terms_and_value(:rights),
+          :subjects => subjects,
+          :temporals => datastream.find_by_terms_and_value(:temporal)
+      }
+    end
+
     #  config[:sort_fields] << ['relevance', 'score desc, pub_date_sort desc, title_sort asc']
     #  config[:sort_fields] << ['year descending', 'pub_date_sort desc, title_sort asc']
     #  config[:sort_fields] << ['author ascending', 'author_sort asc, title_sort asc']

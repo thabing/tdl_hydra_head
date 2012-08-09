@@ -1,34 +1,6 @@
 module Tufts
   module AudioMethods
 
-
-    def self.get_metadata(fedora_obj)
-      datastream = fedora_obj.datastreams["DCA-META"]
-
-      # create the union (ie, without duplicates) of subject, geogname, persname, and corpname
-      subjects = []
-      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:subject))
-      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:geogname))
-      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:persname))
-      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:corpname))
-
-      return {
-        :titles => datastream.find_by_terms_and_value(:title),
-        :creators => datastream.find_by_terms_and_value(:creator),
-        :dates => datastream.find_by_terms_and_value(:dateCreated2),
-        :descriptions => datastream.find_by_terms_and_value(:description),
-        :sources => datastream.find_by_terms_and_value(:source2),
-        :citable_urls => datastream.find_by_terms_and_value(:identifier),
-        :citations => datastream.find_by_terms_and_value(:bibliographicCitation),
-        :publishers => datastream.find_by_terms_and_value(:publisher),
-        :types => datastream.find_by_terms_and_value(:type2),
-        :formats => datastream.find_by_terms_and_value(:format2),
-        :subjects => subjects,
-        :temporals => datastream.find_by_terms_and_value(:temporal)
-      }
-    end
-
-
     def self.show_audio_player(pid)
       result = "<div id=\"playerDiv\"><div id=\"controls\"></div><ul id=\"playlist\"><li>"
 
