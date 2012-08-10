@@ -158,4 +158,7 @@
       return builder.doc
     end
 
+    def to_solr(solr_doc = Hash.new) # :nodoc:
+      return solr_doc
+    end
   end
