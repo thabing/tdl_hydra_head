@@ -428,7 +428,15 @@ module Tufts
 
         did.element_children.each do |did_child|
           if did_child.name == "unittitle"
-            unittitle = did_child.text
+            unittitle = did_child.children.first.text
+
+            if did_child.children.size > 1
+              unittitle_child = did_child.children[1]
+
+              if unittitle_child.name == "unitdate"
+                unitdate = unittitle_child.text
+              end
+            end
           elsif did_child.name == "unitdate"
             unitdate = did_child.text
 #         elsif did_child.name == "physdesc"
@@ -459,7 +467,7 @@ module Tufts
         end
 
         available_online = !page.nil? && !page.empty?
-        title = (available_online ? "<a href=\"/catalog/" + page + "\">" : "") + (unittitle.nil? ? "" : unittitle) + (unitdate.nil? ? "" : " " + unitdate) + (available_online ? "</a>" : "")
+        title = (available_online ? "<a href=\"/catalog/" + page + "\">" : "") + (unittitle.nil? ? "" : unittitle) + (unitdate.nil? || (!unittitle.nil? && unittitle.end_with?(unitdate))? "" : " " + unitdate) + (available_online ? "</a>" : "")
 
         if !physloc.nil?
           labels = "Location:"
