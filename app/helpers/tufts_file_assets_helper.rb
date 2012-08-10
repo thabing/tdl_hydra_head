@@ -7,7 +7,7 @@ module TuftsFileAssetsHelper
       local_object_store = "#{Rails.root}" + local_object_store.gsub("\#\{Rails.root\}", "")
     end
 
-    url = local_object_store << url.gsub(Settings.trim_bucket_url, "")
+    url = local_object_store + url.gsub(Settings.trim_bucket_url, "")
 
     return url
   end
