@@ -849,7 +849,7 @@ a.thumbnail:hover {
 }
 
 /*added so that the homepage thumbnails do not expand */
-.thumbnail .home img {
+ .thumbnail .home img {
     width: 204px;
 }
 
@@ -1363,7 +1363,7 @@ margin-left: 300px;	}
  
  .active_orange a{ color: #de6020;}
  
- 
+ 	
  #static_thumbnail
 {
     text-align:center;
@@ -1398,7 +1398,7 @@ IMG.thumbnailwidth{
 		}
 		
 		
-		.thumbnails > li {
+ #myImageGallery .thumbnails > li {
    
     height: 145px;
 }
