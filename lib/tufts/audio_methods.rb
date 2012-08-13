@@ -95,16 +95,16 @@ module Tufts
         result << "                <div class=\"transcript_chunk\" id=\"chunk" + string_total_seconds + "\">\n"
         unless (string_total_seconds == "")
           result << "                  <div class=\"transcript_row\">\n"
-          result << "                    <div class=\"transcript_speaker\"></div>\n"
-          result << "                    <div class=\"transcript_utterance\">\n"
+          result << "                    <div class=\"transcript_speaker\">\n"
 
           if (active_timestamps)
             result << "                      <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
           else
-            result << "                      " + string_minutes + ":" + string_just_seconds + "\n"
+            result << "                      <span class=\"transcript_chunk_link\">" + string_minutes + ":" + string_just_seconds + "</span>\n"
           end
 
-          result << "                    </div> <!-- transcript_utterance -->\n"
+          result << "                    </div> <!-- transcript_speaker -->\n"
+          result << "                    <div class=\"transcript_utterance\"></div>\n"
           result << "                  </div> <!-- transcript_row -->\n"
         end
         node.children.each do |child|
