@@ -37,12 +37,10 @@ module Tufts
             participant_number += 1
             id = child.attributes["id"]
             role = child.attributes["role"]
-            sex = child.attributes["sex"]
+            sex = child.attributes["sex"].to_s
             result << "        <div class=\"participant_row\" id=\"participant" + participant_number.to_s + "\">\n"
             result << "          <div class=\"participant_id\">" + (id.nil? ? "" : id) + "</div>\n"
-            result << "          <div class=\"participant_name\">" + child.text + "</div>\n"
-            result << "          <div class=\"participant_role\">" + (role.nil? ? "" : role) + "</div>\n"
-            result << "          <div class=\"participant_sex\">" + (sex.nil? ? "" : sex) + "</div>\n"
+            result << "          <div class=\"participant_name\">" + child.text + "<span class=\"participant_role\">" + (role.nil? ? "" : ", " + role) + (sex.nil? ? "" : " (" + (sex == "f" ? "female" : (sex == "m" ? "male" : sex)) + ")") + "</span></div>\n"
             result << "        </div> <!-- participant_row -->\n"
           end
         end
