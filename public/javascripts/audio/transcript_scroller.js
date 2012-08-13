@@ -46,7 +46,7 @@ $(document).ready(
 				}
 	
 				currentlyHighlightedDiv = div;
-				currentlyHighlightedDiv.style.backgroundColor = '#f4dca6';
+				currentlyHighlightedDiv.style.backgroundColor = '#F1F7FF';
 				currentlyHighlightedDiv.scrollIntoView(true);
 			}
 		}
