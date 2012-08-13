@@ -21,8 +21,10 @@
     <div class="span6">
       <%= raw Tufts::AudioMethods.show_audio_player(params[:id]) %><br>
       <br>
-      <b>Interview Participants</b><br>
-      <%= raw Tufts::AudioMethods.show_participants(@document_fedora) %>
+      <div class="participant_div">
+        <b>Interview Participants</b><br>
+        <%= raw Tufts::AudioMethods.show_participants(@document_fedora) %>
+      </div>  <!-- participant_div -->
     </div>  <!-- span6 -->
 
     <div class="span6">
