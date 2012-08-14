@@ -1,9 +1,3 @@
-
-$(document).ready(
-  function() {
-  }
-);
-
 	var currentlyHighlightedDiv = null;
 	var lastSeconds = -1;
 
