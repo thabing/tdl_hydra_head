@@ -51,6 +51,6 @@
 	function jumpPlayerTo(milliseconds) {
 		// set audio_player.js variable resumeTime before calling MediaPlayer.play();
 		// thisMediaObj is also an audio_player.js variable.
-		resumeTime = milliseconds;
+		resumeTime = milliseconds / 1000;
 		YAHOO.MediaPlayer.play(thisMediaObj.track, milliseconds);
 	}
