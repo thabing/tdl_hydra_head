@@ -17,11 +17,11 @@ $(document).ready(
   }
 );
 
-	function playerReady() {
-	  // Choose the transcript tab whenever the play button is clicked.
-		YAHOO.MediaPlayer.onTrackStart.subscribe(chooseTranscriptTab);
-	}
+  function playerReady() {
+    // Choose the transcript tab whenever the play button is clicked.
+    YAHOO.MediaPlayer.onTrackStart.subscribe(chooseTranscriptTab);
+  }
 
-	function chooseTranscriptTab() {
-		$("#tab2").click;
-	}
+  function chooseTranscriptTab() {
+    $("#tab2").click();
+  }
