@@ -1,4 +1,4 @@
-	var currentlyHighlightedDiv = null;
+	var currentlyHighlightedDiv = null;	
 	var lastSeconds = -1;
 
 	function playerReady() {
@@ -38,7 +38,7 @@
 				if (currentlyHighlightedDiv != null) {
 					currentlyHighlightedDiv.style.backgroundColor = 'white';
 				}
-	
+
 				currentlyHighlightedDiv = div;
 				currentlyHighlightedDiv.style.backgroundColor = '#F1F7FF';
 				currentlyHighlightedDiv.scrollIntoView(true);
@@ -47,3 +47,10 @@
 	}
 
 	YAHOO.MediaPlayer.onAPIReady.subscribe(playerReady);
+
+	function jumpPlayerTo(milliseconds) {
+		// set audio_player.js variable resumeTime before calling MediaPlayer.play();
+		// thisMediaObj is also an audio_player.js variable.
+		resumeTime = milliseconds;
+		YAHOO.MediaPlayer.play(thisMediaObj.track, milliseconds);
+	}

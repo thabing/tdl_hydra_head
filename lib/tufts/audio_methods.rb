@@ -96,7 +96,7 @@ module Tufts
           result << "                    <div class=\"transcript_speaker\">\n"
 
           if (active_timestamps)
-            result << "                      <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+            result << "                      <a class=\"transcript_chunk_link\" href=\"javascript:jumpPlayerTo(" + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
           else
             result << "                      <span class=\"transcript_chunk_link\">" + string_minutes + ":" + string_just_seconds + "</span>\n"
           end
