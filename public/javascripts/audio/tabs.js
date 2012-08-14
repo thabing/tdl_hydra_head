@@ -12,5 +12,16 @@ $(document).ready(
 
     tab1.attr("data-toggle", "tab");
     tab2.attr("data-toggle", "tab");
+
+    YAHOO.MediaPlayer.onAPIReady.subscribe(playerReady);
   }
 );
+
+	function playerReady() {
+	  // Choose the transcript tab whenever the play button is clicked.
+		YAHOO.MediaPlayer.onTrackStart.subscribe(chooseTranscriptTab);
+	}
+
+	function chooseTranscriptTab() {
+		$("#tab2").click;
+	}
