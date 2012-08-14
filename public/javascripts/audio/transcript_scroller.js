@@ -49,8 +49,11 @@
 	YAHOO.MediaPlayer.onAPIReady.subscribe(playerReady);
 
 	function jumpPlayerTo(milliseconds) {
-		// set audio_player.js variable resumeTime before calling MediaPlayer.play();
+		// clear audio_player.js variables resumeTrack and resumeTime before calling MediaPlayer.play();
+		// this is so that if the player is paused when a timestamp link is clicked, play will resume
+		// at the timestamp rather than at the point when it was paused.
 		// thisMediaObj is also an audio_player.js variable.
-		resumeTime = milliseconds / 1000;
+		resumeTrack = null;
+		resumeTime = 0;
 		YAHOO.MediaPlayer.play(thisMediaObj.track, milliseconds);
 	}
