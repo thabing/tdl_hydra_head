@@ -6,6 +6,7 @@ TdlHydraHead::Application.routes.draw do
   match '/bookreader/:id', :to => 'imageviewer#show_book', :constraints => {:id => /.*/}, :as =>'bookreader'
 
   match "/about" => "about#index"
+  match "/about/finding_aids" => "about#finding_aids"
  #get "search/index"
  # match "/search" => "search#index"
   match "/contact" => "contact#show"
