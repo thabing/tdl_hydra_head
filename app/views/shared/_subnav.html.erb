@@ -1,5 +1,5 @@
 <div class="subnav">
-  <% if "index" == @current_action %>
+  <% if "index" == @current_action || "about" == @current_action || "contact" == @current_action || "search" == @current_action %>
     <%= render :partial =>"shared/search_bar" %>
   <% elsif "eadoverview" == @current_action %>
     <div class="span6" style="padding-top:5px">
