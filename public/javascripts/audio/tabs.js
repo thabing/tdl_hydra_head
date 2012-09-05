@@ -13,11 +13,11 @@ $(document).ready(
     tab1.attr("data-toggle", "tab");
     tab2.attr("data-toggle", "tab");
 
-    YAHOO.MediaPlayer.onAPIReady.subscribe(playerReady);
+    YAHOO.MediaPlayer.onAPIReady.subscribe(playerReadyForTabs);
   }
 );
 
-  function playerReady() {
+  function playerReadyForTabs() {
     // Choose the transcript tab whenever the play button is clicked.
     YAHOO.MediaPlayer.onTrackStart.subscribe(chooseTranscriptTab);
   }

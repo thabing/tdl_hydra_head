@@ -1,11 +1,6 @@
 	var currentlyHighlightedDiv = null;	
 	var lastSeconds = -1;
 
-	function playerReady() {
-		YAHOO.MediaPlayer.onProgress.subscribe(scrollTranscript);
-	}
-
-
 	function scrollTranscript(progressArray) {
 
 		if (resumeTime != 0) {
@@ -46,7 +41,6 @@
 		}
 	}
 
-	YAHOO.MediaPlayer.onAPIReady.subscribe(playerReady);
 
 	function jumpPlayerTo(milliseconds) {
 		// clear audio_player.js variables resumeTrack and resumeTime before calling MediaPlayer.play();
@@ -57,3 +51,15 @@
 		resumeTime = 0;
 		YAHOO.MediaPlayer.play(thisMediaObj.track, milliseconds);
 	}
+
+
+	function playerReadyForTranscript() {
+		YAHOO.MediaPlayer.onProgress.subscribe(scrollTranscript);
+	}
+
+
+$(document).ready(
+	function() {
+		YAHOO.MediaPlayer.onAPIReady.subscribe(playerReadyForTranscript);
+	}
+);

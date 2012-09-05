@@ -30,6 +30,7 @@
 	var seekInterval = 15; //number of seconds to seek forward or back (for HTML5)
 	var resumeTrack = null;
 	var resumeTime = 0;
+	var initialTrack = null;
 
 	// Once API ready handler is invoked, YAHOO.MediaPlayer class can be accessed safely
 	var apiReadyHandler = function () {
@@ -214,6 +215,7 @@
 	}
 
 	var onPlaylistUpateHandler = function (playlistArray) {
+		initialTrack = playlistArray[0];
 		numSongs = YAHOO.MediaPlayer.getPlaylistCount();
 		//set first track as "Now playing"
 		var children = playlist.childNodes;
@@ -279,7 +281,15 @@
 			playpause.style.backgroundImage="url('../images/audio/audio_play.gif')";
 		}
 		else {
-			YAHOO.MediaPlayer.play();
+			if (initialTrack != null) {
+				// This seems like a horrible hack, but otherwise the play button doesn't initially work.
+				YAHOO.MediaPlayer.play(initialTrack, 0);
+				YAHOO.MediaPlayer.play(initialTrack, 0);
+				initialTrack = null;
+			} else {
+				YAHOO.MediaPlayer.play();
+			}
+
 			playpause.setAttribute('title','Pause');
 			playpause.style.backgroundImage="url('../images/audio/audio_pause.gif')";
 		}
@@ -354,4 +364,8 @@
 		}
 	}
 
-	YAHOO.MediaPlayer.onAPIReady.subscribe(apiReadyHandler);
+$(document).ready(
+	function() {
+		YAHOO.MediaPlayer.onAPIReady.subscribe(apiReadyHandler);
+	}
+);
