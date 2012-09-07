@@ -2,7 +2,6 @@ module Tufts
   module AudioMethods
 
     def self.show_audio_player(pid)
-
       result = "<div id=\"playerDiv\"><div id=\"controls\"></div><ul id=\"playlist\"><li>"
 
       #   the following line is what we would ultimately want but it doesn't work yet
@@ -12,8 +11,11 @@ module Tufts
       #   result += "<a href=\"" + datastream_disseminator_url(params[:id], "ACCESS_MP3") + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
 
       #   the following line works in Safari, Chrome and Firefox but not in Opera
-      result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + pid + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-      #latest from Mike: result += "<a href=\"/file_assets/" + pid +"\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+      #   result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + pid + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+
+      #   the correct way, from Mike: 
+      result += "<a href=\"/file_assets/" + pid +"\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
+
       #   the following test works in Safari, Chrome, Firefox and Opera, proving that Opera is capable of using the yahoo media player, as in current DL prod...
       #   result += "<a href=\"http://dl.tufts.edu/ProxyServlet/?url=http://repository01.lib.tufts.edu:8080/fedora/get/tufts:AC00001/bdef:TuftsAudio/getAudioFile&filename=tufts:AC00001.mp3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
 
@@ -22,10 +24,9 @@ module Tufts
       return result
     end
 
-    def self.show_transcript(fedora_obj, datastream="ARCHIVAL_XML")
-      result = "<div class=\"participant_section\">\n"
-      result << "            <h1 class=\"participant_header\">Interview Participants</h1>\n"
-      result << "            <div class=\"participant_table\">\n"
+
+    def self.show_participants(fedora_obj, datastream="ARCHIVAL_XML")
+      result = "<div class=\"participant_table\">\n"
 
       participant_number = 0
       node_sets = fedora_obj.datastreams[datastream].find_by_terms_and_value(:participants)
@@ -36,20 +37,22 @@ module Tufts
             participant_number += 1
             id = child.attributes["id"]
             role = child.attributes["role"]
-            sex = child.attributes["sex"]
-            result << "              <div class=\"participant_row\" id=\"participant" + participant_number.to_s + "\">\n"
-            result << "                <div class=\"participant_id\">" + (id.nil? ? "" : id) + ":</div>\n"
-            result << "                <div class=\"participant_name\">" + child.text + "</div>\n"
-            result << "                <div class=\"participant_role\">" + (role.nil? ? "" : role) + "</div>\n"
-            result << "                <div class=\"participant_sex\">" + (sex.nil? ? "" : sex) + "</div>\n"
-            result << "              </div> <!-- participant_row -->\n"
+            sex = child.attributes["sex"].to_s
+            result << "        <div class=\"participant_row\" id=\"participant" + participant_number.to_s + "\">\n"
+            result << "          <div class=\"participant_id\">" + (id.nil? ? "" : id) + "</div>\n"
+            result << "          <div class=\"participant_name\">" + child.text + "<span class=\"participant_role\">" + (role.nil? ? "" : ", " + role) + (sex.nil? ? "" : " (" + (sex == "f" ? "female" : (sex == "m" ? "male" : sex)) + ")") + "</span></div>\n"
+            result << "        </div> <!-- participant_row -->\n"
           end
         end
       end
 
-      result << "            </div> <!-- participant_table -->\n"
-      result << "          </div> <!-- participant_section -->\n"
+      result << "      </div> <!-- participant_table -->\n"
 
+      return result
+    end
+
+
+    def self.show_transcript(fedora_obj, active_timestamps, datastream="ARCHIVAL_XML")
       timepoints = Hash.new
       node_sets = fedora_obj.datastreams[datastream].find_by_terms_and_value(:when)
 
@@ -63,10 +66,7 @@ module Tufts
         end
       end
 
-      result << "          <div class=\"transcript_section\">\n"
-      result << "            <h1 class=\"transcript_header\">Transcript</h1>\n"
-      result << "            <div class=\"transcript_scrollarea\">\n"
-      result << "              <div class=\"transcript_table\">\n"
+      result = "<div class=\"transcript_table\">\n"
 
       node_sets = fedora_obj.datastreams[datastream].find_by_terms_and_value(:u)
 
@@ -93,10 +93,16 @@ module Tufts
         result << "                <div class=\"transcript_chunk\" id=\"chunk" + string_total_seconds + "\">\n"
         unless (string_total_seconds == "")
           result << "                  <div class=\"transcript_row\">\n"
-          result << "                    <div class=\"transcript_speaker\"></div>\n"
-          result << "                    <div class=\"transcript_utterance\">\n"
-          result << "                      <a class=\"transcript_chunk_link\" href=\"javascript:YAHOO.MediaPlayer.play(thisMediaObj.track," + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
-          result << "                    </div> <!-- transcript_utterance -->\n"
+          result << "                    <div class=\"transcript_speaker\">\n"
+
+          if (active_timestamps)
+            result << "                      <a class=\"transcript_chunk_link\" href=\"javascript:jumpPlayerTo(" + string_milliseconds + ");\">" + string_minutes + ":" + string_just_seconds + "</a>\n"
+          else
+            result << "                      <span class=\"transcript_chunk_link\">" + string_minutes + ":" + string_just_seconds + "</span>\n"
+          end
+
+          result << "                    </div> <!-- transcript_speaker -->\n"
+          result << "                    <div class=\"transcript_utterance\"></div>\n"
           result << "                  </div> <!-- transcript_row -->\n"
         end
         node.children.each do |child|
@@ -123,13 +129,13 @@ module Tufts
       end
 
       result << "              </div> <!-- transcript_table -->\n"
-      result << "            </div> <!-- transcript_scrollarea -->\n"
-      result << "          </div> <!-- transcript_section -->"
 
       return result
     end
 
+
     private # all methods that follow will be made private: not accessible for outside objects
+
 
     def self.parse_notations(node)
       result = ""

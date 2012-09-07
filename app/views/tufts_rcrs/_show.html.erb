@@ -1,45 +1,67 @@
 <% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
 <% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << "feedback.js" %>
-<% stylesheet_links << "feedback/feedback.css" %>
+<%
+   title = Tufts::RCRMethods.title(@document_fedora)
+   dates = Tufts::RCRMethods.dates(@document_fedora)
+%>
+        <div class="row">
+          <div class="span12">
+            <h2><%= title + ((dates.nil? || dates.empty?) ? "" : (", " + dates)) %></h2>
+          </div>  <!-- span12 -->
+        </div>  <!-- row -->
 
-        <div class="document_viewer" id="cover_container">
-          <%= showMetadataItem("Creator", "creator", :creator) %>
-          <%= showMetadataItem("Source", "source2", :source2) %>
-          <%= showMetadataItem("Description", "description", :description) %>
-          <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
-          <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
-          <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
-          <%= showMetadataItem("Citable URL", "identifier", :identifier) %>
-          <%= showMetadataItem("Rights", "rights", :rights) %>
-          <%= showMetadataItem("Citation", "bibliographicCitation", :bibliographicCitation) %>
-          <%= showMetadataItem("Publisher", "publisher", :publisher) %>
-          <%= showMetadataItem("Type", "type2", :type2) %>
-          <%= showMetadataItem("Format", "format2", :format2) %>
-          <%= showMetadataItem("Person Name", "persname", :persname) %>
-          <%= showMetadataItem("Organizations", "corpname", :corpname) %>
-          <%= showMetadataItem("Places", "geogname", :geogname) %>
-          <%= showMetadataItem("Topics", "subject", :subject) %>
-          <%= showMetadataItem("Funder", "funder", :funder) %>
-          <%= showMetadataItem("Temporal", "temporal", :temporal) %>
-          <%= showMetadataItem("Resolution", "resolution", :resolution) %>
-          <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
-          <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
-          <%= showMetadataItem("File Size", "filesize", :filesize) %>
-          <%= showFeedbackForm(params[:id]) %>
-        </div>
-        <div>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Record ID", "recordId", :recordId) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Maintenance Status", "maintenanceStatus", :maintenanceStatus) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Maintenance Agency", "maintenanceAgency", :maintenanceAgency) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Language Declaration", "languageDeclaration", :languageDeclaration) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Convention Declaration", "conventionDeclaration", :conventionDeclaration) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Maintenance History", "maintenanceHistory", :maintenanceHistory) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Sources", "sources", :sources) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Identity", "identity", :identity) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Description", "description", :description) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Biographical History", "biogHist", :biogHist) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Structure or Genealogy", "structureOrGenealogy", :structureOrGenealogy) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "CPF Relation", "cpfRelation", :cpfRelation) %>
-          <%= showMetadataItemForDatastream("RCR-CONTENT", "Resource Relation", "resourceRelation", :resourceRelation) %>
-       </div>
+        <hr>
+
+        <div class="row">
+          <div class="span6 offset1">
+            <p><%= Tufts::RCRMethods.abstract(@document_fedora)%></p>
+            <h4>History of <%= title %></h4>
+<% Tufts::RCRMethods.history(@document_fedora).each do |paragraph| %>
+            <p><%= paragraph %></p>
+<% end %>
+<% Tufts::RCRMethods.structure_or_genealogy_p(@document_fedora).each do |paragraph| %>
+            <p><%= paragraph %></p>
+<% end %>
+            <ul>
+<% Tufts::RCRMethods.structure_or_genealogy_items(@document_fedora).each do |item| %>
+              <li><%= item %></li>
+<% end %>
+            </ul>
+          </div>  <!-- span6 offset1 -->
+
+          <div class="span4 offset1">
+            <div class="tooltip-demo well">
+              <dl>
+                <dd><span class="browntext">Collections</span></dd>
+                <ul>
+<%
+   collection_array = Tufts::RCRMethods.collections(@document_fedora)
+   collection_array.each do |collection|
+%>
+                  <li><a href="/catalog/tufts:UA069.001.DO.<%= collection[:pid] %>"><%= collection[:name] %></a></li>
+<% end %>
+                </ul>
+              </dl>
+
+              <dl>
+                <dd><span class="browntext">Relationships</span></dd>
+<%
+   relationship_hash = Tufts::RCRMethods.relationships(@document_fedora)
+   roles = relationship_hash.keys
+   roles.each do |role|
+%>
+                <%= role %>:
+                <ul>
+<%
+     relationships = relationship_hash.fetch(role, [])
+
+     relationships.each do |relationship|
+%>
+                  <li><a href="/catalog/tufts:<%= relationship[:pid] %>"><%= relationship[:name] %> (<%= relationship[:from_date] %>-<%= relationship[:to_date] %>)</a></li>
+<%   end %>
+                </ul>
+<% end %>
+              </dl>
+            </div>  <!-- tooltip-demo well -->
+          </div>  <!-- span4 offset1 -->
+        </div>  <!-- row -->

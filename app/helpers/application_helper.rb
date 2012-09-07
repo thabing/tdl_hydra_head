@@ -7,22 +7,30 @@ module ApplicationHelper
         'Tufts Digital Library'
   end
 
-  def showImage(pid)
-    result = "<img alt=\"\" src=\"" + file_asset_path(pid) + "\"/>"
+  def showPdfImage(pid)
+    result = "<img alt=\"\" src=\"/pdf_pages/" + pid + "/0\"/>"
 
     return raw(result)
   end
 
+  def showImage(pid)
+      result = "<img alt=\"\" src=\"" + file_asset_path(pid) + "\"/>"
+
+      return raw(result)
+    end
+
+  def render_image_viewer_path(pid)
+    imageviewer_path(pid) +"#page/1/mode/1up"
+  end
 
   def render_image_viewer_link(pid)
-    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\">full view</a>"
-    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
+    result = "<a href=\"" + render_image_viewer_path(pid) + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
     return raw(result)
   end
 
   def render_book_viewer_link(pid)
-    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\">full view</a>"
-    result = "<a href=\"" + imageviewer_path(pid) +"#page/1/mode/1up" + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
+    result = "<a href=\"/bookreader/" + pid +"#page/1/mode/2up" + "\">full view</a>"
+    result = "<a href=\"/bookreader/" + pid +"#page/1/mode/2up" + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
     return raw(result)
   end
 
@@ -72,7 +80,7 @@ module ApplicationHelper
     return "" unless respond_to?(:javascript_includes)
     str = ""
     javascript_includes.collect do |args|
-      if (args.to_a & %w(hydra/hydra-head jquery.form.js spin.min.js catalog/show custom)).empty?
+      if (args.to_a & %w(hydra/hydra-head jquery.form.js spin.min.js jquery-1.4.2.min.js catalog/show custom)).empty?
         str +=javascript_include_tag(*args)
       end
     end.join("\n")
@@ -93,5 +101,21 @@ module ApplicationHelper
       end
     end.join("\n")
     return raw("\n"+str)
+  end
+
+  def http_referer_uri
+    request.env["HTTP_REFERER"] && URI.parse(request.env["HTTP_REFERER"])
+  end
+
+  def refered_from_our_site?
+    if uri = http_referer_uri
+      uri.host == request.host
+    end
+  end
+
+  def refered_from_a_search?
+    if refered_from_our_site?
+      http_referer_uri.try(:query)['search']
+    end
   end
 end

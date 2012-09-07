@@ -19,12 +19,58 @@
       t.conventionDeclaration(:path => "conventionDeclaration")
       t.maintenanceHistory(:path => "maintenanceHistory")
       t.sources(:path => "sources")
-      t.identity(:path => "identity")
-      t.description(:path => "description")
-      t.biogHist(:path => "biogHist")
-      t.structureOrGenealogy(:path => "structureOrGenealogy")
-      t.cpfRelation(:path => "cpfRelation")
-      t.resourceRelation(:path => "resourceRelation")
+      t.identity(:path => "identity") {
+        t.nameEntry(:path => "nameEntry") {
+          t.part(:path => "part")
+        }
+      }
+      t.description(:path => "description") {
+        t.existDates(:path => "existDates") {
+          t.dateRange(:path => "dateRange") {
+            t.fromDate(:path => "fromDate")
+            t.toDate(:path => "toDate")
+          }
+        }
+      }
+      t.biogHist(:path => "biogHist") {
+        t.abstract(:path => "abstract")
+        t.p(:path => "p")
+      }
+      t.structureOrGenealogy(:path => "structureOrGenealogy") {
+        t.p(:path => "p")
+        t.list(:path => "list") {
+          t.item(:path => "item")
+        }
+      }
+      t.relations(:path => "relations") {
+        t.cpfRelation(:path => "cpfRelation") {
+          t.relationEntry(:path => "relationEntry")
+          t.dateRange(:path => "dateRange") {
+            t.fromDate(:path => "fromDate")
+            t.toDate(:path => "toDate")
+          }
+        }
+        t.resourceRelation(:path => "resourceRelation") {
+          t.relationEntry(:path => "relationEntry")
+        }
+      }
+
+      # Title
+      t.title(:proxy => [:identity, :nameEntry, :part])
+      t.fromDate(:proxy => [:description, :existDates, :dateRange, :fromDate])
+      t.toDate(:proxy => [:description, :existDates, :dateRange, :toDate])
+
+      # Body
+      t.bioghist_abstract(:proxy => [:description, :biogHist, :abstract])
+      t.bioghist_p(:proxy => [:description, :biogHist, :p])
+      t.structure_or_genealogy_p(:proxy => [:description, :structureOrGenealogy, :p])
+      t.structure_or_genealogy_item(:proxy => [:description, :structureOrGenealogy, :list, :item])
+
+      #Relationships
+      t.cpf_relations(:proxy => [:relations, :cpfRelation])
+
+      #Collections
+      t.resource_relations(:proxy => [:relations, :resourceRelation])
     end
 
 
@@ -112,4 +158,7 @@
       return builder.doc
     end
 
+    def to_solr(solr_doc = Hash.new) # :nodoc:
+      return solr_doc
+    end
   end

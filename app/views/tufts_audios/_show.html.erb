@@ -1,36 +1,30 @@
-<% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << "yahooMediaPlayer.js" %>
+<script type="text/javascript" src="http://webplayer.yahooapis.com/player.js"></script>
 <% javascript_includes << "audio/audio_player.js" %>
+<% javascript_includes << "read_more_or_less.js" %>
 <% stylesheet_links << "audio/audio_player.css" %>
-<% javascript_includes << "feedback.js" %>
-<% stylesheet_links << "feedback/feedback.css" %>
+<% stylesheet_links << "audio/audio.css" %>
 
-        <div class="document_viewer" id="cover_container">
-          <%= showMetadataItem("Creator", "creator", :creator) %>
-          <%= showMetadataItem("Source", "source2", :source2) %>
-          <%= showMetadataItem("Description", "description", :description) %>
-          <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
-          <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
-          <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
-          <%= showMetadataItem("Citable URL", "identifier", :identifier) %>
-          <%= showMetadataItem("Rights", "rights", :rights) %>
-          <%= showMetadataItem("Citation", "bibliographicCitation", :bibliographicCitation) %>
-          <%= showMetadataItem("Publisher", "publisher", :publisher) %>
-          <%= showMetadataItem("Type", "type2", :type2) %>
-          <%= showMetadataItem("Format", "format2", :format2) %>
-          <%= showMetadataItem("Person Name", "persname", :persname) %>
-          <%= showMetadataItem("Organizations", "corpname", :corpname) %>
-          <%= showMetadataItem("Places", "geogname", :geogname) %>
-          <%= showMetadataItem("Topics", "subject", :subject) %>
-          <%= showMetadataItem("Funder", "funder", :funder) %>
-          <%= showMetadataItem("Temporal", "temporal", :temporal) %>
-          <%= showMetadataItem("Resolution", "resolution", :resolution) %>
-          <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
-          <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
-          <%= showMetadataItem("File Size", "filesize", :filesize) %>
-          <%= showFeedbackForm(params[:id]) %>
-        </div>
-        <div>
-          <%= showAudioPlayer(params[:id]) %>
-        </div>
+
+<% metadata = Tufts::ModelMethods.get_metadata(@document_fedora) %>
+
+
+<div class="row">
+  <div class="span12">
+    <%= render :partial => 'shared/header_elements', :locals => {:metadata => metadata} %>
+  </div>
+  <!-- span12 -->
+</div>  <!-- row -->
+
+<hr>
+
+<div class="row">
+  <div class="span6">
+    <%= raw Tufts::AudioMethods.show_audio_player(params[:id]) %>
+    <br>
+  </div>
+  <!-- span6 -->
+  <div class="span6">
+    <%= render :partial => 'shared/metadata_pane', :locals => {:metadata => metadata} %>
+  </div>
+  <!-- span6 -->
+</div>  <!-- row -->

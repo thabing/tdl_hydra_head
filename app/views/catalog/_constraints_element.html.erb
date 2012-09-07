@@ -10,25 +10,25 @@
     options[:escape_value] = true unless options.has_key?(:escape_value)
 -%>
 
-<span class="appliedFilter constraint <%= options[:classes].join(" ") if options[:classes] %>">
-      <%- unless label.blank? -%>
-        <span class="filterName"><%= options[:escape_label] ? h(label) : label %></span> 
-      <%- end -%>
-      <%- unless value.blank? -%>
-        <span class="filterValue"><%= options[:escape_value] ? h(value) : value %></span>
-      <%- end -%>
-      <%- unless options[:remove].blank? -%>
-        <% accessible_remove_label =               
-                if label.blank?
-                  "Remove constraint #{options[:escape_value] ? h(value) : value}"
-                else
-                  "Remove constraint #{options[:escape_value] ? h(value) : value}: #{options[:escape_value] ? h(value) : value}"
-                end              
-        %>                
-        <%= link_to(accessible_remove_label,
-					options[:remove],
-					:class=>'btnRemove imgReplace',
-          :title=>'remove'
-				) %>
-      <%- end -%>
-</span>
+
+<%- if label.blank? -%>
+    <% label = "Keywords" %>
+<%- end -%>
+<% accessible_remove_label =
+             "Remove constraint #{options[:escape_value] ? h(value) : value}: #{options[:escape_value] ? h(value) : value}"
+%>
+
+<li class="active">
+
+  <%= link_to options[:remove],:class => 'btnRemove imgReplace',:title => 'accessible_remove_label' do
+        link_label =  (options[:escape_label] ? h(label) : label) + "&nbsp;&gt;&nbsp;".html_safe + (options[:escape_value] ? h(value) : value) + "<span class='pill_divider'>|</span> x".html_safe
+      end
+
+
+  %>
+</li>
+
+
+
+
+

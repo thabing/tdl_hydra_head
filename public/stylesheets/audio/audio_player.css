@@ -12,14 +12,14 @@
 
 	#playerDiv {
 		border: 1px solid #000;
-		width: 467px; /* #controls width + border allowance */
+		width: 444px; /* #controls width + border allowance -- originally 467 */
 	}
 
 	#controls {
 		position: relative;
 		border: 2px solid #4c4c4c;
 		background-color: #666666;
-		width: 464px;
+		width: 441px;	/* originally 464 */
 		height: 30px;
 		line-height: 30px;
 	}
@@ -78,13 +78,13 @@
 
 	span#timer { /* contains both span#currentTime and span#duration */
 		position: absolute;
-		left: 250px;
+		left: 227px;	/* originally 250 */
 		width: 100px;
 		color: #ffffff;
 	}
 
 	input#mute {
-		left: 360px;
+		left: 337px;	/* originally 360 */
 		top: 0px;
 		width: 34px;
 		height: 30px;
@@ -96,7 +96,7 @@
 
 	input#volumeUp {
 		top: 0px;
-		left: 395px;
+		left: 372px;	/* originally 372 */
 		width: 34px;
 		height: 30px;
 		background-color: transparent;
@@ -106,7 +106,7 @@
 
 	input#volumeDown {
 		top: 0px;
-		left: 430px;
+		left: 407px;	/* originally 430 */
 		width: 34px;
 		height: 30px;
 		background-color: transparent;
@@ -119,12 +119,13 @@
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
+		display: none;  /* added this to hide the playlist area */
 	}
 
-    /* bkg -- added this to override the style in yui.css that puts a disc bullet on the playlist list items */
-    ul li {
-        list-style: none;
-    }
+	/* added this to override the style in yui.css that puts a disc bullet on the playlist list items */
+	ul li {
+		list-style: none;
+	}
 
 	#playlist li {
 		margin: 5px;

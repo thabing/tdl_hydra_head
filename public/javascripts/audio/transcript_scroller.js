@@ -1,16 +1,5 @@
-
-$(document).ready(
-  function() {
-  }
-);
-
-	var currentlyHighlightedDiv = null;
+	var currentlyHighlightedDiv = null;	
 	var lastSeconds = -1;
-
-	function playerReady() {
-		YAHOO.MediaPlayer.onProgress.subscribe(scrollTranscript);
-	}
-
 
 	function scrollTranscript(progressArray) {
 
@@ -44,12 +33,33 @@ $(document).ready(
 				if (currentlyHighlightedDiv != null) {
 					currentlyHighlightedDiv.style.backgroundColor = 'white';
 				}
-	
+
 				currentlyHighlightedDiv = div;
-				currentlyHighlightedDiv.style.backgroundColor = '#f4dca6';
+				currentlyHighlightedDiv.style.backgroundColor = '#F1F7FF';
 				currentlyHighlightedDiv.scrollIntoView(true);
 			}
 		}
 	}
 
-	YAHOO.MediaPlayer.onAPIReady.subscribe(playerReady);
+
+	function jumpPlayerTo(milliseconds) {
+		// clear audio_player.js variables resumeTrack and resumeTime before calling MediaPlayer.play();
+		// this is so that if the player is paused when a timestamp link is clicked, play will resume
+		// at the timestamp rather than at the point when it was paused.
+		// thisMediaObj is also an audio_player.js variable.
+		resumeTrack = null;
+		resumeTime = 0;
+		YAHOO.MediaPlayer.play(thisMediaObj.track, milliseconds);
+	}
+
+
+	function playerReadyForTranscript() {
+		YAHOO.MediaPlayer.onProgress.subscribe(scrollTranscript);
+	}
+
+
+$(document).ready(
+	function() {
+		YAHOO.MediaPlayer.onAPIReady.subscribe(playerReadyForTranscript);
+	}
+);

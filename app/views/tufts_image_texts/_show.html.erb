@@ -1,38 +1,25 @@
-<div class="subnav">
-  <ul class="nav nav-pills pull-left">
-    <li>
-      <!--<%= link_to "Back up to list", request.env["HTTP_REFERER"] %> -->
-
-      <a href="#back"><i class="icon-arrow-left"></i> Back to Search Results</a>
-    </li>
-  </ul>
-
-  <ul class="nav nav-pills pull-right">
-    <li><a href="#plugins"><i class="icon-picture"/></i> Download JPG Image</a></li>
-    <li><a href="http://sites.tufts.edu/dca/research-help/image-requests/"><i class="icon-envelope"/></i>  Request Larger Image</a></li>
-
-  </ul>
-</div>
-
 <!-- LEFT SIDE FOR OBJECT TITLE -->
+<% metadata = Tufts::ModelMethods.get_metadata(@document_fedora) %>
+
+
 <div class="row">
   <div class="span12">
-    <%= show_title() %>
-    <%= show_creator() %>
-    <%= show_date() %>
-    <hr>
-    <div class="row">
-      <div class="span6">
-        <%= render :partial => 'tufts_images/image_pane' %>
-
-      </div>
-
-
-      <div class="span6">
-        <%= render :partial => 'tufts_images/metadata_pane' %>
-      </div>
-
-
-    </div>
+    <%= render :partial => 'shared/header_elements', :locals => {:metadata => metadata} %>
   </div>
+  <!-- span12 -->
+</div>  <!-- row -->
+
+<hr>
+<div class="row">
+  <div class="span6">
+    <%= render :partial => 'tufts_images/image_pane' %>
+
+  </div>
+
+
+  <div class="span6">
+    <%= render :partial => 'shared/metadata_pane', :locals => {:metadata => metadata} %>
+  </div>
+
+
 </div>

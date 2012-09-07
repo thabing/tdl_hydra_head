@@ -108,11 +108,11 @@ function BookReader() {
                           {reduce: 0.3, autofit: null},
                           {reduce: 0.4, autofit: null},
                           {reduce: 0.5, autofit: null},
-                          {reduce: 1, autofit: null},
-                          {reduce: 2, autofit: null},
-                          {reduce: 3, autofit: null},
-                          {reduce: 4, autofit: null},
-                          {reduce: 6, autofit: null} ];
+                           {reduce: 1, autofit: null},
+                           {reduce: 2, autofit: null},
+                           {reduce: 3, autofit: null},
+                           {reduce: 4, autofit: null},
+                           {reduce: 6, autofit: null} ];
 
 
     // Object to hold parameters related to 1up mode
@@ -725,8 +725,8 @@ BookReader.prototype.drawLeafsTwoPage = function() {
 
     var indexL = this.twoPage.currentIndexL;
 
-    var heightL  = this._getPageHeight(indexL);
-    var widthL   = this._getPageWidth(indexL);
+    var heightL  = parseInt(this._getPageHeight(indexL));
+    var widthL   = parseInt(this._getPageWidth(indexL));
 
     var leafEdgeWidthL = this.leafEdgeWidth(indexL);
     var leafEdgeWidthR = this.twoPage.edgeWidth - leafEdgeWidthL;
@@ -753,8 +753,8 @@ BookReader.prototype.drawLeafsTwoPage = function() {
     }).appendTo('#BRtwopageview');
 
     var indexR = this.twoPage.currentIndexR;
-    var heightR  = this._getPageHeight(indexR);
-    var widthR   = this._getPageWidth(indexR);
+    var heightR  = parseInt(this._getPageHeight(indexR));
+    var widthR   = parseInt(this._getPageWidth(indexR));
 
     // $$$ should use getwidth2up?
     //var scaledWR = this.twoPage.height*widthR/heightR;
@@ -962,7 +962,7 @@ BookReader.prototype.onePageCalculateViewDimensions = function(reduce, padding) 
     var viewWidth = 0;
     var viewHeight = 0;
     for (i=0; i<this.numLeafs; i++) {
-        viewHeight += parseInt(this._getPageHeight(i)/this.reduce) + this.padding;
+        viewHeight += parseInt(this._getPageHeight(i)/this.reduce) + parseInt(this.padding);
         var width = parseInt(this._getPageWidth(i)/this.reduce);
         if (width>viewWidth) viewWidth=width;
     }
@@ -1660,13 +1660,13 @@ BookReader.prototype.getIdealSpreadSize = function(firstIndex, secondIndex) {
     var canon5Dratio = 1.5;
 
     var first = {
-        height: this._getPageHeight(firstIndex),
-        width: this._getPageWidth(firstIndex)
+        height: parseInt(this._getPageHeight(firstIndex)),
+        width: parseInt(this._getPageWidth(firstIndex))
     }
 
     var second = {
-        height: this._getPageHeight(secondIndex),
-        width: this._getPageWidth(secondIndex)
+        height: parseInt(this._getPageHeight(secondIndex)),
+        width: parseInt(this._getPageWidth(secondIndex))
     }
 
     var firstIndexRatio  = first.height / first.width;
@@ -1718,8 +1718,8 @@ BookReader.prototype.getSpreadSizeFromReduce = function(firstIndex, secondIndex,
     spreadSize.totalLeafEdgeWidth     = Math.min(totalLeafEdgeWidth, maxLeafEdgeWidth);
 
     // $$$ Possibly incorrect -- we should make height "dominant"
-    var nativeWidth = this._getPageWidth(firstIndex) + this._getPageWidth(secondIndex);
-    var nativeHeight = this._getPageHeight(firstIndex) + this._getPageHeight(secondIndex);
+    var nativeWidth = parseInt(this._getPageWidth(firstIndex)) + parseInt(this._getPageWidth(secondIndex));
+    var nativeHeight = parseInt(this._getPageHeight(firstIndex)) + parseInt(this._getPageHeight(secondIndex));
     spreadSize.height = parseInt( (nativeHeight / 2) / this.reduce );
     spreadSize.width = parseInt( (nativeWidth / 2) / this.reduce );
     spreadSize.reduce = reduce;
@@ -3203,8 +3203,9 @@ BookReader.prototype.initNavbar = function() {
         //+         '<button class="BRicon fit"></button>'
         +         '<button class="BRicon zoom_in"></button>'
         +         '<button class="BRicon zoom_out"></button>'
-        +         '<button class="BRicon book_left"></button>'
-        +         '<button class="BRicon book_right"></button>'
+            +         '<button class="BRicon book_right"></button>'
+            +         '<button class="BRicon book_left"></button>'
+
         +     '</div>'
         +     '<div id="BRnavpos">' // Page slider and nav line
         //+         '<div id="BRfiller"></div>'
@@ -5123,7 +5124,7 @@ BookReader.prototype.initUIStrings = function()
     // the toolbar and nav bar easier
 
     // Setup tooltips -- later we could load these from a file for i18n
-    var titles = { '.logo': 'Go to Archive.org', // $$$ update after getting OL record
+    var titles = { '.logo': 'Go to TDL Homepage', // $$$ update after getting OL record
                    '.zoom_in': 'Zoom in',
                    '.zoom_out': 'Zoom out',
                    '.onepg': 'One-page view',

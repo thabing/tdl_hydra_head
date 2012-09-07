@@ -1,0 +1,31 @@
+<div class="subnav">
+  <% if "index" == @current_action || "about" == @current_action || "contact" == @current_action || "search" == @current_action %>
+    <%= render :partial =>"shared/search_bar" %>
+  <% elsif "eadoverview" == @current_action %>
+    <div class="span6" style="padding-top:5px">
+      <a href="<%= Tufts::EADMethods.collection_url(@document_fedora) %>"><i class="icon-arrow-left"></i> Collection Home</a>
+    </div>
+    <div class="span6" style="padding-top:5px; display: none;">    <!-- display: none for now until pdfs become available -->
+      <a href="#"><i class="icon-file"/></i> Download Collection Guide (pdf)</a>
+    </div>
+  <% elsif "eadinternal" == @current_action %>
+    <div class="span12" style="padding-top:5px">
+      <a href="<%= Tufts::EADMethods.finding_aid_url(@document_fedora) %>"><i class="icon-arrow-left"></i> <%= @collection_title %></a> > <%= @series_full_title %>
+    </div>
+  <% elsif "transcriptonly" == @current_action %>
+    <div class="span6" style="padding-top:5px">
+      <a href="/catalog/<%= params[:id] %>"><i class="icon-arrow-left"></i> Back to Audio Player</a>
+    </div>
+    <div class="span6" style="padding-top:5px">
+      <a href="/file_assets/<%= params[:id] %>"><i class="icon-headphones"/></i> Download Audio File</a> &nbsp;<a href="/file_assets/transcript/<%= params[:id] %>"><i class="icon-file"/></i> Download Transcript</a>
+    </div>
+  <% elsif !@document.nil? %>
+      <% format = document_partial_name(@document) %>
+      <div class="span6" style="padding-top:5px">
+        <% if refered_from_our_site? %>
+          <a href="<%= request.env["HTTP_REFERER"]%>"><i class="icon-arrow-left"></i> Back to Search Results</a>
+        <% end %>
+      </div>
+      <%= render :partial=>"#{format}/subnav"%>
+  <% end %>
+</div>

@@ -22,7 +22,7 @@ Blacklight.configure(:shared) do |config|
 
   config[:default_solr_params] = {
     :qt => "search",
-    :per_page => 10 
+    :per_page => 25
   }
  
   # solr field values given special treatment in the show (single result) view
@@ -45,18 +45,18 @@ Blacklight.configure(:shared) do |config|
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
     :field_names => (facet_fields = [
+      "object_type_facet",
       "names_facet",
       "year_facet",
       "subject_facet",
-      "collection_facet",
-      "object_type_facet"
+      "collection_facet"
     ]),
     :labels => {
+        "object_type_facet" => "Format",
         "names_facet" => "Names",
         "year_facet"=>"Year",
         "subject_facet"=>"Subject",
-        "collection_facet"=>"Collection",
-        "object_type_facet"   => "Format"
+        "collection_facet"=>"Collection"
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
     # * If left unset, then all facet values returned by solr will be displayed.
@@ -180,9 +180,33 @@ Blacklight.configure(:shared) do |config|
   # since we aren't specifying it otherwise. 
   config[:search_fields] << {
     :key => "all_fields",  
-    :display_label => 'All Fields'   
+    :display_label => 'Keyword'
   }
-
+  config[:search_fields] << {
+      :key =>'author',
+      :display_label => 'Creator',
+      :solr_parameters => {
+        :"spellcheck.dictionary" => "author"
+      },
+      :solr_local_parameters => {
+        :qf => "$author_qf",
+        :pf => "$author_pf"
+      }
+  }
+  # Specifying a :qt only to show it's possible, and so our internal automated
+    # tests can test it. In this case it's the same as
+    # config[:default_solr_parameters][:qt], so isn't actually neccesary.
+    config[:search_fields] << {
+      :key => 'subject',
+      :qt=> 'search',
+      :solr_parameters => {
+        :"spellcheck.dictionary" => "subject"
+      },
+      :solr_local_parameters => {
+        :qf => "$subject_qf",
+        :pf => "$subject_pf"
+      }
+  }
   # Now we see how to over-ride Solr request handler defaults, in this
   # case for a BL "search field", which is really a dismax aggregate
   # of Solr search fields. 
@@ -201,31 +225,9 @@ Blacklight.configure(:shared) do |config|
       :pf => "$title_pf"
     }
   }
-  config[:search_fields] << {
-    :key =>'author',     
-    :solr_parameters => {
-      :"spellcheck.dictionary" => "author" 
-    },
-    :solr_local_parameters => {
-      :qf => "$author_qf",
-      :pf => "$author_pf"
-    }
-  }
 
-  # Specifying a :qt only to show it's possible, and so our internal automated
-  # tests can test it. In this case it's the same as 
-  # config[:default_solr_parameters][:qt], so isn't actually neccesary. 
-  config[:search_fields] << {
-    :key => 'subject', 
-    :qt=> 'search',
-    :solr_parameters => {
-      :"spellcheck.dictionary" => "subject"
-    },
-    :solr_local_parameters => {
-      :qf => "$subject_qf",
-      :pf => "$subject_pf"
-    }
-  }
+
+
   
   # "sort results by" select (pulldown)
   # label in pulldown is followed by the name of the SOLR field to sort by and
@@ -234,9 +236,12 @@ Blacklight.configure(:shared) do |config|
   # label is key, solr field is value
   config[:sort_fields] ||= []
   config[:sort_fields] << ['relevance', 'score desc, pub_date_sort desc, title_sort asc']
-  config[:sort_fields] << ['year', 'pub_date_sort desc, title_sort asc']
-  config[:sort_fields] << ['author', 'author_sort asc, title_sort asc']
-  config[:sort_fields] << ['title', 'title_sort asc, pub_date_sort desc']
+  config[:sort_fields] << ['year descending', 'pub_date_sort desc, title_sort asc']
+  config[:sort_fields] << ['author ascending', 'author_sort asc, title_sort asc']
+  config[:sort_fields] << ['title ascending', 'title_sort asc, pub_date_sort desc']
+  config[:sort_fields] << ['year ascending', 'pub_date_sort asc, title_sort asc']
+  config[:sort_fields] << ['author descending', 'author_sort desc, title_sort asc']
+  config[:sort_fields] << ['title descending', 'title_sort desc, pub_date_sort desc']
   
   # If there are more than this many search results, no spelling ("did you 
   # mean") suggestion is offered.

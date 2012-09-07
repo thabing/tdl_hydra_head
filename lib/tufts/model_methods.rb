@@ -9,6 +9,85 @@ require 'chronic'
 module Tufts
   module ModelMethods
 
+    def self.get_metadata(fedora_obj)
+      datastream = fedora_obj.datastreams["DCA-META"]
+
+      # create the union (ie, without duplicates) of subject, geogname, persname, and corpname
+      subjects = []
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:subject))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:geogname))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:persname))
+      Tufts::MetadataMethods.union(subjects, datastream.find_by_terms_and_value(:corpname))
+
+      return {
+          :titles => datastream.find_by_terms_and_value(:title),
+          :creators => datastream.find_by_terms_and_value(:creator),
+          :dates => datastream.find_by_terms_and_value(:dateCreated2),
+          :descriptions => datastream.find_by_terms_and_value(:description),
+          :sources => datastream.find_by_terms_and_value(:source2),
+          :citable_urls => datastream.find_by_terms_and_value(:identifier),
+          :citations => datastream.find_by_terms_and_value(:bibliographicCitation),
+          :publishers => datastream.find_by_terms_and_value(:publisher),
+          :genres => datastream.find_by_terms_and_value(:genre),
+          :types => datastream.find_by_terms_and_value(:type2),
+          :formats => datastream.find_by_terms_and_value(:format2),
+          :rights => datastream.find_by_terms_and_value(:rights),
+          :subjects => subjects,
+          :temporals => datastream.find_by_terms_and_value(:temporal)
+      }
+    end
+
+    #  config[:sort_fields] << ['relevance', 'score desc, pub_date_sort desc, title_sort asc']
+    #  config[:sort_fields] << ['year descending', 'pub_date_sort desc, title_sort asc']
+    #  config[:sort_fields] << ['author ascending', 'author_sort asc, title_sort asc']
+    #  config[:sort_fields] << ['title ascending', 'title_sort asc, pub_date_sort desc']
+    #  config[:sort_fields] << ['year ascending', 'pub_date_sort asc, title_sort asc']
+    #  config[:sort_fields] << ['author descending', 'author_sort desc, title_sort asc']
+    #  config[:sort_fields] << ['title descending', 'title_sort desc, pub_date_sort desc']
+
+    def index_sort_fields(fedora_object, solr_doc)
+      #PUBDATESORT
+      dates = fedora_object.datastreams["DCA-META"].get_values(:dateCreated)
+
+      if dates.empty?
+        dates = fedora_object.datastreams["DCA-META"].get_values(:temporal)
+      end
+
+
+      unless dates.empty?
+        unparsed_date = dates[0]
+        if (unparsed_date.length() == 4)
+          unparsed_date += "-01-01"
+        end
+        valid_date = Chronic.parse(unparsed_date)
+        unless valid_date.nil?
+        puts "###############################"
+        puts dates[0]
+        puts valid_date.to_time.iso8601
+        puts valid_date.iso8601(6)
+        puts "###############################"
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_sort", "#{valid_date.iso8601(6)}")
+        end
+      end
+
+      #CREATOR SORT
+      names = fedora_object.datastreams["DCA-META"].get_values(:creator)
+
+
+      unless names.empty?
+        ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "author_sort", "#{names[0]}")
+      end
+
+      #TITLE SORT
+
+      titles = fedora_object.datastreams["DCA-META"].get_values(:title)
+
+
+      unless titles.empty?
+        ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "title_sort", "#{titles[0]}")
+      end
+
+    end
 
     def index_fulltext(solr_doc)
       full_text = ""
@@ -58,8 +137,9 @@ module Tufts
       names = fedora_object.datastreams["DCA-META"].get_values(name_field)
 
       names.each {|name|
-
+          unless name.downcase.include? 'unknown'
             ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "names_facet", "#{name}")
+          end
         }
 
       } #end name_field
@@ -72,8 +152,9 @@ module Tufts
       names = fedora_object.datastreams["DCA-META"].get_values(name_field)
 
       names.each {|name|
-
+          unless name.downcase.include? 'unknown'
             ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "subject_facet", "#{name}")
+          end
         }
 
       } #end name_field
@@ -129,7 +210,7 @@ module Tufts
 
 
         end
-
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_id_facet", ead)
           ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", ead_title)
       end
 
@@ -185,7 +266,7 @@ module Tufts
       ead_title = "Graduate scholarship"
     elsif (pid.starts_with? "tufts:PB.001.001") || (pid.starts_with? "tufts:ddennett")
       ead_title = "Faculty scholarship"
-    elseif pid.starts_with? "tufts:UA069.005.DO"
+    elsif pid.starts_with? "tufts:UA069.005.DO"
       ead_title = "Boston Streets"
     end
 
@@ -210,12 +291,17 @@ module Tufts
         puts "THIS PID HAS NO DATE TO INDEX :::  #{fedora_object.pid}"
       else
         dates.each {|date|
+
+        if date.length() == 4
+          date += "-01-01"
+        end
+
           valid_date = Chronic.parse(date)
           unless valid_date.nil?
             last_digit= valid_date.year.to_s[3,1]
             decade_lower = valid_date.year.to_i - last_digit.to_i
             decade_upper = valid_date.year.to_i + (10-last_digit.to_i)
-            if (decade_upper >= 2020)
+            if decade_upper >= 2020
               decade_upper ="Present"
             end
             ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "year_facet", "#{decade_lower} to #{decade_upper}")
