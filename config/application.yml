@@ -16,6 +16,9 @@ tdldev:
   pdf_pages:
     page_location: "/tdr"
   local_object_store: "/tdr"
+stage:
+  <<: *defaults
+  local_object_store: "/tdr"
 test:
   <<: *defaults
   pdf_pages:
