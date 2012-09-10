@@ -882,11 +882,11 @@ a.thumbnail:hover {
     padding-left: 0;
     padding-right: 10px;
     padding-top: 8px;
-            -moz-border-bottom-colors:   none;
-            -moz-border-image:   none;
-            -moz-border-left-colors:   none;
-            -moz-border-right-colors:   none;
-            -moz-border-top-colors:   none;
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
     background-color: #eeeeee; /* Old browsers */
     background-repeat: repeat-x; /* Repeat the gradient */
     background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* FF3.6+ */
@@ -896,176 +896,176 @@ a.thumbnail:hover {
     background-image: -o-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* Opera 11.10+ */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#f5f5f5', endColorstr = '#eeeeee', GradientType = 0); /* IE6-9 */
     background-image: linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* W3C */
-            border-bottom-width:   1px;
-      border-left-color-ltr-source:   physical;
-            border-left-color-rtl-source:   physical;
-            border-left-color-value:   #E5E5E5;
-            border-left-style-ltr-source:   physical;
-            border-left-style-rtl-source:   physical;
-            border-left-style-value:   solid;
-            border-left-width-ltr-source:   physical;
-            border-left-width-rtl-source:   physical;
-            border-left-width-value:   1px;
-            border-right-color-ltr-source:   physical;
-            border-right-color-rtl-source:   physical;
-            border-right-color-value:   #E5E5E5;
-            border-right-style-ltr-source:   physical;
-            border-right-style-rtl-source:   physical;
-            border-right-style-value:   solid;
-            border-right-width-ltr-source:   physical;
-            border-right-width-rtl-source:   physical;
-            border-right-width-value:   1px;
-            border-top-color:   #E5E5E5;
-            border-top-left-radius:   4px;
-            border-top-right-radius:   4px;
-            border-top-style:   solid;
-            border-top-width:   1px;
-            /*width: 100%;*/
+    border-bottom-width: 1px;
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-left-color-value: #E5E5E5;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-left-style-value: solid;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-left-width-value: 1px;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+    border-right-color-value: #E5E5E5;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+    border-right-style-value: solid;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+    border-right-width-value: 1px;
+    border-top-color: #E5E5E5;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    /*width: 100%;*/
 
 }
 
 .subnav .nav {
-            margin-bottom:   10px;
+    margin-bottom: 10px;
 }
 
 .subnav .nav > li > a {
-            border-bottom-left-radius:   0;
-            border-bottom-right-radius:   0;
-            border-left-color-ltr-source:   physical;
-            border-left-color-rtl-source:   physical;
-            border-left-color-value:   #F5F5F5;
-            border-left-style-ltr-source:   physical;
-            border-left-style-rtl-source:   physical;
-            border-left-style-value:   solid;
-            border-left-width-ltr-source:   physical;
-            border-left-width-rtl-source:   physical;
-            border-left-width-value:   1px;
-            border-right-color-ltr-source:   physical;
-            border-right-color-rtl-source:   physical;
-            border-right-color-value:   #E5E5E5;
-            border-right-style-ltr-source:   physical;
-            border-right-style-rtl-source:   physical;
-            border-right-style-value:   solid;
-            border-right-width-ltr-source:   physical;
-            border-right-width-rtl-source:   physical;
-            border-right-width-value:   1px;
-            border-top-left-radius:   0;
-            border-top-right-radius:   0;
-            margin-bottom:   10px;
-            margin-left:   0;
-            margin-right:   0;
-            margin-top:   10px;
-            padding-bottom:   11px;
-            padding-top:   11px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-left-color-value: #F5F5F5;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-left-style-value: solid;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-left-width-value: 1px;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+    border-right-color-value: #E5E5E5;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+    border-right-style-value: solid;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+    border-right-width-value: 1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+    padding-bottom: 11px;
+    padding-top: 11px;
 }
 
 .subnav .nav > .active > a, .subnav .nav > .active > a:hover {
-            background-color:   #E9E9E9;
-            border-left-color-ltr-source:   physical;
-            border-left-color-rtl-source:   physical;
-            border-left-color-value:   -moz-use-text-color;
-            border-left-style-ltr-source:   physical;
-            border-left-style-rtl-source:   physical;
-            border-left-style-value:   none;
-            border-left-width-ltr-source:   physical;
-            border-left-width-rtl-source:   physical;
-            border-left-width-value:   0;
-            border-right-color-ltr-source:   physical;
-            border-right-color-rtl-source:   physical;
-            border-right-color-value:   #DDDDDD;
-            box-shadow:   0 3px 5px rgba(0, 0, 0, 0.05) inset;
-            color:   #777777;
-            padding-left:   13px;
+    background-color: #E9E9E9;
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-left-color-value: -moz-use-text-color;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-left-style-value: none;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-left-width-value: 0;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+    border-right-color-value: #DDDDDD;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05) inset;
+    color: #777777;
+    padding-left: 13px;
 }
 
 .subnav .nav > .active > a .caret, .subnav .nav > .active > a:hover .caret {
-            border-top-color:   #777777;
+    border-top-color: #777777;
 }
 
 .subnav .nav > li:first-child > a, .subnav .nav > li:first-child > a:hover {
-            border-bottom-left-radius:   4px;
-            border-bottom-right-radius:   0;
-            border-left-color-ltr-source:   physical;
-            border-left-color-rtl-source:   physical;
-            border-left-color-value:   -moz-use-text-color;
-            border-left-style-ltr-source:   physical;
-            border-left-style-rtl-source:   physical;
-            border-left-style-value:   none;
-            border-left-width-ltr-source:   physical;
-            border-left-width-rtl-source:   physical;
-            border-left-width-value:   0;
-            border-top-left-radius:   4px;
-            border-top-right-radius:   0;
-            padding-left:   12px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-left-color-value: -moz-use-text-color;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-left-style-value: none;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-left-width-value: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 0;
+    padding-left: 12px;
 }
 
 .subnav .nav > li:last-child > a {
-            border-right-color-ltr-source:   physical;
-            border-right-color-rtl-source:   physical;
-            border-right-color-value:   -moz-use-text-color;
-            border-right-style-ltr-source:   physical;
-            border-right-style-rtl-source:   physical;
-            border-right-style-value:   none;
-            border-right-width-ltr-source:   physical;
-            border-right-width-rtl-source:   physical;
-            border-right-width-value:   0;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+    border-right-color-value: -moz-use-text-color;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+    border-right-style-value: none;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+    border-right-width-value: 0;
 }
 
 .subnav .dropdown-menu {
-            border-bottom-left-radius:   4px;
-            border-bottom-right-radius:   4px;
-            border-top-left-radius:   0;
-            border-top-right-radius:   0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
 @media (min-width: 500px) {
     .subnav-fixed {
-                border-bottom-color:   #D5D5D5;
-                border-bottom-left-radius:   0;
-                border-bottom-right-radius:   0;
-                border-bottom-width:   1px;
-                border-left-color-ltr-source:   physical;
-                border-left-color-rtl-source:   physical;
-                border-left-color-value:   #D5D5D5;
-                border-left-width-ltr-source:   physical;
-                border-left-width-rtl-source:   physical;
-                border-left-width-value:   0;
-                border-right-color-ltr-source:   physical;
-                border-right-color-rtl-source:   physical;
-                border-right-color-value:   #D5D5D5;
-                border-right-width-ltr-source:   physical;
-                border-right-width-rtl-source:   physical;
-                border-right-width-value:   0;
-                border-top-color:   #D5D5D5;
-                border-top-left-radius:   0;
-                border-top-right-radius:   0;
-                border-top-width:   0;
-                box-shadow:   0 1px 0 #FFFFFF inset, 0 1px 5px rgba(0, 0, 0, 0.1);
-                left:   0;
-                position:   fixed;
-                right:   0;
-                top:   40px;
-                z-index:   1020;
+        border-bottom-color: #D5D5D5;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-width: 1px;
+        border-left-color-ltr-source: physical;
+        border-left-color-rtl-source: physical;
+        border-left-color-value: #D5D5D5;
+        border-left-width-ltr-source: physical;
+        border-left-width-rtl-source: physical;
+        border-left-width-value: 0;
+        border-right-color-ltr-source: physical;
+        border-right-color-rtl-source: physical;
+        border-right-color-value: #D5D5D5;
+        border-right-width-ltr-source: physical;
+        border-right-width-rtl-source: physical;
+        border-right-width-value: 0;
+        border-top-color: #D5D5D5;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-top-width: 0;
+        box-shadow: 0 1px 0 #FFFFFF inset, 0 1px 5px rgba(0, 0, 0, 0.1);
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 40px;
+        z-index: 1020;
     }
 
     .subnav-fixed .nav {
-                margin-bottom:   0;
-                margin-left:   auto;
-                margin-right:   auto;
-                margin-top:   0;
-                padding-bottom:   0;
-                padding-left:   1px;
-                padding-right:   1px;
-                padding-top:   0;
-                width:   938px;
+        margin-bottom: 0;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0;
+        padding-bottom: 0;
+        padding-left: 1px;
+        padding-right: 1px;
+        padding-top: 0;
+        width: 938px;
     }
 
     .subnav .nav > li:first-child > a, .subnav .nav > li:first-child > a:hover {
-                border-bottom-left-radius:   0;
-                border-bottom-right-radius:   0;
-                border-top-left-radius:   0;
-                border-top-right-radius:   0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
     }
 
     /*scrollbox for audio transcript*/
