@@ -676,6 +676,7 @@ table {
      margin-bottom: 0;
     height: 30px;
     width: 955px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0);
     margin-right: auto;
     margin-left: auto;
 }
