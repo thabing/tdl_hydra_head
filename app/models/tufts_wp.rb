@@ -56,7 +56,7 @@ class TuftsWP < ActiveFedora::Base
 
     index_sort_fields self,solr_doc
 
-    index_fulltext solr_doc
+    index_fulltext self, solr_doc
 
     return solr_doc
   end

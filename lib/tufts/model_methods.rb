@@ -89,7 +89,7 @@ module Tufts
 
     end
 
-    def index_fulltext(solr_doc)
+    def index_fulltext(fedora_object, solr_doc)
       full_text = ""
 
       # p.datastreams['Archival.xml'].content
@@ -112,7 +112,7 @@ module Tufts
               model_s="Text"
             when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI"
               #nokogiri_doc = Nokogiri::XML(self.datastreams['Archival.xml'].content)
-              nokogiri_doc = Nokogiri::XML(File.open(convert_url_to_local_path(@file_asset.datastreams["Archival.xml"].dsLocation)).read)
+              nokogiri_doc = Nokogiri::XML(File.open(convert_url_to_local_path(fedora_object.datastreams["Archival.xml"].dsLocation)).read)
               full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
             else
               model_s="Unclassified"
