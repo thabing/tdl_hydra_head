@@ -8,26 +8,6 @@ module ApplicationHelper
   end
 
 
-  def convert_url_to_local_path(url, page_number, pid)
-    local_object_store = Settings.pdf_pages.page_location
-
-    if local_object_store.match(/^\#\{Rails.root\}/)
-      local_object_store = "#{Rails.root}" + local_object_store.gsub("\#\{Rails.root\}", "")
-    end
-
-    page_part = "-#{page_number}.png"
-    url = url.gsub('.archival.pdf', page_part)
-    pid = pid.gsub('tufts:', '')
-    url = url.insert url.rindex('/')+1, pid + '/'
-    url = url.gsub(Settings.trim_bucket_url, "")
-
-    url = local_object_store << "/dcadata02" << url[url.index("/",1)..url.length]
-
-
-    url = url.gsub('archival_pdf', 'access_pdf_pageimages')
-    return url
-  end
-
   def showPdfImage(pid)
     result = "<img alt=\"\" src=\"/pdf_pages/" + pid + "/0\"/>"
 

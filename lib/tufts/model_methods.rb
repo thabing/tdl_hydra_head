@@ -8,6 +8,7 @@ require 'chronic'
 
 module Tufts
   module ModelMethods
+  include TuftsFileAssetsHelper
 
     def self.get_metadata(fedora_obj)
       datastream = fedora_obj.datastreams["DCA-META"]
