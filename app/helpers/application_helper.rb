@@ -51,7 +51,9 @@ module ApplicationHelper
     end
     return raw(result)
   end
-
+  def show_elections_link(pid)
+    return "http://elections.lib.tufts.edu/aas_portal/view-election.xq?id=" + pid[6..-1]
+  end
 
   def showPDFLink(pid)
     result = "<a href=\"" + file_asset_path(pid) + "\">Get PDF</a>"
