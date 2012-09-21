@@ -53,9 +53,12 @@ module ApplicationHelper
   end
   def show_streets_link(pid)
     urn = pid.gsub("tufts:","")
-    del_index = urn.index(":")
-    col = pid[0..(del_index];
-    urn = "tufts;central:dca:" + col + urn;
+#puts "#{urn}"
+    del_index = urn.index(".")
+#puts "#{del_index}"
+    col = urn[0..(del_index-1)];
+#jputs "#{col}"
+    urn = "tufts:central:dca:" + col + ":" + urn 
     return "http://bcd.lib.tufts.edu/view_text.jsp?urn=" + urn
   end
   def show_elections_link(pid)
