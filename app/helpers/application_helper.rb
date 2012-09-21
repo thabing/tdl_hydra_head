@@ -51,6 +51,13 @@ module ApplicationHelper
     end
     return raw(result)
   end
+  def show_streets_link(pid)
+    urn = pid.gsub("tufts:","")
+    del_index = urn.index(":")
+    col = pid[0..(del_index];
+    urn = "tufts;central:dca:" + col + urn;
+    return "http://bcd.lib.tufts.edu/view_text.jsp?urn=" + urn
+  end
   def show_elections_link(pid)
     return "http://elections.lib.tufts.edu/aas_portal/view-election.xq?id=" + pid[6..-1]
   end
