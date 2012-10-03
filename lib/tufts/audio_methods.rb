@@ -2,24 +2,29 @@ module Tufts
   module AudioMethods
 
     def self.show_audio_player(pid)
-      result = "<div id=\"playerDiv\"><div id=\"controls\"></div><ul id=\"playlist\"><li>"
+      result = "<div id=\"controls\"></div>\n"
 
-      #   the following line is what we would ultimately want but it doesn't work yet
-      #   result += "<a href=\"" + file_asset_path(pid) + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-
-      #   the following line works in Safari and Firefox but not in Chrome or Opera
-      #   result += "<a href=\"" + datastream_disseminator_url(params[:id], "ACCESS_MP3") + "\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-
-      #   the following line works in Safari, Chrome and Firefox but not in Opera
-      #   result += "<a href=\"http://127.0.0.1:8983/fedora/get/" + pid + "/ACCESS_MP3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-
-      #   the correct way, from Mike: 
-      result += "<a href=\"/file_assets/" + pid +"\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-
-      #   the following test works in Safari, Chrome, Firefox and Opera, proving that Opera is capable of using the yahoo media player, as in current DL prod...
-      #   result += "<a href=\"http://dl.tufts.edu/ProxyServlet/?url=http://repository01.lib.tufts.edu:8080/fedora/get/tufts:AC00001/bdef:TuftsAudio/getAudioFile&filename=tufts:AC00001.mp3\" type=\"audio/mpeg\">click to play MP3 (or right-click and choose \"save as\" to download MP3)</a>"
-
-      result += "</li></ul></div>"
+      result += "      <div id='jw_player'>This div will be replaced by the JW Player.</div>\n"
+      result += "      <script type='text/javascript' src='/javascripts/jwplayer/jwplayer.js'></script>\n"
+      result += "      <script type='text/javascript'>\n"
+      result += "        jwplayer('jw_player').setup({\n"
+      result += "          file:                  '/file_assets/" + pid + "',\n"
+      result += "          width:                 0,\n"  # to show make this 445
+      result += "          height:                0,\n"  # to show make this 24
+      result += "          'controlbar.position': 'top',\n"
+      result += "          'playlist.position':   'none',\n"
+      result += "          provider:              'sound',\n"
+      result += "          modes:                 [\n"
+      result += "                                     {type: 'flash', src: '/javascripts/jwplayer/player.swf'},\n"
+      result += "                                     {type: 'html5'},\n"
+      result += "                                     {type: 'download'}\n"
+      result += "                                 ],\n"
+      result += "          events:                {\n"
+      result += "                                     onPlay: function() {chooseTranscriptTab();},\n"
+      result += "                                     onTime: function() {scrollTranscript();}\n"
+      result += "                                 }\n"
+      result += "        });\n"
+      result += "      </script>\n"
 
       return result
     end
