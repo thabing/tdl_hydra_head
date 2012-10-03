@@ -1,7 +1,7 @@
 module Tufts
   module AudioMethods
 
-    def self.show_audio_player(pid)
+    def self.show_audio_player(pid, withTranscript)
       result = "<div id=\"controls\"></div>\n"
 
       result += "      <div id='jw_player'>This div will be replaced by the JW Player.</div>\n"
@@ -14,15 +14,19 @@ module Tufts
       result += "          'controlbar.position': 'top',\n"
       result += "          'playlist.position':   'none',\n"
       result += "          provider:              'sound',\n"
+
+			if (withTranscript)
+      	result += "          events:                {\n"
+      	result += "                                     onPlay: function() {chooseTranscriptTab();},\n"
+      	result += "                                     onTime: function() {scrollTranscript();}\n"
+      	result += "                                 },\n"
+      end
+
       result += "          modes:                 [\n"
       result += "                                     {type: 'flash', src: '/javascripts/jwplayer/player.swf'},\n"
       result += "                                     {type: 'html5'},\n"
       result += "                                     {type: 'download'}\n"
-      result += "                                 ],\n"
-      result += "          events:                {\n"
-      result += "                                     onPlay: function() {chooseTranscriptTab();},\n"
-      result += "                                     onTime: function() {scrollTranscript();}\n"
-      result += "                                 }\n"
+      result += "                                 ]\n"
       result += "        });\n"
       result += "      </script>\n"
 
