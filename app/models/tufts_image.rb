@@ -45,6 +45,11 @@ class TuftsImage < ActiveFedora::Base
   #   add_datastream(ds)
   #end
   def to_solr(solr_doc=Hash.new, opts={})
+    pid = self.pid.to_s
+    if pid.include? 'perseus'
+      return solr_doc
+    end
+
     super
     models = self.relationships(:has_model)
     unless models.include?("info:fedora/cm:Text.RCR") || models.include?("info:fedora/afmodel:TuftsRCR")
@@ -53,7 +58,7 @@ class TuftsImage < ActiveFedora::Base
 
     index_sort_fields self,solr_doc
 
-    index_fulltext solr_doc
+    index_fulltext self, solr_doc
 
     return solr_doc
   end

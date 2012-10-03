@@ -7,6 +7,7 @@ module ApplicationHelper
         'Tufts Digital Library'
   end
 
+
   def showPdfImage(pid)
     result = "<img alt=\"\" src=\"/pdf_pages/" + pid + "/0\"/>"
 
@@ -50,7 +51,19 @@ module ApplicationHelper
     end
     return raw(result)
   end
-
+  def show_streets_link(pid)
+    urn = pid.gsub("tufts:","")
+#puts "#{urn}"
+    del_index = urn.index(".")
+#puts "#{del_index}"
+    col = urn[0..(del_index-1)];
+#jputs "#{col}"
+    urn = "tufts:central:dca:" + col + ":" + urn 
+    return "http://bcd.lib.tufts.edu/view_text.jsp?urn=" + urn
+  end
+  def show_elections_link(pid)
+    return "http://elections.lib.tufts.edu/aas_portal/view-election.xq?id=" + pid[6..-1]
+  end
 
   def showPDFLink(pid)
     result = "<a href=\"" + file_asset_path(pid) + "\">Get PDF</a>"

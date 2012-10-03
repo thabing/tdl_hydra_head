@@ -1,42 +1,26 @@
-<% javascript_includes << ['custom', {:plugin=>:hydra_repository, :media=>"all"}] %>
-<% javascript_includes << ["catalog/show", {:plugin=>:hydra_repository, :media=>"all"}] %>
+<!-- LEFT SIDE FOR OBJECT TITLE -->
+<% metadata = Tufts::ModelMethods.get_metadata(@document_fedora) %>
 
-        <div class="document_viewer" id="cover_container">
-          <%= showMetadataItem("Creator", "creator", :creator) %>
-          <%= showMetadataItem("Source", "source2", :source2) %>
-          <%= showMetadataItem("Description", "description", :description) %>
-          <%= showMetadataItem("Date Created", "dateCreated", :dateCreated) %>
-          <%= showMetadataItem("Date Available", "dateAvailable", :dateAvailable) %>
-          <%= showMetadataItem("Date Issued", "dateIssued", :dateIssued) %>
-          <%= showMetadataItem("Citable URL", "identifier", :identifier) %>
-          <%= showMetadataItem("Rights", "rights", :rights) %>
-          <%= showMetadataItem("Citation", "bibliographicCitation", :bibliographicCitation) %>
-          <%= showMetadataItem("Publisher", "publisher", :publisher) %>
-          <%= showMetadataItem("Type", "type2", :type2) %>
-          <%= showMetadataItem("Format", "format2", :format2) %>
-          <%= showMetadataItem("Person Name", "persname", :persname) %>
-          <%= showMetadataItem("Organizations", "corpname", :corpname) %>
-          <%= showMetadataItem("Places", "geogname", :geogname) %>
-          <%= showMetadataItem("Topics", "subject", :subject) %>
-          <%= showMetadataItem("Funder", "funder", :funder) %>
-          <%= showMetadataItem("Temporal", "temporal", :temporal) %>
-          <%= showMetadataItem("Resolution", "resolution", :resolution) %>
-          <%= showMetadataItem("Bit Depth", "bitDepth", :bitDepth) %>
-          <%= showMetadataItem("Color Space", "colorSpace", :colorSpace) %>
-          <%= showMetadataItem("File Size", "filesize", :filesize) %>
-        </div>
+<div class="row">
+  <div class="span12">
+    <%= render :partial => 'shared/header_elements', :locals => {:metadata => metadata} %>
+  </div>
+  <!-- span12 -->
+</div>  <!-- row -->
 
-        <table  class="fileManifest">
-            <thead>
-              <tr>
-                 <td>Object Manifest for Generic Content Datastream</td>
-              </tr>
-              <tr>
-                 <th scope="col">link</th>
-                 <th scope="col">mime type</th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= showGenericObjects(params[:id]) %>
-            </tbody>
-        </table>
+<hr>
+<div class="row">
+  <div class="span6">
+    <%= render :partial => 'tufts_faculty_publications/image_pane' %>
+
+  </div>
+
+
+  <div class="span6">
+    <%= render :partial => 'shared/metadata_pane', :locals => {:metadata => metadata} %>
+  </div>
+
+
+</div>
+
+

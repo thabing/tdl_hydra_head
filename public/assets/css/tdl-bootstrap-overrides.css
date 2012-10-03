@@ -1,7 +1,18 @@
 /*!
  * Altered by Cole Latimer for Tufts University Digital Library: This version is hosted on my personal site for testing and display purposes only.
 */
+.beta {
+    font-size: 15px;
+    display: inline;
+    margin-top: 25px;
+    margin-left: 5px;
+    color: #B99F30;
+    text-align: center;
+    vertical-align: top;
+    font-weight: bold;
 
+
+}
 body {
     background-color: #ffffff;
     margin: 0;
@@ -676,6 +687,7 @@ table {
      margin-bottom: 0;
     height: 30px;
     width: 955px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0);
     margin-right: auto;
     margin-left: auto;
 }
