@@ -17,8 +17,8 @@ module Tufts
 
 			if (withTranscript)
       	result += "          events:                {\n"
-      	result += "                                     onPlay: function() {chooseTranscriptTab();},\n"
-      	result += "                                     onTime: function() {scrollTranscript();}\n"
+      	result += "                                     onPlay: chooseTranscriptTab,\n"
+      	result += "                                     onTime: scrollTranscript\n"
       	result += "                                 },\n"
       end
 
