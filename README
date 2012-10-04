@@ -8,7 +8,7 @@ $ git submodule init
 $ git submodule update
 $ rake db:migrate
 $ rake hydra:jetty:config
-$ rake hydra:jetty:start
+$ rake jetty:start
 $ rake tufts_dca:refresh
 $ rake tufts_dca:refresh RAILS_ENV=test
 $ rails server
