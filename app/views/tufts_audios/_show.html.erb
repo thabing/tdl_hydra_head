@@ -1,5 +1,6 @@
-<script type="text/javascript" src="http://webplayer.yahooapis.com/player.js"></script>
 <% javascript_includes << "audio/audio_player.js" %>
+<% javascript_includes << "audio/transcript_scroller.js" %>
+<% javascript_includes << "audio/tabs.js" %>
 <% stylesheet_links << "audio/audio_player.css" %>
 <% stylesheet_links << "audio/audio.css" %>
 
@@ -18,7 +19,7 @@
 
 <div class="row">
   <div class="span6">
-    <%= raw Tufts::AudioMethods.show_audio_player(params[:id]) %>
+    <%= raw Tufts::AudioMethods.show_audio_player(params[:id], false) %>
     <br>
   </div>
   <!-- span6 -->
