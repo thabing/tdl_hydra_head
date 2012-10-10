@@ -29,9 +29,13 @@ module ApplicationHelper
     return raw(result)
   end
 
+  def render_book_viewer_path(pid)
+    "/bookreader/" + pid +"#page/1/mode/2up"
+  end
+
   def render_book_viewer_link(pid)
-    result = "<a href=\"/bookreader/" + pid +"#page/1/mode/2up" + "\">full view</a>"
-    result = "<a href=\"/bookreader/" + pid +"#page/1/mode/2up" + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
+    result = "<a href=\"" + render_book_viewer_path(pid) + "\">full view</a>"
+    result = "<a href=\"" + render_book_viewer_path(pid) + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
     return raw(result)
   end
 
