@@ -35,7 +35,9 @@
 
                   <% if (paginator.has_next?) %>
                       <% #<a data-toggle="modal" href="#myModal" class="more_facets_link">more »</a> -%>
-                      <li class="more_facets_link"><%= link_to('more »', params.merge(:id => solr_fname, :action => "facet"), :'data-toggle' => "modal", :class => "more_facets_link") %></li>
+
+                      <li class="more_facets_link"><%= link_to('more »', params.merge(:id => solr_fname, :action => "facet"), :class => "more_facets_link") %></li>
+
                   <% end %>
 
                 </ul>

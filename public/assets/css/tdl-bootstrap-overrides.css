@@ -1349,16 +1349,24 @@ margin-left: 300px;	}
 .morelink a{
 	color:  #0755AC;
  }
- 
+
+.modal {
+    max-height: 800px;
+}
+}
+
+.modal-body {
+      max-height: 900px;
+  }
  .modal_650wide
  {  width: 650px;
-    max-height: 800px;
+    max-height: 900px;
 	  margin: -300px 0 0 -340px;
 }
 
  .modal_800wide
  {  width: 800px;
-    max-height: 600px;
+    max-height: 900px;
 	 /* margin: -350px 0 0 -477px;*/
 	  	  margin: -300px 0 0 -400px;
 
