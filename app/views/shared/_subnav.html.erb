@@ -19,6 +19,13 @@
     <div class="span6" style="padding-top:5px">
       <a href="/file_assets/<%= params[:id] %>"><i class="icon-headphones"/></i> Download Audio File</a> &nbsp;<a href="/file_assets/transcript/<%= params[:id] %>"><i class="icon-file"/></i> Download Transcript</a>
     </div>
+  <% elsif "facet" == @current_action %>
+      <div class="span5" style="padding-top:5px">
+           <% if refered_from_our_site? %>
+             <a href="<%= request.env["HTTP_REFERER"]%>"><i class="icon-arrow-left"></i> Back</a>
+           <% end %>
+         </div>
+
   <% elsif !@document.nil? %>
       <% format = document_partial_name(@document) %>
       <div class="span5" style="padding-top:5px">
