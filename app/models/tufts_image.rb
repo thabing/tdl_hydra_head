@@ -46,8 +46,15 @@ class TuftsImage < ActiveFedora::Base
   #end
   def to_solr(solr_doc=Hash.new, opts={})
     pid = self.pid.to_s
-    if pid.include? 'perseus'
+
+    #prefilter perseus and art history objects
+    if ['perseus','aah'].any? { |word| pid.include?(word) }
       return solr_doc
+    end
+
+    #also filter year book pages and election images
+    if ['tufts:UP150','tufts:MS115.001'].any? { |word| pid.starts_with?(word) }
+          return solr_doc
     end
 
     super

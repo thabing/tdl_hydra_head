@@ -139,7 +139,8 @@ module Tufts
 
       names.each {|name|
           unless name.downcase.include? 'unknown'
-            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "names_facet", "#{name}")
+            clean_name = Titleize.titleize(name);
+            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "names_facet", "#{clean_name}")
           end
         }
 
@@ -149,12 +150,13 @@ module Tufts
 
     def index_subject_info(fedora_object,solr_doc)
 
-      [:subject,:corpname,:persname,:geogname].each {|name_field|
-      names = fedora_object.datastreams["DCA-META"].get_values(name_field)
+      [:subject,:corpname,:persname,:geogname].each {|subject_field|
+      subjects = fedora_object.datastreams["DCA-META"].get_values(subject_field)
 
-      names.each {|name|
-          unless name.downcase.include? 'unknown'
-            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "subject_facet", "#{name}")
+      subjects.each {|subject|
+          unless subject.downcase.include? 'unknown'
+            clean_subject = Titleize.titleize(subject);
+            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "subject_facet", "#{clean_subject}")
           end
         }
 
@@ -190,7 +192,8 @@ module Tufts
         if ead_title.nil?
           COLLECTION_ERROR_LOG.error "Could not determine Collection for : #{self.pid}"
         else
-          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", ead_title)
+          clean_ead_title = Titleize.titleize(ead_title);
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", clean_ead_title)
         end
       else
         ead = ead.first.gsub('info:fedora/','')
@@ -211,8 +214,9 @@ module Tufts
 
 
         end
+            clean_ead_title = Titleize.titleize(ead_title)
           ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_id_facet", ead)
-          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", ead_title)
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", clean_ead_title)
       end
 
          # unless collections.nil?
