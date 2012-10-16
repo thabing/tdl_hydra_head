@@ -110,9 +110,8 @@ logger.warn("#{url} == #{page_number} == #{pid}")
       #file name format PB.002.001.00001-0.png
       # pid-pagenumber.png
       # /pdf_pages/data05/tufts/central/dca/PB/access_pdf_pageimages/PB.002.001.00001
-
-      local_path = convert_url_to_local_path(@file_asset.datastreams["Archival.pdf"].dsLocation, params[:pageNumber], params[:id])
-      logger.error("***** #{local_path} *****")
+dsLocation = @file_asset.datastreams["Archival.pdf"].dsLocation
+      local_path = convert_url_to_local_path(dsLocation, params[:pageNumber], params[:id])
       send_file(local_path);
     end
   end
