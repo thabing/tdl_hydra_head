@@ -4,10 +4,13 @@ TdlHydraHead::Application.configure do
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
   config.cache_classes = true
-
+# Log error messages when you accidentally call methods on nil.
+  #config.whiny_nils = true
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
+# Show full error reports and disable caching
+
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
@@ -40,6 +43,13 @@ TdlHydraHead::Application.configure do
   # Enable threaded mode
   # config.threadsafe!
 
+  # Don't care if the mailer can't send
+  # Tell me if the mailer can't send
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.tufts.edu",
+    :port => 25
+  }
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
