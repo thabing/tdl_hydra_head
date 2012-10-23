@@ -11,14 +11,24 @@
   <div class="row-fluid">
     <%= render :partial => 'facet_nav' %>
     <div class="span7">
-      <h3>Search</h3>
+      <h1>Search</h1>
+      <br/>
 
-      <div class="tooltip-demo well">
-       <%= render :partial => 'dca_text/search_tips' %>
+      <div class="tabbable">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="/search">Basic Search</a></li>
+          <li><a href="/advanced">Advanced Search</a></li>
+        </ul>
+      </div>  <!-- class="tabbable" -->
 
+      <div class="span6">
+        <%= render :partial => 'shared/search_form' %>
       </div>
-      ​
+
+      <div class="tooltip-demo well span5">
+        <%= render :partial => 'dca_text/search_tips' %>
+      </div>
+
     </div>
   </div>
-
 </div>
