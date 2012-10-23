@@ -34,9 +34,17 @@ module ApplicationHelper
   end
 
   def render_book_viewer_link(pid)
-    result = "<a href=\"" + render_book_viewer_path(pid) + "\">full view</a>"
     result = "<a href=\"" + render_book_viewer_path(pid) + "\"><h6>open in viewer <i class=\"icon-share\"></i></h6></a>"
     return raw(result)
+  end
+
+  def render_tei_viewer_link(pid)
+      result = "<a href=\"" + render_tei_viewer_path(pid) + "\"><h6>View Book <i class=\"icon-share\"></i></h6></a>"
+      return raw(result)
+  end
+
+  def render_tei_viewer_path(pid)
+      "/catalog/tei/" + pid
   end
 
 

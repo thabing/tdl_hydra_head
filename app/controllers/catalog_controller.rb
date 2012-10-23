@@ -48,6 +48,9 @@ class CatalogController < ApplicationController
   def enforce_transcriptonly_permissions
   end
 
+  def enforce_teireader_permissions
+  end
+
   def search
     delete_or_assign_search_session_params
 
@@ -63,6 +66,9 @@ class CatalogController < ApplicationController
             format.rss  { render :layout => false }
             format.atom { render :layout => false }
           end
+  end
+
+  def teireader
   end
 
   def eadoverview
