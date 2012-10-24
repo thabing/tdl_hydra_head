@@ -1,13 +1,12 @@
-<div class="span5">
   <div class="tabbable ">
     <ul class="nav nav-tabs ebook_tabs">
-      <li><a href="#3" data-toggle="tab">Info</a></li>
-      <li class="active"><a href="#1" data-toggle="tab">Table of Contents</a></li>
-      <li><a href="#2" data-toggle="tab">Search Results (7)</a></li>
+      <li class="active"><a href="#3" data-toggle="tab">Info</a></li>
+      <li><a href="#1" data-toggle="tab">Table of Contents</a></li>
+<% if false %>      <li><a href="#2" data-toggle="tab">Search Results (7)</a></li> <% end %>
     </ul>
 
     <div class="tab-content ">
-      <div class="tab-pane active ebook_content" id="1">
+      <div class="tab-pane  ebook_content" id="1">
 
 
         <table class="table noborder">
@@ -71,7 +70,7 @@
 
 
       </div>
-
+<% if false %>
       <div class="tab-pane ebook_content" id="2">
 
         <table class="table table_notopborder">
@@ -142,57 +141,12 @@
         </table>
         <div class="morelink"><a href="#">more »</a></div>
       </div>
+<% end %>
 
-
-      <div class="tab-pane ebook_content" id="3">
-
-        <p>Tufts Daily example here Tufts Daily Stuff here...</p>
-        <dl>
-          <dd>This object is in collection:</dd>
-          <dt><a href="#">Collection X</a></dt>
-          <dd>This illustration appears in:</dd>
-          <dt><a href="#">Light on the Hill</a></dt>
-          <dd>Citation</dd>
-          <dt>Digital edition of Stories of the Streets of London by Baker, H. Barton, created from the 1899 edition.
-            Permanent URL: http://hdl.handle.net/10427/14821
-          </dt>
-          <dd>Citable URL</dd>
-          <dt> http://hdl.handle.net/10427/14821</dt>
-          <dd>Tufts DL Document ID number</dd>
-          <dt>tufts.central.dca:UA069:UA069:005.DO.00026</dt>
-          <dd>Date of this edition</dd>
-          <dt>2002-01-01</dt>
-          <dd>Note about this document</dd>
-          <dt>This document was created from the 1899 printing of H. Barton Baker's Stories of the Streets of London
-          </dt>
-        </dl>
-
-
-        <div class="tooltip-demo well ">
-
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="noborder">
-            <tbody>
-            <tr>
-              <td width="50">ID:</td>
-              <td>tufts:MS004:002:002:D001:00002</td>
-            </tr>
-            <tr>
-              <td>To Cite:</td>
-              <td><a href="#">DCA Citation Guide</a></td>
-            </tr>
-            <tr>
-              <td>Usage:</td>
-              <td><a href="#">Detailed Rights</a></td>
-            </tr>
-            </tbody>
-          </table>
-
-
-        </div>
+      <div class="tab-pane active ebook_content" id="3">
+        <%= render :partial => 'shared/metadata_pane', :locals => {:metadata => metadata} %>
       </div>
 
 
     </div>
   </div>
-
-</div>
