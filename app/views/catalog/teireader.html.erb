@@ -10,14 +10,13 @@
 
 <hr>
 <div class="row">
-  <div class="span6">
-    <%= render :partial => 'tufts_teis/image_pane', :locals => {:metadata => metadata}  %>
-
+  <div class="span7">
+    <%= render :partial => 'tufts_teis/bookreader_pane', :locals => {:metadata => metadata} %>
   </div>
 
 
-  <div class="span6">
-    <%= render :partial => 'shared/metadata_pane', :locals => {:metadata => metadata} %>
+  <div class="span5">
+    <%= render :partial => 'tufts_teis/metadata_pane', :locals => {:metadata => metadata} %>
   </div>
 
 
