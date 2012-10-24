@@ -1,152 +1,26 @@
-  <div class="tabbable ">
-    <ul class="nav nav-tabs ebook_tabs">
-      <li class="active"><a href="#3" data-toggle="tab">Info</a></li>
-      <li><a href="#1" data-toggle="tab">Table of Contents</a></li>
-<% if false %>      <li><a href="#2" data-toggle="tab">Search Results (7)</a></li> <% end %>
-    </ul>
+<div class="tabbable ">
+  <ul class="nav nav-tabs ebook_tabs">
+    <li class="active"><a href="#3" data-toggle="tab">Info</a></li>
+    <li><a href="#1" data-toggle="tab">Table of Contents</a></li>
+    <% if false %>
+        <li><a href="#2" data-toggle="tab">Search Results (7)</a></li>
+    <% end %>
+  </ul>
 
-    <div class="tab-content ">
-      <div class="tab-pane  ebook_content" id="1">
-
-
-        <table class="table noborder">
-          <tbody>
-          <tr class="borderbottom">
-            <td class="collapse_td  ">
-              <a data-toggle="modal" href="#myImageGallery"><i class="icon-picture"></i></a></td>
-            <td><a data-toggle="modal" href="#myImageGallery"> View all images in this book </a></td>
-          </tr>
-
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">Title Page</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">To the Reader</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER III: The Blackfriars Theatre, Etc.</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#"></a><a href="#">CHAPTER XXII: Mayfair</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER XV: The Strand (continued)</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER XVIII: The Haymarket--St. James's Square, Etc.</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">
-              <a href="#"><img src="assets/img/button_collapse.png" width="11" height="11" alt="collapse"></a></td>
-            <td><a href="#">CHAPTER IV: Smithfield and Clerkenwell</a></td>
-          </tr>
-
-          <tr>
-            <td colspan="2" class="indent"><a href="#">II. Covent Garden Market</a></td>
-          </tr>
-          <tr>
-            <td colspan="2" class="indent"><a href="#">III. Covent Garden Election</a></td>
-          </tr>
-
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER XVII: Westminster Abbey and Palace, Etc.</a></td>
-          </tr>
-
-
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER XVIII: The Haymarket--St. James's Square, Etc.</a></td>
-          </tr>
-
-          </tbody>
-        </table>
-
-
-      </div>
-<% if false %>
-      <div class="tab-pane ebook_content" id="2">
-
-        <table class="table table_notopborder">
-          <thead>
-          <tr class="table_header">
-            <td>Chapter</td>
-            <td>Text</td>
-
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td class="chapter_title">CHAPTER X: Covent Garden Section II. Covent Garden...</td>
-            <td>The wanderer in the now dreary and depressing piazza of<strong> Covent Garden</strong>, where the squat
-              market buildings loom...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER XXI: Piccadilly</td>
-            <td>...Westminster election for Charles James Fox, has been already alluded to in the chapter on "<strong>Covent
-              Garden</strong>".
-            </td>
-          </tr>
-
-
-          <tr>
-            <td class="chapter_title">CHAPTER IX: Chancery Lane--Lincoln's Inn, Etc.
-            </td>
-            <td>The boxes are filled with beaux and belles, the pit with coffeehouse wits from
-              <strong>Covent Garden,</strong> the gallery wi...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER XXII: Mayfair
-            </td>
-            <td>composer's compositions when the management of<strong> Covent Garden </strong>had to omit some of the
-              finest con...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER XV: The Strand (continued)
-            </td>
-            <td>...and his group still live and breathe about Fleet Street, the Strand, Leicester Square,
-              <strong>Covent Garden</strong>...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER VIII: Fleet Street (continued)
-            </td>
-            <td>drawn by slumberous horses, unguided by sleeping drivers, slowly make their way to
-              <strong>Covent Garden</strong>...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER XVIII: The Haymarket--St. James's Square, Etc.
-
-            </td>
-            <td>... Licensing Act, by which the London theatres were restricted to two, Drury Lane and
-              <strong>Covent Garden.</strong></td>
-          </tr>
-
-          </tbody>
-        </table>
-        <div class="morelink"><a href="#">more »</a></div>
-      </div>
-<% end %>
-
-      <div class="tab-pane active ebook_content" id="3">
-        <%= render :partial => 'shared/metadata_pane', :locals => {:metadata => metadata} %>
-      </div>
-
-
+  <div class="tab-content ">
+    <div class="tab-pane  ebook_content" id="1">
+      <%= render :partial => 'tufts_teis/toc', :locals => {:metadata => metadata} %>
     </div>
+    <% if false %>
+        <div class="tab-pane ebook_content" id="2">
+          <%= render :partial => 'tufts_teis/results', :locals => {:metadata => metadata} %>
+        </div>
+    <% end %>
+
+    <div class="tab-pane active ebook_content" id="3">
+      <%= render :partial => 'shared/metadata_pane', :locals => {:metadata => metadata} %>
+    </div>
+
+
   </div>
+</div>
