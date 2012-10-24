@@ -27,6 +27,7 @@ class TuftsTEI < ActiveFedora::Base
   # DCA_admin might be the one that we have started clearing out -- it used to have metadata
   # but it was all wrong, so now we're just putting it in as empty.
   #has_metadata :name => "DCA-ADMIN", :type => ActiveFedora::Datastream
+  has_metadata :name => "Archival.xml", :type =>  TuftsTeiMeta
 
 
   #MK 2011-04-13 - Are we really going to need to access FILE-META from FILE-META.  I'm guessing
