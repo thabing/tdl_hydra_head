@@ -12,6 +12,10 @@
     <div class="span12" style="padding-top:5px">
       <a href="<%= Tufts::EADMethods.finding_aid_url(@document_fedora) %>"><i class="icon-arrow-left"></i> <%= @collection_title %></a> > <%= @series_full_title %>
     </div>
+  <% elsif "teireader" == @current_action %>
+      <div class="span12" style="padding-top:5px">
+        <a href="/catalog/<%= params[:id] %>"><i class="icon-arrow-left"></i> Back to Book Home</a>
+      </div>
   <% elsif "transcriptonly" == @current_action %>
     <div class="span6" style="padding-top:5px">
       <a href="/catalog/<%= params[:id] %>"><i class="icon-arrow-left"></i> Back to Audio Player</a>
