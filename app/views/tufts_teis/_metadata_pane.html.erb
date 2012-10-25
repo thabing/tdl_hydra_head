@@ -1,14 +1,15 @@
 <div class="tabbable ">
   <ul class="nav nav-tabs ebook_tabs">
-    <li class="active"><a href="#3" data-toggle="tab">Info</a></li>
-    <li><a href="#1" data-toggle="tab">Table of Contents</a></li>
+
+    <li <%= @current_action == 'show' ? 'class=active' : '' %>><a href="#3" data-toggle="tab">Info</a></li>
+    <li <%= @current_action == 'teireader' ? 'class=active' : '' %>><a href="#1" data-toggle="tab">Table of Contents</a></li>
     <% if false %>
         <li><a href="#2" data-toggle="tab">Search Results (7)</a></li>
     <% end %>
   </ul>
 
   <div class="tab-content ">
-    <div class="tab-pane  ebook_content" id="1">
+    <div class="tab-pane <%= @current_action == 'teireader' ? 'active' : '' %> ebook_content" id="1">
       <%= render :partial => 'tufts_teis/toc', :locals => {:metadata => metadata} %>
     </div>
     <% if false %>
@@ -17,7 +18,7 @@
         </div>
     <% end %>
 
-    <div class="tab-pane active ebook_content" id="3">
+    <div class="tab-pane <%= @current_action == 'show' ? 'active' : '' %> ebook_content" id="3">
       <%= render :partial => 'shared/metadata_pane', :locals => {:metadata => metadata} %>
     </div>
 
