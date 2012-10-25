@@ -1,50 +1,76 @@
 module Tufts
   module TeiMethods
+    # this relies on all deliverable chunks being div1's or div2's
+    #<xsl:variable name="front-chunks" select="(/TEI.2/text/front/div1|/TEI.2/text/front/titlePage)"/>
+    #<xsl:variable name="body-chunks" select="(/TEI.2/text/body/div1[not(div2)]|/TEI.2/text/body/div1/div2)"/>
+    #<xsl:variable name="back-chunks" select="(/TEI.2/text/back/div1)"/>
+    TOC_PREDICATE = "<tr><td class='collapse_td'>&nbsp;</td><td>"
+    TOC_SUFFIX ="</td></tr>"
 
-    def self.show_participants(fedora_obj, datastream="ARCHIVAL_XML")
-      result = "<div class=\"participant_table\">\n"
+    def self.get_toc(fedora_obj)
+      result = ""
+      xml = fedora_obj.datastreams["Archival.xml"].ng_xml
+      node_sets = xml.xpath('/TEI.2/text/front/div1|/TEI.2/text/front/titlePage')
 
-      participant_number = 0
-      node_sets = fedora_obj.datastreams[datastream].find_by_terms_and_value(:participants)
-
-      node_sets.each do |node|
-        node.children.each do |child|
-          unless child.attributes.empty?
-            participant_number += 1
-            id = child.attributes["id"]
-            role = child.attributes["role"]
-            sex = child.attributes["sex"].to_s
-            result << "        <div class=\"participant_row\" id=\"participant" + participant_number.to_s + "\">\n"
-            result << "          <div class=\"participant_id\">" + (id.nil? ? "" : id) + "</div>\n"
-            result << "          <div class=\"participant_name\">" + child.text + "<span class=\"participant_role\">" + (role.nil? ? "" : ", " + role) + (sex.nil? ? "" : " (" + (sex == "f" ? "female" : (sex == "m" ? "male" : sex)) + ")") + "</span></div>\n"
-            result << "        </div> <!-- participant_row -->\n"
-          end
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/title"+"'>" + "Title Page" + "</a>" << TOC_SUFFIX
         end
       end
 
-      result << "      </div> <!-- participant_table -->\n"
+      node_sets = xml.xpath('/TEI.2/text/body/div1[not(div2)]|/TEI.2/text/body/div1/div2')
 
-      return result
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"<< TOC_SUFFIX
+        end
+      end
+
+      node_sets = xml.xpath('/TEI.2/text/back/div1')
+
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result << TOC_PREDICATE << "<a>" + "Back Page" + "</a>"<< TOC_SUFFIX
+        end
+      end
+
+      result
     end
 
+    def self.show_tei(fedora_obj, chapter)
 
-    def self.show_tei(fedora_obj)
+      if chapter.nil?
+        chapter = "c1"
+      end
 
       result = ""
 
-      node_sets = fedora_obj.datastreams["Archival.xml"].find_by_terms_and_value(:text)
-      result = fedora_obj.datastreams["Archival.xml"].to_s
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head')
       unless node_sets.nil?
         node_sets.each do |node|
-          result << node
+          result << "<h5>" + node + "</h5>"
+
         end
+      end
+
+
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p')
+
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result << "<p>" + node + "</p>"
+
+        end
+      end
+
+      if result.empty?
+        result="Document empty"
       end
       return result
     end
 
 
-   # private # all methods that follow will be made private: not accessible for outside objects
-
+    # private # all methods that follow will be made private: not accessible for outside objects
 
 
   end
