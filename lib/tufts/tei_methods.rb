@@ -72,6 +72,19 @@ module Tufts
       result
     end
 
+    def self.show_tei_backpage(fedora_obj,chapter)
+          result = ""
+          xml = fedora_obj.datastreams["Archival.xml"].ng_xml
+          node_sets = xml.xpath('/TEI.2/text/back/div1')
+          unless node_sets.nil?
+            node_sets.each do |node|
+              if chapter == 'title' || (chapter != "title" && chapter == node['id'])
+                result << self.ctext(node)
+              end
+            end
+          end
+          result
+        end
     # recursive function to walk the title page stick everything into divs
     def self.ctext(el)
       if el.text?
@@ -93,14 +106,23 @@ module Tufts
 
     def self.show_tei(fedora_obj, chapter)
 
+      # if there's no chapter specified show the cover
       if chapter.nil?
         chapter = "title"
       end
 
+      # special case show the cover
       if chapter == "title" || (chapter.start_with? "front")
         return show_tei_cover(fedora_obj,chapter)
       end
 
+      # special case show the back cover
+      if chapter.starts_with? "back"
+        return show_tei_backpage(fedora_obj,chapter)
+      end
+
+      # render the requested chapter.
+      # NOTE: should break this out into a method probably.
       result = ""
 
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head')
