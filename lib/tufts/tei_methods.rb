@@ -18,7 +18,7 @@ module Tufts
           unless node['n'].nil?
             title = node['n']
           end
-          result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/title"+"'>" + title + "</a>" << TOC_SUFFIX
+          result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" << TOC_SUFFIX
         end
       end
 
