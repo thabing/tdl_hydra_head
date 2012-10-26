@@ -58,7 +58,9 @@ module Tufts
       node_sets = xml.xpath('/TEI.2/text/front/div1|/TEI.2/text/front/titlePage')
       unless node_sets.nil?
         node_sets.each do |node|
-          result << self.ctext(node)
+          if chapter == 'title' || (chapter != "title" && chapter == node['id'])
+            result << self.ctext(node)
+          end
         end
       end
       result
