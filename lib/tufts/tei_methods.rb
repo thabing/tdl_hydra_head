@@ -66,15 +66,13 @@ module Tufts
       result
     end
 
+    # recursive function to walk the title page stick everything into divs
     def self.ctext(el)
       if el.text?
         return el.text
       end
       result = [ ]
       for sel in el.children
-        #if (!["b", "i"].include?(sel.name))
-        #  raise "disallowed tag: " + sel.name
-        #end
         if sel.element?
           type = sel[:type]
           result.push("<div class='" + sel.name + " " + (type.nil? ? "" : type) + "'>")
