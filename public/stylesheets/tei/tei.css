@@ -13,3 +13,12 @@
     font-size: 14px;
     padding-bottom: 15px;
 }
+.head {
+    font-size: 14px;
+    color: #0755AC;
+    margin-bottom: 5px;
+    line-height: 20px;
+    margin: 0;
+    font-weight: 500;
+    text-rendering: optimizelegibility;
+}
