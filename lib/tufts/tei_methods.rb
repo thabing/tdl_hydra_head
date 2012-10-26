@@ -34,7 +34,13 @@ module Tufts
 
       unless node_sets.nil?
         node_sets.each do |node|
-          result << TOC_PREDICATE << "<a>" + "Back Page" + "</a>"<< TOC_SUFFIX
+          title = "Back Page"
+
+          unless node['n'].nil?
+            title = node['n']
+          end
+
+          result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" << TOC_SUFFIX
         end
       end
 
