@@ -52,7 +52,7 @@ module Tufts
     #       </docTitle>
     #     </titlePage>
     #  </front>
-    def self.show_tei_cover(fedora_obj)
+    def self.show_tei_cover(fedora_obj,chapter)
       result = ""
       xml = fedora_obj.datastreams["Archival.xml"].ng_xml
       node_sets = xml.xpath('/TEI.2/text/front/div1|/TEI.2/text/front/titlePage')
@@ -91,8 +91,8 @@ module Tufts
         chapter = "title"
       end
 
-      if chapter == "title"
-        return show_tei_cover(fedora_obj)
+      if chapter == "title" || (chapter.start_with? "front")
+        return show_tei_cover(fedora_obj,chapter)
       end
 
       result = ""
