@@ -37,10 +37,58 @@ module Tufts
       result
     end
 
+    # <front>
+    #   <titlePage>
+    #     <docTitle>
+    #       <titlePart type="main">A Failure of Management</titlePart>
+    #     </docTitle>
+    #     <docAuthor> Walter B. Wriston</docAuthor>
+    #     <docTitle>
+    #     <titlePart type="des">Wriston, Walter B. "A Failure of Management." Sternbusiness (1995): 25-26.</titlePart>
+    #       </docTitle>
+    #     </titlePage>
+    #  </front>
+    def self.show_tei_cover(fedora_obj)
+      result = ""
+      xml = fedora_obj.datastreams["Archival.xml"].ng_xml
+      node_sets = xml.xpath('/TEI.2/text/front/div1|/TEI.2/text/front/titlePage')
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result << self.ctext(node)
+        end
+      end
+      result
+    end
+
+    def self.ctext(el)
+      if el.text?
+        return el.text
+      end
+      result = [ ]
+      for sel in el.children
+        #if (!["b", "i"].include?(sel.name))
+        #  raise "disallowed tag: " + sel.name
+        #end
+        if sel.element?
+          type = sel[:type]
+          result.push("<div class='" + sel.name + " " + (type.nil? ? "" : type) + "'>")
+        end
+        result.push(ctext(sel))
+        if sel.element?
+          result.push("</div>")
+        end
+      end
+      return result.join
+    end
+
     def self.show_tei(fedora_obj, chapter)
 
       if chapter.nil?
-        chapter = "c1"
+        chapter = "title"
+      end
+
+      if chapter == "title"
+        return show_tei_cover(fedora_obj)
       end
 
       result = ""

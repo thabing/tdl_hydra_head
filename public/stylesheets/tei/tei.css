@@ -1,0 +1,15 @@
+.docTitle {
+    text-align: center;
+}
+
+.docAuthor {
+    text-align: center;
+}
+
+.titlePart.main {
+    font-size: 18px;
+}
+.titlePart {
+    font-size: 14px;
+    padding-bottom: 15px;
+}
