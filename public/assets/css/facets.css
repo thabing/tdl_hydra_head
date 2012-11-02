@@ -44,7 +44,7 @@
 	text-align:center;}
 	
 .sort_change {text-decoration:underline;}
- .sort_options{font-size:11px; padding-right: 5px;text-align:right;    }
+.sort_options{font-size:11px; padding-right: 5px;text-align:right;}
 .close_window{float:right;  width:9px;  padding-left:5px; cursor:pointer; border-left:1px solid #E0E0E0; color:#999; height:25px;}
 .close_window a {color:#999; vertical-align:middle;}
 
@@ -53,5 +53,8 @@
     padding: 5px;
     display: block;
     color: #666;
-    }
 }
+
+.facet_pagination.top .prev_next_links {display: none;}
+
+.facet_pagination.bottom .sort_options {display: none;}

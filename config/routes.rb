@@ -25,6 +25,7 @@ TdlHydraHead::Application.routes.draw do
   match '/search', :to => 'catalog#search', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/opensearch', :to => 'catalog#opensearch', :constraints => {:id => /.*/}, :as =>'catalog'
   match '/catalog/facet/:id', :to => 'catalog#facet', :constraints => {:id => /.*/}, :as =>'catalog'
+  match '/advanced/facet/:id', :to => 'advanced#facet', :constraints => {:id => /.*/}, :as =>'advanced'
   match '/catalog/ead/:id/:item_id', :to => 'catalog#eadinternal', :constraints => {:id => /.*/, :item_id => /.*/}, :as =>'eadinternal'
   match '/catalog/ead/:id', :to => 'catalog#eadoverview', :constraints => {:id => /.*/}, :as =>'eadoverview'
   match '/catalog/transcriptonly/:id', :to => 'catalog#transcriptonly', :constraints => {:id => /.*/}, :as =>'transcriptonly'
