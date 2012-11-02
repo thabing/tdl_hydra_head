@@ -94,7 +94,8 @@ namespace :tufts_dca do
       "tufts:me.uscongress3.second.1825",
       "tufts:ky.clerkofthehouse.1813",
       "tufts:MS115.001.DO.11090",
-      "tufts:UA069.005.DO.00094"
+      "tufts:UA069.005.DO.00094",
+      "tufts:UA069.005.DO.00001"
 
   ]
 

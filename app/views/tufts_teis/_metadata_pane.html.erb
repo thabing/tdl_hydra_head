@@ -1,198 +1,27 @@
-<div class="span5">
-  <div class="tabbable ">
-    <ul class="nav nav-tabs ebook_tabs">
-      <li><a href="#3" data-toggle="tab">Info</a></li>
-      <li class="active"><a href="#1" data-toggle="tab">Table of Contents</a></li>
-      <li><a href="#2" data-toggle="tab">Search Results (7)</a></li>
-    </ul>
+<div class="tabbable ">
+  <ul class="nav nav-tabs ebook_tabs">
 
-    <div class="tab-content ">
-      <div class="tab-pane active ebook_content" id="1">
+    <li <%= @current_action == 'show' ? 'class=active' : '' %>><a href="#3" data-toggle="tab">Info</a></li>
+    <li <%= @current_action == 'teireader' ? 'class=active' : '' %>><a href="#1" data-toggle="tab">Table of Contents</a></li>
+    <% if false %>
+        <li><a href="#2" data-toggle="tab">Search Results (7)</a></li>
+    <% end %>
+  </ul>
 
-
-        <table class="table noborder">
-          <tbody>
-          <tr class="borderbottom">
-            <td class="collapse_td  ">
-              <a data-toggle="modal" href="#myImageGallery"><i class="icon-picture"></i></a></td>
-            <td><a data-toggle="modal" href="#myImageGallery"> View all images in this book </a></td>
-          </tr>
-
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">Title Page</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">To the Reader</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER III: The Blackfriars Theatre, Etc.</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#"></a><a href="#">CHAPTER XXII: Mayfair</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER XV: The Strand (continued)</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER XVIII: The Haymarket--St. James's Square, Etc.</a></td>
-          </tr>
-          <tr>
-            <td class="collapse_td">
-              <a href="#"><img src="assets/img/button_collapse.png" width="11" height="11" alt="collapse"></a></td>
-            <td><a href="#">CHAPTER IV: Smithfield and Clerkenwell</a></td>
-          </tr>
-
-          <tr>
-            <td colspan="2" class="indent"><a href="#">II. Covent Garden Market</a></td>
-          </tr>
-          <tr>
-            <td colspan="2" class="indent"><a href="#">III. Covent Garden Election</a></td>
-          </tr>
-
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER XVII: Westminster Abbey and Palace, Etc.</a></td>
-          </tr>
-
-
-          <tr>
-            <td class="collapse_td">&nbsp;</td>
-            <td><a href="#">CHAPTER XVIII: The Haymarket--St. James's Square, Etc.</a></td>
-          </tr>
-
-          </tbody>
-        </table>
-
-
-      </div>
-
-      <div class="tab-pane ebook_content" id="2">
-
-        <table class="table table_notopborder">
-          <thead>
-          <tr class="table_header">
-            <td>Chapter</td>
-            <td>Text</td>
-
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td class="chapter_title">CHAPTER X: Covent Garden Section II. Covent Garden...</td>
-            <td>The wanderer in the now dreary and depressing piazza of<strong> Covent Garden</strong>, where the squat
-              market buildings loom...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER XXI: Piccadilly</td>
-            <td>...Westminster election for Charles James Fox, has been already alluded to in the chapter on "<strong>Covent
-              Garden</strong>".
-            </td>
-          </tr>
-
-
-          <tr>
-            <td class="chapter_title">CHAPTER IX: Chancery Lane--Lincoln's Inn, Etc.
-            </td>
-            <td>The boxes are filled with beaux and belles, the pit with coffeehouse wits from
-              <strong>Covent Garden,</strong> the gallery wi...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER XXII: Mayfair
-            </td>
-            <td>composer's compositions when the management of<strong> Covent Garden </strong>had to omit some of the
-              finest con...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER XV: The Strand (continued)
-            </td>
-            <td>...and his group still live and breathe about Fleet Street, the Strand, Leicester Square,
-              <strong>Covent Garden</strong>...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER VIII: Fleet Street (continued)
-            </td>
-            <td>drawn by slumberous horses, unguided by sleeping drivers, slowly make their way to
-              <strong>Covent Garden</strong>...
-            </td>
-          </tr>
-
-          <tr>
-            <td class="chapter_title">CHAPTER XVIII: The Haymarket--St. James's Square, Etc.
-
-            </td>
-            <td>... Licensing Act, by which the London theatres were restricted to two, Drury Lane and
-              <strong>Covent Garden.</strong></td>
-          </tr>
-
-          </tbody>
-        </table>
-        <div class="morelink"><a href="#">more »</a></div>
-      </div>
-
-
-      <div class="tab-pane ebook_content" id="3">
-
-        <p>Tufts Daily example here Tufts Daily Stuff here...</p>
-        <dl>
-          <dd>This object is in collection:</dd>
-          <dt><a href="#">Collection X</a></dt>
-          <dd>This illustration appears in:</dd>
-          <dt><a href="#">Light on the Hill</a></dt>
-          <dd>Citation</dd>
-          <dt>Digital edition of Stories of the Streets of London by Baker, H. Barton, created from the 1899 edition.
-            Permanent URL: http://hdl.handle.net/10427/14821
-          </dt>
-          <dd>Citable URL</dd>
-          <dt> http://hdl.handle.net/10427/14821</dt>
-          <dd>Tufts DL Document ID number</dd>
-          <dt>tufts.central.dca:UA069:UA069:005.DO.00026</dt>
-          <dd>Date of this edition</dd>
-          <dt>2002-01-01</dt>
-          <dd>Note about this document</dd>
-          <dt>This document was created from the 1899 printing of H. Barton Baker's Stories of the Streets of London
-          </dt>
-        </dl>
-
-
-        <div class="tooltip-demo well ">
-
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="noborder">
-            <tbody>
-            <tr>
-              <td width="50">ID:</td>
-              <td>tufts:MS004:002:002:D001:00002</td>
-            </tr>
-            <tr>
-              <td>To Cite:</td>
-              <td><a href="#">DCA Citation Guide</a></td>
-            </tr>
-            <tr>
-              <td>Usage:</td>
-              <td><a href="#">Detailed Rights</a></td>
-            </tr>
-            </tbody>
-          </table>
-
-
-        </div>
-      </div>
-
-
+  <div class="tab-content ">
+    <div class="tab-pane <%= @current_action == 'teireader' ? 'active' : '' %> ebook_content" id="1">
+      <%= render :partial => 'tufts_teis/toc', :locals => {:metadata => metadata} %>
     </div>
-  </div>
+    <% if false %>
+        <div class="tab-pane ebook_content" id="2">
+          <%= render :partial => 'tufts_teis/results', :locals => {:metadata => metadata} %>
+        </div>
+    <% end %>
 
+    <div class="tab-pane <%= @current_action == 'show' ? 'active' : '' %> ebook_content" id="3">
+      <%= render :partial => 'shared/metadata_pane', :locals => {:metadata => metadata} %>
+    </div>
+
+
+  </div>
 </div>
