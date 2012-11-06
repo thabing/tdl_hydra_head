@@ -4,8 +4,11 @@ module Tufts
     #<xsl:variable name="front-chunks" select="(/TEI.2/text/front/div1|/TEI.2/text/front/titlePage)"/>
     #<xsl:variable name="body-chunks" select="(/TEI.2/text/body/div1[not(div2)]|/TEI.2/text/body/div1/div2)"/>
     #<xsl:variable name="back-chunks" select="(/TEI.2/text/back/div1)"/>
-    TOC_PREDICATE = "<tr><td class='collapse_td'>&nbsp;</td><td>"
+    TOC_PREDICATE = "<tr><td>&nbsp;</td><td>"
+    TOC_COLLAPSE_PREDICATE = "<tr><td class='collapse_td'><a class='collapse' href='#'><img src='/assets/img/button_collapse.png' width='11' height='11' alt='collapse'></a></td><td>"
     TOC_SUFFIX ="</td></tr>"
+    TOC_CHILD_PREDICATE = "<div class=collapsabile>"
+    TOC_CHILD_SUFFIX="</div>"
 
     def self.get_toc(fedora_obj)
       result = ""
@@ -22,11 +25,20 @@ module Tufts
         end
       end
 
-      node_sets = xml.xpath('/TEI.2/text/body/div1[not(div2)]|/TEI.2/text/body/div1/div2')
+      node_sets = xml.xpath('/TEI.2/text/body/div1')
 
       unless node_sets.nil?
         node_sets.each do |node|
-          result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"<< TOC_SUFFIX
+          if node['type'] == 'section'
+            result << TOC_COLLAPSE_PREDICATE << "<a class='collapse_td' href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"
+            result << "<div class='collapse_content'>"
+            result << self.get_subsection(fedora_obj, node)
+            result << "</div>"
+            result << TOC_SUFFIX
+          else
+            result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"<< TOC_SUFFIX
+          end
+          #  result << ctext(node)
         end
       end
 
@@ -47,6 +59,18 @@ module Tufts
       result
     end
 
+    def self.get_subsection(fedora_obj, node)
+      result = ""
+      id = node['id']
+      node_sets = node.xpath('/TEI.2/text/body/div1[@id="'+ id +'"]/div2')
+      unless node_sets.nil?
+        node_sets.each do |node2|
+          result << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node2['id']+"'>" + node2['n'] + "</a><br/>"
+        end
+      end
+      result
+    end
+
     # <front>
     #   <titlePage>
     #     <docTitle>
@@ -58,7 +82,7 @@ module Tufts
     #       </docTitle>
     #     </titlePage>
     #  </front>
-    def self.show_tei_cover(fedora_obj,chapter)
+    def self.show_tei_cover(fedora_obj, chapter)
       result = ""
       xml = fedora_obj.datastreams["Archival.xml"].ng_xml
       node_sets = xml.xpath('/TEI.2/text/front/div1|/TEI.2/text/front/titlePage')
@@ -72,25 +96,26 @@ module Tufts
       result
     end
 
-    def self.show_tei_backpage(fedora_obj,chapter)
-          result = ""
-          xml = fedora_obj.datastreams["Archival.xml"].ng_xml
-          node_sets = xml.xpath('/TEI.2/text/back/div1')
-          unless node_sets.nil?
-            node_sets.each do |node|
-              if chapter == 'title' || (chapter != "title" && chapter == node['id'])
-                result << self.ctext(node)
-              end
-            end
+    def self.show_tei_backpage(fedora_obj, chapter)
+      result = ""
+      xml = fedora_obj.datastreams["Archival.xml"].ng_xml
+      node_sets = xml.xpath('/TEI.2/text/back/div1')
+      unless node_sets.nil?
+        node_sets.each do |node|
+          if chapter == 'title' || (chapter != "title" && chapter == node['id'])
+            result << self.ctext(node)
           end
-          result
         end
+      end
+      result
+    end
+
     # recursive function to walk the title page stick everything into divs
     def self.ctext(el)
       if el.text?
         return el.text
       end
-      result = [ ]
+      result = []
       for sel in el.children
         if sel.element?
           type = sel[:type]
@@ -113,12 +138,12 @@ module Tufts
 
       # special case show the cover
       if chapter == "title" || (chapter.start_with? "front")
-        return show_tei_cover(fedora_obj,chapter)
+        return show_tei_cover(fedora_obj, chapter)
       end
 
       # special case show the back cover
       if chapter.starts_with? "back"
-        return show_tei_backpage(fedora_obj,chapter)
+        return show_tei_backpage(fedora_obj, chapter)
       end
 
       # render the requested chapter.

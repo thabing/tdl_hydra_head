@@ -77,7 +77,11 @@
 
  BlacklightAdvancedSearch.config[:form_solr_parameters] = {
    "facet.field" => [
-       "object_type_facet"
+       "object_type_facet",
+       "names_facet",
+       "year_facet",
+       "subject_facet",
+       "collection_facet"
     # "format",
     # "lc_1letter_facet",
     # "language_facet"    
