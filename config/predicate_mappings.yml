@@ -39,6 +39,7 @@
     :is_part_of: isPartOf
     :is_subset_of: isSubsetOf
     :is_topic_of: isTopicOf
+    :created_by: createdBy
   info:fedora/fedora-system:def/model#:
     :has_model: hasModel
   http://www.openarchives.org/OAI/2.0/: 
