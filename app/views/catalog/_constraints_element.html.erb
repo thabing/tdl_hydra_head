@@ -27,7 +27,7 @@
 
       if @current_controller == "advanced"
         # change /catalog to /advanced in the url.
-        remove_facet_url.sub!(catalog_index_path, url_for(:controller=>"advanced", :action=>"index"));
+        remove_facet_url.sub!(catalog_index_path, url_for(:controller=>"advanced", :action=>"index"))
       end
   %>
 
