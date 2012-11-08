@@ -29,13 +29,13 @@
 
   BlacklightAdvancedSearch.config[:search_fields] = search_fields = []
   search_fields << {
-    :key =>  'author',
+    :key =>  'keyword',
     :solr_local_parameters => {
-      :pf => "$pf_author",
-      :qf => "$qf_author"
+      :pf => "$pf_keyword",
+      :qf => "$qf_keyword"
     }
   }
-  
+
   search_fields << {
     :key =>  'title',
     :solr_local_parameters => {
@@ -45,18 +45,58 @@
   }
   
   search_fields << {
-    :key =>  'subject',
+    :key =>  'author',
     :solr_local_parameters => {
-      :pf => "$pf_subject",
-      :qf => "$qf_subject"
+      :pf => "$pf_author",
+      :qf => "$qf_author"
+    }
+  }
+  
+  search_fields << {
+    :key =>  'collection',
+    :solr_local_parameters => {
+      :pf => "$pf_collection",
+      :qf => "$qf_collection"
     }
   }
 
   search_fields << {
-    :key =>  'keyword',
+    :key =>  'description',
     :solr_local_parameters => {
-      :pf => "$pf_keyword",
-      :qf => "$qf_keyword"
+      :pf => "$pf_description",
+      :qf => "$qf_description"
+    }
+  }
+
+  search_fields << {
+    :key =>  'organization',
+    :solr_local_parameters => {
+      :pf => "$pf_organization",
+      :qf => "$qf_organization"
+    }
+  }
+
+  search_fields << {
+    :key =>  'people',
+    :solr_local_parameters => {
+      :pf => "$pf_person",
+      :qf => "$qf_person"
+    }
+  }
+
+  search_fields << {
+    :key =>  'place',
+    :solr_local_parameters => {
+      :pf => "$pf_place",
+      :qf => "$qf_place"
+    }
+  }
+
+  search_fields << {
+    :key =>  'topic',
+    :solr_local_parameters => {
+      :pf => "$pf_topic",
+      :qf => "$qf_topic"
     }
   }
 
