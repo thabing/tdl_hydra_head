@@ -111,7 +111,7 @@ module Tufts
               model_s="Image"
             when "info:fedora/afmodel:TuftsPdf", "info:fedora/afmodel:TuftsTEI"
               model_s="Text"
-            when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI"
+            when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI","info:fedora/cm:Audio.OralHistory", "info:fedora/afmodel:TuftsAudioText"
               #nokogiri_doc = Nokogiri::XML(self.datastreams['Archival.xml'].content)
               nokogiri_doc = Nokogiri::XML(File.open(convert_url_to_local_path(fedora_object.datastreams["Archival.xml"].dsLocation)).read)
               full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
