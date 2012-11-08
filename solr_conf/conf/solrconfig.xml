@@ -109,6 +109,12 @@
           text^10
           active_fedora_model_s
           object_type_facet
+          creator_t
+          subject_t
+          corpname_t
+          persname_t
+          geogname_t
+          description_t
         </str>
         <str name="keyword_qf">
           id
@@ -116,6 +122,12 @@
           text
           active_fedora_model_s
           object_type_facet
+          creator_t
+          subject_t
+          corpname_t
+          persname_t
+          geogname_t
+          description_t
         </str>
         <str name="keyword_pf">
           id
@@ -126,55 +138,88 @@
         </str>
         <str name="author_qf">
           author_unstem_search^200
-          author_addl_unstem_search^50
-          author_t^20
-          author_addl_t
+          creator_t^20
         </str>
         <str name="author_pf">
           author_unstem_search^2000
-          author_addl_unstem_search^500
-          author_t^200
-          author_addl_t^10
+          creator_t^200
         </str>
         <str name="title_qf">
           title_unstem_search^50000
-          subtitle_unstem_search^25000
-          title_addl_unstem_search^10000
           title_t^5000
-          subtitle_t^2500
-          title_addl_t^100
-          title_added_entry_unstem_search^50
-          title_added_entry_t^10
-          title_series_unstem_search^5
-          title_series_t
         </str>
         <str name="title_pf">
           title_unstem_search^500000
-          subtitle_unstem_search^250000
-          title_addl_unstem_search^100000
           title_t^50000
-          subtitle_t^25000
-          title_addl_t^1000
-          title_added_entry_unstem_search^500
-          title_added_entry_t^100
-          title_series_t^50
-          title_series_unstem_search^10
         </str>
         <str name="subject_qf">
           subject_topic_unstem_search^200
-          subject_unstem_search^125
-          subject_topic_facet^100
           subject_t^50
-          subject_addl_unstem_search^10
-          subject_addl_t
+          corpname_t^50
+          corpname_unstem_search^200
+          persname_unstem_search^200
+          geogname_unstem_search^200
+          persname_t^50
+          geogname_t^50
         </str>
         <str name="subject_pf">
           subject_topic_unstem_search^2000
-          subject_unstem_search^1250
-          subject_t^1000
-          subject_topic_facet^500
-          subject_addl_unstem_search^100
-          subject_addl_t^10
+          subject_t^50
+          corpname_t^50
+          corpname_unstem_search^500
+          persname_unstem_search^500
+          geogname_unstem_search^500
+          persname_t^50
+          geogname_t^50
+        </str>
+        <str name="collection_qf">
+          collection_id_unstem_search^5000
+          collection_title_t^50
+        </str>
+        <str name="collection_pf">
+          collection_id_unstem_search^5000
+          collection_title_t^50
+        </str>
+        <str name="description_qf">
+           description_t^50
+        </str>
+        <str name="description_pf">
+          description_t^50
+        </str>
+        <str name="organization_qf">
+          corpname_t^50
+          corpname_unstem_search^500
+        </str>
+        <str name="organization_pf">
+          corpname_t^50
+          corpname_unstem_search^500
+        </str>
+        <str name="place_qf">
+          geogname_unstem_search^500
+          geogname_t^50
+        </str>
+        <str name="place_pf">
+          geogname_unstem_search^500
+          geogname_t^50
+        </str>
+        <str name="person_qf">
+          persname_unstem_search^500
+          persname_t^50
+        </str>
+        <str name="person_pf">
+          persname_unstem_search^500
+          persname_t^50
+        </str>
+        <str name="topic_pf">
+          subject_topic_unstem_search^2000
+          subject_t^50
+        </str>
+        <str name="topic_qf">
+          subject_topic_unstem_search^2000
+          subject_t^50
+        </str>
+        <str name="place_pf">
+
         </str>
 
 
