@@ -31,72 +31,72 @@
   search_fields << {
     :key =>  'keyword',
     :solr_local_parameters => {
-      :pf => "$pf_keyword",
-      :qf => "$qf_keyword"
+      :pf => "$keyword_pf",
+      :qf => "$keyword_qf"
     }
   }
 
   search_fields << {
     :key =>  'title',
     :solr_local_parameters => {
-      :pf => "$pf_title",
-      :qf => "$qf_title"
+      :pf => "$title_pf",
+      :qf => "$title_qf"
     }
   }
   
   search_fields << {
     :key =>  'author',
     :solr_local_parameters => {
-      :pf => "$pf_author",
-      :qf => "$qf_author"
+      :pf => "$author_pf",
+      :qf => "$author_qf"
     }
   }
   
   search_fields << {
     :key =>  'collection',
     :solr_local_parameters => {
-      :pf => "$pf_collection",
-      :qf => "$qf_collection"
+      :pf => "$collection_pf",
+      :qf => "$collection_qf"
     }
   }
 
   search_fields << {
     :key =>  'description',
     :solr_local_parameters => {
-      :pf => "$pf_description",
-      :qf => "$qf_description"
+      :pf => "$description_pf",
+      :qf => "$description_qf"
     }
   }
 
   search_fields << {
     :key =>  'organization',
     :solr_local_parameters => {
-      :pf => "$pf_organization",
-      :qf => "$qf_organization"
+      :pf => "$organization_pf",
+      :qf => "$organization_qf"
     }
   }
 
   search_fields << {
     :key =>  'people',
     :solr_local_parameters => {
-      :pf => "$pf_person",
-      :qf => "$qf_person"
+      :pf => "$person_pf",
+      :qf => "$person_qf"
     }
   }
 
   search_fields << {
     :key =>  'place',
     :solr_local_parameters => {
-      :pf => "$pf_place",
-      :qf => "$qf_place"
+      :pf => "$place_pf",
+      :qf => "$place_qf"
     }
   }
 
   search_fields << {
     :key =>  'topic',
     :solr_local_parameters => {
-      :pf => "$pf_topic",
-      :qf => "$qf_topic"
+      :pf => "$topic_pf",
+      :qf => "$topic_qf"
     }
   }
 
