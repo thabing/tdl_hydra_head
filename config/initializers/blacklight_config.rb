@@ -189,9 +189,9 @@ Blacklight.configure(:shared) do |config|
   config[:search_fields] << {
       :key =>'author',
       :display_label => 'Creator',
-      :solr_parameters => {
-        :"spellcheck.dictionary" => "author"
-      },
+      #:solr_parameters => {
+      #  :"spellcheck.dictionary" => "default"
+      #},
       :solr_local_parameters => {
         :qf => "$author_qf",
         :pf => "$author_pf"
@@ -203,9 +203,9 @@ Blacklight.configure(:shared) do |config|
     config[:search_fields] << {
       :key => 'subject',
       :qt=> 'search',
-      :solr_parameters => {
-        :"spellcheck.dictionary" => "subject"
-      },
+      #:solr_parameters => {
+      #  :"spellcheck.dictionary" => "subject"
+      #},
       :solr_local_parameters => {
         :qf => "$subject_qf",
         :pf => "$subject_pf"
@@ -217,9 +217,9 @@ Blacklight.configure(:shared) do |config|
   config[:search_fields] << {
     :key => 'title',     
     # solr_parameters hash are sent to Solr as ordinary url query params. 
-    :solr_parameters => {
-      :"spellcheck.dictionary" => "title"
-    },
+   # :solr_parameters => {
+   #   :"spellcheck.dictionary" => "title"
+   # },
     # :solr_local_parameters will be sent using Solr LocalParams
     # syntax, as eg {! qf=$title_qf }. This is neccesary to use
     # Solr parameter de-referencing like $title_qf.
