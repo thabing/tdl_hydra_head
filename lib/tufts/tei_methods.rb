@@ -10,6 +10,32 @@ module Tufts
     TOC_CHILD_PREDICATE = "<div class=collapsabile>"
     TOC_CHILD_SUFFIX="</div>"
 
+    def self.get_figures(fedora_obj)
+      result = ""
+      xml = fedora_obj.datastreams["Archival.xml"].ng_xml
+      node_sets = xml.xpath('//figure')
+
+      unless node_sets.nil?
+        node_sets.each do |node|
+          #no op
+        end
+      end
+      result
+    end
+
+    def self.get_figures_for_chapter(fedora_obj, chapter)
+      result = ""
+      xml = fedora_obj.datastreams["Archival.xml"].ng_xml
+      node_sets = xml.xpath('//figure')
+
+      unless node_sets.nil?
+        node_sets.each do |node|
+          #no op
+        end
+      end
+      result
+    end
+
     def self.get_toc(fedora_obj)
       result = ""
       xml = fedora_obj.datastreams["Archival.xml"].ng_xml
@@ -85,14 +111,22 @@ module Tufts
     def self.show_tei_cover(fedora_obj, chapter)
       result = ""
       xml = fedora_obj.datastreams["Archival.xml"].ng_xml
+      # tei cover will be one of these 2 elements.
       node_sets = xml.xpath('/TEI.2/text/front/div1|/TEI.2/text/front/titlePage')
-      unless node_sets.nil?
-        node_sets.each do |node|
-          if chapter == 'title' || (chapter != "title" && chapter == node['id'])
-            result << self.ctext(node)
+
+      if chapter == 'title'
+        node = node_sets.first
+        result << self.ctext(node)
+      else
+        unless node_sets.nil?
+          node_sets.each do |node|
+            if chapter == 'title' || (chapter != "title" && chapter == node['id'])
+              result << self.ctext(node)
+            end
           end
         end
       end
+
       result
     end
 
@@ -159,7 +193,7 @@ module Tufts
       end
 
 
-      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p')
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p|//body/div1/div2[@id="' + chapter +'"]/p')
 
       unless node_sets.nil?
         node_sets.each do |node|
