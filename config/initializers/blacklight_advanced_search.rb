@@ -46,6 +46,7 @@
   
   search_fields << {
     :key =>  'author',
+    :display_label => 'Creator/Author',
     :solr_local_parameters => {
       :pf => "$author_pf",
       :qf => "$author_qf"
@@ -70,6 +71,7 @@
 
   search_fields << {
     :key =>  'organization',
+    :display_label => 'Organizations',
     :solr_local_parameters => {
       :pf => "$organization_pf",
       :qf => "$organization_qf"
@@ -86,6 +88,7 @@
 
   search_fields << {
     :key =>  'place',
+    :display_label => 'Places',
     :solr_local_parameters => {
       :pf => "$place_pf",
       :qf => "$place_qf"
@@ -94,6 +97,7 @@
 
   search_fields << {
     :key =>  'topic',
+    :display_label => 'Topics',
     :solr_local_parameters => {
       :pf => "$topic_pf",
       :qf => "$topic_qf"
