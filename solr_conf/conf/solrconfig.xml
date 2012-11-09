@@ -218,10 +218,6 @@
           subject_topic_unstem_search^2000
           subject_t^50
         </str>
-        <str name="place_pf">
-
-        </str>
-
 
         <int name="ps">3</int>
         <float name="tie">0.01</float>
