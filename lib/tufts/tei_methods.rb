@@ -184,6 +184,7 @@ module Tufts
       # NOTE: should break this out into a method probably.
       result = ""
 
+      # get the header for the chapter
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/head')
       unless node_sets.nil?
         node_sets.each do |node|
@@ -192,16 +193,17 @@ module Tufts
         end
       end
 
-
-      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p|//body/div1/div2[@id="' + chapter +'"]/p')
+      # get the chapter text.
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p/child::text()|//body/div1/div2[@id="' + chapter +'"]/p/child::text()')
 
       unless node_sets.nil?
         node_sets.each do |node|
-          result << "<p>" + node + "</p>"
+          result << "<p>" + node.text + "</p>"
 
         end
       end
 
+      # at the end of the chapter/ look for subject terms list, print header.
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/list/head|//body/div1/div2[@id="' + chapter +'"]/list/head')
 
       unless node_sets.nil?
@@ -210,6 +212,8 @@ module Tufts
 
         end
       end
+
+      # at the end of the chapter/ look for subject terms list, print actual list with subject searches.
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/list/item|//body/div1/div2[@id="' + chapter +'"]/list/item')
 
       unless node_sets.nil?
@@ -220,6 +224,8 @@ module Tufts
         end
       end
 
+
+      #we've clearly scrwed up if this is true.
       if result.empty?
         result="Document empty"
       end
