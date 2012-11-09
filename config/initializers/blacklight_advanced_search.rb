@@ -62,6 +62,24 @@
   }
 
   search_fields << {
+    :key =>  'year_start',
+    :display_label => 'Year Start',
+    :solr_local_parameters => {
+      :pf => "$year_start_pf",
+      :qf => "$year_start_qf"
+    }
+  }
+
+  search_fields << {
+    :key =>  'year_end',
+    :display_label => 'Year End',
+    :solr_local_parameters => {
+      :pf => "$year_end_pf",
+      :qf => "$year_end_qf"
+    }
+  }
+
+  search_fields << {
     :key =>  'description',
     :solr_local_parameters => {
       :pf => "$description_pf",

@@ -180,6 +180,18 @@
           collection_id_unstem_search^5000
           collection_title_t^50
         </str>
+        <str name="year_start_qf">
+          pub_date_i^50
+        </str>
+        <str name="year_start_pf">
+          pub_date_i^50
+        </str>
+        <str name="year_end_qf">
+          pub_date_i^50
+        </str>
+        <str name="year_end_pf">
+          pub_date_i^50
+        </str>
         <str name="description_qf">
            description_t^50
         </str>
