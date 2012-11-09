@@ -184,7 +184,7 @@ module Tufts
       # NOTE: should break this out into a method probably.
       result = ""
 
-      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head')
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/head')
       unless node_sets.nil?
         node_sets.each do |node|
           result << "<h5>" + node + "</h5>"
@@ -198,6 +198,24 @@ module Tufts
       unless node_sets.nil?
         node_sets.each do |node|
           result << "<p>" + node + "</p>"
+
+        end
+      end
+
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/list/head|//body/div1/div2[@id="' + chapter +'"]/list/head')
+
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result << "<h5 class=subject_terms>" + node + "</h5>"
+
+        end
+      end
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/list/item|//body/div1/div2[@id="' + chapter +'"]/list/item')
+
+      unless node_sets.nil?
+        node_sets.each do |node|
+
+          result << "<a class=subject_list_item href='/catalog?f[subject_facet][]="+ node+"'>" + node + "</p>"
 
         end
       end

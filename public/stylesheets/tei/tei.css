@@ -22,3 +22,10 @@
     font-weight: 500;
     text-rendering: optimizelegibility;
 }
+
+.subject_terms {
+    margin-top: 20px;
+}
+.subject_list_item {
+    margin-left: 10px;
+}
