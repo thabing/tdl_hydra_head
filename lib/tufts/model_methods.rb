@@ -130,6 +130,7 @@ module Tufts
       index_collection_info(solr_doc)
       index_date_info(fedora_object,solr_doc)
       index_format_info(fedora_object,solr_doc)
+      index_pub_date(fedora_object,solr_doc)
     end
 
     def index_names_info(fedora_object, solr_doc)
@@ -277,6 +278,38 @@ module Tufts
 
     ead_title
   end
+
+  def index_pub_date(fedora_object, solr_doc)
+      dates = fedora_object.datastreams["DCA-META"].get_values(:dateCreated)
+
+      if dates.empty?
+        dates = fedora_object.datastreams["DCA-META"].get_values(:temporal)
+      end
+
+      if dates.empty?
+        puts "THIS PID HAS NO DATE TO INDEX :::  #{fedora_object.pid}"
+      else
+        dates.each {|date|
+
+        if date.length() == 4
+          date += "-01-01"
+        end
+
+          valid_date = Chronic.parse(date)
+
+
+          if (valid_date.nil?)
+            year ="2012"
+          else
+            year = valid_date.year.to_i
+          end
+
+
+            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_i", "#{year}")
+          }
+      end
+
+    end
     #if possible, exposed as ranges, cf. the Virgo catalog facet "publication era". Under the heading
     #"Date". Also, if possible, use Temporal if "Date.Created" is unavailable.)
 
