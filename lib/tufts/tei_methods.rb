@@ -198,7 +198,7 @@ module Tufts
 
       unless node_sets.nil?
         node_sets.each do |node|
-          result << "<p>" + node.text + "</p>"
+          result << "<p>" + node + "</p>"
 
         end
       end
