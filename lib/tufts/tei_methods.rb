@@ -37,7 +37,7 @@ module Tufts
     end
 
     def self.get_toc(fedora_obj)
-      result = ""
+      toc_result = ""
       xml = fedora_obj.datastreams["Archival.xml"].ng_xml
       node_sets = xml.xpath('/TEI.2/text/front/div1|/TEI.2/text/front/titlePage')
 
@@ -47,7 +47,7 @@ module Tufts
           unless node['n'].nil?
             title = node['n']
           end
-          result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" << TOC_SUFFIX
+          toc_result += TOC_PREDICATE + "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" + TOC_SUFFIX
         end
       end
 
@@ -56,13 +56,13 @@ module Tufts
       unless node_sets.nil?
         node_sets.each do |node|
           if node['type'] == 'section'
-            result << TOC_COLLAPSE_PREDICATE << "<a class='collapse_td' href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"
-            result << "<div class='collapse_content'>"
-            result << self.get_subsection(fedora_obj, node)
-            result << "</div>"
-            result << TOC_SUFFIX
+            toc_result += TOC_COLLAPSE_PREDICATE << "<a class='collapse_td' href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"
+            toc_result += "<div class='collapse_content'>"
+            toc_result += self.get_subsection(fedora_obj, node)
+            toc_result += "</div>"
+            toc_result += TOC_SUFFIX
           else
-            result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"<< TOC_SUFFIX
+            toc_result += TOC_PREDICATE + "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>" + TOC_SUFFIX
           end
           #  result << ctext(node)
         end
@@ -78,11 +78,11 @@ module Tufts
             title = node['n']
           end
 
-          result << TOC_PREDICATE << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" << TOC_SUFFIX
+          toc_result += TOC_PREDICATE + "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" + TOC_SUFFIX
         end
       end
 
-      result
+      toc_result
     end
 
     def self.get_subsection(fedora_obj, node)
@@ -180,6 +180,10 @@ module Tufts
         return show_tei_backpage(fedora_obj, chapter)
       end
 
+      return show_tei_page(fedora_obj, chapter)
+    end
+
+    def self.show_tei_page(fedora_obj, chapter)
       # render the requested chapter.
       # NOTE: should break this out into a method probably.
       result = ""
@@ -188,17 +192,19 @@ module Tufts
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/head')
       unless node_sets.nil?
         node_sets.each do |node|
-          result << "<h5>" + node + "</h5>"
+          result += "<h6>" + node + "</h6><br/>"
 
         end
       end
+
+      result += "<table cellpadding=2 cellspacing=5   class=noborder bookviewer_table ><tr>"
 
       # get the chapter text.
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p/child::text()|//body/div1/div2[@id="' + chapter +'"]/p/child::text()')
 
       unless node_sets.nil?
         node_sets.each do |node|
-          result << "<p>" + node + "</p>"
+          result += "<p>" + node + "</p>"
 
         end
       end
@@ -208,7 +214,7 @@ module Tufts
 
       unless node_sets.nil?
         node_sets.each do |node|
-          result << "<h5 class=subject_terms>" + node + "</h5>"
+          result += "<h5 class=subject_terms>" + node + "</h5>"
 
         end
       end
@@ -219,11 +225,12 @@ module Tufts
       unless node_sets.nil?
         node_sets.each do |node|
 
-          result << "<a class=subject_list_item href='/catalog?f[subject_facet][]="+ node+"'>" + node + "</p>"
+         result += "<div class=subject_list_item><a href='/catalog?f[subject_facet][]="+ node+"'>" + node + "</a></div>"
 
         end
       end
 
+      result += "</tr></table>"
 
       #we've clearly scrwed up if this is true.
       if result.empty?
