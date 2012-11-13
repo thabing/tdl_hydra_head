@@ -1,7 +1,10 @@
 <div class="pull-right">
-
-  <button class="btn btn-mini <%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? 'disabled ' :'' %>prev_page"><i class=" icon-chevron-left"></i></button>
-  <button class="btn btn-mini next_page <%=chapter_list.index(params[:chapter]) == (chapter_list.length - 1) ? 'disabled ' :'' %>"><i class=" icon-chevron-right"></i></button>
+  <a href="<%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? '#' : chapter_list[chapter_list.index(params[:chapter]) - 1] %>">
+    <button class="btn btn-mini <%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? 'disabled ' :'' %>prev_page"><i class=" icon-chevron-left"></i></button>
+  </a>
+  <a href="<%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == (chapter_list.length - 1)) ? '#' : chapter_list[chapter_list.index(params[:chapter]) + 1] %>">
+    <button class="btn btn-mini next_page <%=chapter_list.index(params[:chapter]) == (chapter_list.length - 1) ? 'disabled ' :'' %>"><i class=" icon-chevron-right"></i></button>
+  </a>
 </div>
 
 
@@ -65,7 +68,10 @@
 </table>
 <% end %>
 <div class="pull-right">
-
-  <button class="btn btn-mini <%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? 'disabled ' :'' %>prev_page"><i class=" icon-chevron-left"></i></button>
-  <button class="btn btn-mini next_page <%=chapter_list.index(params[:chapter]) == (chapter_list.length - 1) ? 'disabled ' :'' %>"><i class=" icon-chevron-right"></i></button>
+  <a href="<%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? '#' : chapter_list[chapter_list.index(params[:chapter]) - 1] %>">
+    <button class="btn btn-mini <%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? 'disabled ' :'' %>prev_page"><i class=" icon-chevron-left"></i></button>
+  </a>
+  <a href="<%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? '#' : chapter_list[chapter_list.index(params[:chapter]) + 1] %>">
+    <button class="btn btn-mini next_page <%=chapter_list.index(params[:chapter]) == (chapter_list.length - 1) ? 'disabled ' :'' %>"><i class=" icon-chevron-right"></i></button>
+  </a>
 </div>

@@ -49,7 +49,7 @@ module Tufts
             title = node['n']
           end
           toc_result += TOC_PREDICATE + "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" + TOC_SUFFIX
-          chapter_list << node['id']
+          chapter_list << (node['id'].nil? ? 'title' : node['id'])
         end
       end
 
