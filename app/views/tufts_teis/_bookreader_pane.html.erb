@@ -1,6 +1,6 @@
 <div class="pull-right">
 
-  <button class="btn btn-mini <%=chapter_list.index(params[:chapter]) == 0 ? 'disabled ' :'' %>prev_page"><i class=" icon-chevron-left"></i></button>
+  <button class="btn btn-mini <%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? 'disabled ' :'' %>prev_page"><i class=" icon-chevron-left"></i></button>
   <button class="btn btn-mini next_page <%=chapter_list.index(params[:chapter]) == (chapter_list.length - 1) ? 'disabled ' :'' %>"><i class=" icon-chevron-right"></i></button>
 </div>
 
@@ -66,6 +66,6 @@
 <% end %>
 <div class="pull-right">
 
-  <button class="btn btn-mini <%=chapter_list.index(params[:chapter]) == 0 ? 'disabled ' :'' %>prev_page"><i class=" icon-chevron-left"></i></button>
+  <button class="btn btn-mini <%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? 'disabled ' :'' %>prev_page"><i class=" icon-chevron-left"></i></button>
   <button class="btn btn-mini next_page <%=chapter_list.index(params[:chapter]) == (chapter_list.length - 1) ? 'disabled ' :'' %>"><i class=" icon-chevron-right"></i></button>
 </div>
