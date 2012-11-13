@@ -58,7 +58,7 @@ module Tufts
       unless node_sets.nil?
         node_sets.each do |node|
           if node['type'] == 'section'
-            toc_result += TOC_COLLAPSE_PREDICATE << "<a class='collapse_td' href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"
+            toc_result += TOC_COLLAPSE_PREDICATE + "<a class='collapse_td' href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"
             toc_result += "<div class='collapse_content'>"
             toc_result2, chapter_list = self.get_subsection(fedora_obj, node, chapter_list)
             toc_result += toc_result2
