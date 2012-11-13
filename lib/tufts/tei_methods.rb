@@ -37,6 +37,7 @@ module Tufts
     end
 
     def self.get_toc(fedora_obj)
+      chapter_list = Array.new
       toc_result = ""
       xml = fedora_obj.datastreams["Archival.xml"].ng_xml
       node_sets = xml.xpath('/TEI.2/text/front/div1|/TEI.2/text/front/titlePage')
@@ -48,6 +49,7 @@ module Tufts
             title = node['n']
           end
           toc_result += TOC_PREDICATE + "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" + TOC_SUFFIX
+          chapter_list << node['id']
         end
       end
 
@@ -58,11 +60,13 @@ module Tufts
           if node['type'] == 'section'
             toc_result += TOC_COLLAPSE_PREDICATE << "<a class='collapse_td' href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>"
             toc_result += "<div class='collapse_content'>"
-            toc_result += self.get_subsection(fedora_obj, node)
+            toc_result2, chapter_list = self.get_subsection(fedora_obj, node, chapter_list)
+            toc_result += toc_result2
             toc_result += "</div>"
             toc_result += TOC_SUFFIX
           else
             toc_result += TOC_PREDICATE + "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node['id']+"'>" + node['n'] + "</a>" + TOC_SUFFIX
+            chapter_list << node['id']
           end
           #  result << ctext(node)
         end
@@ -79,22 +83,24 @@ module Tufts
           end
 
           toc_result += TOC_PREDICATE + "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" + TOC_SUFFIX
+          chapter_list << node['id']
         end
       end
 
-      toc_result
+      return toc_result, chapter_list
     end
 
-    def self.get_subsection(fedora_obj, node)
+    def self.get_subsection(fedora_obj, node, chapter_list)
       result = ""
       id = node['id']
       node_sets = node.xpath('/TEI.2/text/body/div1[@id="'+ id +'"]/div2')
       unless node_sets.nil?
         node_sets.each do |node2|
           result << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node2['id']+"'>" + node2['n'] + "</a><br/>"
+          chapter_list << node2['id']
         end
       end
-      result
+      return result, chapter_list
     end
 
     # <front>
@@ -181,6 +187,23 @@ module Tufts
       end
 
       return show_tei_page(fedora_obj, chapter)
+    end
+
+    def self.get_prev_chapter(fedora_obj)
+
+    end
+
+    def self.get_next_chapter(fedora_obj)
+
+    # node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p/child::text()|//body/div1/div2[@id="' + chapter +'"]/p/child::text()')
+    #
+    #   unless node_sets.nil?
+    #     node_sets.each do |node|
+    #       result += "<p>" + node + "</p>"
+    #
+    #     end
+    #   end
+
     end
 
     def self.show_tei_page(fedora_obj, chapter)
