@@ -266,7 +266,7 @@ module Tufts
       result
     end
     def self.get_foot_note(child)
-      result = "<a href='#'>[" + child['n'] + "]</a>"
+      result = "<a href='#'>[" + child['n'] + "]</a>&nbsp;"
       result
     end
 
