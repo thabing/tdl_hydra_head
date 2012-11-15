@@ -266,12 +266,21 @@ module Tufts
       result
     end
     def self.get_foot_note(child)
+      footnotes =""
       result = "<a href='#'>[" + child['n'] + "]</a>&nbsp;"
-      result
+
+      child_text = child.text.to_s.strip
+
+      if child.name == "note"
+       footnotes = "<p>["+ child['n'] +"] " + child_text + "</p>"
+      end
+
+      return result, footnotes
     end
 
     def self.render_page_p(node, in_left_td)
       result = ''
+      footnotes =""
       children = node.children
       result +="<p>"
       children.each do |child|
@@ -285,14 +294,16 @@ module Tufts
           end
           result += get_block_quote(child)
         elsif child.name == "note"
-          result += get_foot_note(child)
+          result_fn, result_foot = get_foot_note(child)
+          result += result_fn
+          footnotes += result_foot
         end
 
       end
       result +="</p>"
       result += '</td>'
 
-      return result, in_left_td
+      return result, in_left_td, footnotes
     end
 
     def self.switch_to_right
@@ -303,10 +314,24 @@ module Tufts
       return "</td><tr><td>"
     end
 
+    def self.render_footnotes(footnotes)
+
+      unless footnotes.nil? || footnotes.empty?
+        result = "<tr><td>&nbsp;</td><td>"
+        result += "<br/>"
+        result += "<span class=maintextviewer-footnotesheader>Footnotes:</span><hr/>"
+        result += footnotes
+        result += "</td></tr>"
+      end
+
+      result
+    end
+
     def self.show_tei_page(fedora_obj, chapter)
       # render the requested chapter.
       # NOTE: should break this out into a method probably.
       result = ""
+      footnotes =""
 
       # get the header for the chapter
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/head')
@@ -351,7 +376,9 @@ module Tufts
 
                 result += "<td>"
 
-                result_p, in_left_td = render_page_p(node,in_left_td)
+                result_p, in_left_td2, footnotes2 = render_page_p(node,in_left_td)
+                in_left_td = in_left_td2
+                footnotes += footnotes2
                 result += result_p
               end
             result += "</tr>"
@@ -360,6 +387,7 @@ module Tufts
       end
 
       result += render_subject_terms(fedora_obj, chapter)
+      result += render_footnotes(footnotes)
       result += self.show_tei_table_end
       return result
     end
