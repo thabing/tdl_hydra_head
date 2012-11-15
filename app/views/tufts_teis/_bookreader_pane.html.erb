@@ -10,63 +10,8 @@
 
 <%= raw Tufts::TeiMethods.show_tei(@document_fedora,params[:chapter]) %>
 
-<% if false %>
-<h6> Chapter X: Covent Garden Section II: Covent Garden Market</h6>
-<br>
-<table cellpadding="2" cellspacing="5" class="noborder bookviewer_table">
-  <tbody>
-  <tr>
-    <td class="pagenumber"><p>186 </p>
-      <ul class="thumbnails">
-        <li>
-          <a data-toggle="modal" href="#myImageOverlay" class="thumbnail">
-            <img src="http://placehold.it/100x100" alt="" width="60" height="60">
-          </a>
-        </li>
-      </ul>
-    </td>
-    <td>
-      <blockquote>
-        <p>Sometimes a new chapter has a pull quote introduction.</p>
-        <small>Someone famous</small>
-      </blockquote>
-      <p></p><h4>Title Chapter 10</h4>
-
-      <p></p>
-
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta, mi ut sollicitudin laoreet, nisl enim
-        ornare erat, quis fringilla dui elit sit amet velit. Sed sit amet dui in nisl commodo faucibus. In hac habitasse
-        platea dictumst. Donec suscipit sodales mi, et placerat est commodo quis. Class aptent taciti sociosqu ad litora
-        torquent per conubia nostra, per inceptos himenaeos. Aliquam erat volutpat. Vivamus ut gravida arcu. Lorem ipsum
-        dolor sit amet, consectetur adipiscing elit.</p>
-
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta, mi ut sollicitudin laoreet, nisl enim
-        ornare erat, quis fringilla dui elit sit amet velit. Sed sit amet dui in nisl commodo faucibus. In hac habitasse
-        platea dictumst. Donec suscipit sodales mi, et placerat est commodo quis. Class aptent taciti sociosqu ad litora
-        torquent per conubia nostra, per inceptos himenaeos. Aliquam erat volutpat. Vivamus ut gravida arcu. Lorem ipsum
-        dolor sit amet, consectetur adipiscing elit.</p>
-
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta, mi ut sollicitudin laoreet, nisl enim
-        ornare erat, quis fringilla dui elit sit amet velit. Sed sit amet dui in nisl commodo faucibus. In hac habitasse
-        platea dictumst. Donec suscipit sodales mi, et placerat est commodo quis. Class aptent taciti sociosqu ad litora
-        torquent per conubia nostra, per inceptos himenaeos. Aliquam erat volutpat. Vivamus ut gravida arcu. Lorem ipsum
-        dolor sit amet, consectetur adipiscing elit.</p></td>
-  </tr>
-
-  <tr>
-    <td class="pagenumber"><p>187 </p></td>
-    <td><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta, mi ut sollicitudin laoreet, nisl enim
-      ornare erat, quis fringilla dui elit sit amet velit. Sed sit amet dui in nisl commodo faucibus. In hac habitasse
-      platea dictumst. Donec suscipit sodales mi, et placerat est commodo quis. Class aptent taciti sociosqu ad litora
-      torquent per conubia nostra, per inceptos himenaeos. Aliquam erat volutpat. Vivamus ut gravida arcu. Lorem ipsum
-      dolor sit amet, consectetur adipiscing elit.<a href="#"></a></p></td>
-  </tr>
 
 
-  </tbody>
-</table>
-<% end %>
 <div class="pull-right">
   <a href="<%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? '#' : chapter_list[chapter_list.index(params[:chapter]) - 1] %>">
     <button class="btn btn-mini <%=(params[:chapter].nil? || chapter_list.index(params[:chapter]) == 0) ? 'disabled ' :'' %>prev_page"><i class=" icon-chevron-left"></i></button>
