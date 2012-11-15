@@ -10,6 +10,9 @@ module Tufts
     TOC_CHILD_PREDICATE = "<div class=collapsabile>"
     TOC_CHILD_SUFFIX="</div>"
 
+    #####
+    # Code for getting figures
+    #####
     def self.get_figures(fedora_obj)
       result = ""
       xml = fedora_obj.datastreams["Archival.xml"].ng_xml
@@ -36,6 +39,9 @@ module Tufts
       result
     end
 
+    ####################
+    # Table of Contents
+    ####################
     def self.get_toc(fedora_obj)
       chapter_list = Array.new
       toc_result = ""
@@ -103,22 +109,17 @@ module Tufts
       return result, chapter_list
     end
 
-    # <front>
-    #   <titlePage>
-    #     <docTitle>
-    #       <titlePart type="main">A Failure of Management</titlePart>
-    #     </docTitle>
-    #     <docAuthor> Walter B. Wriston</docAuthor>
-    #     <docTitle>
-    #     <titlePart type="des">Wriston, Walter B. "A Failure of Management." Sternbusiness (1995): 25-26.</titlePart>
-    #       </docTitle>
-    #     </titlePage>
-    #  </front>
+
+    ####################
+    # TEI Cover Page
+    ####################
     def self.show_tei_cover(fedora_obj, chapter)
       result = ""
       xml = fedora_obj.datastreams["Archival.xml"].ng_xml
       # tei cover will be one of these 2 elements.
       node_sets = xml.xpath('/TEI.2/text/front/div1|/TEI.2/text/front/titlePage')
+
+      result += self.show_tei_table_start
 
       if chapter == 'title'
         node = node_sets.first
@@ -133,11 +134,14 @@ module Tufts
         end
       end
 
+      result += self.show_tei_table_end
+
       result
     end
 
     def self.show_tei_backpage(fedora_obj, chapter)
       result = ""
+      result += self.show_tei_table_start
       xml = fedora_obj.datastreams["Archival.xml"].ng_xml
       node_sets = xml.xpath('/TEI.2/text/back/div1')
       unless node_sets.nil?
@@ -147,6 +151,8 @@ module Tufts
           end
         end
       end
+
+      result += self.show_tei_table_end
       result
     end
 
@@ -169,6 +175,14 @@ module Tufts
       return result.join
     end
 
+    def self.show_tei_table_start
+      return '<table cellpadding="2" cellspacing="5" class="noborder bookviewer_table"><tbody>'
+    end
+
+    def self.show_tei_table_end
+      return '</tbody></table>'
+    end
+
     def self.show_tei(fedora_obj, chapter)
 
       # if there's no chapter specified show the cover
@@ -189,6 +203,25 @@ module Tufts
       return show_tei_page(fedora_obj, chapter)
     end
 
+    def self.render_pb(node)
+      result += "<td class=pagenumber>"
+      result += "<p>186</p>"
+      result
+    end
+
+    def self.get_block_quote(node)
+      result = '<blockquote>'
+
+      children = node.children
+      children.each do |child|
+        child_text = child.text.to_s.strip
+
+          result += "<p>" + child.text + "</p>"
+        end
+      result += "</blockquote>"
+      result
+    end
+
     def self.get_prev_chapter(fedora_obj)
 
     end
@@ -206,32 +239,8 @@ module Tufts
 
     end
 
-    def self.show_tei_page(fedora_obj, chapter)
-      # render the requested chapter.
-      # NOTE: should break this out into a method probably.
-      result = ""
-
-      # get the header for the chapter
-      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/head')
-      unless node_sets.nil?
-        node_sets.each do |node|
-          result += "<h6>" + node + "</h6><br/>"
-
-        end
-      end
-
-      result += "<table cellpadding=2 cellspacing=5   class=noborder bookviewer_table ><tr>"
-
-      # get the chapter text.
-      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p/child::text()|//body/div1/div2[@id="' + chapter +'"]/p/child::text()')
-
-      unless node_sets.nil?
-        node_sets.each do |node|
-          result += "<p>" + node + "</p>"
-
-        end
-      end
-
+    def self.render_subject_terms(fedora_obj, chapter)
+      result = '<tr><td>&nbsp;</td><td>'
       # at the end of the chapter/ look for subject terms list, print header.
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/list/head|//body/div1/div2[@id="' + chapter +'"]/list/head')
 
@@ -248,17 +257,110 @@ module Tufts
       unless node_sets.nil?
         node_sets.each do |node|
 
-         result += "<div class=subject_list_item><a href='/catalog?f[subject_facet][]="+ node+"'>" + node + "</a></div>"
+          result += "<div class=subject_list_item><a href='/catalog?f[subject_facet][]="+ node+"'>" + node + "</a></div>"
 
         end
       end
 
-      result += "</tr></table>"
+      result += '</tr></td>'
+      result
+    end
+    def self.get_foot_note(child)
+      result = "<a href='#'>[" + child['n'] + "]</a>"
+      result
+    end
 
-      #we've clearly scrwed up if this is true.
-      if result.empty?
-        result="Document empty"
+    def self.render_page_p(node, in_left_td)
+      result = ''
+      children = node.children
+      result +="<p>"
+      children.each do |child|
+        child_text = child.text.to_s.strip
+        if child.name == "text" && !child_text.empty? && child.type == 3
+          result +=  child.text
+        elsif child.name == "quote"
+          if in_left_td
+            result += switch_to_right
+            in_left_td = false
+          end
+          result += get_block_quote(child)
+        elsif child.name == "note"
+          result += get_foot_note(child)
+        end
+
       end
+      result +="</p>"
+      result += '</td>'
+
+      return result, in_left_td
+    end
+
+    def self.switch_to_right
+      return "</td>"
+    end
+
+    def self.switch_to_left
+      return "</td><tr><td>"
+    end
+
+    def self.show_tei_page(fedora_obj, chapter)
+      # render the requested chapter.
+      # NOTE: should break this out into a method probably.
+      result = ""
+
+      # get the header for the chapter
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/head')
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result += "<h6>" + node + "</h6><br/>"
+
+        end
+      end
+
+      result += self.show_tei_table_start
+
+
+      # get the chapter text.
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p|//body/div1/div2[@id="' + chapter +'"]/p|//body/div1[@id="' + chapter +'"]/quote|//body/div1/div2[@id="' + chapter +'"]/quote')
+
+      unless node_sets.nil?
+        node_sets.each do |node|
+
+          node_text = node.text.to_s.strip
+          unless node_text.nil? || node_text.empty?
+            in_left_td = true
+            result += "<tr>"
+            result += "<td class=pagenumber>"
+            case node.name
+              when "pb"
+                result += render_pb(node)
+                in_left_td = true
+              when "quote"
+                if in_left_td
+                  result += switch_to_right
+                  in_left_td = false
+                end
+
+                result += get_block_quote(node)
+              when "p"
+                #if we're in the left close it.
+                if in_left_td
+                  result += switch_to_right
+                  in_left_td = false
+                end
+
+                result += "<td>"
+
+                result_p, in_left_td = render_page_p(node,in_left_td)
+                result += result_p
+              end
+            result += "</tr>"
+          end
+        end
+      end
+
+      result += render_subject_terms(fedora_obj, chapter)
+      result += self.show_tei_table_end
       return result
     end
 
@@ -267,4 +369,5 @@ module Tufts
 
 
   end
+
 end
