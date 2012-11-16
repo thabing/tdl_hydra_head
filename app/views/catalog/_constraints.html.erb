@@ -1,13 +1,23 @@
 <div class="row">
-  <%- unless localized_params[:q].nil? || localized_params[:q].length()==0 -%>
+  <%- unless (localized_params[:q].nil? || localized_params[:q].length() == 0) && 
+             (localized_params[:keyword].nil? || localized_params[:keyword].length() == 0) && 
+             (localized_params[:title].nil? || localized_params[:title].length() == 0) && 
+             (localized_params[:author].nil? || localized_params[:author].length() == 0) && 
+             (localized_params[:collection].nil? || localized_params[:collection].length() == 0) && 
+             (localized_params[:year_start].nil? || localized_params[:year_start].length() == 0) && 
+             (localized_params[:year_end].nil? || localized_params[:year_end].length() == 0) && 
+             (localized_params[:description].nil? || localized_params[:description].length() == 0) && 
+             (localized_params[:organization].nil? || localized_params[:organization].length() == 0) && 
+             (localized_params[:people].nil? || localized_params[:people].length() == 0) && 
+             (localized_params[:place].nil? || localized_params[:place].length() == 0) && 
+             (localized_params[:topic].nil? || localized_params[:topic].length() == 0) -%>
   <div class="span2" style="text-align: right;">
     <h6>You searched for:</h6>
   </div>
   <div class="span7">
 
-
     <ul class="nav nav-pills">
-      <%= render_constraints_query(localized_params) %>
+      <%= raw render_constraints_query(localized_params) %>
     </ul>
 
   </div>
