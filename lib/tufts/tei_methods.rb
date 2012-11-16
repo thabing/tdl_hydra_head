@@ -300,6 +300,7 @@ module Tufts
         elsif child.name == "quote"
           if in_left_td
             result += switch_to_right
+            result += "<td>"
             in_left_td = false
           end
           result += get_block_quote(child)
@@ -373,6 +374,7 @@ module Tufts
               when "quote"
                 if in_left_td
                   result += switch_to_right
+                  result += "<td>"
                   in_left_td = false
                 end
 
@@ -390,20 +392,21 @@ module Tufts
                 in_left_td = in_left_td2
                 footnotes += footnotes2
                 result += result_p
-                if in_left_td
-                  result +="</td><td>&nbsp;</td>"
-                  in_left_td = true
-                else
-                  result += "</td>"
-                  in_left_td=true
-                end
+
               else
                 if in_left_td
                   result += switch_to_right
                   in_left_td = false
                 end
                 puts "else"
-              end
+            end
+            if in_left_td
+              result +="</td><td>&nbsp;</td>"
+              in_left_td = true
+            else
+              result += "</td>"
+              in_left_td=true
+            end
             result += "</tr>"
           end
         end
