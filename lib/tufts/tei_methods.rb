@@ -221,23 +221,6 @@ module Tufts
       result
     end
 
-    def self.get_prev_chapter(fedora_obj)
-
-    end
-
-    def self.get_next_chapter(fedora_obj)
-
-    # node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p/child::text()|//body/div1/div2[@id="' + chapter +'"]/p/child::text()')
-    #
-    #   unless node_sets.nil?
-    #     node_sets.each do |node|
-    #       result += "<p>" + node + "</p>"
-    #
-    #     end
-    #   end
-
-    end
-
     def self.render_subject_terms(fedora_obj, chapter)
       result = '<tr><td>&nbsp;</td><td>'
       # at the end of the chapter/ look for subject terms list, print header.
@@ -297,6 +280,19 @@ module Tufts
           end
           result += render_pb(child)
           in_left_td = true
+        elsif child.name == "figure"
+          unless in_left_td
+            result += switch_to_left
+            in_left_td = true
+          end
+          result +="<ul class=thumbnails><li>"
+          result +='<a data-toggle="modal" href="#myImageOverlay"  class="thumbnail">'
+#          <%= link_to image_tag("/file_assets/thumb/"+document[:id] , :alt=>document[:title],:class=>"thumbnailwidth"), "/catalog/" + document[:id],:class=>"thumbnail" %>
+          pid = PidMethods.urn_to_pid(child['n'])
+
+          result +='<img src="/file_assets/thumb/' + pid + '">'
+          result +="</a>"
+          result +="</li></ul>"
         elsif child.name == "quote"
           if in_left_td
             result += switch_to_right
