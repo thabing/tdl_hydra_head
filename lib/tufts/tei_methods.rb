@@ -325,7 +325,7 @@ module Tufts
     end
 
     def self.render_footnotes(footnotes)
-
+      result =""
       unless footnotes.nil? || footnotes.empty?
         result = "<tr><td>&nbsp;</td><td>"
         result += "<br/>"
