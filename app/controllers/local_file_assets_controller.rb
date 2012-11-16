@@ -237,6 +237,15 @@ From file_assets/_new.html.haml
       end
   end
 
+  def image_overlay
+    #back_url
+    #{{item_title}}<br>
+    #    {{item_date}}<br>
+    #    {{item_description}}
+    #image_url
+    #item_link
+    render :json => {:back_url => "#", :item_title => 'title',:item_date=>'2004',:item_url=>"#",:item_link=>'#',:item_description=>'blah'}
+  end
   def dimensions
     @file_asset = FileAsset.find(params[:id])
 

@@ -17,4 +17,19 @@ $(function(){
         }
       });
 
+
+      //add modals to the thumbnails
+
+      $('.thumbnail').attr('href','#myImageOverlay');
+      $('.thumbnail').on('click', function(e){
+            e.preventDefault();
+
+          var template = $('#image_overlay_template').html();
+          var overlay_data = "";
+          var html = Mustache.to_html(template, overlay_data);
+          $('#myImageOverlay').html(html);
+
+
+      });
+
   });
