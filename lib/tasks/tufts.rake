@@ -96,7 +96,8 @@ namespace :tufts_dca do
       "tufts:MS115.001.DO.11090",
       "tufts:UA069.005.DO.00094",
       "tufts:UA069.005.DO.00001",
-      "tufts:UA069.005.DO.00026"
+      "tufts:UA069.005.DO.00026",
+      "tufts_MS054.003.DO.02108" 
 
   ]
 
