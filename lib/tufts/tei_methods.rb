@@ -204,8 +204,7 @@ module Tufts
     end
 
     def self.render_pb(node)
-      result += "<td class=pagenumber>"
-      result += "<p>186</p>"
+      result = "<p>" + node['n'] + "</p>"
       result
     end
 
@@ -286,7 +285,18 @@ module Tufts
       children.each do |child|
         child_text = child.text.to_s.strip
         if child.name == "text" && !child_text.empty? && child.type == 3
+          if in_left_td
+            result += switch_to_right
+            result += "<td>"
+            in_left_td = false
+          end
           result +=  child.text
+        elsif child.name == "pb"
+          unless in_left_td
+            result += switch_to_left
+          end
+          result += render_pb(child)
+          in_left_td = true
         elsif child.name == "quote"
           if in_left_td
             result += switch_to_right
@@ -301,7 +311,7 @@ module Tufts
 
       end
       result +="</p>"
-      result += '</td>'
+
 
       return result, in_left_td, footnotes
     end
@@ -311,7 +321,7 @@ module Tufts
     end
 
     def self.switch_to_left
-      return "</td><tr><td>"
+      return "</td><tr><td class=pagenumber>"
     end
 
     def self.render_footnotes(footnotes)
@@ -347,13 +357,13 @@ module Tufts
 
       # get the chapter text.
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p|//body/div1/div2[@id="' + chapter +'"]/p|//body/div1[@id="' + chapter +'"]/quote|//body/div1/div2[@id="' + chapter +'"]/quote')
+      in_left_td = true
 
       unless node_sets.nil?
         node_sets.each do |node|
 
           node_text = node.text.to_s.strip
           unless node_text.nil? || node_text.empty?
-            in_left_td = true
             result += "<tr>"
             result += "<td class=pagenumber>"
             case node.name
@@ -380,6 +390,19 @@ module Tufts
                 in_left_td = in_left_td2
                 footnotes += footnotes2
                 result += result_p
+                if in_left_td
+                  result +="</td><td>&nbsp;</td>"
+                  in_left_td = true
+                else
+                  result += "</td>"
+                  in_left_td=true
+                end
+              else
+                if in_left_td
+                  result += switch_to_right
+                  in_left_td = false
+                end
+                puts "else"
               end
             result += "</tr>"
           end
