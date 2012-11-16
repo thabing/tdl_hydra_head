@@ -10,7 +10,7 @@
 
   <div class="tab-content ">
     <div class="tab-pane <%= @current_action == 'teireader' ? 'active' : '' %> ebook_content" id="1">
-      <%= render :partial => 'tufts_teis/toc', :locals => {:metadata => metadata} %>
+      <%= render :partial => 'tufts_teis/toc', :locals => {:metadata => metadata,:toc_results => toc_results} %>
     </div>
     <% if false %>
         <div class="tab-pane ebook_content" id="2">
