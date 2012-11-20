@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" PID="cm:Text.TEI-Fragmented"
+xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+<foxml:objectProperties>
+<foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Generated CModel"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2009-04-22T13:20:20.056Z"/>
+<foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2009-05-22T13:34:04.998Z"/>
+</foxml:objectProperties>
+<foxml:datastream ID="AUDIT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="false">
+<foxml:datastreamVersion ID="AUDIT.0" LABEL="Audit Trail for this object" CREATED="2009-04-22T13:20:20.056Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit">
+<foxml:xmlContent>
+<audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+<audit:record ID="AUDREC1">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-04-22T13:20:20.056Z</audit:date>
+<audit:justification>Ingested from local file /Users/mkorcy01/Desktop/analyzer-output/cmodel-8.xml</audit:justification>
+</audit:record>
+<audit:record ID="AUDREC2">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-05-22T13:34:04.998Z</audit:date>
+<audit:justification>another fedora object</audit:justification>
+</audit:record>
+</audit:auditTrail>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="RELS-EXT1.0" LABEL="RDF Statements about this object" CREATED="2009-04-17T20:31:54.354Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="1345">
+<foxml:xmlContent>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora-model="info:fedora/fedora-system:def/model#">
+  <rdf:Description rdf:about="info:fedora/cm:Text.TEI-Fragmented">
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsText"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsAccess"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsReference"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsDirectory"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsAccessRights"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsPlainText"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsMetadata"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:AssetDef"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsArchival"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsType"></fedora-model:hasService>
+    <fedora-model:hasModel rdf:resource="info:fedora/fedora-system:ContentModel-3.0"></fedora-model:hasModel>
+  </rdf:Description></rdf:RDF>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DS-COMPOSITE-MODEL" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DS-COMPOSITE-MODEL1.0" LABEL="Datastream Composite Model" CREATED="2009-04-17T20:31:54.354Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:FedoraDSCompositeModel-1.0" SIZE="559">
+<foxml:xmlContent>
+<dsCompositeModel xmlns="info:fedora/fedora-system:def/dsCompositeModel#">
+  <dsTypeModel ID="Access.xml">
+    <form MIME="text/xml"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="Archival.xml">
+    <form MIME="text/xml"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="DC">
+    <form MIME="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="DCA-ADMIN">
+    <form MIME="text/xml"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="DCA-META">
+    <form MIME="text/xml"></form>
+  </dsTypeModel>
+</dsCompositeModel>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="CLASS-DESCRIPTION" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="CLASS-DESCRIPTION1.0" LABEL="Technical description of the class of objects assigned to this content model" CREATED="2009-04-17T20:31:54.354Z" MIMETYPE="text/xml" SIZE="2412">
+<foxml:xmlContent>
+<class-description>
+OrigContentModel
+  &apos;tufts/text/tei/fragmented&apos;
+BDefPIDs
+  &apos;bdef:TuftsText&apos;, &apos;bdef:TuftsAccess&apos;, &apos;bdef:TuftsReference&apos;, &apos;bdef:TuftsDirectory&apos;, &apos;bdef:TuftsAccessRights&apos;, &apos;bdef:TuftsPlainText&apos;, &apos;bdef:TuftsMetadata&apos;, &apos;bdef:AssetDef&apos;, &apos;bdef:TuftsArchival&apos;, &apos;bdef:TuftsType&apos;
+BMechPIDs
+  &apos;bmech:TuftsReference-Text.TEI.Directory&apos;, &apos;bmech:TuftsArchival-Text.TEI.Directory&apos;, &apos;bmech:TuftsAccess-Text.TEI.Directory&apos;, &apos;bmech:TuftsPlainText-Text.TEI.Directory&apos;, &apos;bmech:TuftsText-Text.TEI.Directory&apos;, &apos;bmech:TuftsAccessRights-Text.TEI.Directory&apos;, &apos;bmech:TuftsDirectory&apos;, &apos;bmech:TuftsMetadata-Text.TEI.Directory&apos;, &apos;bmech:TuftsType-Text.TEI.Directory&apos;, &apos;bmech:AssetDef-Text.TEI.Directory&apos;
+BindingKeyAssignments
+  for bmech:TuftsReference-Text.TEI.Directory
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsArchival-Text.TEI.Directory
+    &apos;ARCHIVAL_TEXT=Archival.xml&apos;
+  for bmech:TuftsAccess-Text.TEI.Directory
+    &apos;ACCESS_TEXT=Access.xml&apos;
+  for bmech:TuftsPlainText-Text.TEI.Directory
+    &apos;ACCESS_TEXT=Access.xml&apos;
+  for bmech:TuftsText-Text.TEI.Directory
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsAccessRights-Text.TEI.Directory
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsDirectory
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsMetadata-Text.TEI.Directory
+    &apos;DC_METADATA=DC&apos;, &apos;DCA_METADATA=DCA-META&apos;, &apos;DCA_ADMIN_METADATA=DCA-ADMIN&apos;
+  for bmech:TuftsType-Text.TEI.Directory
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:AssetDef-Text.TEI.Directory
+    &apos;ACCESS_TEXT=Access.xml&apos;, &apos;DC_METADATA=DC&apos;, &apos;DCA_METADATA=DCA-META&apos;, &apos;ASSET_METADATA=DC&apos;
+DatastreamIDs
+  &apos;Access.xml&apos;, &apos;Archival.xml&apos;, &apos;DC&apos;, &apos;DCA-ADMIN&apos;, &apos;DCA-META&apos;
+MIMETypes
+  for Access.xml, &apos;text/xml&apos;
+  for Archival.xml, &apos;text/xml&apos;
+  for DCA-ADMIN, &apos;text/xml&apos;
+  for DC, &apos;text/xml&apos;
+  for DCA-META, &apos;text/xml&apos;
+FormatURIs
+  for Access.xml, none
+  for Archival.xml, none
+  for DCA-ADMIN, none
+  for DC, &apos;http://www.openarchives.org/OAI/2.0/oai_dc/&apos;
+  for DCA-META, none
+</class-description>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DC1.0" LABEL="Dublin Core Record for this object" CREATED="2009-04-22T13:20:20.056Z" MIMETYPE="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" SIZE="391">
+<foxml:xmlContent>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <dc:title>Generated CModel</dc:title>
+  <dc:identifier>cm:Text.TEI-Fragmented</dc:identifier>
+</oai_dc:dc>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+</foxml:digitalObject>

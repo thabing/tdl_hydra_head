@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" PID="cm:Image.3DS-AssetDef"
+xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+<foxml:objectProperties>
+<foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Generated deployment for cm:Image.3DS (copy of bmech:AssetDef-Image.3DS)"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2009-04-22T13:20:20.771Z"/>
+<foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2009-05-22T13:33:58.347Z"/>
+</foxml:objectProperties>
+<foxml:datastream ID="AUDIT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="false">
+<foxml:datastreamVersion ID="AUDIT.0" LABEL="Audit Trail for this object" CREATED="2009-04-22T13:20:20.771Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit">
+<foxml:xmlContent>
+<audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+<audit:record ID="AUDREC1">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-04-22T13:20:20.771Z</audit:date>
+<audit:justification>Ingested from local file /Users/mkorcy01/Desktop/analyzer-output/cmodel-9.deployment2.xml</audit:justification>
+</audit:record>
+<audit:record ID="AUDREC2">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-05-22T13:33:58.347Z</audit:date>
+<audit:justification>another fedora object</audit:justification>
+</audit:record>
+</audit:auditTrail>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DSINPUTSPEC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DSINPUTSPEC1.0" LABEL="Datastream Input Specification for Service" CREATED="2005-05-17T22:50:14.890Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:FedoraDSInputSpec-1.0" SIZE="1701">
+<foxml:xmlContent>
+<fbs:DSInputSpec xmlns:fbs="http://fedora.comm.nsdlib.org/service/bindspec" bDefPID="bdef:AssetDef" label="Datastream Input Specification for Asset Definition Behavior Mechanism - Image (3DS)">
+          <fbs:DSInput DSMax="1" DSMin="1" DSOrdinality="false" wsdlMsgPartName="Thumbnail.png">
+            <fbs:DSInputLabel>THUMBNAIL_IMAGE Binding</fbs:DSInputLabel>
+            <fbs:DSMIME>image/png</fbs:DSMIME>
+            <fbs:DSInputInstruction></fbs:DSInputInstruction>
+          </fbs:DSInput>
+          <fbs:DSInput DSMax="1" DSMin="1" DSOrdinality="false" wsdlMsgPartName="Advanced.jpg">
+            <fbs:DSInputLabel>ACCESS_IMAGE Binding</fbs:DSInputLabel>
+            <fbs:DSMIME>image/jpeg</fbs:DSMIME>
+            <fbs:DSInputInstruction></fbs:DSInputInstruction>
+          </fbs:DSInput>
+          <fbs:DSInput DSMax="1" DSMin="1" DSOrdinality="false" wsdlMsgPartName="DCA-META">
+            <fbs:DSInputLabel>DCA_METADATA Binding</fbs:DSInputLabel>
+            <fbs:DSMIME>text/xml</fbs:DSMIME>
+            <fbs:DSInputInstruction></fbs:DSInputInstruction>
+          </fbs:DSInput>
+          <fbs:DSInput DSMax="1" DSMin="1" DSOrdinality="false" wsdlMsgPartName="DC">
+            <fbs:DSInputLabel>DC_METADATA Binding</fbs:DSInputLabel>
+            <fbs:DSMIME>text/xml</fbs:DSMIME>
+            <fbs:DSInputInstruction></fbs:DSInputInstruction>
+          </fbs:DSInput>
+          <fbs:DSInput DSMax="1" DSMin="1" DSOrdinality="false" wsdlMsgPartName="DC">
+            <fbs:DSInputLabel>ASSET_METADATA Binding</fbs:DSInputLabel>
+            <fbs:DSMIME>text/xml</fbs:DSMIME>
+            <fbs:DSInputInstruction></fbs:DSInputInstruction>
+          </fbs:DSInput>
+        </fbs:DSInputSpec>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="METHODMAP" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="METHODMAP1.0" LABEL="Mapping of WSDL to Fedora notion of Method Definitions" CREATED="2005-05-17T22:50:14.890Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:FedoraSDepMethodMap-1.0" SIZE="4033">
+<foxml:xmlContent>
+<fmm:MethodMap xmlns:fmm="http://fedora.comm.nsdlib.org/service/methodmap" bDefPID="bdef:AssetDef" name="MethodMap - Asset Definition Behavior Mechanism - Image (3DS)">
+          <fmm:Method operationLabel="Thumbnail or text fragment representing the object" operationName="getPreview" wsdlMsgName="getPreviewRequest" wsdlMsgOutput="dissemResponse">
+            <fmm:DatastreamInputParm parmName="DCA-META" passBy="URL_REF" required="true"></fmm:DatastreamInputParm>
+            <fmm:DefaultInputParm defaultValue="http://stylesheets01.lib.tufts.edu/dl-xsl/return-preview.xsl" label="" parmName="XSLT" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:DefaultInputParm defaultValue="yes" label="" parmName="CLEAR_CACHE" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:MethodReturnType wsdlMsgName="dissemResponse" wsdlMsgTOMIME="text/plain"></fmm:MethodReturnType>
+          </fmm:Method>
+          <fmm:Method operationLabel="A row datastream" operationName="getDefaultContent" wsdlMsgName="getDefaultContentRequest" wsdlMsgOutput="dissemResponse">
+            <fmm:DatastreamInputParm parmName="Advanced.jpg" passBy="URL_REF" required="true"></fmm:DatastreamInputParm>
+            <fmm:MethodReturnType wsdlMsgName="dissemResponse" wsdlMsgTOMIME="image/jpeg"></fmm:MethodReturnType>
+          </fmm:Method>
+          <fmm:Method operationLabel="Long description of the object in plain text" operationName="getDescription" wsdlMsgName="getDescriptionRequest" wsdlMsgOutput="dissemResponse">
+            <fmm:DatastreamInputParm parmName="DC" passBy="URL_REF" required="true"></fmm:DatastreamInputParm>
+            <fmm:MethodReturnType wsdlMsgName="dissemResponse" wsdlMsgTOMIME="text/xml"></fmm:MethodReturnType>
+          </fmm:Method>
+          <fmm:Method operationLabel="HTML page rendering the object" operationName="getFullView" wsdlMsgName="getFullViewRequest" wsdlMsgOutput="dissemResponse">
+            <fmm:DatastreamInputParm parmName="DC" passBy="URL_REF" required="true"></fmm:DatastreamInputParm>
+            <fmm:DefaultInputParm defaultValue="http://stylesheets01.lib.tufts.edu/dl-xsl/image/getFullView.xsl" label="" parmName="XSLT" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:DefaultInputParm defaultValue="yes" label="" parmName="CLEAR_CACHE" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:MethodReturnType wsdlMsgName="dissemResponse" wsdlMsgTOMIME="text/html"></fmm:MethodReturnType>
+          </fmm:Method>
+          <fmm:Method operationLabel="Short description of the object" operationName="getLabel" wsdlMsgName="getLabelRequest" wsdlMsgOutput="dissemResponse">
+            <fmm:DatastreamInputParm parmName="DCA-META" passBy="URL_REF" required="true"></fmm:DatastreamInputParm>
+            <fmm:DefaultInputParm defaultValue="http://stylesheets01.lib.tufts.edu/dl-xsl/return-label.xsl" label="" parmName="XSLT" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:DefaultInputParm defaultValue="yes" label="" parmName="CLEAR_CACHE" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:MethodReturnType wsdlMsgName="dissemResponse" wsdlMsgTOMIME="text/plain"></fmm:MethodReturnType>
+          </fmm:Method>
+          <fmm:Method operationLabel="Asset Definition" operationName="getFullAssetDef" wsdlMsgName="getFullAssetDefRequest" wsdlMsgOutput="dissemResponse">
+            <fmm:DefaultInputParm defaultValue="http://stylesheets01.lib.tufts.edu/dl-xsl/image/getAssetDef.xsl" label="" parmName="XSLT" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:DefaultInputParm defaultValue="yes" label="" parmName="CLEAR_CACHE" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:DatastreamInputParm parmName="DC" passBy="URL_REF" required="true"></fmm:DatastreamInputParm>
+            <fmm:MethodReturnType wsdlMsgName="dissemResponse" wsdlMsgTOMIME="text/xml"></fmm:MethodReturnType>
+          </fmm:Method>
+        </fmm:MethodMap>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="WSDL" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="WSDL1.0" LABEL="WSDL definition of service" CREATED="2005-05-17T22:50:14.890Z" MIMETYPE="text/xml" FORMAT_URI="http://schemas.xmlsoap.org/wsdl/" SIZE="8041">
+<foxml:xmlContent>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap" xmlns:this="bmech" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/wsdl/soap/encoding" name="Asset Definition Behavior Mechanism - Image (3DS)" targetNamespace="bmech">
+          <wsdl:types>
+            <xsd:schema targetNamespace="bmech">
+              <xsd:simpleType name="ACCESS_IMAGEType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+              <xsd:simpleType name="THUMBNAIL_IMAGEType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+              <xsd:simpleType name="DCA_METADATAType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+              <xsd:simpleType name="DC_METADATAType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+              <xsd:simpleType name="XSLTType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+              <xsd:simpleType name="CLEAR_CACHEType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+              <xsd:simpleType name="ASSET_METADATAType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+            </xsd:schema>
+          </wsdl:types>
+          <wsdl:message name="getPreviewRequest">
+            <wsdl:part name="DCA-META" type="this:DCA_METADATAType"></wsdl:part>
+            <wsdl:part name="XSLT" type="this:XSLTType"></wsdl:part>
+            <wsdl:part name="CLEAR_CACHE" type="this:CLEAR_CACHEType"></wsdl:part>
+          </wsdl:message>
+          <wsdl:message name="getDefaultContentRequest">
+            <wsdl:part name="Advanced.jpg" type="this:ACCESS_IMAGEType"></wsdl:part>
+          </wsdl:message>
+          <wsdl:message name="getDescriptionRequest">
+            <wsdl:part name="DC" type="this:DCA_METADATAType"></wsdl:part>
+          </wsdl:message>
+          <wsdl:message name="getFullViewRequest">
+            <wsdl:part name="DCA-META" type="this:DC_METADATAType"></wsdl:part>
+            <wsdl:part name="XSLT" type="this:XSLTType"></wsdl:part>
+            <wsdl:part name="CLEAR_CACHE" type="this:CLEAR_CACHEType"></wsdl:part>
+          </wsdl:message>
+          <wsdl:message name="getLabelRequest">
+            <wsdl:part name="DCA-META" type="this:DCA_METADATAType"></wsdl:part>
+            <wsdl:part name="XSLT" type="this:XSLTType"></wsdl:part>
+            <wsdl:part name="CLEAR_CACHE" type="this:CLEAR_CACHEType"></wsdl:part>
+          </wsdl:message>
+          <wsdl:message name="getFullAssetDefRequest">
+            <wsdl:part name="XSLT" type="this:XSLTType"></wsdl:part>
+            <wsdl:part name="CLEAR_CACHE" type="this:CLEAR_CACHEType"></wsdl:part>
+            <wsdl:part name="DC" type="this:ASSET_METADATAType"></wsdl:part>
+          </wsdl:message>
+          <wsdl:message name="dissemResponse">
+            <wsdl:part name="dissem" type="xsd:base64Binary"></wsdl:part>
+          </wsdl:message>
+          <wsdl:portType name="AssetDef-Image.3DSPortType">
+            <wsdl:operation name="getPreview">
+              <wsdl:input message="this:getPreviewRequest"></wsdl:input>
+              <wsdl:output message="this:dissemResponse"></wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getFullView">
+              <wsdl:input message="this:getFullViewRequest"></wsdl:input>
+              <wsdl:output message="this:dissemResponse"></wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getDescription">
+              <wsdl:input message="this:getDescriptionRequest"></wsdl:input>
+              <wsdl:output message="this:dissemResponse"></wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getDefaultContent">
+              <wsdl:input message="this:getDefaultContentRequest"></wsdl:input>
+              <wsdl:output message="this:dissemResponse"></wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getLabel">
+              <wsdl:input message="this:getLabelRequest"></wsdl:input>
+              <wsdl:output message="this:dissemResponse"></wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getFullAssetDef">
+              <wsdl:input message="this:getFullAssetDefRequest"></wsdl:input>
+              <wsdl:output message="this:dissemResponse"></wsdl:output>
+            </wsdl:operation>
+          </wsdl:portType>
+          <wsdl:service name="AssetDef-Image.3DS">
+            <wsdl:port binding="this:AssetDef-Image.3DS_http" name="AssetDef-Image.3DS_port">
+              <http:address location="LOCAL"></http:address>
+            </wsdl:port>
+          </wsdl:service>
+          <wsdl:binding name="AssetDef-Image.3DS_http" type="this:AssetDef-Image.3DSPortType">
+            <http:binding verb="GET"></http:binding>
+            <wsdl:operation name="getPreview">
+              <http:operation location="http://processing01.lib.tufts.edu:8080/saxon/SaxonServlet?source=(DCA-META)&amp;style=(XSLT)&amp;clear-stylesheet-cache=(CLEAR_CACHE)"></http:operation>
+              <wsdl:input>
+                <http:urlReplacement></http:urlReplacement>
+              </wsdl:input>
+              <wsdl:output>
+                <mime:content type="text/plain"></mime:content>
+              </wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getDefaultContent">
+              <http:operation location="(Advanced.jpg) "></http:operation>
+              <wsdl:input>
+                <http:urlReplacement></http:urlReplacement>
+              </wsdl:input>
+              <wsdl:output>
+                <mime:content type="image/jpeg"></mime:content>
+              </wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getDescription">
+              <http:operation location="(DC)"></http:operation>
+              <wsdl:input>
+                <http:urlReplacement></http:urlReplacement>
+              </wsdl:input>
+              <wsdl:output>
+                <mime:content type="text/xml"></mime:content>
+              </wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getFullView">
+              <http:operation location="http://processing01.lib.tufts.edu:8080/saxon/SaxonServlet?source=(DC)&amp;style=(XSLT)&amp;clear-stylesheet-cache=(CLEAR_CACHE)"></http:operation>
+              <wsdl:input>
+                <http:urlReplacement></http:urlReplacement>
+              </wsdl:input>
+              <wsdl:output>
+                <mime:content type="text/html"></mime:content>
+              </wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getLabel">
+              <http:operation location="http://processing01.lib.tufts.edu:8080/saxon/SaxonServlet?source=(DCA-META)&amp;style=(XSLT)&amp;clear-stylesheet-cache=(CLEAR_CACHE)"></http:operation>
+              <wsdl:input>
+                <http:urlReplacement></http:urlReplacement>
+              </wsdl:input>
+              <wsdl:output>
+                <mime:content type="text/plain"></mime:content>
+              </wsdl:output>
+            </wsdl:operation>
+            <wsdl:operation name="getFullAssetDef">
+              <http:operation location="http://processing01.lib.tufts.edu:8080/saxon/SaxonServlet?source=(DC)&amp;style=(XSLT)&amp;clear-stylesheet-cache=(CLEAR_CACHE)"></http:operation>
+              <wsdl:input>
+                <http:urlReplacement></http:urlReplacement>
+              </wsdl:input>
+              <wsdl:output>
+                <mime:content type="text/xml"></mime:content>
+              </wsdl:output>
+            </wsdl:operation>
+          </wsdl:binding>
+        </wsdl:definitions>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="RELS-EXT1.0" LABEL="RDF Statements about this object" CREATED="2009-04-21T15:17:43.489Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="547">
+<foxml:xmlContent>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora-model="info:fedora/fedora-system:def/model#">
+  <rdf:Description rdf:about="info:fedora/cm:Image.3DS-AssetDef">
+    <fedora-model:isDeploymentOf rdf:resource="info:fedora/bdef:AssetDef"></fedora-model:isDeploymentOf>
+    <fedora-model:isContractorOf rdf:resource="info:fedora/cm:Image.3DS"></fedora-model:isContractorOf>
+    <fedora-model:hasModel rdf:resource="info:fedora/fedora-system:ServiceDeployment-3.0"></fedora-model:hasModel>
+  </rdf:Description>
+</rdf:RDF>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DS1" STATE="A" CONTROL_GROUP="E" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DS1.0" LABEL="Asset Definition Behavior Mechanism Documentation" CREATED="2005-05-17T22:50:14.890Z" MIMETYPE="text/html">
+<foxml:contentLocation TYPE="URL" REF="http://dl.tufts.edu/docs/assetprofile/bmech.html"/>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="SERVICE-PROFILE" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="SERVICE-PROFILE1.0" LABEL="Service Definition - Technical description of the service" CREATED="2005-05-17T22:50:14.890Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.mets.techMD.OTHER.UNSPECIFIED" SIZE="1132">
+<foxml:xmlContent>
+<fsvp:serviceProfile xmlns:fsvp="http://fedora.comm.nsdlib.org/service/profile" bDefPID="bdef:AssetDef" name="XSLT Processor">
+          <fsvp:serviceDescription>Saxon XSLT Processor</fsvp:serviceDescription>
+          <fsvp:serviceImplementation>
+            <fsvp:serviceLiveTestURL>http://processing01.lib.tufts.edu:8080/saxon</fsvp:serviceLiveTestURL>
+            <fsvp:serviceMessagingProtocol>HTTP GET</fsvp:serviceMessagingProtocol>
+            <fsvp:serviceInputFormats>
+              <fsvp:MIMEType>text/xml</fsvp:MIMEType>
+              <fsvp:MIMEType>image/jpeg</fsvp:MIMEType>
+              <fsvp:MIMEType>image/png</fsvp:MIMEType>
+            </fsvp:serviceInputFormats>
+            <fsvp:serviceOutputFormats>
+              <fsvp:MIMEType>text/plain</fsvp:MIMEType>
+              <fsvp:MIMEType>text/xml</fsvp:MIMEType>
+              <fsvp:MIMEType>text/html</fsvp:MIMEType>
+              <fsvp:MIMEType>image/jpeg</fsvp:MIMEType>
+            </fsvp:serviceOutputFormats>
+            <fsvp:serviceImplDependencies></fsvp:serviceImplDependencies>
+          </fsvp:serviceImplementation>
+        </fsvp:serviceProfile>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DC1.0" LABEL="Dublin Core Metadata for Service" CREATED="2005-05-17T22:50:14.890Z" MIMETYPE="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" SIZE="481">
+<foxml:xmlContent>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <dc:title>Asset Definition Behavior Mechanism - Image (3DS)</dc:title>
+  <dc:identifier>bmech:AssetDef-Image.3DS</dc:identifier>
+  <dc:identifier>cm:Image.3DS-AssetDef</dc:identifier>
+</oai_dc:dc>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+</foxml:digitalObject>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" PID="cm:VotingRecord"
+xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+<foxml:objectProperties>
+<foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Generated CModel"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2009-04-22T13:19:41.828Z"/>
+<foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2009-05-22T13:34:07.958Z"/>
+</foxml:objectProperties>
+<foxml:datastream ID="AUDIT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="false">
+<foxml:datastreamVersion ID="AUDIT.0" LABEL="Audit Trail for this object" CREATED="2009-04-22T13:19:41.828Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit">
+<foxml:xmlContent>
+<audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+<audit:record ID="AUDREC1">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-04-22T13:19:41.828Z</audit:date>
+<audit:justification>Ingested from local file /Users/mkorcy01/Desktop/analyzer-output/cmodel-1.xml</audit:justification>
+</audit:record>
+<audit:record ID="AUDREC2">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-05-22T13:34:07.958Z</audit:date>
+<audit:justification>another fedora object</audit:justification>
+</audit:record>
+</audit:auditTrail>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="RELS-EXT1.0" LABEL="RDF Statements about this object" CREATED="2009-01-06T17:08:16.395Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="1143">
+<foxml:xmlContent>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora-model="info:fedora/fedora-system:def/model#">
+  <rdf:Description rdf:about="info:fedora/cm:VotingRecord">
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsReference"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsMetadata"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsArchival"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:AssetDef"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsVotingRecord"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsAccessRights"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsPlainText"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsType"></fedora-model:hasService>
+    <fedora-model:hasModel rdf:resource="info:fedora/fedora-system:ContentModel-3.0"></fedora-model:hasModel>
+  </rdf:Description></rdf:RDF>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DS-COMPOSITE-MODEL" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DS-COMPOSITE-MODEL1.0" LABEL="Datastream Composite Model" CREATED="2009-01-06T17:08:16.395Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:FedoraDSCompositeModel-1.0" SIZE="474">
+<foxml:xmlContent>
+<dsCompositeModel xmlns="info:fedora/fedora-system:def/dsCompositeModel#">
+  <dsTypeModel ID="DC">
+    <form MIME="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="DCA-ADMIN">
+    <form MIME="text/xml"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="DCA-META">
+    <form MIME="text/xml"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="RECORD-XML">
+    <form MIME="text/xml"></form>
+  </dsTypeModel>
+</dsCompositeModel>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="CLASS-DESCRIPTION" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="CLASS-DESCRIPTION1.0" LABEL="Technical description of the class of objects assigned to this content model" CREATED="2009-01-06T17:08:16.395Z" MIMETYPE="text/xml" SIZE="2016">
+<foxml:xmlContent>
+<class-description>
+OrigContentModel
+  &apos;Voting Record&apos;
+BDefPIDs
+  &apos;bdef:TuftsReference&apos;, &apos;bdef:TuftsMetadata&apos;, &apos;bdef:TuftsArchival&apos;, &apos;bdef:AssetDef&apos;, &apos;bdef:TuftsVotingRecord&apos;, &apos;bdef:TuftsAccessRights&apos;, &apos;bdef:TuftsPlainText&apos;, &apos;bdef:TuftsType&apos;
+BMechPIDs
+  &apos;bmech:TuftsMetadata-Data.VotingRecord&apos;, &apos;bmech:TuftsPlainText-Data.VotingRecord&apos;, &apos;bmech:TuftsArchival-Data.VotingRecord&apos;, &apos;bmech:AssetDef-Data.VotingRecord&apos;, &apos;bmech:TuftsType-Data.VotingRecord&apos;, &apos;bmech:TuftsReference-Data.VotingRecord&apos;, &apos;bmech:TuftsVotingRecord-Data.VotingRecord&apos;, &apos;bmech:TuftsAccessRights-Data.VotingRecord&apos;
+BindingKeyAssignments
+  for bmech:TuftsMetadata-Data.VotingRecord
+    &apos;DCA_ADMIN_METADATA=DCA-ADMIN&apos;, &apos;DC_METADATA=DC&apos;, &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsPlainText-Data.VotingRecord
+    &apos;ACCESS_TEXT=RECORD-XML&apos;
+  for bmech:TuftsArchival-Data.VotingRecord
+    &apos;RECORD_XML=RECORD-XML&apos;
+  for bmech:AssetDef-Data.VotingRecord
+    &apos;ASSET_METADATA=DC&apos;, &apos;DC_METADATA=DC&apos;, &apos;DCA_METADATA=DCA-META&apos;, &apos;RECORD_XML=RECORD-XML&apos;
+  for bmech:TuftsType-Data.VotingRecord
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsReference-Data.VotingRecord
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsVotingRecord-Data.VotingRecord
+    &apos;RECORD_XML=RECORD-XML&apos;
+  for bmech:TuftsAccessRights-Data.VotingRecord
+    &apos;DCA_METADATA=DCA-META&apos;
+DatastreamIDs
+  &apos;DC&apos;, &apos;DCA-ADMIN&apos;, &apos;DCA-META&apos;, &apos;RECORD-XML&apos;
+MIMETypes
+  for DC, &apos;text/xml&apos;
+  for DCA-ADMIN, &apos;text/xml&apos;
+  for DCA-META, &apos;text/xml&apos;
+  for RECORD-XML, &apos;text/xml&apos;
+FormatURIs
+  for DC, &apos;http://www.openarchives.org/OAI/2.0/oai_dc/&apos;
+  for DCA-ADMIN, none
+  for DCA-META, none
+  for RECORD-XML, none
+</class-description>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DC1.0" LABEL="Dublin Core Record for this object" CREATED="2009-04-22T13:19:41.828Z" MIMETYPE="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" SIZE="384">
+<foxml:xmlContent>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <dc:title>Generated CModel</dc:title>
+  <dc:identifier>cm:VotingRecord</dc:identifier>
+</oai_dc:dc>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+</foxml:digitalObject>
