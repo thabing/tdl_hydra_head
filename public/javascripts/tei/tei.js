@@ -24,10 +24,25 @@ $(function(){
       $('.thumbnail').on('click', function(e){
             e.preventDefault();
 
-          var template = $('#image_overlay_template').html();
-          var overlay_data = "";
-          var html = Mustache.to_html(template, overlay_data);
-          $('#myImageOverlay').html(html);
+
+
+          var pid = $(this).data('pid');
+          $.getJSON('/file_assets/image_overlay/' + pid , function(data) {
+            //var items = [];
+
+            //$.each(data, function(key, val) {
+            //  items.push('<li id="' + key + '">' + val + '</li>');
+            //});
+            var template = $('#image_overlay_template').html();
+            var html = Mustache.to_html(template, data);
+            $('#myImageOverlay').html(html);
+            //$('<ul/>', {
+            //  'class': 'my-new-list',
+            //  html: items.join('')
+            //}).appendTo('body');
+          });
+
+
 
 
       });
