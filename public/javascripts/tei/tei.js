@@ -27,19 +27,12 @@ $(function(){
 
 
           var pid = $(this).data('pid');
-          $.getJSON('/file_assets/image_overlay/' + pid , function(data) {
-            //var items = [];
-
-            //$.each(data, function(key, val) {
-            //  items.push('<li id="' + key + '">' + val + '</li>');
-            //});
+          $.getJSON('/file_assets/image_overlay/' + pid , function(data)
+          {
             var template = $('#image_overlay_template').html();
             var html = Mustache.to_html(template, data);
-            $('#myImageOverlay').html(html);
-            //$('<ul/>', {
-            //  'class': 'my-new-list',
-            //  html: items.join('')
-            //}).appendTo('body');
+            $('#myImageOverlay').html(html).modal('show');
+
           });
 
 

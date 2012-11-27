@@ -288,7 +288,7 @@ module Tufts
           result +="<ul class=thumbnails><li>"
           #result +='<a data-toggle="modal" href="#myImageOverlay"  class="thumbnail">'
           pid = PidMethods.urn_to_pid(child['n'])
-          result +='<a data-toggle="modal" data-pid="'+ pid+'" href="/catalog/' + pid + '"  class="thumbnail">'
+          result +='<a data-pid="'+ pid+'" href="/catalog/' + pid + '"  class="thumbnail">'
 #          <%= link_to image_tag("/file_assets/thumb/"+document[:id] , :alt=>document[:title],:class=>"thumbnailwidth"), "/catalog/" + document[:id],:class=>"thumbnail" %>
 
 
