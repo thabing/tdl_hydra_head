@@ -283,25 +283,28 @@ From file_assets/_new.html.haml
     title = metadata[:titles].nil? ? "" : metadata[:titles].first.text
     xml = @document_fedora.datastreams["Archival.xml"].ng_xml
     node_sets = xml.xpath('//figure')
-    figures = Array.new
-    captions = Array.new
+
+
+   figures = Array.new
 
     unless node_sets.nil?
       node_sets.each do |node|
           image_pid = Tufts::PidMethods.urn_to_pid(node[:n])
-          figures << image_pid
+          image_title = ""
           @image = TuftsImage.find(image_pid)
           begin
             image_metadata = Tufts::ModelMethods.get_metadata(@image)
             image_title = image_metadata[:titles].nil? ? "" : image_metadata[:titles].first.text
-            captions << image_title
+
           rescue NoMethodError
-            captions << ""
+            image_title = ""
           end
+
+        figures <<  {:pid => image_pid, :caption => image_title }
         end
     end
 
-    render :json => {:figures => figures, :count=> figures.length,:title=> "Illustrations from the " + title, :captions=>captions }
+    render :json => {:figures => figures, :count=> figures.length,:title=> "Illustrations from the " + title }
     #metadata = Tufts::ModelMethods.get_metadata(@document_fedora)
     #title = metadata[:titles].nil? ? "" : metadata[:titles].first.text
     #temporal = metadata[:temporals].nil? ? "" : metadata[:temporals].first.text
