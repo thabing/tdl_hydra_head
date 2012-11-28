@@ -42,11 +42,15 @@ $(function(){
 
       $('.myImageGalleryLauncher').on('click', function(e) {
         e.preventDefault();
-        var template = $('#gallery_overlay_template').html();
-        var data="{}";
-        var html = Mustache.to_html(template, data);
+          var pid = $(this).data('pid');
+          $.getJSON('/file_assets/image_gallery/' + pid , function(data)
+            {
+                var template = $('#gallery_overlay_template').html();
 
-        $('#myImageGallery').html(html).modal('show');
+                var html = Mustache.to_html(template, data);
+                $('#myImageGallery').html(html).modal('show');
+            });
+
       });
 
   });
