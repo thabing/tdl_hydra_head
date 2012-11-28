@@ -40,4 +40,13 @@ $(function(){
 
       });
 
+      $('.myImageGalleryLauncher').on('click', function(e) {
+        e.preventDefault();
+        var template = $('#gallery_overlay_template').html();
+        var data="{}";
+        var html = Mustache.to_html(template, data);
+
+        $('#myImageGallery').html(html).modal('show');
+      });
+
   });
