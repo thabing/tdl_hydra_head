@@ -29,11 +29,14 @@
          end
 
        end
-
+       valid_date_string = ""
+       unless date.nil?
+         valid_date_string = valid_date.strftime("%Y")
+       end
 
     %>
     <%#= valid_date.strftime("%b %d, %Y")  %>
-    <%= valid_date.strftime("%Y")  %>
+    <%= valid_date_string  %>
   </td>
   <% if document[:type2_t].first == 'image' %>
       <td class="thumbnail_td" align="center">
