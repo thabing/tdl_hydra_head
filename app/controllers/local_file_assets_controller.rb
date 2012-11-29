@@ -7,6 +7,7 @@ class LocalFileAssetsController < ApplicationController
   include MediaShelf::ActiveFedoraHelper
   include Blacklight::SolrHelper
   include TuftsFileAssetsHelper
+  include Tufts::ModelMethods
 #  before_filter :require_fedora
   before_filter :require_solr, :only => [:index, :create, :show, :destroy]
   prepend_before_filter :sanitize_update_params
@@ -141,6 +142,45 @@ From file_assets/_new.html.haml
     end
   end
 
+  def showMedium
+      @file_asset = FileAsset.find(params[:id])
+      if (@file_asset.nil?)
+        logger.warn("No such file asset: " + params[:id])
+        flash[:notice]= "No such file asset."
+        redirect_to(:action => 'index', :q => nil, :f => nil)
+      else
+        # get containing object for this FileAsset
+        pid = @file_asset.container_id
+        @downloadable = false
+        # A FileAsset is downloadable iff the user has read or higher access to a parent
+        @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
+        if reader?
+          @downloadable = true
+        end
+
+        mapped_model_names = ModelNameHelper.map_model_names(@file_asset.relationships(:has_model))
+
+
+        if (mapped_model_names.include?("info:fedora/afmodel:TuftsImage"))
+          if @file_asset.datastreams.include?("Basic.jpg")
+            send_file(convert_url_to_local_path(@file_asset.datastreams["Basic.jpg"].dsLocation))
+          end
+        end
+
+        if (mapped_model_names.include?("info:fedora/afmodel:TuftsImageText"))
+          if @file_asset.datastreams.include?("Basic.jpg")
+            send_file(convert_url_to_local_path(@file_asset.datastreams["Basic.jpg"].dsLocation))
+          end
+        end
+
+        if (mapped_model_names.include?("info:fedora/afmodel:TuftsWP"))
+          if @file_asset.datastreams.include?("Basic.jpg")
+            send_file(convert_url_to_local_path(@file_asset.datastreams["Basic.jpg"].dsLocation))
+          end
+        end
+      end
+    end
+
 
   def showThumb
     @file_asset = FileAsset.find(params[:id])
@@ -237,14 +277,57 @@ From file_assets/_new.html.haml
       end
   end
 
+  def image_gallery
+    @document_fedora = TuftsTEI.find(params[:id])
+    metadata = Tufts::ModelMethods.get_metadata(@document_fedora)
+    title = metadata[:titles].nil? ? "" : metadata[:titles].first.text
+    xml = @document_fedora.datastreams["Archival.xml"].ng_xml
+    node_sets = xml.xpath('//figure')
+
+
+   figures = Array.new
+
+    unless node_sets.nil?
+      node_sets.each do |node|
+          image_pid = Tufts::PidMethods.urn_to_pid(node[:n])
+          image_title = ""
+          @image = TuftsImage.find(image_pid)
+          begin
+            image_metadata = Tufts::ModelMethods.get_metadata(@image)
+            image_title = image_metadata[:titles].nil? ? "" : image_metadata[:titles].first.text
+
+          rescue NoMethodError
+            image_title = ""
+          end
+
+        figures <<  {:pid => image_pid, :caption => image_title }
+        end
+    end
+
+    render :json => {:figures => figures, :count=> figures.length,:title=> "Illustrations from the " + title }
+    #metadata = Tufts::ModelMethods.get_metadata(@document_fedora)
+    #title = metadata[:titles].nil? ? "" : metadata[:titles].first.text
+    #temporal = metadata[:temporals].nil? ? "" : metadata[:temporals].first.text
+    #description = metadata[:descriptions].nil? ? "" : metadata[:descriptions].first.text
+    #pid = params[:id]
+    #item_link = '/catalog/' + pid
+    #image_url = '/file_assets/medium/' + pid
+
+
+  end
+
   def image_overlay
-    #back_url
-    #{{item_title}}<br>
-    #    {{item_date}}<br>
-    #    {{item_description}}
-    #image_url
-    #item_link
-    render :json => {:back_url => "#", :item_title => 'title',:item_date=>'2004',:item_url=>"#",:item_link=>'#',:item_description=>'blah'}
+    @document_fedora = TuftsBase.find(params[:id])
+    metadata = Tufts::ModelMethods.get_metadata(@document_fedora)
+    title = metadata[:titles].nil? ? "" : metadata[:titles].first.text
+    temporal = metadata[:temporals].nil? ? "" : metadata[:temporals].first.text
+    description = metadata[:descriptions].nil? ? "" : metadata[:descriptions].first.text
+    pid = params[:id]
+    item_link = '/catalog/' + pid
+    image_url = '/file_assets/medium/' + pid
+
+
+    render :json => {:back_url => "#", :item_title => title,:item_date=> temporal,:image_url=> image_url,:item_link=> item_link,:item_description=>description}
   end
   def dimensions
     @file_asset = FileAsset.find(params[:id])

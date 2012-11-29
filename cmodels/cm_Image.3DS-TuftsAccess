@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" PID="cm:Image.3DS-TuftsAccess"
+xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+<foxml:objectProperties>
+<foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Generated deployment for cm:Image.3DS (copy of bmech:TuftsAccess-Image.3DS)"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2009-04-22T13:20:21.177Z"/>
+<foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2009-05-22T13:33:59.242Z"/>
+</foxml:objectProperties>
+<foxml:datastream ID="AUDIT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="false">
+<foxml:datastreamVersion ID="AUDIT.0" LABEL="Audit Trail for this object" CREATED="2009-04-22T13:20:21.177Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit">
+<foxml:xmlContent>
+<audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+<audit:record ID="AUDREC1">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-04-22T13:20:21.177Z</audit:date>
+<audit:justification>Ingested from local file /Users/mkorcy01/Desktop/analyzer-output/cmodel-9.deployment3.xml</audit:justification>
+</audit:record>
+<audit:record ID="AUDREC2">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-05-22T13:33:59.242Z</audit:date>
+<audit:justification>another fedora object</audit:justification>
+</audit:record>
+</audit:auditTrail>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DSINPUTSPEC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DSINPUTSPEC1.0" LABEL="Datastream Input Specification for Service" CREATED="2004-12-17T15:32:11.000Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:FedoraDSInputSpec-1.0" SIZE="488">
+<foxml:xmlContent>
+<fbs:DSInputSpec xmlns:fbs="http://fedora.comm.nsdlib.org/service/bindspec" bDefPID="bdef:TuftsAccess" label="Datastream Input Specification">
+          <fbs:DSInput DSMax="1" DSMin="1" DSOrdinality="false" wsdlMsgPartName="Advanced.jpg">
+            <fbs:DSInputLabel>Access Quality Image file</fbs:DSInputLabel>
+            <fbs:DSMIME>image/jpeg</fbs:DSMIME>
+            <fbs:DSInputInstruction>JPEG Image</fbs:DSInputInstruction>
+           </fbs:DSInput>
+        </fbs:DSInputSpec>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="METHODMAP" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="METHODMAP1.0" LABEL="Mapping of WSDL to Fedora notion of Method Definitions" CREATED="2005-11-01T22:03:01.263Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:FedoraSDepMethodMap-1.0" SIZE="507">
+<foxml:xmlContent>
+<fmm:MethodMap xmlns:fmm="http://fedora.comm.nsdlib.org/service/methodmap" bDefPID="bdef:TuftsAccess" name="">
+          <fmm:Method operationName="getAccess" wsdlMsgName="getAccessRequest" wsdlMsgOutput="dissemResponse">
+            <fmm:DatastreamInputParm parmName="Advanced.jpg" passBy="URL_REF" required="true"></fmm:DatastreamInputParm>
+            <fmm:MethodReturnType wsdlMsgName="dissemResponse" wsdlMsgTOMIME="image/jpeg"></fmm:MethodReturnType>
+          </fmm:Method>
+        </fmm:MethodMap>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="WSDL" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="WSDL1.0" LABEL="WSDL definition of service" CREATED="2005-11-01T22:03:01.263Z" MIMETYPE="text/xml" FORMAT_URI="http://schemas.xmlsoap.org/wsdl/" SIZE="2069">
+<foxml:xmlContent>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap" xmlns:this="bmech" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/wsdl/soap/encoding" name="Tufts Access Behavior Mechanism - Image (3DS)" targetNamespace="bmech">
+          <wsdl:types>
+            <xsd:schema targetNamespace="bmech">
+              <xsd:simpleType name="URLType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+            </xsd:schema>
+          </wsdl:types>
+          <wsdl:message name="getAccessRequest">
+            <wsdl:part name="Advanced.jpg" type="this:URLType"></wsdl:part>
+          </wsdl:message>
+          <wsdl:message name="dissemResponse">
+            <wsdl:part name="dissem" type="xsd:base64Binary"></wsdl:part>
+          </wsdl:message>
+          <wsdl:portType name="PortType">
+            <wsdl:operation name="getAccess">
+                <wsdl:input message="this:getAccessRequest"></wsdl:input>
+                <wsdl:output message="this:dissemResponse"></wsdl:output>
+            </wsdl:operation>
+          </wsdl:portType>
+          <wsdl:service name="Fedora Disseminator">
+            <wsdl:port binding="this:dissem_http" name="dissem_port">
+              <http:address location=""></http:address>
+            </wsdl:port>
+          </wsdl:service>
+          <wsdl:binding name="dissem_http" type="this:PortType">
+            <http:binding verb="GET"></http:binding>
+            <wsdl:operation name="getAccess">
+              <http:operation location="(Advanced.jpg)"></http:operation>
+              <wsdl:input>
+                <http:urlReplacement></http:urlReplacement>
+              </wsdl:input>
+              <wsdl:output>
+                <mime:content type="image/jpeg"></mime:content>
+              </wsdl:output>
+            </wsdl:operation>
+          </wsdl:binding>
+        </wsdl:definitions>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="RELS-EXT1.0" LABEL="RDF Statements about this object" CREATED="2009-04-21T15:17:43.489Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="553">
+<foxml:xmlContent>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora-model="info:fedora/fedora-system:def/model#">
+  <rdf:Description rdf:about="info:fedora/cm:Image.3DS-TuftsAccess">
+    <fedora-model:isDeploymentOf rdf:resource="info:fedora/bdef:TuftsAccess"></fedora-model:isDeploymentOf>
+    <fedora-model:isContractorOf rdf:resource="info:fedora/cm:Image.3DS"></fedora-model:isContractorOf>
+    <fedora-model:hasModel rdf:resource="info:fedora/fedora-system:ServiceDeployment-3.0"></fedora-model:hasModel>
+  </rdf:Description>
+</rdf:RDF>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="SERVICE-PROFILE" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="SERVICE-PROFILE1.0" LABEL="Service Profile - Technical description of the service" CREATED="2004-12-17T15:32:11.000Z" MIMETYPE="text/xml" SIZE="773">
+<foxml:xmlContent>
+<fsvp:serviceProfile xmlns:fsvp="http://fedora.comm.nsdlib.org/service/profile" bDefPID="bdef:TuftsAccess" name="">
+          <fsvp:serviceDescription></fsvp:serviceDescription>
+          <fsvp:serviceImplementation>
+            <fsvp:serviceLiveTestURL></fsvp:serviceLiveTestURL>
+            <fsvp:serviceMessagingProtocol>HTTP GET</fsvp:serviceMessagingProtocol>
+            <fsvp:serviceInputFormats></fsvp:serviceInputFormats>
+            <fsvp:serviceOutputFormats>
+                <fsvp:MIMEType>image/jpeg</fsvp:MIMEType>
+                <fsvp:MIMEType>image/png</fsvp:MIMEType>
+            </fsvp:serviceOutputFormats>
+            <fsvp:serviceImplDependencies></fsvp:serviceImplDependencies>
+          </fsvp:serviceImplementation>
+        </fsvp:serviceProfile>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DC1.0" LABEL="Dublin Core Metadata for Service" CREATED="2005-11-01T22:03:01.263Z" MIMETYPE="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" SIZE="481">
+<foxml:xmlContent>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <dc:title>Tufts Access Behavior Mechanism (Image.3DS)</dc:title>
+  <dc:identifier>bmech:TuftsAccess-Image.3DS</dc:identifier>
+  <dc:identifier>cm:Image.3DS-TuftsAccess</dc:identifier>
+</oai_dc:dc>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+</foxml:digitalObject>

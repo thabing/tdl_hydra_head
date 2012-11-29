@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" PID="cm:Image.3DS"
+xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+<foxml:objectProperties>
+<foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Generated CModel"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2009-04-22T13:20:23.736Z"/>
+<foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2009-05-22T13:33:57.591Z"/>
+</foxml:objectProperties>
+<foxml:datastream ID="AUDIT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="false">
+<foxml:datastreamVersion ID="AUDIT.0" LABEL="Audit Trail for this object" CREATED="2009-04-22T13:20:23.736Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit">
+<foxml:xmlContent>
+<audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+<audit:record ID="AUDREC1">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-04-22T13:20:23.736Z</audit:date>
+<audit:justification>Ingested from local file /Users/mkorcy01/Desktop/analyzer-output/cmodel-9.xml</audit:justification>
+</audit:record>
+<audit:record ID="AUDREC2">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-05-22T13:33:57.591Z</audit:date>
+<audit:justification>another fedora object</audit:justification>
+</audit:record>
+</audit:auditTrail>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="RELS-EXT1.0" LABEL="RDF Statements about this object" CREATED="2009-04-17T20:31:54.354Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="1028">
+<foxml:xmlContent>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora-model="info:fedora/fedora-system:def/model#">
+  <rdf:Description rdf:about="info:fedora/cm:Image.3DS">
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsAccess"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsReference"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsAccessRights"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsMetadata"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:AssetDef"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsType"></fedora-model:hasService>
+    <fedora-model:hasService rdf:resource="info:fedora/bdef:TuftsImage"></fedora-model:hasService>
+    <fedora-model:hasModel rdf:resource="info:fedora/fedora-system:ContentModel-3.0"></fedora-model:hasModel>
+  </rdf:Description></rdf:RDF>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DS-COMPOSITE-MODEL" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DS-COMPOSITE-MODEL1.0" LABEL="Datastream Composite Model" CREATED="2009-04-17T20:31:54.354Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:FedoraDSCompositeModel-1.0" SIZE="649">
+<foxml:xmlContent>
+<dsCompositeModel xmlns="info:fedora/fedora-system:def/dsCompositeModel#">
+  <dsTypeModel ID="Advanced.jpg">
+    <form MIME="image/jpeg"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="Basic.jpg">
+    <form MIME="image/jpeg"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="DC">
+    <form MIME="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="DCA-ADMIN">
+    <form MIME="text/xml"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="DCA-META">
+    <form MIME="text/xml"></form>
+  </dsTypeModel>
+  <dsTypeModel ID="Thumbnail.png">
+    <form MIME="image/png"></form>
+  </dsTypeModel>
+</dsCompositeModel>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="CLASS-DESCRIPTION" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="CLASS-DESCRIPTION1.0" LABEL="Technical description of the class of objects assigned to this content model" CREATED="2009-04-17T20:31:54.354Z" MIMETYPE="text/xml" SIZE="2067">
+<foxml:xmlContent>
+<class-description>
+OrigContentModel
+  &apos;tufts/image/noarchival&apos;
+BDefPIDs
+  &apos;bdef:TuftsAccess&apos;, &apos;bdef:TuftsReference&apos;, &apos;bdef:TuftsAccessRights&apos;, &apos;bdef:TuftsMetadata&apos;, &apos;bdef:AssetDef&apos;, &apos;bdef:TuftsType&apos;, &apos;bdef:TuftsImage&apos;
+BMechPIDs
+  &apos;bmech:TuftsMetadata-Image.3DS&apos;, &apos;bmech:AssetDef-Image.3DS&apos;, &apos;bmech:TuftsAccess-Image.3DS&apos;, &apos;bmech:TuftsReference-Image.3DS&apos;, &apos;bmech:TuftsType-Image.3DS&apos;, &apos;bmech:TuftsAccessRights-Image.3DS&apos;, &apos;bmech:TuftsImage-Image.3DS&apos;
+BindingKeyAssignments
+  for bmech:TuftsMetadata-Image.3DS
+    &apos;DC_METADATA=DC&apos;, &apos;DCA_METADATA=DCA-META&apos;, &apos;DCA_ADMIN_METADATA=DCA-ADMIN&apos;
+  for bmech:AssetDef-Image.3DS
+    &apos;DC_METADATA=DC&apos;, &apos;DCA_METADATA=DCA-META&apos;, &apos;THUMBNAIL_IMAGE=Thumbnail.png&apos;, &apos;ASSET_METADATA=DC&apos;, &apos;ACCESS_IMAGE=Advanced.jpg&apos;
+  for bmech:TuftsAccess-Image.3DS
+    &apos;ACCESS_IMAGE=Advanced.jpg&apos;
+  for bmech:TuftsReference-Image.3DS
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsType-Image.3DS
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsAccessRights-Image.3DS
+    &apos;DCA_METADATA=DCA-META&apos;
+  for bmech:TuftsImage-Image.3DS
+    &apos;DC_METADATA=DC&apos;, &apos;THUMBNAIL_IMAGE=Thumbnail.png&apos;, &apos;BASIC_IMAGE=Basic.jpg&apos;, &apos;ACCESS_IMAGE=Advanced.jpg&apos;
+DatastreamIDs
+  &apos;Advanced.jpg&apos;, &apos;Basic.jpg&apos;, &apos;DC&apos;, &apos;DCA-ADMIN&apos;, &apos;DCA-META&apos;, &apos;Thumbnail.png&apos;
+MIMETypes
+  for Advanced.jpg, &apos;image/jpeg&apos;
+  for Basic.jpg, &apos;image/jpeg&apos;
+  for DCA-ADMIN, &apos;text/xml&apos;
+  for DC, &apos;text/xml&apos;
+  for Thumbnail.png, &apos;image/png&apos;
+  for DCA-META, &apos;text/xml&apos;
+FormatURIs
+  for Advanced.jpg, none
+  for Basic.jpg, none
+  for DCA-ADMIN, none
+  for DC, &apos;http://www.openarchives.org/OAI/2.0/oai_dc/&apos;
+  for Thumbnail.png, none
+  for DCA-META, none
+</class-description>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DC1.0" LABEL="Dublin Core Record for this object" CREATED="2009-04-22T13:20:23.736Z" MIMETYPE="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" SIZE="381">
+<foxml:xmlContent>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <dc:title>Generated CModel</dc:title>
+  <dc:identifier>cm:Image.3DS</dc:identifier>
+</oai_dc:dc>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+</foxml:digitalObject>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" PID="cm:Text.TEI-Fragmented-TuftsPlainText"
+xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+<foxml:objectProperties>
+<foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Generated deployment for cm:Text.TEI-Fragmented (copy of bmech:TuftsPlainText-Text.TEI.Directory)"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2009-04-22T13:20:16.897Z"/>
+<foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2009-05-22T13:34:07.594Z"/>
+</foxml:objectProperties>
+<foxml:datastream ID="AUDIT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="false">
+<foxml:datastreamVersion ID="AUDIT.0" LABEL="Audit Trail for this object" CREATED="2009-04-22T13:20:16.897Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit">
+<foxml:xmlContent>
+<audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+<audit:record ID="AUDREC1">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-04-22T13:20:16.897Z</audit:date>
+<audit:justification>Ingested from local file /Users/mkorcy01/Desktop/analyzer-output/cmodel-8.deployment4.xml</audit:justification>
+</audit:record>
+<audit:record ID="AUDREC2">
+<audit:process type="Fedora API-M"/>
+<audit:action>ingest</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2009-05-22T13:34:07.594Z</audit:date>
+<audit:justification>another fedora object</audit:justification>
+</audit:record>
+</audit:auditTrail>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DSINPUTSPEC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DSINPUTSPEC1.0" LABEL="Datastream Input Specification for Service" CREATED="2005-05-25T16:10:44.291Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:FedoraDSInputSpec-1.0" SIZE="510">
+<foxml:xmlContent>
+<fbs:DSInputSpec xmlns:fbs="http://fedora.comm.nsdlib.org/service/bindspec" bDefPID="bdef:TuftsPlainText" label="Datastream Input Specification for Tufts Plain Text Behavior Mechanism">
+          <fbs:DSInput DSMax="1" DSMin="1" DSOrdinality="false" wsdlMsgPartName="Access.xml">
+            <fbs:DSInputLabel>ACCESS_TEXT Binding</fbs:DSInputLabel>
+            <fbs:DSMIME>text/xml</fbs:DSMIME>
+            <fbs:DSInputInstruction></fbs:DSInputInstruction>
+          </fbs:DSInput>
+        </fbs:DSInputSpec>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="METHODMAP" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="METHODMAP1.0" LABEL="Mapping of WSDL to Fedora notion of Method Definitions" CREATED="2005-05-25T16:10:44.291Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:FedoraSDepMethodMap-1.0" SIZE="939">
+<foxml:xmlContent>
+<fmm:MethodMap xmlns:fmm="http://fedora.comm.nsdlib.org/service/methodmap" bDefPID="bdef:TuftsPlainText" name="MethodMap - Tufts Plain Text Behavior Mechanism">
+          <fmm:Method operationLabel="Plain Text Stream" operationName="getPlainText" wsdlMsgName="getPlainTextRequest" wsdlMsgOutput="dissemResponse">
+            <fmm:DefaultInputParm defaultValue="http://stylesheets01.lib.tufts.edu/dl-xsl/text/directory/getPlainText.xsl" label="" parmName="XSLT" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:DatastreamInputParm parmName="Access.xml" passBy="URL_REF" required="true"></fmm:DatastreamInputParm>
+            <fmm:DefaultInputParm defaultValue="yes" label="" parmName="CLEAR_CACHE" passBy="VALUE" required="true"></fmm:DefaultInputParm>
+            <fmm:MethodReturnType wsdlMsgName="dissemResponse" wsdlMsgTOMIME="text/plain"></fmm:MethodReturnType>
+          </fmm:Method>
+        </fmm:MethodMap>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="WSDL" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="WSDL1.0" LABEL="WSDL definition of service" CREATED="2005-05-25T16:10:44.291Z" MIMETYPE="text/xml" FORMAT_URI="http://schemas.xmlsoap.org/wsdl/" SIZE="2820">
+<foxml:xmlContent>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap" xmlns:this="bmech" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/wsdl/soap/encoding" name="Tufts Plain Text Behavior Mechanism" targetNamespace="bmech">
+          <wsdl:types>
+            <xsd:schema targetNamespace="bmech">
+              <xsd:simpleType name="XSLTType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+              <xsd:simpleType name="ACCESS_TEXTType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+              <xsd:simpleType name="CLEAR_CACHEType">
+                <xsd:restriction base="xsd:string"></xsd:restriction>
+              </xsd:simpleType>
+            </xsd:schema>
+          </wsdl:types>
+          <wsdl:message name="getPlainTextRequest">
+            <wsdl:part name="XSLT" type="this:XSLTType"></wsdl:part>
+            <wsdl:part name="Access.xml" type="this:ACCESS_TEXTType"></wsdl:part>
+            <wsdl:part name="CLEAR_CACHE" type="this:CLEAR_CACHEType"></wsdl:part>
+          </wsdl:message>
+          <wsdl:message name="dissemResponse">
+            <wsdl:part name="dissem" type="xsd:base64Binary"></wsdl:part>
+          </wsdl:message>
+          <wsdl:portType name="TuftsPlainText-Text.TEI.DirectoryPortType">
+            <wsdl:operation name="getPlainText">
+              <wsdl:input message="this:getPlainTextRequest"></wsdl:input>
+              <wsdl:output message="this:dissemResponse"></wsdl:output>
+            </wsdl:operation>
+          </wsdl:portType>
+          <wsdl:service name="TuftsPlainText-Text.TEI.Directory">
+            <wsdl:port binding="this:TuftsPlainText-Text.TEI.Directory_http" name="TuftsPlainText-Text.TEI.Directory_port">
+              <http:address location="http://processing01.lib.tufts.edu:8080/saxon/"></http:address>
+            </wsdl:port>
+          </wsdl:service>
+          <wsdl:binding name="TuftsPlainText-Text.TEI.Directory_http" type="this:TuftsPlainText-Text.TEI.DirectoryPortType">
+            <http:binding verb="GET"></http:binding>
+            <wsdl:operation name="getPlainText">
+              <http:operation location="SaxonServlet?source=(Access.xml)&amp;style=(XSLT)&amp;clear-stylesheet-cache=(CLEAR_CACHE)"></http:operation>
+              <wsdl:input>
+                <http:urlReplacement></http:urlReplacement>
+              </wsdl:input>
+              <wsdl:output>
+                <mime:content type="text/plain"></mime:content>
+              </wsdl:output>
+            </wsdl:operation>
+          </wsdl:binding>
+        </wsdl:definitions>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="RELS-EXT1.0" LABEL="RDF Statements about this object" CREATED="2009-04-21T15:17:43.489Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="579">
+<foxml:xmlContent>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora-model="info:fedora/fedora-system:def/model#">
+  <rdf:Description rdf:about="info:fedora/cm:Text.TEI-Fragmented-TuftsPlainText">
+    <fedora-model:isDeploymentOf rdf:resource="info:fedora/bdef:TuftsPlainText"></fedora-model:isDeploymentOf>
+    <fedora-model:isContractorOf rdf:resource="info:fedora/cm:Text.TEI-Fragmented"></fedora-model:isContractorOf>
+    <fedora-model:hasModel rdf:resource="info:fedora/fedora-system:ServiceDeployment-3.0"></fedora-model:hasModel>
+  </rdf:Description>
+</rdf:RDF>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DS1" STATE="A" CONTROL_GROUP="E" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DS1.0" LABEL="Tufts Plain Text Behavior Mechanism Documentation" CREATED="2005-05-25T16:10:44.291Z" MIMETYPE="text/html">
+<foxml:contentLocation TYPE="URL" REF="http://dl.tufts.edu/docs/tufts/plaintext/bmech.html"/>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="SERVICE-PROFILE" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="SERVICE-PROFILE1.0" LABEL="Service Profile - Technical description of the service" CREATED="2005-05-25T16:10:44.291Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.mets.techMD.OTHER.UNSPECIFIED" SIZE="863">
+<foxml:xmlContent>
+<fsvp:serviceProfile xmlns:fsvp="http://fedora.comm.nsdlib.org/service/profile" bDefPID="bdef:TuftsPlainText" name="XSLT Processor">
+          <fsvp:serviceDescription>Saxon XSLT Processor</fsvp:serviceDescription>
+          <fsvp:serviceImplementation>
+            <fsvp:serviceLiveTestURL>http://processing01.lib.tufts.edu:8080/saxon/</fsvp:serviceLiveTestURL>
+            <fsvp:serviceMessagingProtocol>HTTP GET</fsvp:serviceMessagingProtocol>
+            <fsvp:serviceInputFormats>
+              <fsvp:MIMEType>text/xml</fsvp:MIMEType>
+            </fsvp:serviceInputFormats>
+            <fsvp:serviceOutputFormats>
+              <fsvp:MIMEType>text/plain</fsvp:MIMEType>
+            </fsvp:serviceOutputFormats>
+            <fsvp:serviceImplDependencies></fsvp:serviceImplDependencies>
+          </fsvp:serviceImplementation>
+        </fsvp:serviceProfile>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
+<foxml:datastreamVersion ID="DC1.0" LABEL="Dublin Core Metadata for Service" CREATED="2005-05-25T16:10:44.291Z" MIMETYPE="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" SIZE="498">
+<foxml:xmlContent>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <dc:title>Tufts Plain Text Behavior Mechanism</dc:title>
+  <dc:identifier>bmech:TuftsPlainText-Text.TEI.Directory</dc:identifier>
+  <dc:identifier>cm:Text.TEI-Fragmented-TuftsPlainText</dc:identifier>
+</oai_dc:dc>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+</foxml:digitalObject>
