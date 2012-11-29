@@ -94,8 +94,8 @@ class CatalogController < ApplicationController
       solr_params[:fq] << year_range
 
 # this works but then there are no nav-pills for year start/end...
-#req_params.delete(:year_start)
-#req_params.delete(:year_end)
+req_params.delete(:year_start)
+req_params.delete(:year_end)
     end
   end
 
