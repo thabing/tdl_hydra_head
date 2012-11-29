@@ -16,6 +16,8 @@ class CatalogController < ApplicationController
   CatalogController.solr_search_params_logic << :add_access_controls_to_solr_params
   # This filters out objects that you want to exclude from search results, like FileAssets
   CatalogController.solr_search_params_logic << :exclude_unwanted_models
+  # This changes the begin year and end year params of an advanced search into a proper range parameter for solr
+  CatalogController.solr_search_params_logic << :add_advanced_search_range_param
 
 
   def instantiate_controller_and_action_names
@@ -79,6 +81,22 @@ class CatalogController < ApplicationController
   end
 
   def transcriptonly
+  end
+
+  def add_advanced_search_range_param(solr_params, req_params)
+    year_start = req_params[:year_start]
+    year_end = req_params[:year_end]
+    year_start_requested = !(year_start.nil? || year_start.empty?)
+    year_end_requested = !(year_end.nil? || year_end.empty?)
+
+    if (year_start_requested || year_end_requested)
+      year_range = "pub_date_i:[" + (year_start_requested ? year_start : "*") + " TO " + (year_end_requested ? year_end : "*") + "]"
+      solr_params[:fq] << year_range
+
+# this works but then there are no nav-pills for year start/end...
+#req_params.delete(:year_start)
+#req_params.delete(:year_end)
+    end
   end
 
 end
