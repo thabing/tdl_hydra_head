@@ -65,6 +65,9 @@ $(function(){
 
     });
 
+    $("img.lazy").lazyload();
+
+
 
 
   });
