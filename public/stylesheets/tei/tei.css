@@ -32,3 +32,6 @@
 td.pagenumber {
     width: 120px;
 }
+.hidden {
+    display: none;
+}

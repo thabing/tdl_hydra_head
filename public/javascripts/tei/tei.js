@@ -40,17 +40,31 @@ $(function(){
 
       });
 
-      $('.myImageGalleryLauncher').on('click', function(e) {
+    var gallery_start = 0;
+    var gallery_page_size = 10;
+    $('.myImageGalleryLauncher').on('click', function (e) {
         e.preventDefault();
-          var pid = $(this).data('pid');
-          $.getJSON('/file_assets/image_gallery/' + pid , function(data)
-            {
-                var template = $('#gallery_overlay_template').html();
+        var pid = $(this).data('pid');
+        $.getJSON('/file_assets/image_gallery/' + pid, function (data) {
+            var template = $('#gallery_overlay_template').html();
 
-                var html = Mustache.to_html(template, data);
-                $('#myImageGallery').html(html).modal('show');
+            var html = Mustache.to_html(template, data);
+            var gallery = $('#myImageGallery');
+            gallery.html(html);
+            $('.thumb_item').slice(gallery_start, gallery_start + gallery_page_size).removeClass('hidden');
+            gallery.modal('show');
+            $('.next_page').on('click', function (e) {
+                $('.thumb_item').slice(gallery_start, gallery_start + gallery_page_size).addClass('hidden');
+                gallery_start += gallery_page_size;
+
+                $('.thumb_item').slice(gallery_start, gallery_start + gallery_page_size).removeClass('hidden');
+
+
             });
+        });
 
-      });
+    });
+
+
 
   });
