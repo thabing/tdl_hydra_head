@@ -58,21 +58,36 @@ $(function(){
             var html = Mustache.to_html(template, data);
             gallery.html(html);
             if (show)
+            {
                 gallery.modal('show');
+
+            }
+            addPagingHandlers();
         });
     }
 
-    $('.next_page').on('click', function (e) {
-        e.preventDefault();
-        gallery_start += gallery_page_size;
-        updateThumbs(gallery,false);
-    });
+    function addPagingHandlers() {
+        $('.next_page').on('click', function (e) {
+            e.preventDefault();
+            gallery_start += gallery_page_size;
+            updateThumbs(gallery, false);
+        });
 
-    $('.prev_page').on('click', function (e) {
-        e.preventDefault();
-        gallery_start -= gallery_page_size;
-        updateThumbs(gallery,false);
-    });
+        $('.prev_page').on('click', function (e) {
+            e.preventDefault();
+            gallery_start -= gallery_page_size;
+            updateThumbs(gallery, false);
+        });
+    }
+
+    function removePagingHandlers() {
+        $('.next_page').unbind('click');
+        $('.prev_page').unbind('click');
+    }
+
+    gallery.on('hidden', function (e) {
+        removePagingHandlers();
+    })
 
 
 
