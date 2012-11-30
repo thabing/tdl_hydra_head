@@ -90,12 +90,15 @@ class CatalogController < ApplicationController
     year_end_requested = !(year_end.nil? || year_end.empty?)
 
     if (year_start_requested || year_end_requested)
+      # add the properly formatted date range to the parameters that will be passed to solr for the search
       year_range = "pub_date_i:[" + (year_start_requested ? year_start : "*") + " TO " + (year_end_requested ? year_end : "*") + "]"
       solr_params[:fq] << year_range
 
-# this works but then there are no nav-pills for year start/end...
-req_params.delete(:year_start)
-req_params.delete(:year_end)
+      # and remove year_start and year_end so that they will NOT be used in the search;  they will have to be added
+      # back after the search so that their nav-pills will appear on the results page (see
+      # config/initializers/blacklight_advanced_search_override.rb and app/views/catalog/_constraints.html.erb).
+      req_params[:year_start] = ""
+      req_params[:year_end] = ""
     end
   end
 
