@@ -258,9 +258,14 @@ module Tufts
       if ead_title.blank?
         return ""
       else
-        result=""
-        result << "<dd>This object is in collection:</dd>"
-        result << "<dt>"+ link_to(ead_title,"/catalog/"+ead)+"</dt>"
+	ead_title = ead_title.class == Array ? ead_title.first : ead_title
+        ead = ead.class == Array ? ead.first : ead
+        unless ead.nil?
+          result=""
+          result << "<dd>This object is in collection:</dd>"
+          result << "<dt>" + link_to(ead_title,"/catalog/" + ead + "</dt>")
+        end
+
         raw result
       end
     end
