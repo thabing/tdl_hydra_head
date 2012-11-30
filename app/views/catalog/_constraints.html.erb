@@ -1,5 +1,11 @@
 <div class="row">
-  <%- unless (localized_params[:q].nil? || localized_params[:q].length() == 0) && 
+  <%-
+      # Add year_start and year_end params back so that nav-pills for them appear properly.
+      rack_req = @_env['rack.request.query_hash']
+      localized_params['year_start'] = rack_req['year_start']
+      localized_params['year_end'] = rack_req['year_end']
+
+      unless (localized_params[:q].nil? || localized_params[:q].length() == 0) && 
              (localized_params[:keyword].nil? || localized_params[:keyword].length() == 0) && 
              (localized_params[:title].nil? || localized_params[:title].length() == 0) && 
              (localized_params[:author].nil? || localized_params[:author].length() == 0) && 
@@ -10,14 +16,9 @@
              (localized_params[:organization].nil? || localized_params[:organization].length() == 0) && 
              (localized_params[:people].nil? || localized_params[:people].length() == 0) && 
              (localized_params[:place].nil? || localized_params[:place].length() == 0) && 
-             (localized_params[:topic].nil? || localized_params[:topic].length() == 0) -%>
-   <%
-      rack_req = @_env['rack.request.query_hash']
-      localized_params['year_start'] = rack_req['year_start']
-      localized_params['year_end'] = rack_req['year_end']
+             (localized_params[:topic].nil? || localized_params[:topic].length() == 0)
+   -%>
 
-
-   %>
   <div class="span2" style="text-align: right;">
     <h6>You searched for:</h6>
   </div>
