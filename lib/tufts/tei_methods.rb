@@ -356,6 +356,16 @@ module Tufts
         end
       end
 
+
+      # render the bibl
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/bibl')
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result += "<p class=" + node.name + ">" + node + "</p>"
+
+        end
+      end
+
       result += self.show_tei_table_start
 
 
