@@ -283,11 +283,15 @@ From file_assets/_new.html.haml
     title = metadata[:titles].nil? ? "" : metadata[:titles].first.text
     xml = @document_fedora.datastreams["Archival.xml"].ng_xml
     node_sets = xml.xpath('//figure')
-
+    total_length = node_sets.length
 
    figures = Array.new
 
+    start = Integer(params[:start])
+    end_figure = Integer(params[:number])
+
     unless node_sets.nil?
+      node_sets = node_sets.slice(start, end_figure)
       node_sets.each do |node|
           image_pid = Tufts::PidMethods.urn_to_pid(node[:n])
           image_title = ""
@@ -304,7 +308,7 @@ From file_assets/_new.html.haml
         end
     end
 
-    render :json => {:figures => figures, :count=> figures.length,:title=> "Illustrations from the " + title }
+    render :json => {:figures => figures, :count=> total_length,:title=> "Illustrations from the " + title }
     #metadata = Tufts::ModelMethods.get_metadata(@document_fedora)
     #title = metadata[:titles].nil? ? "" : metadata[:titles].first.text
     #temporal = metadata[:temporals].nil? ? "" : metadata[:temporals].first.text

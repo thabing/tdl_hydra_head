@@ -45,7 +45,7 @@ $(function(){
     $('.myImageGalleryLauncher').on('click', function (e) {
         e.preventDefault();
         var pid = $(this).data('pid');
-        $.getJSON('/file_assets/image_gallery/' + pid, function (data) {
+        $.getJSON('/file_assets/image_gallery/' + pid + '/'+ gallery_start +'/' + gallery_page_size, function (data) {
             var template = $('#gallery_overlay_template').html();
 
             var html = Mustache.to_html(template, data);
@@ -65,7 +65,10 @@ $(function(){
 
     });
 
-    $("img.lazy").lazyload();
+    $("img.lazy").lazyload({
+         effect : "fadeIn",
+         container: $("#myImageGallery")
+     });
 
 
 
