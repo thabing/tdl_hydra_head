@@ -6,7 +6,7 @@ BlacklightAdvancedSearch::RenderConstraintsOverride.module_eval do
 # is our trigger that we're in advanced mode.
   def render_constraints_query(my_params = params)
     if (@advanced_query.nil?)
-      return super(my_parameters)
+      return super(my_params)
     end
 
     # Add year_start and year_end params back so that nav-pills for them appear properly.
