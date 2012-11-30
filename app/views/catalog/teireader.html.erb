@@ -47,9 +47,9 @@
   <div class="modal-body">
     <ul class="thumbnails  ">
       {{#figures}}
-      <li class="span2 hidden thumb_item">
+      <li class="span2 thumb_item">
         <div class="thumbnail">
-          <a href="#"><img class="lazy" data-original="/file_assets/thumb/{{pid}}" src="/images/grey.gif" width="120" height="80" alt="{{caption}}"></a>
+          <a href="#"><img src="/file_assets/thumb/{{pid}}" alt="{{caption}}"></a>
 
           <div class="caption_oneline ">
             <a href="/catalog/{{pid}}">{{caption}}</a>
@@ -58,16 +58,14 @@
         </div>
       </li>
       {{/figures}}
-
     </ul>
-
-
   </div>
-
-
   <div class="facet_pagination bottom">
     <div class="prev_next_links">
-      <span class="disabled ui-state-active prev_page">« Previous</span> |
+      <% if false %>
+        <span class="disabled ui-state-active prev_page">« Previous</span> |
+      <% end %>
+      <a href="#" class="prev_page">« Previous</a> |
       <a href="#" class="next_page">Next »</a></div>
 
   </div>

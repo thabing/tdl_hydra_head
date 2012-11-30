@@ -42,31 +42,52 @@ $(function(){
 
     var gallery_start = 0;
     var gallery_page_size = 10;
+    var pid = "";
+    var gallery = $('#myImageGallery');
+
     $('.myImageGalleryLauncher').on('click', function (e) {
         e.preventDefault();
-        var pid = $(this).data('pid');
-        $.getJSON('/file_assets/image_gallery/' + pid, function (data) {
-            var template = $('#gallery_overlay_template').html();
-
-            var html = Mustache.to_html(template, data);
-            var gallery = $('#myImageGallery');
-            gallery.html(html);
-            $('.thumb_item').slice(gallery_start, gallery_start + gallery_page_size).removeClass('hidden');
-            gallery.modal('show');
-            $('.next_page').on('click', function (e) {
-                $('.thumb_item').slice(gallery_start, gallery_start + gallery_page_size).addClass('hidden');
-                gallery_start += gallery_page_size;
-
-                $('.thumb_item').slice(gallery_start, gallery_start + gallery_page_size).removeClass('hidden');
-
-
-            });
-        });
+        pid = $(this).data('pid');
+        updateThumbs(gallery, true);
 
     });
 
-    $("img.lazy").lazyload();
+    function updateThumbs(gallery,show) {
+        $.getJSON('/file_assets/image_gallery/' + pid + '/' + gallery_start + '/' + gallery_page_size, function (data) {
+            var template = $('#gallery_overlay_template').html();
+            var html = Mustache.to_html(template, data);
+            gallery.html(html);
+            if (show)
+            {
+                gallery.modal('show');
 
+            }
+            addPagingHandlers();
+        });
+    }
+
+    function addPagingHandlers() {
+        $('.next_page').on('click', function (e) {
+            e.preventDefault();
+            gallery_start += gallery_page_size;
+            updateThumbs(gallery, false);
+        });
+
+        $('.prev_page').on('click', function (e) {
+            e.preventDefault();
+            gallery_start -= gallery_page_size;
+            updateThumbs(gallery, false);
+        });
+    }
+
+    function removePagingHandlers() {
+        $('.next_page').unbind('click');
+        $('.prev_page').unbind('click');
+    }
+
+    gallery.on('hidden', function (e) {
+        removePagingHandlers();
+    })
 
 
 

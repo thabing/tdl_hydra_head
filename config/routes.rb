@@ -39,7 +39,7 @@ TdlHydraHead::Application.routes.draw do
   match '/file_assets/rcr/:id', :to => 'local_file_assets#showRCR', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/file_assets/dimensions/:id', :to => 'local_file_assets#dimensions', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/file_assets/image_overlay/:id', :to => 'local_file_assets#image_overlay', :constraints => {:id => /.*/}, :as =>'file_asset'
-  match '/file_assets/image_gallery/:id', :to => 'local_file_assets#image_gallery', :constraints => {:id => /.*/}, :as =>'file_asset'
+  match '/file_assets/image_gallery/:id/:start/:number', :to => 'local_file_assets#image_gallery', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/local_file_assets/:id', :to => 'local_file_assets#show', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/file_assets/:id', :to => 'local_file_assets#show', :constraints => {:id => /.*/}, :as =>'file_asset'
   match '/proxy/:id', :to => 'proxy#show', :constraints => {:id => /.*/}, :as =>'proxy'
