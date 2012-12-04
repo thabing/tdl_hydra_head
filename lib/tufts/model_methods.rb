@@ -131,6 +131,7 @@ module Tufts
       index_date_info(fedora_object,solr_doc)
       index_format_info(fedora_object,solr_doc)
       index_pub_date(fedora_object,solr_doc)
+      index_unstemmed_values(fedora_object,solr_doc)
     end
 
     def index_names_info(fedora_object, solr_doc)
