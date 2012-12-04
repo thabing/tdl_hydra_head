@@ -134,37 +134,113 @@ module Tufts
       index_unstemmed_values(fedora_object,solr_doc)
     end
 
-    def index_names_info(fedora_object, solr_doc)
-
-      [:creator,:persname,:corpname].each {|name_field|
-      names = fedora_object.datastreams["DCA-META"].get_values(name_field)
-
-      names.each {|name|
-          unless name.downcase.include? 'unknown'
-            clean_name = Titleize.titleize(name);
-            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "names_facet", "#{clean_name}")
-          end
-        }
-
-      } #end name_field
-
-    end
-
-    def index_subject_info(fedora_object,solr_doc)
-
-      [:subject,:corpname,:persname,:geogname].each {|subject_field|
+  def index_unstemmed_values(fedora_object, solr_doc)
+    #collection_id_unstem_search^5000
+    #corpname_unstem_search^500
+    [:corpname].each { |subject_field|
       subjects = fedora_object.datastreams["DCA-META"].get_values(subject_field)
 
-      subjects.each {|subject|
-          unless subject.downcase.include? 'unknown'
-            clean_subject = Titleize.titleize(subject);
-            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "subject_facet", "#{clean_subject}")
-          end
-        }
+      subjects.each { |subject|
+        unless subject.downcase.include? 'unknown'
+          clean_subject = Titleize.titleize(subject);
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "corpname_unstem_search", "#{clean_subject}")
+        end
+      }
 
-      } #end name_field
+    } #end name_field
+      #persname_unstem_search^500
+      #geogname_unstem_search^500
+    [:geogname].each { |subject_field|
+      subjects = fedora_object.datastreams["DCA-META"].get_values(subject_field)
 
-    end
+      subjects.each { |subject|
+        unless subject.downcase.include? 'unknown'
+          clean_subject = Titleize.titleize(subject);
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "geogname_unstem_search", "#{clean_subject}")
+        end
+      }
+
+    } #end name_field
+
+    [:subject].each { |subject_field|
+      subjects = fedora_object.datastreams["DCA-META"].get_values(subject_field)
+
+      subjects.each { |subject|
+        unless subject.downcase.include? 'unknown'
+          clean_subject = Titleize.titleize(subject);
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "subject_topic_unstem_search", "#{clean_subject}")
+        end
+      }
+
+    } #end name_field
+
+    #funder_unstem_search^500
+    #persname_unstem_search^500
+    [:persname].each { |name_field|
+      names = fedora_object.datastreams["DCA-META"].get_values(name_field)
+
+      names.each { |name|
+        unless name.downcase.include? 'unknown'
+          clean_name = Titleize.titleize(name)
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "persname_unstem_search", "#{clean_name}")
+        end
+      }
+    }
+    [:creator].each { |name_field|
+      names = fedora_object.datastreams["DCA-META"].get_values(name_field)
+
+      names.each { |name|
+        unless name.downcase.include? 'unknown'
+          clean_name = Titleize.titleize(name)
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "author_unstem_search", "#{clean_name}")
+        end
+      }
+    }
+    [:title].each { |name_field|
+      names = fedora_object.datastreams["DCA-META"].get_values(name_field)
+
+      names.each { |name|
+        unless name.downcase.include? 'unknown'
+          clean_name = Titleize.titleize(name)
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "title_unstem_search", "#{clean_name}")
+        end
+      }
+
+    } #end name_field
+
+  end
+
+  def index_names_info(fedora_object, solr_doc)
+
+    [:creator, :persname, :corpname].each { |name_field|
+      names = fedora_object.datastreams["DCA-META"].get_values(name_field)
+
+      names.each { |name|
+        unless name.downcase.include? 'unknown'
+          clean_name = Titleize.titleize(name)
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "names_facet", "#{clean_name}")
+        end
+      }
+
+    } #end name_field
+
+  end
+
+  def index_subject_info(fedora_object, solr_doc)
+
+    [:subject, :corpname, :persname, :geogname].each { |subject_field|
+      subjects = fedora_object.datastreams["DCA-META"].get_values(subject_field)
+
+      subjects.each { |subject|
+        unless subject.downcase.include? 'unknown'
+          clean_subject = Titleize.titleize(subject);
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "subject_facet", "#{clean_subject}")
+        end
+      }
+
+    } #end name_field
+
+  end
     #
     # Adds metadata about the depositor to the asset
     # Most important behavior: if the asset has a rightsMetadata datastream, this method will add +depositor_id+ to its individual edit permissions.
