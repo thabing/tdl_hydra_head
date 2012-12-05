@@ -4,10 +4,13 @@ class LocalFileAssetsController < ApplicationController
   include Hydra::AssetsControllerHelper
   include Hydra::FileAssetsHelper
   include Hydra::RepositoryController
+  include Hydra::HydraFedoraMetadataHelperBehavior
   include MediaShelf::ActiveFedoraHelper
   include Blacklight::SolrHelper
   include TuftsFileAssetsHelper
   include Tufts::ModelMethods
+  include Tufts::MetadataMethods
+
 #  before_filter :require_fedora
   before_filter :require_solr, :only => [:index, :create, :show, :destroy]
   prepend_before_filter :sanitize_update_params
@@ -102,7 +105,57 @@ From file_assets/_new.html.haml
     render :text => "Deleted #{params[:id]} from #{params[:asset_id]}."
   end
 
+    def showGeneric
+      #  generic_content = get_values_from_datastream(@document_fedora, "GENERIC-CONTENT", [:item])
+      #  result = ""
+      #  generic_content.each_with_index do |page, index|
+      #    result+="<tr class=\"manifestRow\">"
+      #    file_name = get_values_from_datastream(@document_fedora, "GENERIC-CONTENT", [:item, :fileName])[index]
+      #    link = '/file_assets/generic/' + pid + "/" + String(index)
+      #    mime_type = get_values_from_datastream(@document_fedora, "GENERIC-CONTENT", [:item, :mimeType])[index]
+      #    result+="<td class=\"nameCol\"><a class=\"manifestLink\" href=\"#{link}\">#{file_name}</a></td>"
+      #    result+="<td class=\"mimeCol\">#{mime_type}</td>"
+      #    result+="</tr>"
+      #  end
+      #  return raw(result)
+      #end
+      #match '/file_assets/generic/:id/:index', :to => 'local_file_assets#showGeneric', :constraints => {:id => /.*/}, :as =>'file_asset'
 
+      @file_asset = TuftsGenericObject.find(params[:id])
+      if (@file_asset.nil?)
+        logger.warn("No such file asset: " + params[:id])
+        flash[:notice]= "No such file asset."
+        redirect_to(:action => 'index', :q => nil, :f => nil)
+      else
+        # get containing object for this FileAsset
+        pid = params[:id]
+        @downloadable = false
+        # A FileAsset is downloadable iff the user has read or higher access to a parent
+        @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
+        if reader?
+          @downloadable = true
+        end
+        index = Integer(params[:index])
+        file_name = get_values_from_datastream(@file_asset, "GENERIC-CONTENT", [:item, :fileName])
+        send_file(convert_url_to_local_path(file_name))
+        #if @file_asset.datastreams.include?("Advanced.jpg")
+        #  send_file(convert_url_to_local_path(@file_asset.datastreams["Advanced.jpg"].dsLocation))
+        #end
+
+      end
+    end
+# retrieve field values from datastream.
+  # If :values is provided, skips accessing the datastream and returns the contents of :values instead.
+  def get_values_from_datastream(resource, datastream_name, field_key, opts={})
+    if opts.has_key?(:values)
+      values = opts[:values]
+      if values.nil? then values = [opts.fetch(:default, "")] end
+    else
+      values = resource.get_values_from_datastream(datastream_name, field_key, opts.fetch(:default, ""))
+      if values.empty? then values = [ opts.fetch(:default, "") ] end
+    end
+    return values
+  end
   def showAdvanced
     @file_asset = FileAsset.find(params[:id])
     if (@file_asset.nil?)
