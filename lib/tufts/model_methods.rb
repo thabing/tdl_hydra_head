@@ -295,6 +295,8 @@ module Tufts
             clean_ead_title = Titleize.titleize(ead_title)
           ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_id_facet", ead)
           ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_facet", clean_ead_title)
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_title_t", clean_ead_title)
+          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "collection_id_unstem_search", ead)
       end
 
          # unless collections.nil?
