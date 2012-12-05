@@ -164,7 +164,8 @@ From file_assets/_new.html.haml
       redirect_to(:action => 'index', :q => nil, :f => nil)
     else
       # get containing object for this FileAsset
-      pid = @file_asset.container_id
+      #pid = @file_asset.container_id
+      pid = params[:id]
       @downloadable = false
       # A FileAsset is downloadable iff the user has read or higher access to a parent
       @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
@@ -203,7 +204,8 @@ From file_assets/_new.html.haml
         redirect_to(:action => 'index', :q => nil, :f => nil)
       else
         # get containing object for this FileAsset
-        pid = @file_asset.container_id
+        #pid = @file_asset.container_id
+        pid = params[:id]
         @downloadable = false
         # A FileAsset is downloadable iff the user has read or higher access to a parent
         @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
@@ -243,7 +245,8 @@ From file_assets/_new.html.haml
       redirect_to(:action => 'index', :q => nil, :f => nil)
     else
       # get containing object for this FileAsset
-      pid = @file_asset.container_id
+      #pid = @file_asset.container_id
+      pid = params[:id]
       @downloadable = false
       # A FileAsset is downloadable iff the user has read or higher access to a parent
       @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
@@ -283,7 +286,8 @@ From file_assets/_new.html.haml
         redirect_to(:action => 'index', :q => nil, :f => nil)
       else
         # get containing object for this FileAsset
-        pid = @file_asset.container_id
+        #pid = @file_asset.container_id
+        pid = params[:id]
         @downloadable = false
         # A FileAsset is downloadable iff the user has read or higher access to a parent
         @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
@@ -311,7 +315,8 @@ From file_assets/_new.html.haml
         redirect_to(:action => 'index', :q => nil, :f => nil)
       else
         # get containing object for this FileAsset
-        pid = @file_asset.container_id
+        #pid = @file_asset.container_id
+        pid = params[:id]
         @downloadable = false
         # A FileAsset is downloadable iff the user has read or higher access to a parent
         @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
@@ -396,7 +401,8 @@ From file_assets/_new.html.haml
       redirect_to(:action => 'index', :q => nil, :f => nil)
     else
       # get containing object for this FileAsset
-      pid = @file_asset.container_id
+      #pid = @file_asset.container_id
+      pid = params[:id]
       @downloadable = false
       # A FileAsset is downloadable iff the user has read or higher access to a parent
       @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
@@ -444,7 +450,8 @@ From file_assets/_new.html.haml
       redirect_to(:action => 'index', :q => nil, :f => nil)
     else
       # get containing object for this FileAsset
-      pid = @file_asset.container_id
+      #pid = @file_asset.container_id
+      pid = params[:id]
       @downloadable = false
       # A FileAsset is downloadable iff the user has read or higher access to a parent
       @response, @permissions_solr_document = get_solr_response_for_doc_id(pid)
