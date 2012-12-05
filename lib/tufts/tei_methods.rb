@@ -255,7 +255,11 @@ module Tufts
     def self.get_foot_note(child)
       footnotes =""
       note_id = child['n'].nil? ? child['id'] : child['n']
-      result = "<a href='#'>[" + note_id + "]</a>&nbsp;"
+      unless note_id.nil?
+        result = "<a href='#'>[" + note_id + "]</a>&nbsp;"
+      else
+        note_id = ""
+      end
 
       child_text = child.text.to_s.strip
 
