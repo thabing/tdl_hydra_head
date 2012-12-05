@@ -314,7 +314,9 @@ module Tufts
           result += get_block_quote(child)
         elsif child.name == "note"
           result_fn, result_foot = get_foot_note(child)
-          result += result_fn
+          unless result_fn.nil?
+            result += result_fn
+          end
           footnotes += result_foot
         end
 
