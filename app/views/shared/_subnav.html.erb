@@ -33,7 +33,9 @@
   <% elsif !@document.nil? %>
       <% format = document_partial_name(@document) %>
       <div class="span5" style="padding-top:5px">
-        <%= link_back_to_catalog(:label=>'Back to Search Results') %>
+        <% if refered_from_our_site? %>
+            <i class="icon-arrow-left"></i>&nbsp;<%= link_back_to_catalog(:label=>'Back to Search Results') %>
+        <% end %>
       </div>
       <%= render :partial=>"#{format}/subnav"%>
   <% end %>
