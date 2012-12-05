@@ -33,9 +33,7 @@
   <% elsif !@document.nil? %>
       <% format = document_partial_name(@document) %>
       <div class="span5" style="padding-top:5px">
-        <% if refered_from_our_site? %>
-          <a href="<%= request.env["HTTP_REFERER"]%>"><i class="icon-arrow-left"></i> Back to Search Results</a>
-        <% end %>
+        <%= link_back_to_catalog(:label=>'Back to Search Results') %>
       </div>
       <%= render :partial=>"#{format}/subnav"%>
   <% end %>
