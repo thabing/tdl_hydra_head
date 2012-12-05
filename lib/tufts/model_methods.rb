@@ -340,7 +340,7 @@ module Tufts
         unless ead.nil?
           result=""
           result << "<dd>This object is in collection:</dd>"
-          result << "<dt>" + link_to(ead_title,"/catalog/" + ead + "</dt>")
+          result << "<dt>" + link_to(ead_title,"/catalog/" + ead) + "</dt>"
         end
 
         raw result
