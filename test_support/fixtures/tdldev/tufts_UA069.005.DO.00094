@@ -28,13 +28,11 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 </foxml:datastream>
 <foxml:datastream ID="Access.xml" STATE="A" CONTROL_GROUP="E" VERSIONABLE="true">
 <foxml:datastreamVersion ID="Access.xml.0" LABEL="Index TEI of the Document Source" CREATED="2005-05-25T20:33:57.600Z" MIMETYPE="text/xml">
-<foxml:contentDigest TYPE="MD5" DIGEST="d7db4f6ccb27d2ca4d714e9c574a1604"/>
 <foxml:contentLocation TYPE="URL" REF="http://bucket01.lib.tufts.edu/data01/tufts/central/dca/UA069/access_xml/UA069.005.DO.00094.access.xml"/>
 </foxml:datastreamVersion>
 </foxml:datastream>
 <foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
 <foxml:datastreamVersion ID="RELS-EXT.0" LABEL="Relationships to other objects" CREATED="2005-05-25T20:33:57.600Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="778">
-<foxml:contentDigest TYPE="MD5" DIGEST="33fdfcd378213ca03d42fd4cb09ffcd1"/>
 <foxml:xmlContent>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:xlink="http://www.w3.org/TR/xlink">
                 
@@ -50,7 +48,6 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 </foxml:xmlContent>
 </foxml:datastreamVersion>
 <foxml:datastreamVersion ID="RELS-EXT.1" LABEL="Relationships to other objects" CREATED="2010-09-07T19:20:30.637Z" MIMETYPE="text/xml" FORMAT_URI="http://www.w3.org/1999/02/22-rdf-syntax-ns#" SIZE="723">
-<foxml:contentDigest TYPE="MD5" DIGEST="e38089913d0b1269fe12ebf342d0c2af"/>
 <foxml:xmlContent>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:xlink="http://www.w3.org/TR/xlink">
   <rdf:Description rdf:about="info:fedora/tufts:UA069.005.DO.00094">
@@ -65,13 +62,11 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 </foxml:datastream>
 <foxml:datastream ID="Archival.xml" STATE="A" CONTROL_GROUP="E" VERSIONABLE="true">
 <foxml:datastreamVersion ID="Archival.xml.0" LABEL="Full TEI Document Source" CREATED="2005-05-25T20:33:57.600Z" MIMETYPE="text/xml">
-<foxml:contentDigest TYPE="MD5" DIGEST="5657e792613234df18cbb67bc66530d9"/>
 <foxml:contentLocation TYPE="URL" REF="http://bucket01.lib.tufts.edu/data01/tufts/central/dca/UA069/archival_xml/UA069.005.DO.00094.archival.xml"/>
 </foxml:datastreamVersion>
 </foxml:datastream>
 <foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
 <foxml:datastreamVersion ID="DC.1" LABEL="Dublin Core Metadata" CREATED="2005-05-25T20:33:57.600Z" MIMETYPE="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" SIZE="1051">
-<foxml:contentDigest TYPE="MD5" DIGEST="70af14d4c2375a0ba8863a3a090f9299"/>
 <foxml:xmlContent>
 <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <dc:title>Here and There at Tufts</dc:title>
@@ -93,7 +88,6 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 </foxml:datastream>
 <foxml:datastream ID="DCA-ADMIN" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
 <foxml:datastreamVersion ID="DCA-ADMIN.1" LABEL="DCA Administrative Metadata" CREATED="2005-05-17T23:08:38.024Z" MIMETYPE="text/xml" SIZE="1818">
-<foxml:contentDigest TYPE="MD5" DIGEST="b4e53d81ab07873c3d5be119f2533128"/>
 <foxml:xmlContent>
 <dca_admin:admin xmlns:dca_admin="http://nils.lib.tufts.edu/dca_admin/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:admin="http://nils.lib.tufts.edu/admin/" xmlns:xlink="http://www.w3.org/TR/xlink">
                 
@@ -128,7 +122,6 @@ xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/
 </foxml:datastream>
 <foxml:datastream ID="DCA-META" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
 <foxml:datastreamVersion ID="DCA-META.1" LABEL="DCA Descriptive Metadata" CREATED="2005-05-25T20:33:57.600Z" MIMETYPE="text/xml" SIZE="2153">
-<foxml:contentDigest TYPE="MD5" DIGEST="c41118ee8c9bf02345c805f3c761a752"/>
 <foxml:xmlContent>
 <dca_dc:dc xmlns:dca_dc="http://nils.lib.tufts.edu/dca_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcatech="http://nils.lib.tufts.edu/dcatech/" xmlns:dcadesc="http://nils.lib.tufts.edu/dcadesc/" xmlns:xlink="http://www.w3.org/TR/xlink">
                 
