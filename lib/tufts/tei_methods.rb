@@ -170,11 +170,18 @@ module Tufts
       for sel in el.children
         if sel.element?
           type = sel[:type]
-          result.push("<div class='" + sel.name + " " + (type.nil? ? "" : type) + "'>")
+          if sel.name == 'figure'
+            pid = PidMethods.urn_to_pid(sel['n'])
+            result.push("<img alt=\"\" src=\"" + "/file_assets/" + pid + "\"></img>")
+          else
+            result.push("<div class='" + sel.name + " " + (type.nil? ? "" : type) + "'>")
+          end
         end
         result.push(ctext(sel))
         if sel.element?
-          result.push("</div>")
+          unless sel.name == 'figure'
+            result.push("</div>")
+          end
         end
       end
       return result.join
