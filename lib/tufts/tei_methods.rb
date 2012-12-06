@@ -172,7 +172,7 @@ module Tufts
           type = sel[:type]
           if sel.name == 'figure'
             pid = PidMethods.urn_to_pid(sel['n'])
-            result.push("<img alt=\"\" src=\"" + "/file_assets/" + pid + "\"></img>")
+            result.push("<br/><br/><img alt=\"\" src=\"" + "/file_assets/" + pid + "\"></img>")
           else
             result.push("<div class='" + sel.name + " " + (type.nil? ? "" : type) + "'>")
           end
