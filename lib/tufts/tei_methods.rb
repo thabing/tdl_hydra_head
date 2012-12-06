@@ -51,7 +51,18 @@ module Tufts
       unless node_sets.nil?
         node_sets.each do |node|
           title = "Title Page"
-          unless node['n'].nil?
+          if node['n'].nil?
+            type = node['type']
+            unless type.nil?
+              if type == 'preface'
+                title = "Preface"
+              elsif type == 'dedication'
+                title = 'Dedication'
+              elsif type == 'frontispiece'
+                title = 'Frontispiece'
+              end
+            end
+          else
             title = node['n']
           end
           toc_result += TOC_PREDICATE + "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+(node['id'].nil? ? "title" : node['id'])+"'>" + title + "</a>" + TOC_SUFFIX
@@ -128,6 +139,9 @@ module Tufts
 
       if chapter == 'title'
         node = node_sets.first
+        if node['type'] == 'frontispiece'
+          node = node_sets.to_ary[1]
+        end
         result << self.ctext(node)
       else
         unless node_sets.nil?
