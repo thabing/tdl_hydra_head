@@ -95,7 +95,7 @@
 %>
       <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
         <td class="collapse_td"><%= raw expand_collapse %></td>
-        <td <%= raw (is_folder ? "class=\"ead_table_title\"" : "") %>><%= raw (is_folder ? "<a href=\"javascript:toggleDisplay('#img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\">" + item_title + "</a>" : item_title) %>
+        <td<%= raw (is_folder ? " class=\"ead_table_title\"" : "") %>><%= raw (is_folder ? "<a href=\"javascript:toggleDisplay('#img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\">" + item_title + "</a>" : item_title) %>
 <%    if is_folder %>
           <br><span class="smalltext">There might be additional items in this folder.  <a href="/contact">Contact DCA.</a></span>
 <%    end %>
@@ -116,12 +116,12 @@
         end
       else
 %>
-        <td align="center" class="availableonline_td">
-          <center>
-            <ul class="thumbnails">
-              <li class="nothumbnailmargin"><a href="/catalog/<%= page %>" class="thumbnail"><img class="thumbnailwidth" src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
-            </ul>
-          </center>
+        <td class="thumbnail_td" align="center">
+          <ul class="thumbnails">
+            <li class="nothumbnailmargin">
+              <a href="/catalog/<%= page %>" class="thumbnail"><img class="thumbnailwidth" src="/file_assets/thumb/<%= thumbnail %>" /></a>
+            </li>
+          </ul>
         </td>
 <%    end %>
       </tr>
@@ -141,12 +141,12 @@
 <%      if thumbnail.nil? || thumbnail.empty? %>
         <td align="center" class="availableonline_td">&nbsp</td>
 <%      else %>
-        <td align="center" class="availableonline_td">
-          <center>
-            <ul class="thumbnails">
-              <li class="nothumbnailmargin"><a href="/catalog/<%= page %>" class="thumbnail"><img class="thumbnailwidth" src="/file_assets/thumb/<%= thumbnail %>" alt=""/></a></li>
-            </ul>
-          </center>
+        <td class="thumbnail_td" align="center">
+          <ul class="thumbnails">
+            <li class="nothumbnailmargin">
+              <a href="/catalog/<%= page %>" class="thumbnail"><img class="thumbnailwidth" src="/file_assets/thumb/<%= thumbnail %>" /></a>
+            </li>
+          </ul>
         </td>
 <%      end %>
       </tr>
