@@ -4,7 +4,7 @@ TdlHydraHead::Application.routes.draw do
   get "about/index"
   match '/imageviewer/:id', :to => 'imageviewer#show', :constraints => {:id => /.*/}, :as =>'imageviewer'
   match '/bookreader/:id', :to => 'imageviewer#show_book', :constraints => {:id => /.*/}, :as =>'bookreader'
-  match '/catalog/tei/:id/chapter/:chapter', :to => 'catalog#teireader', :constraints => {:id => /.*/}, :as =>'teireader'
+  match '/catalog/tei/:id/chapter/:chapter', :to => 'catalog#teireader', :constraints => {:id => /.*/,:chapter => /.*/}, :as =>'teireader'
   match '/catalog/tei/:id', :to => 'catalog#teireader', :constraints => {:id => /.*/}, :as =>'teireader'
 
 
