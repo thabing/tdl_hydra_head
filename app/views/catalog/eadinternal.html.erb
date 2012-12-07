@@ -109,9 +109,9 @@
       if thumbnail.nil? || thumbnail.empty?
         if page.nil? || page.empty?
 %>
-        <td align="center" class="availableonline_td">&nbsp</td>
+        <td class="availableonline_td" align="center">&nbsp</td>
 <%      else %>
-        <td align="center" class="availableonline_td"><center><i class="icon-ok"></i></center></td>
+        <td class="availableonline_td" align="center"><i class="icon-ok"></i></td>
 <%
         end
       else
@@ -139,7 +139,7 @@
         <td class="smalltext locator_td"><%= raw item_labels %></td>
         <td class="smalltext id_td" align="left"><%= raw item_values %></td>
 <%      if thumbnail.nil? || thumbnail.empty? %>
-        <td align="center" class="availableonline_td">&nbsp</td>
+        <td class="thumbnail_td" align="center">&nbsp</td>
 <%      else %>
         <td class="thumbnail_td" align="center">
           <ul class="thumbnails">
