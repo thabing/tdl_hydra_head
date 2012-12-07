@@ -22,6 +22,7 @@ gem 'daemons'
 gem 'chronic'
 gem 'settingslogic'
 gem 'titleize'
+gem 'solrizer', :git => "http://github.com/mkorcy/solrizer.git"
  # For testing.  You will probably want to use all of these to run the tests you write for your hydra head
 group :development, :test do 
          gem 'solrizer-fedora', '>=1.0.1'
