@@ -451,8 +451,15 @@ module Tufts
             if daogrp_child.name == "daoloc"
               daoloc_label = daogrp_child.attribute("label")
               daoloc_href = daogrp_child.attribute("href")
+              daoloc_audience = daogrp_child.attribute("audience")
 
-              if !daoloc_label.nil? && !daoloc_href.nil?
+              if !daoloc_audience.nil? && daoloc_audience.text == "internal"
+                # an audience="internal" attribute in a daoloc tag means this item is in the Dark Archive;
+                # leave page and thumbnail = nil so that values will not be returned for them
+                # and so that the href will not be included in title.  Set physloc to the dark
+                # archive message.
+                physloc = "Dark Archives; <a href=""/contact"">contact DCA</a>"
+              elsif !daoloc_label.nil? && !daoloc_href.nil?
                 daoloc_label_text = daoloc_label.text
                 daoloc_href_text = daoloc_href.text
 
