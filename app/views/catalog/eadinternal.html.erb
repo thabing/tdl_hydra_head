@@ -96,9 +96,12 @@
       <tr class="folderRow">           <!-- folderRow is not for styling purposes - that might be hacky... -->
         <td class="collapse_td"><%= raw expand_collapse %></td>
         <td <%= raw (is_folder ? "class=\"ead_table_title\"" : "") %>><%= raw (is_folder ? "<a href=\"javascript:toggleDisplay('#img" + row_s + "', " + (row + 1).to_s + ", " + (row + next_level_items.size).to_s + ");\">" + item_title + "</a>" : item_title) %>
+<%    if is_folder %>
+          <br><span class="smalltext">There might be additional items in this folder.  <a href="/contact">Contact DCA.</a></span>
+<%    end %>
 <%    item_paragraphs.each do |item_paragraph| %>
           <br><%= raw item_paragraph %>
-<%      end %>
+<%    end %>
         </td>
         <td class="smalltext locator_td"><%= raw item_labels %></td>
         <td class="smalltext id_td" align="left"><%= raw item_values %></td>
