@@ -25,5 +25,14 @@ class ApplicationController < ActionController::Base
         javascript_includes << "tdl"
   end
 
+  def rescue_with_handler(exception)
+      if exception.class == Blacklight::Exceptions::InvalidSolrID
+        flash[:notice] = "The object you have reached does not exist. If you have questions, you can <a href='/contact'>contact DCA</a>"
+        redirect_to root_path
+      else
+        super
+      end
+  end
+
   protect_from_forgery
 end
