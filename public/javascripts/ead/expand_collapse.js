@@ -29,7 +29,7 @@ function displayAll(display) {
     if (className == "table_options" || className == "table_header") {
       // do nothing
     } else if (className == "folderRow") {
-      row.find('img').attr('src', imgSrc);
+      row.find('.folderRowToggler').attr('src', imgSrc);
     } else {
       row.css('display', rowDisplay);
     }
