@@ -21,18 +21,32 @@ function displayAll(display) {
   var rowDisplay = (display ? "" : "none");
   var rowIndex;
   var rowCount = rows.length;
+  var foldersFound = false;
+  var buttonRow = null;
 
   for (rowIndex = 0; rowIndex < rowCount; rowIndex++) {
     var row = $(rows[rowIndex]);
     var className = row.attr('class');
 
-    if (className == "table_options" || className == "table_header") {
+    if (className == "table_options") {
+      buttonRow = row;
+    } else if (className == "table_header") {
       // do nothing
     } else if (className == "folderRow") {
-      row.find('img').attr('src', imgSrc);
+      var toggler = row.find('.folderRowToggler');
+
+      if (toggler.length) {
+        toggler.attr('src', imgSrc);
+        foldersFound = true;
+      }
     } else {
       row.css('display', rowDisplay);
     }
+  }
+
+  if (!foldersFound && buttonRow != null) {
+    // There are no folders on this page, so hide the expand/collapse buttons.
+    buttonRow.css('display', "none");
   }
 }
 

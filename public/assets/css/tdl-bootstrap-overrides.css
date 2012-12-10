@@ -190,7 +190,7 @@ h1 {
 
 h2 {
      line-height: 24px;
-    color: #de6020;
+     color: #de6020;
  	font-size: 16px;	
 	margin-bottom:3px;
 
@@ -198,6 +198,7 @@ h2 {
 
 h3 {
     line-height: 24px;
+    margin-top: 1em;
     /*font-size: 20px;*/
     font-size: 18px;
     color: #0755AC;
@@ -302,15 +303,15 @@ dt, dd {
 
 dt {
     color: #000000;
-    font-weight: normal;
-    margin-left: 20px;
-    margin-bottom: 15px;
+    font-weight: strong;
 }
 
 dd {
     /*color:#333;*/
     color: #666;
-    margin-left: 0px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 3em;
     /*font-weight:300;*/
 }
 
