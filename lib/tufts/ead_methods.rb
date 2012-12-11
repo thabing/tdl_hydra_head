@@ -76,7 +76,7 @@ module Tufts
 
 
     def self.read_more_about(fedora_obj, datastream = "Archival.xml")
-      result = ""
+      result = nil
       persname = fedora_obj.datastreams[datastream].find_by_terms_and_value(:persname)
       corpname = fedora_obj.datastreams[datastream].find_by_terms_and_value(:corpname)
       famname = fedora_obj.datastreams[datastream].find_by_terms_and_value(:famname)
@@ -91,8 +91,12 @@ module Tufts
         name, rcr_url = parse_origination(famname)
       end
 
-      if !name.nil?
-        result << "<a href=\"" + (rcr_url.nil? ? "" : "/catalog/tufts:" + rcr_url) + "\">" + name + "</a>"
+      if !name.nil? && !rcr_url.nil?
+        rcr_url = "tufts:" + rcr_url
+
+        if TuftsRCR.find(rcr_url)
+        	result = "<a href=\"" + (rcr_url.nil? ? "" : "/catalog/" + rcr_url) + "\">" + name + "</a>"
+        end
       end
 
       return result
@@ -113,7 +117,11 @@ module Tufts
             child_url = (child_id.nil? ? nil : child_id.text)
 
             if child_name.size > 0 && !child_url.nil?
-              result << "<a href=\"/catalog/" + child_url + "\">" + child_name + "</a>"
+              child_url = "tufts:" + child_url
+
+              if TuftsRCR.find(child_url)
+                result << "<a href=\"/catalog/" + child_url + "\">" + child_name + "</a>"
+              end
             end
           end
         end

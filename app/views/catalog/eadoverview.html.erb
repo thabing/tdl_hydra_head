@@ -4,6 +4,7 @@
 
 <%
     title = raw Tufts::EADMethods.title(@document_fedora)
+    read_more_about = Tufts::EADMethods.read_more_about(@document_fedora)
     contributors = Tufts::EADMethods.get_contributors(@document_fedora)
     contents = Tufts::EADMethods.get_contents(@document_fedora)
     serieses = Tufts::EADMethods.get_serieses(@document_fedora)
@@ -67,7 +68,10 @@
     </p>
 
     <p><%= raw Tufts::EADMethods.abstract(@document_fedora) %></p>
-    <p>Read more about <%= raw Tufts::EADMethods.read_more_about(@document_fedora) %></p>
+
+<%  unless read_more_about.nil? %>
+    <p>Read more about <%= raw read_more_about %></p>
+<%  end %>
 
 <%  if !contributors.empty? %>
     <h4 id="contributors">Contributors</h4>
