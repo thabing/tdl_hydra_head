@@ -13,9 +13,9 @@
       <a href="<%= Tufts::EADMethods.finding_aid_url(@document_fedora) %>"><i class="icon-arrow-left"></i> <%= @collection_title %></a> > <%= @series_full_title %>
     </div>
   <% elsif "teireader" == @current_action %>
-      <div class="span12" style="padding-top:5px">
-        <a href="/catalog/<%= params[:id] %>"><i class="icon-arrow-left"></i> Back to Book Home</a>
-      </div>
+    <div class="span12" style="padding-top:5px">
+      <a href="/catalog/<%= params[:id] %>"><i class="icon-arrow-left"></i> Back to Book Home</a>
+    </div>
   <% elsif "transcriptonly" == @current_action %>
     <div class="span6" style="padding-top:5px">
       <a href="/catalog/<%= params[:id] %>"><i class="icon-arrow-left"></i> Back to Audio Player</a>
@@ -24,19 +24,18 @@
       <a href="/file_assets/<%= params[:id] %>"><i class="icon-headphones"/></i> Download Audio File</a> &nbsp;<a href="/file_assets/transcript/<%= params[:id] %>"><i class="icon-file"/></i> Download Transcript</a>
     </div>
   <% elsif "facet" == @current_action %>
-      <div class="span5" style="padding-top:5px">
-           <% if refered_from_our_site? %>
-             <a href="<%= request.env["HTTP_REFERER"]%>"><i class="icon-arrow-left"></i> Back</a>
-           <% end %>
-         </div>
-
+    <div class="span5" style="padding-top:5px">
+    <% if refered_from_our_site? %>
+      <a href="<%= request.env["HTTP_REFERER"]%>"><i class="icon-arrow-left"></i> Back</a>
+    <% end %>
+    </div>
   <% elsif !@document.nil? %>
-      <% format = document_partial_name(@document) %>
-      <div class="span5" style="padding-top:5px">
-        <% if refered_from_our_site? %>
-            <i class="icon-arrow-left"></i>&nbsp;<%= link_back_to_catalog(:label=>'Back to Search Results') %>
-        <% end %>
-      </div>
-      <%= render :partial=>"#{format}/subnav"%>
+    <% format = document_partial_name(@document) %>
+    <div class="span5" style="padding-top:5px">
+      <% if refered_from_our_site? %>
+        <i class="icon-arrow-left"></i>&nbsp;<%= link_back_to_catalog(:label=>'Back to Search Results') %>
+      <% end %>
+    </div>
+    <%= render :partial=>"#{format}/subnav"%>
   <% end %>
 </div>
