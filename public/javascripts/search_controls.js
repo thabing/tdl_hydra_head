@@ -42,12 +42,15 @@ SortAndPerPageControls.prototype.updatePerPageButton = function () {
     $('#per_page').val(this.perpage_count);
 };
 
-SortAndPerPageControls.prototype.updateSortButton = function () {
+SortAndPerPageControls.prototype.updateSortButton = function (e) {
 
     var sort = $('#sort');
     var sort_type = this.sort_col.split(" ", 2)[0];
+
     if (this.sort_direction == undefined)
-        this.sort_direction = this.sort_col.split(" ", 2)[1];
+      this.sort_direction = this.sort_col.split(" ", 2)[1];
+
+
     var dir = "";
     switch (sort_type) {
         case "score":
@@ -63,6 +66,8 @@ SortAndPerPageControls.prototype.updateSortButton = function () {
         case "title_sort":
         case "Title":
             this.updateSortText('title');
+
+
             if (this.sort_direction == undefined || this.sort_direction == "asc") {
                 sort.find("option:contains('title ascending')").prop("selected", "selected");
                 dir = "asc";
