@@ -136,8 +136,8 @@ From file_assets/_new.html.haml
           @downloadable = true
         end
         index = Integer(params[:index])
-        file_name = get_values_from_datastream(@file_asset, "GENERIC-CONTENT", [:item, :fileName])
-        send_file(convert_url_to_local_path(file_name))
+        file_name = get_values_from_datastream(@file_asset, "GENERIC-CONTENT", [:item, :link])
+        send_file(convert_url_to_local_path(file_name[0]))
         #if @file_asset.datastreams.include?("Advanced.jpg")
         #  send_file(convert_url_to_local_path(@file_asset.datastreams["Advanced.jpg"].dsLocation))
         #end
