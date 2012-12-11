@@ -64,9 +64,16 @@
         $('#perpage_form').submit();
     });
 
-    $('.sort_option').on('click', function () {
+    $('.sort_option').on('click', function (e) {
         sort_controls.sort_col = $(this).text();
-        sort_controls.updateSortButton();
+
+
+        if (sort_controls.sort_col == "Date")
+            sort_controls.sort_direction = "desc";
+        else
+            sort_controls.sort_direction = "asc";
+
+        sort_controls.updateSortButton(e);
         $('#sort_form').submit();
 
     });
