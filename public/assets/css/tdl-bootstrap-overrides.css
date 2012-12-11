@@ -293,26 +293,40 @@ h9 a{
     /*padding-right: 10px;*/
 }
 
+
 dl {
     margin-bottom: 30px;
 }
 
-dt, dd {
+dt {
     line-height: 20px;
 }
 
 dt {
     color: #000000;
-    font-weight: strong;
+    font-weight: normal;
+    margin-left: 20px;
+    margin-bottom: 15px;
 }
 
 dd {
-    /*color:#333;*/
     color: #666;
+    line-height: 20px;
+    margin-left: 0px;
+}
+
+
+.faq dt {
+    color: #000000;
+    font-weight: bold;
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+.faq dd {
     margin-top: 1em;
     margin-bottom: 1em;
     margin-left: 3em;
-    /*font-weight:300;*/
 }
 
 hr {
