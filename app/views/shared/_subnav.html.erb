@@ -6,7 +6,7 @@
       <a href="<%= Tufts::EADMethods.collection_url(@document_fedora) %>"><i class="icon-arrow-left"></i> Collection Home</a>
     </div>
     <div class="span6" style="padding-top:5px; display: none;">    <!-- display: none for now until pdfs become available -->
-      <a href="#"><i class="icon-file"/></i> Download Collection Guide (pdf)</a>
+      <a href="/file_assets/pdf/<%= params[:id] %>"><i class="icon-file"/></i> Download Collection Guide (pdf)</a>
     </div>
   <% elsif "eadinternal" == @current_action %>
     <div class="span12" style="padding-top:5px">
