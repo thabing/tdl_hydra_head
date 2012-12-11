@@ -21,10 +21,12 @@ a {
  right:0;
  top:0;
  bottom:0;
+ margin-top: 40px;
+ margin-bottom: 40px;
 }
 #BRtoolbar {
     position: relative;
-    top: 0;
+    top: -40px;
     left: 0;
     height: 40px;
     padding: 0;
@@ -894,6 +896,7 @@ div#BRzoombtn {
     -webkit-border-top-right-radius: 8px;
     -moz-border-radius-topleft: 8px;
     -webkit-border-top-left-radius: 8px;
+    display: none;
 }
 #BRnavCntlTop {
     top: 40px;
