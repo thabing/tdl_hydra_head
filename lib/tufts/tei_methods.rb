@@ -118,7 +118,7 @@ module Tufts
             chapter_list << node2['id']
           else
             chapter_title = node2['n']
-	    chapter_title.nil? ? chapter_title ='[chapter]' : chapter_title
+            chapter_title.nil? ? chapter_title ='[chapter]' : chapter_title
             result << "<a href='/catalog/tei/" + fedora_obj.pid + "/chapter/" + node['id'] + "'>" + chapter_title + "</a><br/>"
             chapter_list << node['id']
           end
@@ -243,8 +243,8 @@ module Tufts
       children.each do |child|
         child_text = child.text.to_s.strip
 
-          result += "<p>" + child.text + "</p>"
-        end
+        result += "<p>" + child.text + "</p>"
+      end
       result += "</blockquote>"
       result
     end
@@ -275,6 +275,7 @@ module Tufts
       result += '</tr></td>'
       result
     end
+
     def self.get_foot_note(child)
       footnotes =""
       note_id = child['n'].nil? ? child['id'] : child['n']
@@ -287,7 +288,7 @@ module Tufts
       child_text = child.text.to_s.strip
 
       if child.name == "note"
-       footnotes = "<p>["+ note_id +"] " + child_text + "</p>"
+        footnotes = "<p>["+ note_id +"] " + child_text + "</p>"
       end
 
       return result, footnotes
@@ -306,7 +307,7 @@ module Tufts
             result += "<td>"
             in_left_td = false
           end
-          result +=  child.text
+          result += child.text
         elsif child.name == "pb"
           unless in_left_td
             result += switch_to_left
@@ -322,7 +323,7 @@ module Tufts
           #result +='<a data-toggle="modal" href="#myImageOverlay"  class="thumbnail">'
           pid = PidMethods.urn_to_pid(child['n'])
           result +='<a data-pid="'+ pid+'" href="/catalog/' + pid + '"  class="thumbnail">'
-#          <%= link_to image_tag("/file_assets/thumb/"+document[:id] , :alt=>document[:title],:class=>"thumbnailwidth"), "/catalog/" + document[:id],:class=>"thumbnail" %>
+          #          <%= link_to image_tag("/file_assets/thumb/"+document[:id] , :alt=>document[:title],:class=>"thumbnailwidth"), "/catalog/" + document[:id],:class=>"thumbnail" %>
 
 
           result +='<img src="/file_assets/thumb/' + pid + '">'
@@ -371,32 +372,38 @@ module Tufts
       result
     end
 
-    def self.show_tei_page(fedora_obj, chapter)
-      # render the requested chapter.
-      # NOTE: should break this out into a method probably.
+    def self.render_image_page(fedora_obj, chapter)
       result = ""
-      footnotes =""
 
-      # get the header for the chapter
-      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/head')
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1/div2[@id="' + chapter +'"]/p/figure/head')
       unless node_sets.nil?
         node_sets.each do |node|
           result += "<h6>" + node + "</h6><br/>"
-
         end
       end
 
-
-      # render the bibl
-      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/bibl')
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1/div2[@id="' + chapter +'"]/p/figure')
       unless node_sets.nil?
         node_sets.each do |node|
-          result += "<p class=" + node.name + ">" + node + "</p>"
-
+          pid = PidMethods.urn_to_pid(node['n'])
+          result += ("<br/><br/><img alt=\"\" src=\"" + "/file_assets/" + pid + "\"></img>")
         end
       end
 
-      result += self.show_tei_table_start
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1/div2[@id="' + chapter +'"]/p/figure/figDesc')
+      unless node_sets.nil?
+        node_sets.each do |node|
+
+          result += ("<p>"+ node+"</p>")
+        end
+      end
+
+
+      result
+    end
+
+    def self.render_text_page(fedora_obj, chapter,footnotes)
+      result = self.show_tei_table_start
 
 
       # get the chapter text.
@@ -431,7 +438,7 @@ module Tufts
 
                 result += "<td>"
 
-                result_p, in_left_td2, footnotes2 = render_page_p(node,in_left_td)
+                result_p, in_left_td2, footnotes2 = render_page_p(node, in_left_td)
                 in_left_td = in_left_td2
                 footnotes += footnotes2
                 result += result_p
@@ -458,6 +465,54 @@ module Tufts
       result += render_subject_terms(fedora_obj, chapter)
       result += render_footnotes(footnotes)
       result += self.show_tei_table_end
+      result
+    end
+
+    def self.is_chapter_image_book(fedora_obj, chapter)
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p|//body/div1/div2[@id="' + chapter +'"]/p|//body/div1[@id="' + chapter +'"]/quote|//body/div1/div2[@id="' + chapter +'"]/quote')
+      unless node_sets.nil?
+        node_sets.each do |node|
+          if node.parent['rend'] == 'page-image'
+            return true
+          else
+            return false
+          end
+        end
+      end
+    end
+
+    def self.show_tei_page(fedora_obj, chapter)
+      # render the requested chapter.
+      # NOTE: should break this out into a method probably.
+      result = ""
+      footnotes =""
+
+      # get the header for the chapter
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/head')
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result += "<h6>" + node + "</h6><br/>"
+
+        end
+      end
+
+
+      # render the bibl
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/head|//body/div1/div2[@id="' + chapter +'"]/bibl')
+      unless node_sets.nil?
+        node_sets.each do |node|
+          result += "<p class=" + node.name + ">" + node + "</p>"
+
+        end
+      end
+
+      #peek ahead and see if this is an image book if not render it as a standard text book.
+      if is_chapter_image_book(fedora_obj, chapter)
+        result += render_image_page(fedora_obj, chapter)
+      else
+        result += render_text_page(fedora_obj, chapter,footnotes)
+      end
+
       return result
     end
 
