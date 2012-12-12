@@ -43,6 +43,7 @@ $(function(){
     var gallery_start = 0;
     var gallery_page_size = 10;
     var pid = "";
+    var total_count = 0;
     var gallery = $('#myImageGallery');
 
     $('.myImageGalleryLauncher').on('click', function (e) {
@@ -54,6 +55,7 @@ $(function(){
 
     function updateThumbs(gallery,show) {
         $.getJSON('/file_assets/image_gallery/' + pid + '/' + gallery_start + '/' + gallery_page_size, function (data) {
+            total_count = parseInt(data.count);
             var template = $('#gallery_overlay_template').html();
             var html = Mustache.to_html(template, data);
             gallery.html(html);
@@ -67,6 +69,14 @@ $(function(){
     }
 
     function addPagingHandlers() {
+
+        if (gallery_start + gallery_page_size >= total_count)
+            $('.next_page').addClass('disabled');
+
+        if (gallery_start == 0) {
+            $('.prev_page').addClass('disabled');
+
+        }
         $('.next_page').on('click', function (e) {
             e.preventDefault();
             gallery_start += gallery_page_size;

@@ -35,3 +35,8 @@ td.pagenumber {
 .hidden {
     display: none;
 }
+.disabled {
+  color: #999999;
+    pointer-events: none;
+    cursor: default;
+}
