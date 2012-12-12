@@ -371,19 +371,35 @@ module Tufts
 
       result
     end
+
     def self.render_image_page(fedora_obj, chapter)
       result = ""
 
-
-      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p|//body/div1/div2[@id="' + chapter +'"]/p|//body/div1[@id="' + chapter +'"]/quote|//body/div1/div2[@id="' + chapter +'"]/quote')
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1/div2[@id="' + chapter +'"]/p/figure/head')
       unless node_sets.nil?
-              node_sets.each do |node|
-                pid = PidMethods.urn_to_pid(sel['n'])
-                result += ("<br/><br/><img alt=\"\" src=\"" + "/file_assets/" + pid + "\"></img>")
-              end
+        node_sets.each do |node|
+          result += "<h6>" + node + "</h6><br/>"
+        end
       end
 
-      results
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1/div2[@id="' + chapter +'"]/p/figure')
+      unless node_sets.nil?
+        node_sets.each do |node|
+          pid = PidMethods.urn_to_pid(node['n'])
+          result += ("<br/><br/><img alt=\"\" src=\"" + "/file_assets/" + pid + "\"></img>")
+        end
+      end
+
+      node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1/div2[@id="' + chapter +'"]/p/figure/figDesc')
+      unless node_sets.nil?
+        node_sets.each do |node|
+
+          result += ("<p>"+ node+"</p>")
+        end
+      end
+
+
+      result
     end
 
     def self.render_text_page(fedora_obj, chapter,footnotes)
@@ -456,7 +472,7 @@ module Tufts
       node_sets = fedora_obj.datastreams["Archival.xml"].ng_xml.xpath('//body/div1[@id="' + chapter +'"]/p|//body/div1/div2[@id="' + chapter +'"]/p|//body/div1[@id="' + chapter +'"]/quote|//body/div1/div2[@id="' + chapter +'"]/quote')
       unless node_sets.nil?
         node_sets.each do |node|
-          if node['rend'] == 'page-image'
+          if node.parent['rend'] == 'page-image'
             return true
           else
             return false
