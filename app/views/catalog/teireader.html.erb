@@ -4,6 +4,7 @@
 <% toc_results, chapter_list = Tufts::TeiMethods.get_toc(@document_fedora) %>
 <% javascript_includes << "mustache/mustache.js" %>
 
+
 <div class="row">
   <div class="span12">
     <%= render :partial => 'shared/header_elements', :locals => {:metadata => metadata} %>
@@ -51,10 +52,10 @@
       {{#figures}}
       <li class="span2 thumb_item">
         <div class="thumbnail thumbnail_with_caption">
-          <a href="#"><img src="/file_assets/thumb/{{pid}}" alt="{{caption}}"></a>
+          <a data-pid="{{pid}}" href="#myImageOverlay" class="thumbnail" ><img src="/file_assets/thumb/{{pid}}" alt="{{caption}}"></a>
 
           <div class="caption_oneline ">
-            <a href="/catalog/{{pid}}">{{caption}}</a>
+            <a data-pid="{{pid}}" href="#myImageOverlay" class="gallery_thumbnail">{{caption}}</a>
 
           </div>
         </div>

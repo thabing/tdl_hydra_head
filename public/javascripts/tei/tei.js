@@ -21,24 +21,8 @@ $(function(){
       //add modals to the thumbnails
 
       $('.thumbnail').attr('href','#myImageOverlay');
-      $('.thumbnail').on('click', function(e){
-            e.preventDefault();
+      addThumbListeners();
 
-
-
-          var pid = $(this).data('pid');
-          $.getJSON('/file_assets/image_overlay/' + pid , function(data)
-          {
-            var template = $('#image_overlay_template').html();
-            var html = Mustache.to_html(template, data);
-            $('#myImageOverlay').html(html).modal('show');
-
-          });
-
-
-
-
-      });
 
     var gallery_start = 0;
     var gallery_page_size = 10;
@@ -53,6 +37,32 @@ $(function(){
 
     });
 
+    function removeThumbListeners()
+    {
+        $('.thumbnail').unbind('click');
+    }
+
+    function addThumbListeners()
+    {
+        $('.thumbnail').on('click', function(e){
+                    e.preventDefault();
+
+
+
+                  var pid = $(this).data('pid');
+                  $.getJSON('/file_assets/image_overlay/' + pid , function(data)
+                  {
+                    var template = $('#image_overlay_template').html();
+                    var html = Mustache.to_html(template, data);
+                    $('#myImageOverlay').html(html).modal('show');
+
+                  });
+
+
+
+
+              });
+    }
     function updateThumbs(gallery,show) {
         $.getJSON('/file_assets/image_gallery/' + pid + '/' + gallery_start + '/' + gallery_page_size, function (data) {
             total_count = parseInt(data.count);
@@ -63,8 +73,11 @@ $(function(){
             {
                 gallery.modal('show');
 
+
             }
             addPagingHandlers();
+            removeThumbListeners();
+            addThumbListeners();
         });
     }
 

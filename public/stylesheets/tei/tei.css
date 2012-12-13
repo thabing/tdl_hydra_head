@@ -75,3 +75,10 @@ td.pagenumber {
     margin: 0;
 
 }
+.modal-level2 {
+z-index:1052
+}
+
+.modal-level1 {
+z-index: 1051;
+}
