@@ -1440,7 +1440,11 @@ IMG.thumbnailwidth{
     height: 145px;
 }
 
-.download_links{  text-align:right; padding-right: 15px; padding-top:5px; }
+.download_links{
+    text-align: right;
+    padding-right: 15px;
+    padding-top: 5px;
+}
 
 .blueline {
     background-color: #6699cc;
