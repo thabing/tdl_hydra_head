@@ -42,13 +42,17 @@ td.pagenumber {
 }
 .thumbnail_with_caption {
     margin-right: 5px;
+    margin-top: 10px;
     margin-bottom: 5px;
     float:left;
-    width:115px;
-    height:130px;
+    width:120px;
+    height:170px;
 
 }
-
+#myImageGallery .thumbnails > li {
+  
+   height: 180px;
+}
 .modal-header {
     padding-bottom: 30px;
 }
