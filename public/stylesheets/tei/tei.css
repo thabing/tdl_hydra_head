@@ -40,3 +40,34 @@ td.pagenumber {
     pointer-events: none;
     cursor: default;
 }
+.thumbnail {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    float:left;
+    width:115px;
+    height:130px;
+
+}
+
+.modal-header {
+    padding-bottom: 30px;
+}
+.title_container {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.dialog_title {
+    text-align: left;
+    float:left;
+    margin: 0px;
+
+
+}
+
+.close_button {
+    float: right;
+    text-align: right;
+    margin: 0;
+
+}
