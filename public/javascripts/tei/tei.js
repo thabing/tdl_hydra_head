@@ -25,8 +25,18 @@ $(function(){
 
 
     $("#myImageOverlay").on('show resize', function () {
-                    var modal = $("#myImageOverlay");
-                    modal.css({"left":0}).css({"max-width":"100%","max-height":"100%","margin-left": (- modal.outerWidth() / 2), "margin-top": (- modal.outerHeight() - 100 ), "left":"50%"});})
+                    var modal = $(this);
+        modal.css({
+        'margin-top': function () {
+
+
+               return ("-48%");
+        }
+
+           });
+    });
+
+
 
     $("#myImageGallery").on('show resize', function () {
                         var modal = $("#myImageGallery");
