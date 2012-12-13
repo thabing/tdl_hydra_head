@@ -40,7 +40,7 @@ td.pagenumber {
     pointer-events: none;
     cursor: default;
 }
-.thumbnail {
+.thumbnail_with_caption {
     margin-right: 5px;
     margin-bottom: 5px;
     float:left;

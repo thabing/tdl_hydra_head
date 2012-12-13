@@ -1367,10 +1367,15 @@ margin-left: 300px;	}
 	color:  #0755AC;
  }
 
+.modal_fixed_height {
+    max-height: 800px;
+    height: 500px
+}
 .modal {
     max-height: 800px;
+
 }
-}
+
 
 .modal-body {
       max-height: 900px;
