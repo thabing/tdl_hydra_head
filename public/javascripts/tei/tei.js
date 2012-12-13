@@ -37,10 +37,22 @@ $(function(){
     });
 
 
-
     $("#myImageGallery").on('show resize', function () {
-                        var modal = $("#myImageGallery");
-                        modal.css({"left":0}).css({"max-width":"100%","max-height":"100%","margin-left": (- modal.outerWidth() / 2), "margin-top": (- modal.outerHeight() / 2), "left":"50%"});})
+                        var modal = $(this);
+            modal.css({
+            'margin-top': function () {
+
+
+                   return ("-48%");
+            }
+
+               });
+        });
+
+
+    //$("#myImageGallery").on('show resize', function () {
+    //                    var modal = $("#myImageGallery");
+    //                    modal.css({"left":0}).css({"max-width":"100%","max-height":"100%","margin-left": (- modal.outerWidth() / 2), "margin-top": (- modal.outerHeight() / 2), "left":"50%"});})
 
     var gallery_start = 0;
     var gallery_page_size = 10;
