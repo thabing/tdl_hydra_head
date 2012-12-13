@@ -359,8 +359,8 @@ From file_assets/_new.html.haml
             image_metadata = Tufts::ModelMethods.get_metadata(@image)
             image_title = image_metadata[:titles].nil? ? "" : image_metadata[:titles].first.text
             full_title = image_title
-            if image_title.length > 30
-              image_title = image_title.slice(0,27) + '...'
+            if image_title.length > 20
+              image_title = image_title.slice(0,17) + '...'
             end
 
           rescue NoMethodError
