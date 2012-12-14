@@ -40,3 +40,46 @@ td.pagenumber {
     pointer-events: none;
     cursor: default;
 }
+.thumbnail_with_caption {
+    margin-right: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    float:left;
+    width:120px;
+    height:170px;
+
+}
+#myImageGallery .thumbnails > li {
+  
+   height: 180px;
+}
+.modal-header {
+    padding-bottom: 30px;
+}
+.title_container {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.dialog_title {
+    text-align: left;
+    float:left;
+    margin: 0px;
+
+
+}
+
+.close_button {
+    float: right;
+    text-align: right;
+    margin: 0;
+
+}
+.modal-level2 {
+z-index:1052
+
+}
+
+.modal-level1 {
+z-index: 1051;
+}

@@ -353,16 +353,21 @@ From file_assets/_new.html.haml
       node_sets.each do |node|
           image_pid = Tufts::PidMethods.urn_to_pid(node[:n])
           image_title = ""
+          full_title = ""
           @image = TuftsImage.find(image_pid)
           begin
             image_metadata = Tufts::ModelMethods.get_metadata(@image)
             image_title = image_metadata[:titles].nil? ? "" : image_metadata[:titles].first.text
+            full_title = image_title
+            if image_title.length > 20
+              image_title = image_title.slice(0,17) + '...'
+            end
 
           rescue NoMethodError
             image_title = ""
           end
 
-        figures <<  {:pid => image_pid, :caption => image_title }
+        figures <<  {:pid => image_pid, :caption => image_title, :full_title=> full_title }
         end
     end
 
@@ -382,14 +387,30 @@ From file_assets/_new.html.haml
     @document_fedora = TuftsBase.find(params[:id])
     metadata = Tufts::ModelMethods.get_metadata(@document_fedora)
     title = metadata[:titles].nil? ? "" : metadata[:titles].first.text
-    temporal = metadata[:temporals].nil? ? "" : metadata[:temporals].first.text
-    description = metadata[:descriptions].nil? ? "" : metadata[:descriptions].first.text
+    temporal = if metadata[:temporals].nil? then
+                 ""
+               else
+                 metadata[:temporals].first.nil? ? "" : metadata[:temporals].first.text
+               end
+    description = if metadata[:descriptions].nil? then
+                    ""
+                  else
+                    metadata[:descriptions].first.nil? ? "" : metadata[:descriptions].first.text
+                  end
     pid = params[:id]
     item_link = '/catalog/' + pid
     image_url = '/file_assets/medium/' + pid
 
 
-    render :json => {:back_url => "#", :item_title => title,:item_date=> temporal,:image_url=> image_url,:item_link=> item_link,:item_description=>description}
+
+
+
+              imagesize = ImageSize.new File.open(convert_url_to_local_path(@document_fedora.datastreams["Basic.jpg"].dsLocation)).read
+
+
+
+
+    render :json => {:back_url => "#", :item_title => title,:item_date=> temporal,:image_url=> image_url,:item_link=> item_link,:item_description=>description,:width => imagesize.get_height, :height => imagesize.get_width}
   end
   def dimensions
     @file_asset = FileAsset.find(params[:id])

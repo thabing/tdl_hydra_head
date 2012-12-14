@@ -111,7 +111,7 @@
 
   <div class="page-header">
 
-    <%= link_to(image_tag('/assets/img/tuftsdigitallibrarylogosmall.png', :alt => "Tufts Digital Library logo"), catalog_path('/'), :class => "work") %><span><p class="beta">BETA</p></span>
+    <%= link_to(image_tag('/assets/img/tuftsdigitallibrarylogosmall.png', :alt => "Tufts Digital Library logo"), catalog_path('/'), :class => "work") %>
     <%- if "show" == @current_action || "eadoverview" == @current_action || "eadinternal" == @current_action || "transcriptonly" == @current_action -%>
         <button href="#comment_modal" data-toggle="modal" class="btn btn-blue pull-right" style="margin-top:10px; margin-right:10px;"> Comments about this page?
           <i class="icon-comment icon-white"></i></button>
@@ -132,10 +132,10 @@
 
   <!-Image Overlay Modal-->
 
-  <div class="modal fade modal_650wide" id="myImageOverlay"></div>
+  <div class="modal fade modal_650wide modal-level2" tabindex="-1" id="myImageOverlay"></div>
   <!-Image Gallery Modal-->
 
-  <div class="modal fade modal_800wide" id="myImageGallery"></div>
+  <div class="modal modal_fixed_height fade modal_800wide modal-level1" tabindex="-1" id="myImageGallery"></div>
   <!-End Gallery Modal -->
 </div>
 <!-- /container -->

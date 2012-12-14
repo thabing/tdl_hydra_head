@@ -99,6 +99,13 @@
         <str name="qf">
           id
           title_t^25000
+          title_unstem_search^50000
+          author_unstem_search^200
+          subject_topic_unstem_search^200
+          corpname_unstem_search^200
+          persname_unstem_search^200
+          geogname_unstem_search^200
+          collection_id_unstem_search^5
           text
           active_fedora_model_s
           object_type_facet
@@ -106,6 +113,13 @@
         <str name="pf">
           id
           title_t^250000
+          title_unstem_search^50000
+          author_unstem_search^200
+          subject_topic_unstem_search^200
+          corpname_unstem_search^200
+          persname_unstem_search^200
+          geogname_unstem_search^200
+          collection_id_unstem_search^5
           text^10
           active_fedora_model_s
           object_type_facet
@@ -119,6 +133,13 @@
         <str name="keyword_qf">
           id
           title_t^25000
+          title_unstem_search^50000
+          author_unstem_search^200
+          subject_topic_unstem_search^200
+          corpname_unstem_search^200
+          persname_unstem_search^200
+          geogname_unstem_search^200
+          collection_id_unstem_search^5
           text
           active_fedora_model_s
           object_type_facet

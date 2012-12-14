@@ -18,27 +18,34 @@ $(function(){
       });
 
 
-      //add modals to the thumbnails
+      ////add modals to the thumbnails
 
       $('.thumbnail').attr('href','#myImageOverlay');
-      $('.thumbnail').on('click', function(e){
-            e.preventDefault();
+      addThumbListeners();
+
+
+    //$("#myImageOverlay").on('show resize', function () {
+    //                var modal = $(this);
+    //    modal.css({
+    //    'margin-top': function () {
+    //
+    //
+    //           return ("-48%");
+    //    }
+    //
+    //       });
+    //});
+   $("#myImageGallery").on('show resize', function () {
+                        var modal = $("#myImageGallery");
+                        modal.css({"left":0}).css({"max-width":"100%","max-height":"100%","margin-left": (- modal.outerWidth() / 2), "margin-top": (- modal.outerHeight() / 2), "left":"50%"});})
 
 
 
-          var pid = $(this).data('pid');
-          $.getJSON('/file_assets/image_overlay/' + pid , function(data)
-          {
-            var template = $('#image_overlay_template').html();
-            var html = Mustache.to_html(template, data);
-            $('#myImageOverlay').html(html).modal('show');
+   $("#myImageOverlay").on('show resize', function () {
+                        var modal = $("#myImageOverlay");
+                          modal.css({"left":0}).css({"max-width":"100%","max-height":"100%","margin-left": (- modal.outerWidth() / 2), "margin-top": (- modal.outerHeight() / 2), "left":"50%"});
+})
 
-          });
-
-
-
-
-      });
 
     var gallery_start = 0;
     var gallery_page_size = 10;
@@ -53,6 +60,36 @@ $(function(){
 
     });
 
+    function removeThumbListeners()
+    {
+        $('a.thumbnail, a.gallery_thumbnail').unbind('click');
+    }
+
+    function addThumbListeners()
+    {
+        $('a.thumbnail, a.gallery_thumbnail').on('click', function(e){
+                    e.preventDefault();
+
+
+
+                  var pid = $(this).data('pid');
+                  $.getJSON('/file_assets/image_overlay/' + pid , function(data)
+                  {
+                    var template = $('#image_overlay_template').html();
+                    var html = Mustache.to_html(template, data);
+                    $('#myImageOverlay').html(html)
+		    setTimeout(function() { 
+			$('#myImageOverlay').modal('show');
+			},500);
+
+
+                  });
+
+
+
+
+              });
+    }
     function updateThumbs(gallery,show) {
         $.getJSON('/file_assets/image_gallery/' + pid + '/' + gallery_start + '/' + gallery_page_size, function (data) {
             total_count = parseInt(data.count);
@@ -63,8 +100,18 @@ $(function(){
             {
                 gallery.modal('show');
 
+
             }
             addPagingHandlers();
+            removeThumbListeners();
+            addThumbListeners();
+            $(document).ready(function() {
+                $('.modal a[rel="tooltip"]')
+                    .tooltip({placement: 'right'})
+                    .data('tooltip')
+                    .tip()
+                    .css('z-index',2080);
+            });
         });
     }
 
