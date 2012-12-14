@@ -387,7 +387,11 @@ From file_assets/_new.html.haml
     @document_fedora = TuftsBase.find(params[:id])
     metadata = Tufts::ModelMethods.get_metadata(@document_fedora)
     title = metadata[:titles].nil? ? "" : metadata[:titles].first.text
-    temporal = metadata[:temporals].nil? ? "" : metadata[:temporals].first.text
+    temporal = if metadata[:temporals].nil? then
+                 ""
+               else
+                 metadata[:temporals].first.nil? ? "" : metadata[:temporals].first.text
+               end
     description = metadata[:descriptions].nil? ? "" : metadata[:descriptions].first.text
     pid = params[:id]
     item_link = '/catalog/' + pid
