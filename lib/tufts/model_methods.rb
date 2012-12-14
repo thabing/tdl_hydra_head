@@ -107,7 +107,7 @@ module Tufts
               model_s="Audio"
             when "info:fedora/cm:Image.4DS", "info:fedora/cm:Image.3DS	", "info:fedora/afmodel:TuftsImage"
               model_s="Image"
-            when "info:fedora/afmodel:TuftsPdf"
+            when "info:fedora/afmodel:TuftsPdf","info:fedora/cm:Text.FacPub","info:fedora/afmodel:TuftsFacultyPublication","info:fedora/cm:Text.PDF"
               #http://dev-processing01.lib.tufts.edu:8080/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/tufts:PB.002.001.00001/datastreams/Archival.pdf/content&amp;chunkList=true'
               processing_url = Settings.processing_url
               unless processing_url == "SKIP"
