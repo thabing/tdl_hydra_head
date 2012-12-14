@@ -114,7 +114,6 @@ module Tufts
                pid = fedora_object.pid.to_s
                nokogiri_doc = Nokogiri::XML(open(processing_url + '/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/' + pid + '/datastreams/Archival.pdf/content&amp;chunkList=true').read)
                full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
-               puts "#{full_text}"
               end
             when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI","info:fedora/cm:Audio.OralHistory", "info:fedora/afmodel:TuftsAudioText","info:fedora/cm:Text.EAD", "info:fedora/afmodel:TuftsEAD"
               #nokogiri_doc = Nokogiri::XML(self.datastreams['Archival.xml'].content)
