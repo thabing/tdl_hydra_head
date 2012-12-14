@@ -62,12 +62,12 @@ $(function(){
 
     function removeThumbListeners()
     {
-        $('a.thumbnail').unbind('click');
+        $('a.thumbnail, a.gallery_thumbnail').unbind('click');
     }
 
     function addThumbListeners()
     {
-        $('a.thumbnail').on('click', function(e){
+        $('a.thumbnail, a.gallery_thumbnail').on('click', function(e){
                     e.preventDefault();
 
 
