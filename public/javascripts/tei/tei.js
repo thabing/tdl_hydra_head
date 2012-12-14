@@ -18,7 +18,7 @@ $(function(){
       });
 
 
-      //add modals to the thumbnails
+      ////add modals to the thumbnails
 
       $('.thumbnail').attr('href','#myImageOverlay');
       addThumbListeners();
@@ -35,24 +35,17 @@ $(function(){
     //
     //       });
     //});
+   $("#myImageGallery").on('show resize', function () {
+                        var modal = $("#myImageGallery");
+                        modal.css({"left":0}).css({"max-width":"100%","max-height":"100%","margin-left": (- modal.outerWidth() / 2), "margin-top": (- modal.outerHeight() / 2), "left":"50%"});})
 
 
-    $("#myImageGallery").on('show resize', function () {
-                        var modal = $(this);
-            modal.css({
-            'margin-top': function () {
 
+   $("#myImageOverlay").on('show resize', function () {
+                        var modal = $("#myImageOverlay");
+                          modal.css({"left":0}).css({"max-width":"100%","max-height":"100%","margin-left": (- modal.outerWidth() / 2), "margin-top": (- modal.outerHeight() / 2), "left":"50%"});
+})
 
-                   return ("-48%");
-            }
-
-               });
-        });
-
-
-    //$("#myImageGallery").on('show resize', function () {
-    //                    var modal = $("#myImageGallery");
-    //                    modal.css({"left":0}).css({"max-width":"100%","max-height":"100%","margin-left": (- modal.outerWidth() / 2), "margin-top": (- modal.outerHeight() / 2), "left":"50%"});})
 
     var gallery_start = 0;
     var gallery_page_size = 10;
@@ -69,12 +62,12 @@ $(function(){
 
     function removeThumbListeners()
     {
-        $('.thumbnail').unbind('click');
+        $('a.thumbnail').unbind('click');
     }
 
     function addThumbListeners()
     {
-        $('.thumbnail').on('click', function(e){
+        $('a.thumbnail').on('click', function(e){
                     e.preventDefault();
 
 
@@ -85,6 +78,7 @@ $(function(){
                     var template = $('#image_overlay_template').html();
                     var html = Mustache.to_html(template, data);
                     $('#myImageOverlay').html(html).modal('show');
+
 
                   });
 
