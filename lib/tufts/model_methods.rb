@@ -378,7 +378,7 @@ module Tufts
       if dates.empty?
         puts "THIS PID HAS NO DATE TO INDEX :::  #{fedora_object.pid}"
       else
-        dates.each {|date|
+        dates.first {|date|
 
         if date.length() == 4
           date += "-01-01"
