@@ -392,7 +392,11 @@ From file_assets/_new.html.haml
                else
                  metadata[:temporals].first.nil? ? "" : metadata[:temporals].first.text
                end
-    description = metadata[:descriptions].nil? ? "" : metadata[:descriptions].first.text
+    description = if metadata[:descriptions].nil? then
+                    ""
+                  else
+                    metadata[:descriptions].first.nil? ? "" : metadata[:descriptions].first.text
+                  end
     pid = params[:id]
     item_link = '/catalog/' + pid
     image_url = '/file_assets/medium/' + pid
