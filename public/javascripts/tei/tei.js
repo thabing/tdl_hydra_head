@@ -105,6 +105,13 @@ $(function(){
             addPagingHandlers();
             removeThumbListeners();
             addThumbListeners();
+            $(document).ready(function() {
+                $('.modal a[rel="tooltip"]')
+                    .tooltip({placement: 'right'})
+                    .data('tooltip')
+                    .tip()
+                    .css('z-index',2080);
+            });
         });
     }
 
