@@ -42,7 +42,7 @@ function BookReader() {
     this.constModeThumb = 3;
 
     this.reduce  = 4;
-    this.padding = 10;          // Padding in 1up
+    this.padding = 10;          // height padding in 1up
 
     this.mode    = this.constMode1up;
     this.ui = 'full';           // UI mode
@@ -1751,11 +1751,11 @@ BookReader.prototype.twoPageIsZoomedIn = function() {
 
 BookReader.prototype.onePageGetAutofitWidth = function() {
     var widthPadding = 20;
-    return (this.getMedianPageSize().width + 0.0) / ($('#BRcontainer').prop('clientWidth') - widthPadding * 2);
+    return this.getMedianPageSize().width / ($('#BRcontainer').prop('clientWidth') - widthPadding * 2);
 }
 
 BookReader.prototype.onePageGetAutofitHeight = function() {
-    return (this.getMedianPageSize().height + 0.0) / ($('#BRcontainer').prop('clientHeight') - this.padding * 2); // make sure a little of adjacent pages show
+    return this.getMedianPageSize().height / ($('#BRcontainer').prop('clientHeight') - this.padding * 2); // make sure a little of adjacent pages show
 }
 
 // Returns where the top of the page with given index should be in one page view
