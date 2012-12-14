@@ -77,7 +77,10 @@ $(function(){
                   {
                     var template = $('#image_overlay_template').html();
                     var html = Mustache.to_html(template, data);
-                    $('#myImageOverlay').html(html).modal('show');
+                    $('#myImageOverlay').html(html)
+		    setTimeout(function() { 
+			$('#myImageOverlay').modal('show');
+			},250);
 
 
                   });
