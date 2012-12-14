@@ -103,15 +103,20 @@ module Tufts
           case model
             when "info:fedora/cm:WP", "info:fedora/afmodel:TuftsWP", "info:fedora/afmodel:TuftsTeiFragmented", "info:fedora/cm:Text.TEI-Fragmented"
               model_s="Datasets"
-            when "info:fedora/cm:Text.EAD", "info:fedora/afmodel:TuftsEAD"
-              model_s = "Collection Guides"
-            when "info:fedora/cm:Audio", "info:fedora/afmodel:TuftsAudio", "info:fedora/cm:Audio.OralHistory", "info:fedora/afmodel:TuftsAudioText"
+            when "info:fedora/cm:Audio", "info:fedora/afmodel:TuftsAudio"
               model_s="Audio"
             when "info:fedora/cm:Image.4DS", "info:fedora/cm:Image.3DS	", "info:fedora/afmodel:TuftsImage"
               model_s="Image"
-            when "info:fedora/afmodel:TuftsPdf", "info:fedora/afmodel:TuftsTEI"
-              model_s="Text"
-            when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI","info:fedora/cm:Audio.OralHistory", "info:fedora/afmodel:TuftsAudioText"
+            when "info:fedora/afmodel:TuftsPdf"
+              #http://dev-processing01.lib.tufts.edu:8080/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/tufts:PB.002.001.00001/datastreams/Archival.pdf/content&amp;chunkList=true'
+              processing_url = Settings.processing_url
+              unless processing_url == "SKIP"
+               pid = fedora_object.pid.to_s
+               nokogiri_doc = Nokogiri::XML(open(processing_url + '/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/' + pid + '/datastreams/Archival.pdf/content&amp;chunkList=true').read)
+               full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
+               puts "#{full_text}"
+              end
+            when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI","info:fedora/cm:Audio.OralHistory", "info:fedora/afmodel:TuftsAudioText","info:fedora/cm:Text.EAD", "info:fedora/afmodel:TuftsEAD"
               #nokogiri_doc = Nokogiri::XML(self.datastreams['Archival.xml'].content)
               nokogiri_doc = Nokogiri::XML(File.open(convert_url_to_local_path(fedora_object.datastreams["Archival.xml"].dsLocation)).read)
               full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
