@@ -402,7 +402,7 @@ From file_assets/_new.html.haml
 
 
 
-    render :json => {:back_url => "#", :item_title => title,:item_date=> temporal,:image_url=> image_url,:item_link=> item_link,:item_description=>description,:height => imagesize.get_height, :width => imagesize.get_width}
+    render :json => {:back_url => "#", :item_title => title,:item_date=> temporal,:image_url=> image_url,:item_link=> item_link,:item_description=>description,:width => imagesize.get_height, :height => imagesize.get_width}
   end
   def dimensions
     @file_asset = FileAsset.find(params[:id])
