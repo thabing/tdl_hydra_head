@@ -24,17 +24,17 @@ $(function(){
       addThumbListeners();
 
 
-    $("#myImageOverlay").on('show resize', function () {
-                    var modal = $(this);
-        modal.css({
-        'margin-top': function () {
-
-
-               return ("-48%");
-        }
-
-           });
-    });
+    //$("#myImageOverlay").on('show resize', function () {
+    //                var modal = $(this);
+    //    modal.css({
+    //    'margin-top': function () {
+    //
+    //
+    //           return ("-48%");
+    //    }
+    //
+    //       });
+    //});
 
 
     $("#myImageGallery").on('show resize', function () {

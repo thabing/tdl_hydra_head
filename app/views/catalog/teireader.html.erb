@@ -31,8 +31,16 @@
     <button class="close" data-dismiss="modal">&times;</button>
   </div>
   <div class="modal-body">
-    <img class="centerimage" src="{{image_url}}" width="491" height="500">
-
+    <style>
+    #imgDiv {
+        width : {{width}}px
+        height: {{height}}px
+        overflow: auto
+    }
+    </style>
+    <div id="imgDiv">
+        <img class="centerimage" src="{{image_url}}" width="{{height}}" height="{{width}}">
+    </div>
     <div class="pull-right"><h6><a href="{{item_link}}">go to image entry <i class="icon-share"></i></a></h6></div>
     {{item_title}}<br>
     {{item_date}}<br>

@@ -394,7 +394,15 @@ From file_assets/_new.html.haml
     image_url = '/file_assets/medium/' + pid
 
 
-    render :json => {:back_url => "#", :item_title => title,:item_date=> temporal,:image_url=> image_url,:item_link=> item_link,:item_description=>description}
+
+
+
+              imagesize = ImageSize.new File.open(convert_url_to_local_path(@document_fedora.datastreams["Basic.jpg"].dsLocation)).read
+
+
+
+
+    render :json => {:back_url => "#", :item_title => title,:item_date=> temporal,:image_url=> image_url,:item_link=> item_link,:item_description=>description,:height => imagesize.get_height, :width => imagesize.get_width}
   end
   def dimensions
     @file_asset = FileAsset.find(params[:id])
