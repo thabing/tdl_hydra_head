@@ -80,7 +80,7 @@ $(function(){
                     $('#myImageOverlay').html(html)
 		    setTimeout(function() { 
 			$('#myImageOverlay').modal('show');
-			},250);
+			},500);
 
 
                   });
