@@ -119,6 +119,12 @@ module Tufts
             when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI","info:fedora/cm:Audio.OralHistory", "info:fedora/afmodel:TuftsAudioText","info:fedora/cm:Text.EAD", "info:fedora/afmodel:TuftsEAD"
               #nokogiri_doc = Nokogiri::XML(self.datastreams['Archival.xml'].content)
 	      datastream = fedora_object.datastreams["Archival.xml"]
+              # some objects have inconsistent name for the datastream
+
+              if datastream.nil?
+	        datastream = fedora_object.datastreams["ARCHIVAL_XML"]
+              end	
+
               unless datastream.nil?
                 nokogiri_doc = Nokogiri::XML(File.open(convert_url_to_local_path(datastream.dsLocation)).read)
                 full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
