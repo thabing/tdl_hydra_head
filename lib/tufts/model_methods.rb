@@ -113,9 +113,27 @@ module Tufts
 		# skip processing on localhost since its probably not listening
              unless processing_url == "SKIP"
                pid = fedora_object.pid.to_s
-               nokogiri_doc = Nokogiri::XML(open(processing_url + '/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/' + pid + '/datastreams/Archival.pdf/content&amp;chunkList=true').read)
-               full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
-              end
+               url = processing_url + '/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/' + pid + '/datastreams/Archival.pdf/content&amp;chunkList=true'
+		puts "#{url}"
+               begin
+                 nokogiri_doc = Nokogiri::XML(open(url).read)
+                 full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
+               rescue => e
+                 case e
+                   when OpenURI::HTTPError
+                     puts "HTTPError while indexing full text #{pid}"
+                   when SocketError
+                     puts "SocketError while indexing full text #{pid}"
+                   else
+                     puts "Error while indexing full text #{pid}"
+                   end
+               rescue SystemCallError => e
+                 if e === Errno::ECONNRESET
+                     puts "Connection Reset while indexing full text #{pid}"
+                 else
+                     puts "SystemCallError while indexing full text #{pid}"
+                 end
+               end
             when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI","info:fedora/cm:Audio.OralHistory", "info:fedora/afmodel:TuftsAudioText","info:fedora/cm:Text.EAD", "info:fedora/afmodel:TuftsEAD"
               #nokogiri_doc = Nokogiri::XML(self.datastreams['Archival.xml'].content)
 	      datastream = fedora_object.datastreams["Archival.xml"]
