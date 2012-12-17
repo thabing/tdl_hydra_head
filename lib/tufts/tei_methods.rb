@@ -141,7 +141,7 @@ module Tufts
 
       if chapter == 'title'
         node = node_sets.first
-        if node['type'] == 'frontispiece'
+        if !node.nil?  && node['type'] == 'frontispiece'
           node = node_sets.to_ary[1]
         end
         result << self.ctext(node)
@@ -179,6 +179,9 @@ module Tufts
 
     # recursive function to walk the title page stick everything into divs
     def self.ctext(el)
+      if el.nil?
+	return ""
+      end
       if el.text?
         return el.text
       end
