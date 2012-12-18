@@ -110,9 +110,10 @@ module Tufts
             when "info:fedora/afmodel:TuftsPdf","info:fedora/cm:Text.FacPub","info:fedora/afmodel:TuftsFacultyPublication","info:fedora/cm:Text.PDF"
               #http://dev-processing01.lib.tufts.edu:8080/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/tufts:PB.002.001.00001/datastreams/Archival.pdf/content&amp;chunkList=true'
               processing_url = Settings.processing_url
+              repository_url = Settings.repository_url
               unless processing_url == "SKIP"
                pid = fedora_object.pid.to_s
-               nokogiri_doc = Nokogiri::XML(open(processing_url + '/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/' + pid + '/datastreams/Archival.pdf/content&amp;chunkList=true').read)
+               nokogiri_doc = Nokogiri::XML(open(processing_url + '/tika/TikaPDFExtractionServlet?doc=' + repository_url + '/fedora/objects/' + pid + '/datastreams/Archival.pdf/content&amp;chunkList=true').read)
                full_text = nokogiri_doc.xpath('//text()').text.gsub(/[^0-9A-Za-z]/, ' ')
               end
             when "info:fedora/cm:Text.TEI", "info:fedora/afmodel.TuftsTEI","info:fedora/cm:Audio.OralHistory", "info:fedora/afmodel:TuftsAudioText","info:fedora/cm:Text.EAD", "info:fedora/afmodel:TuftsEAD"
