@@ -110,10 +110,10 @@ module Tufts
             when "info:fedora/afmodel:TuftsPdf", "info:fedora/cm:Text.FacPub", "info:fedora/afmodel:TuftsFacultyPublication", "info:fedora/cm:Text.PDF"
               #http://dev-processing01.lib.tufts.edu:8080/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/tufts:PB.002.001.00001/datastreams/Archival.pdf/content&amp;chunkList=true'
               processing_url = Settings.processing_url
-              # skip processing on localhost since its probably not listening
+              repository_url = Settings.repository_url
               unless processing_url == "SKIP"
-                pid = fedora_object.pid.to_s
-                url = processing_url + '/tika/TikaPDFExtractionServlet?doc=http://repository01.lib.tufts.edu:8080/fedora/objects/' + pid + '/datastreams/Archival.pdf/content&amp;chunkList=true'
+               pid = fedora_object.pid.to_s
+               url = processing_url + '/tika/TikaPDFExtractionServlet?doc='+ repository_url +'/fedora/objects/' + pid + '/datastreams/Archival.pdf/content&amp;chunkList=true'
                 puts "#{url}"
                 begin
                   nokogiri_doc = Nokogiri::XML(open(url).read)
