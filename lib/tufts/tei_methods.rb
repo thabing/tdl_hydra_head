@@ -141,7 +141,7 @@ module Tufts
 
       if chapter == 'title'
         node = node_sets.first
-        if node['type'] == 'frontispiece'
+        if !node.nil?  && node['type'] == 'frontispiece'
           node = node_sets.to_ary[1]
         end
         result << self.ctext(node)
@@ -179,6 +179,9 @@ module Tufts
 
     # recursive function to walk the title page stick everything into divs
     def self.ctext(el)
+      if el.nil?
+	return ""
+      end
       if el.text?
         return el.text
       end
@@ -294,8 +297,26 @@ module Tufts
       return result, footnotes
     end
 
+    def self.render_table(node, in_left_td)
+      result = "<table>"
+      rows = node.children
+      rows.each do |row|
+        result += "<tr>"
+        cols = row.children
+        cols.each do |col|
+          result += "<td>"
+          text = col.text.to_s.strip
+          result += (text.nil? || text.length == 0) ? "&nbsp;" : text
+          result += "</td>"
+        end
+        result += "</tr>"
+      end
+      result += "</table>"
+      result
+    end
+
     def self.render_page_p(node, in_left_td)
-      result = ''
+      result = ""
       footnotes =""
       children = node.children
       result +="<p>"
@@ -311,6 +332,7 @@ module Tufts
         elsif child.name == "pb"
           unless in_left_td
             result += switch_to_left
+            in_left_td = true
           end
           result += render_pb(child)
           in_left_td = true
@@ -336,6 +358,13 @@ module Tufts
             in_left_td = false
           end
           result += get_block_quote(child)
+        elsif child.name == "table"
+          if in_left_td
+            result += switch_to_right
+            result += "<td>"
+            in_left_td = false
+          end
+          result += render_table(child, in_left_td)
         elsif child.name == "note"
           result_fn, result_foot = get_foot_note(child)
           unless result_fn.nil?
@@ -420,7 +449,6 @@ module Tufts
             case node.name
               when "pb"
                 result += render_pb(node)
-                in_left_td = true
               when "quote"
                 if in_left_td
                   result += switch_to_right
@@ -442,7 +470,8 @@ module Tufts
                 in_left_td = in_left_td2
                 footnotes += footnotes2
                 result += result_p
-
+              when "table"
+                render += render_table(node,in_left_td)
               else
                 if in_left_td
                   result += switch_to_right

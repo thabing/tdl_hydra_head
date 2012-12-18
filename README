@@ -88,3 +88,5 @@ Hydra 3.0 -> 3.1.5 Upgrade path.
 8) rake jetty:start
 9) rake tufts_dca:refresh
 10) rails server
+
+TEST
