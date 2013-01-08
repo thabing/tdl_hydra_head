@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe PdfPageController do
+describe PdfPagesController do
 
 end
