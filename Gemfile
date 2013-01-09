@@ -5,7 +5,7 @@ source 'http://rubygems.org'
 #gem 'blacklight', '~> 3.0.0'
 #gem 'active-fedora', '~> 3.1.6'
 #gem 'hydra-head'
-gem 'rails', '~>3.0.11'
+gem 'rails', '~>3.0.19'
 
 gem 'blacklight', '~> 3.1.2'
 gem 'hydra-head', '~> 3.2.0'
