@@ -113,7 +113,7 @@
         </str>
         <str name="pf">
           id
- 	  id_t
+	  id_t
           title_t^250000
           title_unstem_search^50000
           author_unstem_search^200
@@ -448,7 +448,10 @@
   <requestHandler name="/update" class="solr.XmlUpdateRequestHandler" />
   <requestHandler name="/analysis" class="solr.AnalysisRequestHandler" />
   <requestHandler name="/update/csv" class="solr.CSVRequestHandler" startup="lazy" />
-  <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers" />
+<!--  <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers" />  -->
+  <requestHandler name="/admin/" class="PingRequestHandler" /> 
+<!--  <requestHandler name="/admin/luke" class="org.apache.solr.handler.admin.LukeRequestHandler" /> -->
+
   <requestHandler name="/admin/ping" class="PingRequestHandler">
     <lst name="defaults">
       <str name="qt">standard</str>
