@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe ContactController do
 
-  describe "GET 'index'" do
+  describe "GET 'show'" do
     it "returns http success" do
-      get 'index'
+      get 'show'
       response.should be_success
     end
   end
