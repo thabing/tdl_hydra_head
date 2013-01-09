@@ -1,12 +1,6 @@
 source 'http://rubygems.org'
 
-#gem 'rails', '~> 3.0.10'
-
-#gem 'blacklight', '~> 3.0.0'
-#gem 'active-fedora', '~> 3.1.6'
-#gem 'hydra-head'
 gem 'rails', '~>3.0.19'
-
 gem 'blacklight', '~> 3.1.2'
 gem 'hydra-head', '~> 3.2.0'
 gem 'sqlite3-ruby', :require => 'sqlite3'
@@ -23,19 +17,22 @@ gem 'chronic'
 gem 'settingslogic'
 gem 'titleize'
 gem 'solrizer', :git => "http://github.com/mkorcy/solrizer.git"
- # For testing.  You will probably want to use all of these to run the tests you write for your hydra head
-group :development, :test do 
-         gem 'solrizer-fedora', '>=1.0.1'
-         gem 'ruby-debug'
-         gem 'rspec'
-         gem 'rspec-rails', '>=2.5.0'
-         gem 'mocha'
-         gem 'cucumber-rails'
-         gem 'database_cleaner'
-         gem 'capybara'
-         gem 'bcrypt-ruby'
-         gem 'rcov'
-         gem 'metric_fu'
-         gem 'cucumber'
 
+# For testing.  You will probably want to use all of these to run the tests you write for your hydra head
+group :test do
+  gem 'cucumber-rails'
+end
+
+group :development, :test do 
+  gem 'solrizer-fedora', '>=1.0.1'
+  gem 'ruby-debug'
+  gem 'rspec'
+  gem 'rspec-rails', '>=2.5.0'
+  gem 'mocha'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'bcrypt-ruby'
+  gem 'rcov'
+  gem 'metric_fu'
+  gem 'cucumber'
 end
