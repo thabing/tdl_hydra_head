@@ -2,7 +2,9 @@
   <td class="number_td"><%= @result_no += 1 %></td>
   <td class="title_td">
     <span class="table_title">
-      <%= link_to document[:title_t][0], "/catalog/" + document[:id] %>
+    <% unless document[:title_t].nil? %>
+     <%= link_to document[:title_t][0], "/catalog/" + document[:id]  %>
+    <% end %>
     </span>
   </td>
   <td class="creator_td">
@@ -38,7 +40,7 @@
     <%#= valid_date.strftime("%b %d, %Y")  %>
     <%= valid_date_string  %>
   </td>
-  <% if document[:type2_t].first == 'image' %>
+  <% if !document[:type2_t].nil? && document[:type2_t].first == 'image' %>
       <td class="thumbnail_td" align="center">
         <ul class="thumbnails">
           <li class="nothumbnailmargin">
