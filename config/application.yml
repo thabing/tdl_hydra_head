@@ -22,6 +22,8 @@ tdldev:
   repository_url: "http://dev-repository01.lib.tufts.edu:8080"
 stage:
   <<: *defaults
+  pdf_pages:
+    page_location: "/tdr"
   local_object_store: "/tdr"
   processing_url: "http://stage-processing01.lib.tufts.edu:8080"
   repository_url: "http://stage-repository01.lib.tufts.edu:8080"
