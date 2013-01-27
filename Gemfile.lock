@@ -97,6 +97,8 @@ GEM
       main
       ruby_parser (~> 2.0.4)
       sexp_processor (~> 3.0.3)
+    ci_reporter (1.8.4)
+      builder (>= 2.1.2)
     colored (1.2)
     columnize (0.3.6)
     crack (0.3.1)
@@ -375,6 +377,7 @@ DEPENDENCIES
   blacklight_advanced_search (= 1.1.1)
   capybara
   chronic
+  ci_reporter
   cucumber
   cucumber-rails
   daemons
