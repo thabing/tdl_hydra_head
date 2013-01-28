@@ -141,8 +141,10 @@ namespace :tufts_dca do
 
     error = nil
     error = Jettywrapper.wrap(jetty_params) do
-      sh %("rake ci:setup:rspec spec")
-      sh %("rake ci:setup:cucumber features")
+      Rake::Task['ci:setup:rspec'].invoke
+          Rake::Task['spec'].invoke
+          Rake::Task['ci:setup:cucumber'].invoke
+          Rake::Task['features'].invoke
     end
     raise "test failures: #{error}" if error
   end
