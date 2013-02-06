@@ -16,13 +16,50 @@
   </td>
   <td class="date_td">
     <%
-       date = document[:pub_date_i]
-       if date.nil?
-         date = ""
+       date = document[:dateCreated_t]
+       valid_date = Time.new
+
+       if date.nil? || (!date.nil? && date == "")
+         date = document[:temporal_t]
+	end
+
+       #try to address dates that start "ca. 1970" 
+       unless date.nil?
+	 date = date.to_s
        end
+
+       if (!date.nil? && !date[/^c/].nil?)
+	date = date.split[1..10].join(' ')      
+       end 
+       #end handling circa dates
+
+       #Chronic is not gonna like the 4 digit date here it may interpret as military time, and
+       #this may be imperfect but lets try this.
+
+       unless date.nil?
+         if date.length() == 4
+          date += "-01-01"
+	 elsif date.length() == 9
+          date = date[0..3] += "-01-01"
+         elsif date.length() == 7
+	  date = date[0..3] += "-01-01"
+         end
+
+         unparsed_date =Chronic.parse(date)
+         unless unparsed_date.nil?
+            valid_date = Time.at(unparsed_date)
+         end
+
+       end
+
+       valid_date_string = ""
+       unless date.nil?
+         valid_date_string = valid_date.strftime("%Y")
+       end
+
     %>
     <%#= valid_date.strftime("%b %d, %Y")  %>
-    <%= date  %>
+    <%= valid_date_string  %>
   </td>
   <% if !document[:type2_t].nil? && document[:type2_t].first == 'image' %>
       <td class="thumbnail_td" align="center">

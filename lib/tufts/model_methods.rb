@@ -157,7 +157,6 @@ module Tufts
     end
 
     def create_facets(fedora_object, solr_doc)
-
       index_names_info(fedora_object,solr_doc)
       index_subject_info(fedora_object,solr_doc)
       index_collection_info(solr_doc)
@@ -406,43 +405,22 @@ module Tufts
       if dates.empty?
         puts "THIS PID HAS NO DATE TO INDEX :::  #{fedora_object.pid}"
       else
-        dates.first {|date|
-          valid_date = Time.new
+        date = dates[0]
+        if date.length() == 4
+          date += "-01-01"
+        end
 
-          date = date.to_s
+          valid_date = Chronic.parse(date)
 
-          if (!date.nil? && !date[/^c/].nil?)
-            date = date.split[1..10].join(' ')
+
+          if (valid_date.nil?)
+            year ="2012"
+          else
+            year = valid_date.year.to_i
           end
 
-          #end handling circa dates
-
-          #Chronic is not gonna like the 4 digit date here it may interpret as military time, and
-          #this may be imperfect but lets try this.
-
-          unless date.nil?
-            if date.length() == 4
-              date += "-01-01"
-            elsif date.length() == 9
-              date = date[0..3] += "-01-01"
-            elsif date.length() == 7
-              date = date[0..3] += "-01-01"
-            end
-
-            unparsed_date =Chronic.parse(date)
-            unless unparsed_date.nil?
-              valid_date = Time.at(unparsed_date)
-            end
-
-          end
-
-          valid_date_string = valid_date.strftime("%Y")
-
-
-
-
-        ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_i", "#{valid_date_string}")
-        }
+            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_i", "#{year}")
+          
       end
 
     end
