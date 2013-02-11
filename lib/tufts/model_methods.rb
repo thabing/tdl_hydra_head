@@ -48,28 +48,7 @@ module Tufts
 
     def index_sort_fields(fedora_object, solr_doc)
       #PUBDATESORT
-      dates = fedora_object.datastreams["DCA-META"].get_values(:dateCreated)
-
-      if dates.empty?
-        dates = fedora_object.datastreams["DCA-META"].get_values(:temporal)
-      end
-
-
-      unless dates.empty?
-        unparsed_date = dates[0]
-        if (unparsed_date.length() == 4)
-          unparsed_date += "-01-01"
-        end
-        valid_date = Chronic.parse(unparsed_date)
-        unless valid_date.nil?
-        puts "###############################"
-        puts dates[0]
-        puts valid_date.to_time.iso8601
-        puts valid_date.iso8601(6)
-        puts "###############################"
-          ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_sort", "#{valid_date.iso8601(6)}")
-        end
-      end
+      #moved 
 
       #CREATOR SORT
       names = fedora_object.datastreams["DCA-META"].get_values(:creator)
@@ -420,6 +399,7 @@ module Tufts
           end
 
             ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_i", "#{year}")
+            ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_sort", "#{year}")
           
       end
 
