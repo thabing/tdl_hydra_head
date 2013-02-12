@@ -73,6 +73,7 @@
   </style>
   <link rel="shortcut icon" href="/assets/ico/favicon.ico">
   <%= raw(render_head_content) %>
+  <%= analytics_init if (Rails.env.production? || Rails.env.tdldev?) %>
 </head>
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
 

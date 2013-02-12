@@ -57,4 +57,7 @@ TdlHydraHead::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  #Google Analytics Tracking Code
+  GA.tracker = "UA-38431398-1"
 end

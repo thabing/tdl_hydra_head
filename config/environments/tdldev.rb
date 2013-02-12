@@ -31,5 +31,7 @@ TdlHydraHead::Application.configure do
 
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
+  #Google Analytics Tracking Code
+  GA.tracker = "UA-38431398-2"
 end
 
