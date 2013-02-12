@@ -392,9 +392,19 @@ module Tufts
           if (!date.nil? && !date[/^c/].nil?)
             date = date.split[1..10].join(' ')
           end
-
+         
           #end handling circa dates
 
+          #handle 01/01/2004 style dates
+          if (!date.nil? && !date[/\//].nil?)
+	    date = date[date.rindex('/')+1..date.length()]
+ 	    #check for 2 digit year
+ 	    if (date.length() == 2)
+	     date = "19" + date
+	    end
+          end
+          #end handle 01/01/2004 style dates
+	  
           #Chronic is not gonna like the 4 digit date here it may interpret as military time, and
           #this may be imperfect but lets try this.
 
