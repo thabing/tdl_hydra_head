@@ -136,6 +136,7 @@ GEM
       sexp_processor (~> 3.0)
     gherkin (2.7.6)
       json (>= 1.4.6)
+    google-analytics-rails (0.0.3)
     gyoku (0.4.4)
       builder (>= 2.1.2)
     haml (3.1.4)
@@ -383,6 +384,7 @@ DEPENDENCIES
   daemons
   database_cleaner
   devise
+  google-analytics-rails
   hydra-head (~> 3.2.0)
   jettywrapper
   metric_fu
