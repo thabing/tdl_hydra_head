@@ -404,11 +404,17 @@ module Tufts
 	    end
           end
           #end handle 01/01/2004 style dates
-	  
+
+	  #handle n.d.
+	  if (!date.nil? && date == "n.d.")
+            date = "0"
+          end
+          #end n.d. 
+
           #Chronic is not gonna like the 4 digit date here it may interpret as military time, and
           #this may be imperfect but lets try this.
 
-          unless date.nil?
+          unless (date.nil? || date == "0")
             if date.length() == 4
               date += "-01-01"
             elsif date.length() == 9
@@ -423,11 +429,11 @@ module Tufts
             end
 
           end
-
-          valid_date_string = valid_date.strftime("%Y")
-
-
-
+          if date == 0
+	    valid_date_string = "0"
+	  else
+            valid_date_string = valid_date.strftime("%Y")
+ 	  end
 
         ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_i", "#{valid_date_string}")
         ::Solrizer::Extractor.insert_solr_field_value(solr_doc, "pub_date_sort", "#{valid_date_string}")
