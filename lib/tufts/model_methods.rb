@@ -406,10 +406,20 @@ module Tufts
           #end handle 01/01/2004 style dates
 
 	  #handle n.d.
-	  if (!date.nil? && date == "n.d.")
+	  if (!date.nil? && date[/n\.d/])
             date = "0"
           end
           #end n.d. 
+
+          #handle YYYY-MM-DD and MM-DD-YYYY
+	  if (!date.nil? && !date[/-/].nil?)
+		if (date.index('-') == 4)
+		  date = date[0..date.index('-')-1]
+                else
+		  date = date[date.rindex('-')+1..date.length()]
+		end
+          end
+          #end YYYY-MM-DD
 
           #Chronic is not gonna like the 4 digit date here it may interpret as military time, and
           #this may be imperfect but lets try this.
@@ -429,7 +439,7 @@ module Tufts
             end
 
           end
-          if date == 0
+          if date == "0"
 	    valid_date_string = "0"
 	  else
             valid_date_string = valid_date.strftime("%Y")
