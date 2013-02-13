@@ -114,7 +114,9 @@ module Tufts
       unless node_sets.nil?
         node_sets.each do |node2|
           unless node2['id'].nil?
-            result << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node2['id']+"'>" + node2['n'] + "</a><br/>"
+            chapter_title = node2['n']
+            chapter_title.nil? ? chapter_title ='[chapter]' : chapter_title
+            result << "<a href='/catalog/tei/"+ fedora_obj.pid+"/chapter/"+node2['id']+"'>" + chapter_title + "</a><br/>"
             chapter_list << node2['id']
           else
             chapter_title = node2['n']
