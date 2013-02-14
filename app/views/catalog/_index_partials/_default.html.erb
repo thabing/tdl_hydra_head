@@ -19,7 +19,7 @@
        valid_date_string = document[:pub_date_i]
        # since this is an int field we're storing no dates as 0, which makes for ugly display
        # best way to handle this seems to be dealing with it here.
-       if valid_date_string == "0"
+       if valid_date_string.to_s == "0"
          valid_date_string = "n.d."
        end
 
