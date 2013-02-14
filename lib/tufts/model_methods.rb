@@ -421,6 +421,13 @@ module Tufts
           end
           #end YYYY-MM-DD
 
+	  #handle ua084 collection which has dates set as 0000-00-00
+ 	  pid = fedora_object.pid.to_s.downcase
+          if pid[/tufts\:ua084/]
+	    date="1980"
+          end	
+          #end ua084
+
           #Chronic is not gonna like the 4 digit date here it may interpret as military time, and
           #this may be imperfect but lets try this.
 
