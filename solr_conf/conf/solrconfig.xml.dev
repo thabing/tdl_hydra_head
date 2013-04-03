@@ -12,7 +12,7 @@
     <mergeFactor>10</mergeFactor>
     <ramBufferSizeMB>32</ramBufferSizeMB>
     <maxMergeDocs>2147483647</maxMergeDocs>
-    <maxFieldLength>10000</maxFieldLength>
+    <maxFieldLength>950000</maxFieldLength>
     <writeLockTimeout>1000</writeLockTimeout>
     <commitLockTimeout>10000</commitLockTimeout>
     <lockType>single</lockType>
@@ -23,7 +23,7 @@
     <ramBufferSizeMB>32</ramBufferSizeMB>
     <mergeFactor>10</mergeFactor>
     <maxMergeDocs>2147483647</maxMergeDocs>
-    <maxFieldLength>10000</maxFieldLength>
+    <maxFieldLength>950000</maxFieldLength>
     <unlockOnStartup>false</unlockOnStartup>
   </mainIndex>
   
@@ -85,7 +85,7 @@
   <!-- Searching ("All Fields") -->
     <requestHandler name="search" class="solr.SearchHandler" default="true">
       <lst name="defaults">
-        <str name="defType">dismax</str>
+        <str name="defType">dismax</str> 
         <str name="echoParams">explicit</str>      
         <str name="q.alt">*:*</str>
         <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
@@ -98,7 +98,6 @@
         -->
         <str name="qf">
           id
-	  id_t
           title_t^25000
           title_unstem_search^50000
           author_unstem_search^200
@@ -113,7 +112,6 @@
         </str>
         <str name="pf">
           id
-	  id_t
           title_t^250000
           title_unstem_search^50000
           author_unstem_search^200
@@ -448,10 +446,7 @@
   <requestHandler name="/update" class="solr.XmlUpdateRequestHandler" />
   <requestHandler name="/analysis" class="solr.AnalysisRequestHandler" />
   <requestHandler name="/update/csv" class="solr.CSVRequestHandler" startup="lazy" />
-  <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers" /> 
-  <!-- <requestHandler name="/admin/" class="PingRequestHandler" /> -->
-  <requestHandler name="/admin/luke" class="org.apache.solr.handler.admin.LukeRequestHandler" />
-
+  <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers" />
   <requestHandler name="/admin/ping" class="PingRequestHandler">
     <lst name="defaults">
       <str name="qt">standard</str>
