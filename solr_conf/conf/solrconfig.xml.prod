@@ -12,7 +12,7 @@
     <mergeFactor>10</mergeFactor>
     <ramBufferSizeMB>32</ramBufferSizeMB>
     <maxMergeDocs>2147483647</maxMergeDocs>
-    <maxFieldLength>10000</maxFieldLength>
+    <maxFieldLength>950000</maxFieldLength>
     <writeLockTimeout>1000</writeLockTimeout>
     <commitLockTimeout>10000</commitLockTimeout>
     <lockType>single</lockType>
@@ -23,7 +23,7 @@
     <ramBufferSizeMB>32</ramBufferSizeMB>
     <mergeFactor>10</mergeFactor>
     <maxMergeDocs>2147483647</maxMergeDocs>
-    <maxFieldLength>10000</maxFieldLength>
+    <maxFieldLength>950000</maxFieldLength>
     <unlockOnStartup>false</unlockOnStartup>
   </mainIndex>
   
