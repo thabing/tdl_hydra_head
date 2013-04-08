@@ -134,7 +134,7 @@ begin
   else
     # No pid was specified, so listen to ActiveMQ for events of interest
 
-    log_file = File.open(File.join(@hydra_home, 'log', 'pngizer.log'), 'w')
+    log_file = File.open(File.join(@hydra_home, 'log', 'pngizer.log'), 'a')
     log_file.sync = true # causes each log message to be flushed immediately
     @logger = Logger.new(log_file)
     @logger.info("Starting #{$PROGRAM_NAME}...")
