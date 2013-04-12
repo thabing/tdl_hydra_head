@@ -8,6 +8,8 @@ require 'RMagick'
 options = {}
 
 def convert_to_png(pid)
+  success = false
+
   unless pid.nil?
     begin
       file_asset = FileAsset.find(pid)
@@ -51,12 +53,17 @@ def convert_to_png(pid)
           end
 
           @logger.info('Successfully completed ' + pid + '.')
+          success = true
         end
       end
     rescue Magick::ImageMagickError => ex
-      @logger.error($PROGRAM_NAME + ': ' + ex.message)
+      @logger.error($PROGRAM_NAME + ' ImageMagick error: ' + ex.message)
+    rescue SystemCallError => ex
+      @logger.error($PROGRAM_NAME + ' I/O error: ' + ex.message)
     end
   end
+
+  return success
 end
 
 optparse = OptionParser.new do |opts|
@@ -137,7 +144,7 @@ begin
     log_file = File.open(File.join(@hydra_home, 'log', 'pngizer.log'), 'a')
     log_file.sync = true # causes each log message to be flushed immediately
     @logger = Logger.new(log_file)
-    @logger.info("Starting #{$PROGRAM_NAME}...")
+    @logger.info("\nStarting #{$PROGRAM_NAME}...")
 
     @port = options[:port]
     @host = options[:host]
@@ -159,17 +166,22 @@ begin
       @msg = @conn.receive()
       pid = @msg.headers['pid']
       method = @msg.headers['methodName']
+      done_with_event = false
 
-      if method.eql?('ingest')
+      unless method.eql?('ingest')
+        done_with_event = true
+      else
         count += 1
-        @logger.info(count.to_s + ': ' + @msg.headers.inspect)
+        @logger.info("\n" + count.to_s + ': ' + @msg.headers.inspect)
 
-        convert_to_png(pid)
+        done_with_event = convert_to_png(pid)
       end
 
-      @conn.ack(@msg.headers['message-id'])
+      if done_with_event
+        @conn.ack(@msg.headers['message-id'])
+      end
     end
   end
-rescue Exception => ex
+rescue StandardError => ex
   @logger.fatal($PROGRAM_NAME + ': ' + ex.message)
 end
