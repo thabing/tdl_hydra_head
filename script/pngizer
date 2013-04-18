@@ -169,7 +169,7 @@ begin
       method = @msg.headers['methodName']
       done_with_event = false
 
-      unless method.eql?('ingest')
+      if pid.nil? or !method.eql?('ingest')
         done_with_event = true
       else
         count += 1
