@@ -48,6 +48,7 @@ def convert_to_png(pid)
             @logger.info('Writing ' + png_path + '.')
 
             pdf_page.write(png_path){self.quality = 100}
+            pdf_page.destroy!  # this is important - without it RMagick can occasionally be left in a state that causes subsequent failures
 
             page_number += 1
           end
