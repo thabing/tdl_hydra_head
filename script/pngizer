@@ -161,6 +161,7 @@ begin
     @conn.subscribe(@destination, {'activemq.subscriptionName' => @clientid, :ack => 'client'})
 
     count = 0
+    email_sent = false
 
     while true
       @msg = @conn.receive()
@@ -175,6 +176,11 @@ begin
         @logger.info("\n" + count.to_s + ': ' + @msg.headers.inspect)
 
         done_with_event = convert_to_png(pid)
+
+        unless done_with_event or email_sent
+          Notifier.pngizer_failure({:pid => pid})
+          email_sent = true
+        end
       end
 
       if done_with_event

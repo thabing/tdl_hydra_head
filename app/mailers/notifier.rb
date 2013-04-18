@@ -1,11 +1,19 @@
 class Notifier < ActionMailer::Base
-  default :from => "from@example.com"
+  default :from => "donotreply@dl.tufts.edu"
 
   def feedback(params)
     @params = params
 
     return mail(:to => Settings.tdl_feedback_address,
       :from => params[:email],
-      :subject => Settings.tdl_feedback_subject).deliver;
+      :subject => Settings.tdl_feedback_subject).deliver
+  end
+
+
+  def pngizer_failure(params)
+    @params = params
+
+    return mail(:to => Settings.tdl_feedback_address,
+      :subject => "pngizerd failure for #{params[:pid]}").deliver
   end
 end
