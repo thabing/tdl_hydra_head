@@ -13,7 +13,7 @@ class Notifier < ActionMailer::Base
   def pngizer_failure(params)
     @params = params
 
-    return mail(:to => Settings.tdl_feedback_address,
+    return mail(:to => Settings.pngizer_failure_address,
       :subject => "pngizerd failure for #{params[:pid]}").deliver
   end
 end

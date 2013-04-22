@@ -4,6 +4,7 @@ defaults: &defaults
     page_location: "#{Rails.root}/pdf_pages"
   png_pages:
     page_location: "#{Rails.root}/pdf_pages"
+  pngizer_failure_address: "brian.goodmon@tufts.edu"
   tdl_feedback_address: "brian.goodmon@tufts.edu"
   tdl_feedback_subject: "TDL Content Feedback"
   local_object_store: "#{Rails.root}/local_object_store"
@@ -28,6 +29,7 @@ stage:
     page_location: "/tdr"
   png_pages:
     page_location: "/tdr"
+  pngizer_failure_address: "dldev.elist.tufts.edu"
   local_object_store: "/tdr"
   processing_url: "http://stage-processing01.lib.tufts.edu:8080"
   repository_url: "http://stage-repository01.lib.tufts.edu:8080"
