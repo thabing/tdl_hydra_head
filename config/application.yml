@@ -46,7 +46,7 @@ production:
     page_location: "/tdr"
   png_pages:
     page_location: "/tdr"
-  tdl_feedback_address: "deborah.kaplan@tufts.edu"
+  tdl_feedback_address: "dl_feedback.elist.tufts.edu"
   local_object_store: "/tdr"
   processing_url: "http://processing01.lib.tufts.edu:8080"
   repository_url: "http://repository01.lib.tufts.edu:8080"
