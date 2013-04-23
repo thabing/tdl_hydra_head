@@ -12,12 +12,14 @@ def convert_to_png(pid)
 
   unless pid.nil?
     begin
-      file_asset = FileAsset.find(pid)
+      file_asset = ActiveFedora::Base.find(pid)
 
       if (file_asset.nil?)
         @logger.fatal('Can\'t find ' + pid + '.')
       else
-        if file_asset.datastreams.include?('Archival.pdf')
+        unless file_asset.datastreams.include?('Archival.pdf')
+          @logger.info(pid + ' does not have an Archival.pdf datastream.')
+        else
           pdf_url = file_asset.datastreams['Archival.pdf'].dsLocation
           pdf_path = convert_url_to_local_path(pdf_url)
           @logger.info('Reading ' + pdf_path + '.')
@@ -49,13 +51,14 @@ def convert_to_png(pid)
 
             pdf_page.write(png_path){self.quality = 100}
             pdf_page.destroy!  # this is important - without it RMagick can occasionally be left in a state that causes subsequent failures
+            pdf_pages[page_number] = nil
 
             page_number += 1
           end
-
-          @logger.info('Successfully completed ' + pid + '.')
-          success = true
         end
+
+        @logger.info('Successfully completed ' + pid + '.')
+        success = true
       end
     rescue Magick::ImageMagickError => ex
       @logger.error($PROGRAM_NAME + ' ImageMagick error: ' + ex.message)
