@@ -18,6 +18,7 @@ gem 'settingslogic'
 gem 'titleize'
 gem 'solrizer', :git => "http://github.com/mkorcy/solrizer.git"
 gem 'google-analytics-rails'
+gem 'rmagick', '~> 2.13.2'
 
 # For testing.  You will probably want to use all of these to run the tests you write for your hydra head
 group :test do
