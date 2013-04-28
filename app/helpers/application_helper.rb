@@ -74,7 +74,7 @@ module ApplicationHelper
     return "http://bcd.lib.tufts.edu/view_text.jsp?urn=" + urn
   end
   def show_elections_link(pid)
-    return "http://elections.lib.tufts.edu/aas_portal/view-election.xq?id=" + pid[6..-1]
+    return "http://elections.lib.tufts.edu/catalog/" + pid
   end
 
   def showPDFLink(pid)

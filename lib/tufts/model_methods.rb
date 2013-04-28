@@ -23,7 +23,7 @@ module Tufts
       return {
           :titles => datastream.find_by_terms_and_value(:title),
           :creators => datastream.find_by_terms_and_value(:creator),
-          :dates => datastream.find_by_terms_and_value(:dateCreated2),
+          :dates => datastream.find_by_terms_and_value(:dateCreated),
           :descriptions => datastream.find_by_terms_and_value(:description),
           :sources => datastream.find_by_terms_and_value(:source2),
           :citable_urls => datastream.find_by_terms_and_value(:identifier),
