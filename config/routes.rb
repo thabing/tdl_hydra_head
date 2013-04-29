@@ -1,5 +1,7 @@
 
 TdlHydraHead::Application.routes.draw do
+  resources :message_queues
+
   get "contact/index"
   get "about/index"
   match '/imageviewer/:id', :to => 'imageviewer#show', :constraints => {:id => /.*/}, :as =>'imageviewer'

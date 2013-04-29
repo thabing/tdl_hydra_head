@@ -1,0 +1,37 @@
+<h1>Listing message_queues</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Last heartbeat</th>
+    <th>Last ingest</th>
+    <th>Last modify</th>
+    <th>Last purge</th>
+    <th>Last pid ingested</th>
+    <th>Last pid purged</th>
+    <th>Last pid modified</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @message_queues.each do |message_queue| %>
+  <tr>
+    <td><%= message_queue.name %></td>
+    <td><%= message_queue.last_heartbeat %></td>
+    <td><%= message_queue.last_ingest %></td>
+    <td><%= message_queue.last_modify %></td>
+    <td><%= message_queue.last_purge %></td>
+    <td><%= message_queue.last_pid_ingested %></td>
+    <td><%= message_queue.last_pid_purged %></td>
+    <td><%= message_queue.last_pid_modified %></td>
+    <td><%= link_to 'Show', message_queue %></td>
+    <td><%= link_to 'Edit', edit_message_queue_path(message_queue) %></td>
+    <td><%= link_to 'Destroy', message_queue, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Message queue', new_message_queue_path %>
