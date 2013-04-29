@@ -52,7 +52,8 @@ options = {
   :multiple=>false,
   :dir_mode=>:normal,
   :dir=>'/tmp',
-  :backtrace=>true
+  :backtrace=>true,
+  :monitor=>true
 }
 argv_array = []
 argv_array << ARGV[0]

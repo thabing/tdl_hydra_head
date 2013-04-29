@@ -4,6 +4,7 @@ require 'rubygems'
 require 'optparse'
 require 'stomp'
 require 'RMagick'
+require 'date'
 
 options = {}
 
@@ -165,30 +166,30 @@ begin
     @conn.subscribe(@destination, {'activemq.subscriptionName' => @clientid, :ack => 'client'})
 
     count = 0
-    email_sent = false
+    success = true
 
-    while true
+    # Let pngizer finish after failure;  if running via pngizerd, the :monitor=>true option passed toDaemons.run()
+    # will cause pngizer to be restarted.  Sometimes after converting a huge pdf (for example tufts:UA005.008.066.00001
+    # with 152 pages) RMagick fails on subsequent converts and this is the only known way to recover.
+
+    while success
       @msg = @conn.receive()
       pid = @msg.headers['pid']
       method = @msg.headers['methodName']
-      done_with_event = false
 
-      if pid.nil? or !method.eql?('ingest')
-        done_with_event = true
-      else
+      unless pid.nil? or !method.eql?('ingest')
         count += 1
-        @logger.info("\n" + count.to_s + ': ' + @msg.headers.inspect)
+        current_time = DateTime.now()
 
-        done_with_event = convert_to_png(pid)
+        @logger.info("\n" + count.to_s + ' ' + current_time.strftime("%m/%d/%Y %H:%M:%S") + ' ' + @msg.headers.inspect)
 
-        unless done_with_event or email_sent
-          Notifier.pngizer_failure({:pid => pid})
-          email_sent = true
-        end
+        success = convert_to_png(pid)
       end
 
-      if done_with_event
+      if success
         @conn.ack(@msg.headers['message-id'])
+      else
+        Notifier.pngizer_failure({:pid => pid})
       end
     end
   end
