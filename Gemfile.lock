@@ -284,6 +284,7 @@ GEM
       sexp_processor (~> 3.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rmagick (2.13.2)
     roodi (2.1.0)
       ruby_parser
     rsolr (1.0.2)
@@ -392,6 +393,7 @@ DEPENDENCIES
   om (= 1.4.4)
   rails (~> 3.0.19)
   rcov
+  rmagick (~> 2.13.2)
   rsolr
   rsolr-ext
   rspec
